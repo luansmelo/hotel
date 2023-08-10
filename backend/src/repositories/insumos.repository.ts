@@ -3,19 +3,24 @@ import { InsumoDTO } from "../dto/insumo.dto";
 import { uuid } from "uuidv4";
 
 export class InsumoRepository {
-  private insumo: string = "insumos";
+  private static insumo: string = "insumos";
   constructor(private readonly database: Knex<any, unknown[]>) {}
 
-  async handle(data: InsumoDTO) {
-    await this.database(this.insumo).insert({ id: uuid(), ...data });
+  async createInsumo(data: InsumoDTO) {
+    await this.database(InsumoRepository.insumo).insert({
+      id: uuid(),
+      ...data,
+    });
   }
 
   async getInsumos() {
-    return this.database(this.insumo).select("*");
+    const insumos = await this.database(InsumoRepository.insumo);
+
+    return insumos;
   }
 
   async getInsumoByName(nome: string) {
-    const [insumo] = await this.database(this.insumo)
+    const [insumo] = await this.database(InsumoRepository.insumo)
       .select("nome")
       .where({ nome });
 

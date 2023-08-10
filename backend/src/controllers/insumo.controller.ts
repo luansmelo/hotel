@@ -7,4 +7,8 @@ export class InsumoController {
   async createInsumo(payload: InsumoDTO) {
     return this.insumoService.createInsumo(payload);
   }
+
+  async getInsumo() {
+    return this.insumoService.getInsumos();
+  }
 }

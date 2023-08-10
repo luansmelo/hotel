@@ -20,4 +20,18 @@ router.post(
   }
 );
 
+router.get(
+  "/",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const controller = makeInsumoController();
+      const result = await controller.getInsumo();
+
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { router, slug };

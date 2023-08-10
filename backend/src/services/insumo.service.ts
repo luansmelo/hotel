@@ -14,7 +14,7 @@ export class InsumoService {
       throw new ConflictError("Insumo já cadastrado.");
     }
 
-    return this.insumoRepository.handle(payload);
+    return this.insumoRepository.createInsumo(payload);
   }
 
   async getInsumos() {
