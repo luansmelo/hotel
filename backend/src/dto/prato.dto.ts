@@ -1,3 +1,3 @@
 export interface PratoDTO {
-  decricao: string;
+  description: string;
 }
