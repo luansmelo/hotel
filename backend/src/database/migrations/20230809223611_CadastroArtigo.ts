@@ -2,7 +2,7 @@ import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("CadastroArtigo", (table) => {
-    table.uuid("id");
+    table.uuid("id").primary().defaultTo(knex.fn.uuid());
     table.string("genero");
     table.string("grupo");
     table.string("codigo");
