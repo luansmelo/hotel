@@ -1,6 +1,5 @@
 import { Knex } from "knex";
 import { InsumoDTO } from "../dto/insumo.dto";
-import { uuid } from "uuidv4";
 
 export class InsumoRepository {
   private static insumo: string = "insumos";
@@ -8,7 +7,6 @@ export class InsumoRepository {
 
   async createInsumo(data: InsumoDTO) {
     await this.database(InsumoRepository.insumo).insert({
-      id: uuid(),
       ...data,
     });
   }
@@ -20,9 +18,10 @@ export class InsumoRepository {
   }
 
   async getInsumoByName(nome: string) {
-    const [insumo] = await this.database(InsumoRepository.insumo)
-      .select("nome")
-      .where({ nome });
+    const [insumo] = await this.database(InsumoRepository.insumo).whereRaw(
+      "LOWER(nome) = ?",
+      nome.toLowerCase()
+    );
 
     return insumo;
   }

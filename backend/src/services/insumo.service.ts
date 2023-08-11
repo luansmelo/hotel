@@ -6,9 +6,7 @@ export class InsumoService {
   constructor(private readonly insumoRepository: InsumoRepository) {}
 
   async createInsumo(payload: InsumoDTO) {
-    const insumo = await this.insumoRepository.getInsumoByName(
-      payload.nome.toLowerCase()
-    );
+    const insumo = await this.insumoRepository.getInsumoByName(payload.nome);
 
     if (insumo) {
       throw new ConflictError("Insumo já cadastrado.");
