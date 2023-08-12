@@ -6,8 +6,8 @@ export class PratoService {
   constructor(private readonly pratoRepository: PratoRepository) {}
 
   async createDish(payload: PratoDTO) {
-    const dish = await this.pratoRepository.getDishByDescription(
-      payload.description
+    const dish = await this.pratoRepository.getDishByName(
+      payload.nome
     );
 
     if (dish) {

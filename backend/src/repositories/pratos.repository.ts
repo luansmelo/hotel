@@ -18,10 +18,10 @@ export class PratoRepository {
     return dish;
   }
 
-  async getDishByDescription(description: string) {
+  async getDishByName(nome: string) {
     const [dish] = await this.database(PratoRepository.dish).whereRaw(
-      "LOWER(description) = ?",
-      description.toLowerCase()
+      "LOWER(nome) = ?",
+      nome.toLowerCase()
     );
     return dish;
   }
