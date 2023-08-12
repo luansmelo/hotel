@@ -1,4 +1,4 @@
-import { PratoDTO } from "../dto/prato.dto";
+import { AddInsumoToDish, PratoDTO } from "../dto/prato.dto";
 import { ConflictError } from "../errors/httpErrors";
 import { PratoRepository } from "../repositories/pratos.repository";
 
@@ -19,5 +19,9 @@ export class PratoService {
 
   async getDishs() {
     return this.pratoRepository.getDishs();
+  }
+
+  async addInsumoToDish(payload: AddInsumoToDish) {
+    return this.pratoRepository.addInsumoToDish(payload);
   }
 }
