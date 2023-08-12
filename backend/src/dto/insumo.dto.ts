@@ -1,4 +1,4 @@
-export interface InsumoDTO {
+export interface InputDTO {
   nome: string;
   quantidade: number;
   unidade_associativa?: string; 

@@ -1,14 +1,14 @@
-import { InsumoDTO } from "../dto/insumo.dto";
-import { InsumoService } from "../services/insumo.service";
+import { InputDTO } from "../dto/insumo.dto";
+import { InputService } from "../services/insumo.service";
 
-export class InsumoController {
-  constructor(private readonly insumoService: InsumoService) {}
+export class InputController {
+  constructor(private readonly insumoService: InputService) {}
 
-  async createInsumo(payload: InsumoDTO) {
-    return this.insumoService.createInsumo(payload);
+  async createInput(payload: InputDTO) {
+    return this.insumoService.createInput(payload);
   }
 
-  async getInsumo() {
-    return this.insumoService.getInsumos();
+  async getInputs() {
+    return this.insumoService.getInputs();
   }
 }
