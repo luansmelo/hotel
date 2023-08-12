@@ -1,4 +1,4 @@
-import { PratoDTO } from "../dto/prato.dto";
+import { AddInsumoToDish, PratoDTO } from "../dto/prato.dto";
 import { PratoService } from "../services/prato.service";
 
 export class PratoController {
@@ -10,5 +10,9 @@ export class PratoController {
 
   async getDishs() {
     return this.pratoService.getDishs();
+  }
+
+  async addInsumoToDish(payload: AddInsumoToDish) {
+    return this.pratoService.addInsumoToDish(payload);
   }
 }

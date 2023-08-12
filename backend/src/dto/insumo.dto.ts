@@ -1,7 +1,8 @@
 export interface InsumoDTO {
   nome: string;
-  quantidade_disponivel: string;
-  custo: number;
-  fornecedor: string;
-  data_validade: Date | null;
+  quantidade: number;
+  unidade_associativa?: string; 
+  unidade_de_medida?: number;
+  custo_por_unidade?: number;
+  fornecedor?: string;
 }

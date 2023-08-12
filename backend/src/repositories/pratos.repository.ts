@@ -1,5 +1,5 @@
 import { Knex } from "knex";
-import { PratoDTO } from "../dto/prato.dto";
+import { AddInsumoToDish, PratoDTO } from "../dto/prato.dto";
 
 export class PratoRepository {
   private static dish: string = "dish";
@@ -26,11 +26,11 @@ export class PratoRepository {
     return dish;
   }
 
-  async addInsumoToDish(dishId: string, insumoId: string, quantidade: number) {
+  async addInsumoToDish(payload: AddInsumoToDish) {
     await this.database(PratoRepository.dish_insumo).insert({
-      dish_id: dishId,
-      insumo_id: insumoId,
-      quantidade: quantidade,
+      dish_id: payload.dishId,
+      insumo_id: payload.insumoId,
+      quantidade: payload.quantidade,
     });
   }
 }
