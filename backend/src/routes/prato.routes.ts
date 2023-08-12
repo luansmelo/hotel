@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { PratoDTO } from "../dto/prato.dto";
+import { AddInsumoToDish, PratoDTO } from "../dto/prato.dto";
 import { makePratoController } from "../utils/factories/makePratoController";
 
 const router = Router();
@@ -13,6 +13,22 @@ router.post(
 
       const controller = makePratoController();
       const result = await controller.createDish(payload);
+
+      return response.status(201).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/add/:dishId/:insumoId/:quantidade",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const payload: AddInsumoToDish = request.body;
+
+      const controller = makePratoController();
+      const result = await controller.addInsumoToDish(payload);
 
       return response.status(201).send(result);
     } catch (error) {
