@@ -1,0 +1,8 @@
+.sideBarContainer {
+  width: 255px;
+  background-color: #FFF;
+  box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.06);
+  display: flex;
+  padding-top: 124px;
+}
+

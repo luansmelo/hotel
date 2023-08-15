@@ -1,0 +1,7 @@
+.headerContainer {
+  width: 100%;
+  min-height: 124px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
