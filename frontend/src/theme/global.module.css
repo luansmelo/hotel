@@ -1,0 +1,13 @@
+.globalContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: #00ffff11;
+}
+
+.globalSection {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin: 0px 34px 0px 34px;
+}
+
