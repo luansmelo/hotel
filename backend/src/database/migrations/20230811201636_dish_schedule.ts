@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("dish_schedule", (table) => {
     table.uuid("id").primary().defaultTo(knex.fn.uuid());
     table.uuid("dish_id").references("id").inTable("dish").onDelete("CASCADE");
-    table.date("data_programada").notNullable();
+    table.date("schedule_date").notNullable();
     table
       .uuid("category_id")
       .references("id")

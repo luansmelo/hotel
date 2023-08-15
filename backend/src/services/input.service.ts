@@ -1,12 +1,12 @@
-import { InputDTO } from "../dto/insumo.dto";
+import { InputDTO } from "../dto/input.dto";
 import { ConflictError } from "../errors/httpErrors";
-import { InsumoRepository } from "../repositories/insumos.repository";
+import { InputRepository } from "../repositories/inputs.repository";
 
 export class InputService {
-  constructor(private readonly inputRepository: InsumoRepository) {}
+  constructor(private readonly inputRepository: InputRepository) {}
 
   async createInput(payload: InputDTO) {
-    const input = await this.inputRepository.getInputByName(payload.nome);
+    const input = await this.inputRepository.getInputByName(payload.name);
 
     if (input) {
       throw new ConflictError("Insumo já cadastrado.");

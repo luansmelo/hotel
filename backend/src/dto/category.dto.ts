@@ -1,3 +1,3 @@
 export interface CategoryDTO {
-  nome: string;
+  name: string;
 }

@@ -1,5 +1,5 @@
 import { Knex } from "knex";
-import { CategoryDTO } from "../dto/categoria.dto";
+import { CategoryDTO } from "../dto/category.dto";
 
 export class CategoryRepository {
   private static category: string = "category";
