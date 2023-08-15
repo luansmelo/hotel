@@ -22,10 +22,17 @@ router.post(
 );
 
 router.post(
-  "/add/:dishId/:insumoId/:quantidade",
+  "/:dishId/ingredients/:insumoId",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const payload: AddInsumoToDish = request.body;
+      const { dishId, insumoId } = request.params;
+      const unidade = Number(request.query.unidade);
+
+      const payload: AddInsumoToDish = {
+        dishId,
+        insumoId,
+        unidade_de_medida: unidade,
+      };
 
       const controller = makePratoController();
       const result = await controller.addInsumoToDish(payload);
@@ -43,6 +50,21 @@ router.get(
     try {
       const controller = makePratoController();
       const result = await controller.getDishs();
+
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/:dishId",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const { dishId } = request.params;
+      const controller = makePratoController();
+      const result = await controller.getDishWithIngredients(dishId);
 
       return response.status(200).send(result);
     } catch (error) {

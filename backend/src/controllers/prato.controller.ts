@@ -15,4 +15,8 @@ export class PratoController {
   async addInsumoToDish(payload: AddInsumoToDish) {
     return this.pratoService.addInsumoToDish(payload);
   }
+
+  async getDishWithIngredients(dishId: string) {
+    return this.pratoService.getDishWithIngredients(dishId);
+  }
 }

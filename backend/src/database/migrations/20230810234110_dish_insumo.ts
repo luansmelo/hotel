@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
       .references("id")
       .inTable("input")
       .onDelete("CASCADE");
-    table.integer("quantidade").notNullable();
+    table.float("unidade_de_medida").notNullable();
     table.unique(["dish_id", "insumo_id"]);
   });
 }

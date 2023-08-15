@@ -8,5 +8,5 @@ export interface PratoDTO {
 export interface AddInsumoToDish {
   dishId: string;
   insumoId: string;
-  quantidade: number;
+  unidade_de_medida: number;
 }

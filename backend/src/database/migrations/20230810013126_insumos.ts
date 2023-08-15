@@ -4,10 +4,9 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("input", (table) => {
     table.uuid("id").primary().defaultTo(knex.fn.uuid());
     table.string("nome").notNullable();
-    table.integer("quantidade").defaultTo(0);
-    table.string("unidade_associativa").nullable();
-    table.float("unidade_de_medida").nullable();
-    table.float("custo_por_unidade").nullable();
+    table.integer("estoque_quantidade").defaultTo(0);
+    table.string("unidade_associativa").notNullable();
+    table.float("custo_por_unidade").notNullable();
     table.string("fornecedor").nullable();
   });
 }
