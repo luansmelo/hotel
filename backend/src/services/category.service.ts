@@ -1,6 +1,6 @@
-import { CategoryDTO } from "../dto/categoria.dto";
+import { CategoryDTO } from "../dto/category.dto";
 import { ConflictError } from "../errors/httpErrors";
-import { CategoryRepository } from "../repositories/categorias.repository";
+import { CategoryRepository } from "../repositories/category.repository";
 
 export class CategoryService {
   constructor(private readonly categoryRepository: CategoryRepository) {}

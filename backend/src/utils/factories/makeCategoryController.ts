@@ -1,7 +1,7 @@
-import { CategoryController } from "../../controllers/categoria.controller";
+import { CategoryController } from "../../controllers/category.controller";
 import { db } from "../../database";
-import { CategoryRepository } from "../../repositories/categorias.repository";
-import { CategoryService } from "../../services/categoria.service";
+import { CategoryRepository } from "../../repositories/category.repository";
+import { CategoryService } from "../../services/category.service";
 
 export function makeCategoryController(): CategoryController {
   const categoryRepository = new CategoryRepository(db);

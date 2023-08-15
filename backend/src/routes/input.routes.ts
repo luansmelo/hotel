@@ -1,17 +1,17 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { CategoryDTO } from "../dto/categoria.dto";
-import { makeCategoryController } from "../utils/factories/makeCategoriaController";
+import { InputDTO } from "../dto/input.dto";
+import { makeInputController } from "../utils/factories/makeInputController";
 
 const router = Router();
-const slug = "/categoria";
+const slug = "/input";
 
 router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const payload: CategoryDTO = request.body;
-      const controller = makeCategoryController();
-      const result = await controller.createCategory(payload);
+      const payload: InputDTO = request.body;
+      const controller = makeInputController();
+      const result = await controller.createInput(payload);
 
       return response.status(201).send(result);
     } catch (error) {
@@ -24,8 +24,8 @@ router.get(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const controller = makeCategoryController();
-      const result = await controller.getCategory();
+      const controller = makeInputController();
+      const result = await controller.getInputs();
 
       return response.status(200).send(result);
     } catch (error) {
