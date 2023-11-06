@@ -1,16 +1,16 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { InputDTO } from "../dto/input.dto";
-import { makeInputController } from "../utils/factories/makeInputController";
+import { ProductDTO } from "../dto/product.dto";
+import { makeProductController } from "../utils/factories/makeProductController";
 
 const router = Router();
-const slug = "/input";
+const slug = "/product";
 
 router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: InputDTO = request.body;
-      const controller = makeInputController();
+      const input: ProductDTO = request.body;
+      const controller = makeProductController();
       const result = await controller.create(input);
 
       return response.status(201).send(result);
@@ -24,7 +24,7 @@ router.get(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const controller = makeInputController();
+      const controller = makeProductController();
       const result = await controller.getAll();
 
       return response.status(200).send(result);

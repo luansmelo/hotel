@@ -1,17 +1,17 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { CategoryDTO } from "../dto/category.dto";
-import { makeCategoryController } from "../utils/factories/makeCategoryController";
+import { makeMenuController } from "../utils/factories/makeMenuController";
+import { MenuDTO } from "../dto/menu.dto";
 
 const router = Router();
-const slug = "/category";
+const slug = "/menu";
 
 router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const payload: CategoryDTO = request.body;
-      const controller = makeCategoryController();
-      const result = await controller.createCategory(payload);
+      const input: MenuDTO = request.body;
+      const controller = makeMenuController();
+      const result = await controller.create(input);
 
       return response.status(201).send(result);
     } catch (error) {
@@ -24,8 +24,8 @@ router.get(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const controller = makeCategoryController();
-      const result = await controller.getCategory();
+      const controller = makeMenuController();
+      const result = await controller.getAll();
 
       return response.status(200).send(result);
     } catch (error) {

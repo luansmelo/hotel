@@ -1,4 +1,7 @@
-import config from "../../knexfile";
-import knex from "knex";
+import { PrismaClient } from "@prisma/client";
 
-export const db = knex(config.development);
+const prisma = new PrismaClient({
+  log: ["query", "info", "warn", "error"],
+});
+
+export default prisma;

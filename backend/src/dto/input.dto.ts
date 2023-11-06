@@ -1,6 +1,8 @@
 export interface InputDTO {
   name: string;
-  associative_unit: string; 
-  cost_per_unit: number;
-  supplier?: string;
+  code: string;
+  unitPrice: number;
+  quantityUnit: number;
+  measurementUnit: string;
+  grammage: number;
 }

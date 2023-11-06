@@ -1,12 +1,12 @@
 import { Router } from "express";
 import * as inputs from "./input.routes";
-import * as dishs from "./dish.routes";
-import * as categories from "./category.routes";
+import * as products from "./product.routes";
+import * as menus from "./menu.routes";
 
 const mainRouter = Router();
 
 mainRouter.use(inputs.slug, inputs.router);
-mainRouter.use(dishs.slug, dishs.router);
-mainRouter.use(categories.slug, categories.router);
+mainRouter.use(products.slug, products.router);
+mainRouter.use(menus.slug, menus.router);
 
 export default mainRouter;

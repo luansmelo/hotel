@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+
+  @@map("account")
+}
+
+model Product {
+  id          String             @id @default(uuid())
+  name        String
+  description String
+  inputs      InputsOnProducts[]
+
+  @@map("product")
+}
+
+model InputsOnProducts {
+  id        String  @id @default(uuid())
+  inputId   String
+  productId String
+  input     Input   @relation(fields: [inputId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("inputsOnProducts")
+}
+
+model Input {
+  id              String             @id @default(uuid())
+  name            String
+  code            String
+  unitPrice       Float
+  quantityUnit    Int
+  measurementUnit String
+  grammage        Float
+  products        InputsOnProducts[]
+
+  @@map("input")
+}
+
+model Menu {
+  id             String           @id @default(uuid())
+  name           String
+  weekDay        Weekday          @default(MONDAY)
+  categoryOnMenu CategoryOnMenu[]
+
+  @@map("menu")
+}
+
+model CategoryOnMenu {
+  id         String   @id @default(uuid())
+  menuId     String
+  categoryId String
+  menu       Menu     @relation(fields: [menuId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@map("categoryOnMenu")
+}
+
+model Category {
+  id             String           @id @default(uuid())
+  name           String
+  categoryOnMenu CategoryOnMenu[]
+
+  @@map("category")
+}
+
+enum Weekday {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}

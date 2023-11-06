@@ -1,21 +1,26 @@
+import {
+  InputRepositoryContract,
+  InputServiceContract,
+} from "../contracts/input-contract";
 import { InputDTO } from "../dto/input.dto";
 import { ConflictError } from "../errors/httpErrors";
-import { InputRepository } from "../repositories/inputs.repository";
 
-export class InputService {
-  constructor(private readonly inputRepository: InputRepository) {}
+export class InputService implements InputServiceContract {
+  constructor(private readonly inputRepository: InputRepositoryContract) {}
 
-  async createInput(payload: InputDTO) {
-    const input = await this.inputRepository.getInputByName(payload.name);
-
-    if (input) {
-      throw new ConflictError("Insumo já cadastrado.");
-    }
-
-    return this.inputRepository.createInput(payload);
+  async create(input: InputDTO) {
+    return this.inputRepository.save(input);
   }
 
-  async getInputs() {
-    return this.inputRepository.getInputs();
+  async getAll() {
+    return this.inputRepository.getAll();
+  }
+
+  async updateById(id: string, input: InputDTO) {
+    return this.inputRepository.updateById(id, input);
+  }
+
+  async deleteById(id: string) {
+    return this.inputRepository.deleteById(id);
   }
 }
