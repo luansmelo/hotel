@@ -1,28 +1,33 @@
 .tr {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
+  justify-content: space-between;
   padding: 16px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.17px;
+}
 
-  td {
-    text-align: left;
-    color: #000000de;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.17px;
-    margin-right: 4px;
-  }
+.tr div {
+  display: flex;
 
-  td:last-child {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
-  }
+  margin-right: 10px;
+  
+}
+
+.tr div:last-child {
+  margin-right: 0; /* Remove o espaçamento do último campo */
+}
+
+.tr .productActionView,
+.tr .productActionDelete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .productActionView {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 28px;
   height: 28px;

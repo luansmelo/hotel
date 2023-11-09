@@ -5,7 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react'
-import axios from 'axios'
+
 import { IInputResponse } from '@/atom/business'
 import { handleToastify } from '@/utils/toastify'
 import api from '@/config/configApi'
@@ -13,8 +13,8 @@ import api from '@/config/configApi'
 interface IInputContext {
   inputList: IInputResponse[]
   handleRequestNewInput: (newInput: IInputResponse) => Promise<void>
-  handleUpdateInput: (newInput: IInputResponse) => Promise<void>
-  handleDeleteInput: (newInput: IInputResponse) => Promise<void>
+  handleUpdateInput: (inputId: string, input: IInputResponse) => Promise<void>
+  handleDeleteInput: (inputId: string) => Promise<void>
   isAddLoading: boolean
   isUpdateLoading: boolean
 }
@@ -34,7 +34,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
 
       response?.data && setInputList(response.data.inputList)
     } catch (error: any) {
-      console.log(error)
+      console.log(error.message)
     }
   }
 
@@ -63,18 +63,11 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const handleUpdateInput = async (newInput: IInputResponse) => {
-    const apiUrl = ` https://localhost:8080/api/input/updateInput/${newInput.id}` // Substitua o ID conforme necessário
-
+  const handleUpdateInput = async (inputId: string, input: IInputResponse) => {
     try {
       setIsUpdateLoading(true)
 
-      const response = await axios.put(apiUrl, newInput, {
-        headers: {
-          Accept: '*/*',
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await api.patch(`/input/${inputId}`, input)
 
       if (response.status === 200) {
         await fetchInputList()
@@ -86,26 +79,18 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
           handleToastify('Não foi possível atualizar o insumo.', 'error')
         }, 500)
       }
-    } catch (error) {
-      setTimeout(() => {
-        handleToastify('Não foi possível atualizar o insumo.', 'error')
-      }, 500)
+    } catch (error: any) {
+      handleToastify('Não foi possível atualizar o insumo.', 'error')
     } finally {
       setIsUpdateLoading(false)
     }
   }
 
-  const handleDeleteInput = async (newInput: IInputResponse) => {
-    const apiUrl = `https://localhost:8080/api/input/deleteInput/${newInput.id}`
-
+  const handleDeleteInput = async (id: string) => {
     try {
       setIsUpdateLoading(true)
 
-      const response = await axios.delete(apiUrl, {
-        headers: {
-          Accept: '*/*',
-        },
-      })
+      const response = await api.delete(`/input/${id}`)
 
       if (response.status === 200) {
         await fetchInputList()
@@ -118,9 +103,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         }, 500)
       }
     } catch (error) {
-      setTimeout(() => {
-        handleToastify('Não foi possível excluir o insumo.', 'error')
-      }, 500)
+      console.log(error)
     } finally {
       setIsUpdateLoading(false)
     }

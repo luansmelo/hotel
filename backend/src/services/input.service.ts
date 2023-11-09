@@ -3,7 +3,7 @@ import {
   InputServiceContract,
 } from "../contracts/input-contract";
 import { InputDTO } from "../dto/input.dto";
-import { ConflictError } from "../errors/httpErrors";
+import { ConflictError, NotFoundError } from "../errors/httpErrors";
 
 export class InputService implements InputServiceContract {
   constructor(private readonly inputRepository: InputRepositoryContract) {}
@@ -16,11 +16,25 @@ export class InputService implements InputServiceContract {
     return this.inputRepository.getAll();
   }
 
+  async getById(id: string) {
+    const input = await this.inputRepository.getById(id);
+
+    if (!input) {
+      throw new NotFoundError("Insumo não encontrado");
+    }
+
+    return input;
+  }
+
   async updateById(id: string, input: InputDTO) {
-    return this.inputRepository.updateById(id, input);
+    const inputExists = await this.getById(id);
+
+    return this.inputRepository.updateById(inputExists.id, input);
   }
 
   async deleteById(id: string) {
-    return this.inputRepository.deleteById(id);
+    const input = await this.getById(id);
+
+    return this.inputRepository.deleteById(input.id);
   }
 }

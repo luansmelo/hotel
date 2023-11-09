@@ -20,7 +20,7 @@ interface MenuMapProductInput {
 
 interface MenuMapProduct {
   name: string
-  productDescription: string
+  description: string
   id: string
 }
 

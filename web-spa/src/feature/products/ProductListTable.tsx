@@ -32,7 +32,7 @@ export default function ProductListTable({
               return (
                 <tr className={styles.tr} key={product.name}>
                   <td>{product.name}</td>
-                  <td>{product.productDescription}</td>
+                  <td>{product.description}</td>
                   <td>
                     <div
                       className={styles.productActionView}

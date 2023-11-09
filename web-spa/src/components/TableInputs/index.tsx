@@ -18,6 +18,7 @@ export default function TableInputs({
         <td>Preço Unitário</td>
         <td>Unidade Medida</td>
         <td>Grupo</td>
+        <td>Gramatura</td>
       </thead>
 
       <tbody className={styles.tbody}>

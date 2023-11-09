@@ -36,6 +36,37 @@ router.get(
   }
 );
 
-router.get("");
+router.patch(
+  "/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const input: InputDTO = request.body;
+      const controller = makeInputController();
+
+      await controller.updateById(id, input);
+
+      return response.status(200).send({ message: "Insumo atualizado!" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const controller = makeInputController();
+
+      await controller.deleteById(id);
+
+      response.status(200).send({ message: "Insumo excluído com sucesso!" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { router, slug };

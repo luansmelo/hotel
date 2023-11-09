@@ -68,7 +68,7 @@ export interface IProductProps {
 export interface IProductResponse {
   id?: string
   name: string
-  productDescription: string
+  description: string
 }
 
 export interface IProductInputResponse {

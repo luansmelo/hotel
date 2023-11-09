@@ -11,4 +11,12 @@ export class InputController {
   async getAll() {
     return this.inputService.getAll();
   }
+
+  async updateById(id: string, input: InputDTO) {
+    return this.inputService.updateById(id, input);
+  }
+
+  async deleteById(id: string) {
+    return this.inputService.deleteById(id);
+  }
 }

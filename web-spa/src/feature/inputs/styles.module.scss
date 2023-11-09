@@ -24,23 +24,24 @@
 
 .thead {
   background: #f8bdbd;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .thead tr {
   display: flex;
-  justify-content: space-between;
+  gap: 76px;
   padding: 16px;
 }
 
 .thead td {
   text-align: left;
-  color: #000000de;
+  // color: #000000de;
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
   letter-spacing: 0.17px;
 }
-
 
 .tbody {
   tr:nth-child(2n + 1) {

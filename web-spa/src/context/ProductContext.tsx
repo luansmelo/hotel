@@ -69,7 +69,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
 
       const response = await api.post('/product/create', {
         name: newProduct.name,
-        description: newProduct.productDescription,
+        description: newProduct.description,
       })
 
       if (response.status === 201) {
@@ -81,6 +81,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       console.error('Erro ao adicionar o produto:', error)
       handleToastify(error.response.data.message, 'error')
     } finally {
+      await fetchProductList()
       setIsLoading(false)
     }
   }

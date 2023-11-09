@@ -26,11 +26,9 @@ export default function InputLine({
   const isNewProduct = isNewInputProps
 
   const handleOnSave = () => {
-    handleUpdateInput(inputValues)
+    handleUpdateInput(inputValues.id as string, { ...inputValues })
     setEnableEdit(false)
   }
-
-  console.log(inputValues)
 
   const handleOnCreate = () => {
     handleRequestNewInput(inputValues)
@@ -38,7 +36,7 @@ export default function InputLine({
   }
 
   const handleDelete = () => {
-    handleDeleteInput(input)
+    handleDeleteInput(inputValues.id as string)
   }
 
   const handleCancelEdit = () => {
@@ -57,15 +55,14 @@ export default function InputLine({
     <tr className={styles.tr}>
       {!isEnabledEdit ? (
         <>
-          <div>
-            <td>{inputValues.code}</td>
-            <td>{inputValues.name}</td>
-            <td>{inputValues.unitPrice.toFixed(0)}</td>
-            <td>{inputValues.measurementUnit}</td>
-            <td>{inputValues.group}</td>
-            <td>{inputValues.grammage}</td>
-          </div>
-          <td>
+          <td>{inputValues.code}</td>
+          <td>{inputValues.name}</td>
+          <td>{inputValues.unitPrice.toFixed(0)}</td>
+          <td>{inputValues.measurementUnit}</td>
+          <td>{inputValues.group}</td>
+          <td>{inputValues.grammage}</td>
+
+          <div className={styles.productActions}>
             <div
               className={styles.productActionView}
               onClick={() => setEnableEdit(true)}
@@ -78,7 +75,7 @@ export default function InputLine({
             >
               <Trash2 color="white" size={18} />
             </div>
-          </td>
+          </div>
         </>
       ) : (
         <div className={styles.inputContainer}>

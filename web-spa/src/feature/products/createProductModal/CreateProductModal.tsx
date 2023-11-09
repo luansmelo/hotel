@@ -192,7 +192,7 @@ export default function CreateProductModal({
                 label="Descrição"
                 variant="outlined"
                 fullWidth
-                value={productDetail?.product?.productDescription}
+                value={productDetail?.product?.description}
                 disabled
               />
 

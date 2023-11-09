@@ -14,7 +14,7 @@ export default function ProductList() {
   const [hasNewProduct, setHasNewProduct] = useState(false)
   const [currNewProduct, setCurrNewProduct] = useState<IProductResponse>({
     name: '',
-    productDescription: '',
+    description: '',
   })
   const [currProductDetailId, setCurrProductDetailId] = useState('')
 
@@ -35,7 +35,7 @@ export default function ProductList() {
       setHasNewProduct(false)
       setCurrNewProduct({
         name: '',
-        productDescription: '',
+        description: '',
       })
     })
   }
@@ -100,11 +100,11 @@ export default function ProductList() {
                         label="Descrição"
                         variant="outlined"
                         sx={{ width: '450px' }}
-                        value={currNewProduct.productDescription || ''}
+                        value={currNewProduct.description || ''}
                         onChange={(event) =>
                           setCurrNewProduct({
                             ...currNewProduct,
-                            productDescription: event.target.value,
+                            description: event.target.value,
                           })
                         }
                       />
@@ -114,7 +114,7 @@ export default function ProductList() {
                       <button
                         className={styles.productCreate}
                         disabled={
-                          !currNewProduct.productDescription.length ||
+                          !currNewProduct.description.length ||
                           !currNewProduct.name.length
                         }
                         onClick={() => handleRequestCreateProduct()}

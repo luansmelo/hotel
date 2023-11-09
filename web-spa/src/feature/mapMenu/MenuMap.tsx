@@ -11,6 +11,7 @@ import { Fade, Modal } from '@mui/material'
 import SelectCategory from '@/components/selectCategory'
 import MenuProductTable from './MenuProductTable'
 import { categoryList, useMapContext } from '@/context/MapaContext'
+import { useBusinessContext } from '@/context/BusinessContext'
 
 const colorObj: Record<string, string> = {
   'Café da Manhã': '#FFD700',
@@ -26,10 +27,7 @@ export default function MenuMap() {
   const [isOpenCreateMenu, setisOpenCreateMenu] = useState(false)
   const { currentSelectCategory, setcurrentSelectCategory } = useMapContext()
 
-  console.log('currentSelectCategory', currentSelectCategory)
-  const businessSelected = useAtomValue(businessSelectedAtom)
-
-  const [productList, setProductList] = useState(businessSelected.products)
+  const { menuList } = useBusinessContext()
 
   const handleChangeCategory = (value: string) => {
     setcurrentSelectCategory(value)
@@ -38,7 +36,6 @@ export default function MenuMap() {
   const handleOnSave = (productSelected: IProductProps | undefined) => {
     if (!productSelected) return
 
-    setProductList([...productList, productSelected])
     setisOpenCreateMenu(false)
   }
 
@@ -68,7 +65,7 @@ export default function MenuMap() {
 
         <div>
           <MenuProductTable
-            productData={productList}
+            menuList={menuList}
             headColor={colorObj[currentSelectCategory] ?? ''}
             removeEye
           />
