@@ -3,7 +3,7 @@ export interface ProductDTO {
   description: string;
 }
 
-export interface AddInputToDish {
+export interface AddInputToProductDTO {
   productId: string;
   inputId: string;
 }

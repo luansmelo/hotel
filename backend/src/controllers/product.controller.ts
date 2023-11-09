@@ -1,15 +1,11 @@
 import { ProductServiceContract } from "../contracts/products-contract";
-import { AddInputToDish, ProductDTO } from "../dto/product.dto";
+import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
 
 export class ProductController {
   constructor(private readonly productService: ProductServiceContract) {}
 
   async create(input: ProductDTO) {
     return this.productService.create(input);
-  }
-
-  async getAll() {
-    return this.productService.getAll();
   }
 
   async getById(id: string) {
@@ -20,7 +16,11 @@ export class ProductController {
     return this.productService.deleteById(id);
   }
 
-  async addInputToProduct(input: AddInputToDish): Promise<void> {
+  async getPredefinedProduct(id: string) {
+    return this.productService.getPredefinedProduct(id);
+  }
+
+  async addInputToProduct(input: AddInputToProductDTO): Promise<void> {
     return this.productService.addInputToProduct(input);
   }
 }

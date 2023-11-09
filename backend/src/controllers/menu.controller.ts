@@ -1,5 +1,5 @@
 import { MenuServiceContract } from "../contracts/menu-contract";
-import { MenuDTO } from "../dto/menu.dto";
+import { AddProductToMenuDTO, MenuDTO } from "../dto/menu.dto";
 
 export class MenuController {
   constructor(private readonly menuService: MenuServiceContract) {}
@@ -10,5 +10,9 @@ export class MenuController {
 
   async getAll() {
     return this.menuService.getAll();
+  }
+
+  async addProductToMenu(input: AddProductToMenuDTO) {
+    return this.menuService.addProductToMenu(input);
   }
 }

@@ -21,13 +21,14 @@ router.post(
 );
 
 router.get(
-  "/all",
+  "/details/:id",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
+      const id = request.params.id;
       const controller = makeProductController();
-      const result = await controller.getAll();
-
-      return response.status(200).send({ productList: result });
+      const result = await controller.getPredefinedProduct(id);
+      console.log(result);
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }
@@ -35,7 +36,7 @@ router.get(
 );
 
 router.get(
-  "/details/:id",
+  ":id",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -57,6 +58,23 @@ router.delete(
       const controller = makeProductController();
       const result = await controller.deleteById(id);
       return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/add/:productId/input/:inputId",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const productId = request.params.productId;
+      const inputId = request.params.inputId;
+
+      const controller = makeProductController();
+      await controller.addInputToProduct({ productId, inputId });
+
+      return response.status(200).send({ message: "Insumo adicionado!" });
     } catch (error) {
       next(error);
     }

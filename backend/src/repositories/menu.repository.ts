@@ -1,5 +1,5 @@
 import prisma from "../database";
-import { MenuDTO } from "../dto/menu.dto";
+import { AddProductToMenuDTO, MenuDTO } from "../dto/menu.dto";
 import { MenuRepositoryContract } from "../contracts/menu-contract";
 
 export class MenuRepository implements MenuRepositoryContract {
@@ -12,5 +12,9 @@ export class MenuRepository implements MenuRepositoryContract {
   async getList(): Promise<any> {
     const db = await prisma.menu.findMany();
     return db;
+  }
+
+  addProductToMenu(input: AddProductToMenuDTO): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 }

@@ -1,6 +1,6 @@
 import prisma from "../database";
 import { ProductRepositoryContract } from "../contracts/products-contract";
-import { AddInputToDish, ProductDTO } from "../dto/product.dto";
+import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
 
 export class ProductRepository implements ProductRepositoryContract {
   async save(input: ProductDTO) {
@@ -15,10 +15,16 @@ export class ProductRepository implements ProductRepositoryContract {
     return db;
   }
 
-  async getAll() {
-    const db = await prisma.product.findMany();
+  async getPredefinedProduct(id: string) {
+    const db = await prisma.product.findUnique({
+      where: { id },
+      include: { inputs: { include: { input: true } } },
+    });
 
-    return db;
+    return {
+      ...db,
+      inputs: db?.inputs?.map((input) => input.input),
+    };
   }
 
   async updateById(id: string, input: ProductDTO) {
@@ -34,13 +40,10 @@ export class ProductRepository implements ProductRepositoryContract {
     });
   }
 
-  async addInputToProduct(input: AddInputToDish): Promise<void> {
-    await prisma.product.update({
-      where: { id: input.inputId },
+  async addInputToProduct(input: AddInputToProductDTO): Promise<void> {
+    await prisma.inputsOnProducts.create({
       data: {
-        // products: {
-        //   connect: { id: input.productId },
-        // },
+        ...input,
       },
     });
   }

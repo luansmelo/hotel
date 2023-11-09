@@ -2,7 +2,7 @@ import {
   ProductRepositoryContract,
   ProductServiceContract,
 } from "../contracts/products-contract";
-import { AddInputToDish, ProductDTO } from "../dto/product.dto";
+import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
 import { NotFoundError } from "../errors/httpErrors";
 
 export class ProductService implements ProductServiceContract {
@@ -26,11 +26,15 @@ export class ProductService implements ProductServiceContract {
     return product;
   }
 
+  async getPredefinedProduct(id: string) {
+    return this.productRepository.getPredefinedProduct(id);
+  }
+
   deleteById(id: string): Promise<void> {
     return this.productRepository.deleteById(id);
   }
 
-  async addInputToProduct(input: AddInputToDish): Promise<void> {
+  async addInputToProduct(input: AddInputToProductDTO): Promise<void> {
     return this.productRepository.addInputToProduct(input);
   }
 }

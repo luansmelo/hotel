@@ -1,17 +1,13 @@
 import { ProductDTO, AddInputToProductDTO } from "../dto/product.dto";
 
-export interface ProductRepositoryContract {
+export interface CategoryRepositoryContract {
   save(input: ProductDTO): Promise<void>;
   getById(id: string): Promise<any>;
   deleteById(id: string): Promise<void>;
-  addInputToProduct(input: AddInputToProductDTO): Promise<void>;
-  getPredefinedProduct(id: string): Promise<any>;
 }
 
-export interface ProductServiceContract {
+export interface CategoryServiceContract {
   create(input: ProductDTO): Promise<void>;
   getById(id: string): Promise<any>;
   deleteById(id: string): Promise<void>;
-  addInputToProduct(input: AddInputToProductDTO): Promise<void>;
-  getPredefinedProduct(id: string): Promise<any>;
 }
