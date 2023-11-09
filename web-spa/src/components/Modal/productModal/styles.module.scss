@@ -1,0 +1,40 @@
+.modalProductContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 24px;
+  border-radius: 0 0 12px 12px;
+
+  width: 800px;
+}
+
+.EditWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nameAndVariantWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.productCreate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 14px;
+  border-radius: 6px;
+  background: #84a59d;
+  gap: 4px;
+
+  color: white;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}

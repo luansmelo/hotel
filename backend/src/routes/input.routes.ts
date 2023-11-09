@@ -6,14 +6,16 @@ const router = Router();
 const slug = "/input";
 
 router.post(
-  "/",
+  "/create",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: InputDTO = request.body;
+      console.log(input);
       const controller = makeInputController();
+
       const result = await controller.create(input);
 
-      return response.status(201).send(result);
+      return response.status(201).send({ inputList: result });
     } catch (error) {
       next(error);
     }
@@ -21,17 +23,19 @@ router.post(
 );
 
 router.get(
-  "/",
+  "/all",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeInputController();
       const result = await controller.getAll();
 
-      return response.status(200).send(result);
+      return response.status(200).send({ inputList: result });
     } catch (error) {
       next(error);
     }
   }
 );
+
+router.get("");
 
 export { router, slug };

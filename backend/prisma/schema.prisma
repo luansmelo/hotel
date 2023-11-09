@@ -43,7 +43,7 @@ model Input {
   name            String
   code            String
   unitPrice       Float
-  quantityUnit    Int
+  group           String
   measurementUnit String
   grammage        Float
   products        InputsOnProducts[]

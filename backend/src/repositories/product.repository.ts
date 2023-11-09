@@ -16,31 +16,31 @@ export class ProductRepository implements ProductRepositoryContract {
   }
 
   async getAll() {
-    const db = await prisma.input.findMany();
+    const db = await prisma.product.findMany();
 
     return db;
   }
 
   async updateById(id: string, input: ProductDTO) {
-    await prisma.input.update({
+    await prisma.product.update({
       where: { id },
       data: input,
     });
   }
 
   async deleteById(id: string) {
-    await prisma.input.delete({
+    await prisma.product.delete({
       where: { id },
     });
   }
 
   async addInputToProduct(input: AddInputToDish): Promise<void> {
-    await prisma.input.update({
+    await prisma.product.update({
       where: { id: input.inputId },
       data: {
-        products: {
-          connect: { id: input.productId },
-        },
+        // products: {
+        //   connect: { id: input.productId },
+        // },
       },
     });
   }

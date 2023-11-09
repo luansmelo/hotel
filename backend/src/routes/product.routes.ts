@@ -6,7 +6,7 @@ const router = Router();
 const slug = "/product";
 
 router.post(
-  "/",
+  "/create",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: ProductDTO = request.body;
@@ -21,12 +21,41 @@ router.post(
 );
 
 router.get(
-  "/",
+  "/all",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeProductController();
       const result = await controller.getAll();
 
+      return response.status(200).send({ productList: result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/details/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const controller = makeProductController();
+      const result = await controller.getById(id);
+
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const controller = makeProductController();
+      const result = await controller.deleteById(id);
       return response.status(200).send(result);
     } catch (error) {
       next(error);

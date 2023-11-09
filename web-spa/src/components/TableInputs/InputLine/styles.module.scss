@@ -1,0 +1,97 @@
+.tr {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 16px;
+
+  td {
+    text-align: left;
+    color: #000000de;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.17px;
+    margin-right: 4px;
+  }
+
+  td:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+}
+
+.productActionView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #ffef92;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.productActionDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #d96262;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.productCreate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-block: 8px;
+  padding-inline: 14px;
+  border-radius: 6px;
+  background: #84a59d;
+  gap: 4px;
+  border: unset;
+
+  color: white;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: brightness(1);
+  }
+}
+
+.productCancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  background: #d96262;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}

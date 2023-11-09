@@ -12,6 +12,14 @@ export class ProductController {
     return this.productService.getAll();
   }
 
+  async getById(id: string) {
+    return this.productService.getById(id);
+  }
+
+  async deleteById(id: string) {
+    return this.productService.deleteById(id);
+  }
+
   async addInputToProduct(input: AddInputToDish): Promise<void> {
     return this.productService.addInputToProduct(input);
   }
