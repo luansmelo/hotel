@@ -57,12 +57,14 @@ export default function InputLine({
     <tr className={styles.tr}>
       {!isEnabledEdit ? (
         <>
-          <td>{inputValues.code}</td>
-          <td>{inputValues.name}</td>
-          <td>{inputValues.unitPrice.toFixed(0)}</td>
-          <td>{inputValues.measurementUnit}</td>
-          <td>{inputValues.group}</td>
-          <td>{inputValues.grammage}</td>
+          <div>
+            <td>{inputValues.code}</td>
+            <td>{inputValues.name}</td>
+            <td>{inputValues.unitPrice.toFixed(0)}</td>
+            <td>{inputValues.measurementUnit}</td>
+            <td>{inputValues.group}</td>
+            <td>{inputValues.grammage}</td>
+          </div>
           <td>
             <div
               className={styles.productActionView}
@@ -79,10 +81,10 @@ export default function InputLine({
           </td>
         </>
       ) : (
-        <div style={{ display: 'flex', margin: '2px 0px' }}>
-          <td>
+        <div className={styles.inputContainer}>
+          <div>
             <TextField
-              sx={{ width: '160px' }}
+              sx={{ width: '100px' }}
               size="small"
               id="codigo"
               label="Código"
@@ -92,10 +94,10 @@ export default function InputLine({
                 setInputValues({ ...inputValues, code: event.target.value })
               }
             />
-          </td>
-          <td>
+          </div>
+          <div>
             <TextField
-              sx={{ width: '160px' }}
+              sx={{ width: '100px' }}
               size="small"
               id="name"
               label="Nome"
@@ -105,10 +107,10 @@ export default function InputLine({
                 setInputValues({ ...inputValues, name: event.target.value })
               }
             />
-          </td>
-          <td>
+          </div>
+          <div>
             <TextField
-              sx={{ width: '160px' }}
+              sx={{ width: '100px' }}
               size="small"
               id="precoUnitario"
               label="Preço Unitário"
@@ -122,10 +124,10 @@ export default function InputLine({
                 })
               }
             />
-          </td>
-          <td>
+          </div>
+          <div>
             <TextField
-              sx={{ width: '160px' }}
+              sx={{ width: '100px' }}
               size="small"
               id="name"
               label="Unidade Medida"
@@ -138,10 +140,10 @@ export default function InputLine({
                 })
               }
             />
-          </td>
-          <td>
+          </div>
+          <div>
             <TextField
-              sx={{ width: '160px' }}
+              sx={{ width: '100px' }}
               size="small"
               id="grupo"
               label="Grupo"
@@ -155,7 +157,7 @@ export default function InputLine({
               }
             />
             <TextField
-              sx={{ width: '160px' }}
+              sx={{ width: '100px' }}
               size="small"
               id="gramatura"
               label="Gramatura"
@@ -168,7 +170,7 @@ export default function InputLine({
                 })
               }
             />
-          </td>
+          </div>
 
           {isNewProduct ? (
             <td>

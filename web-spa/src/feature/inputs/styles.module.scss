@@ -18,34 +18,29 @@
   margin-bottom: 16px;
 }
 
-
-
-/////
-/// 
-/// 
-/// 
 .table {
   width: 100%;
 }
 
 .thead {
-  display: grid;
-  grid-template-columns: 200px 1fr 1fr 1fr 140px;
-  gap: 8px;
   background: #f8bdbd;
-  padding: 16px;
-  justify-content: center;
-  
-
-  td {
-    text-align: left;
-    color: #000000de;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0.17px;
-  }
 }
+
+.thead tr {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.thead td {
+  text-align: left;
+  color: #000000de;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.17px;
+}
+
 
 .tbody {
   tr:nth-child(2n + 1) {
@@ -53,10 +48,5 @@
     background: rgba(252, 205, 205, 0.37);
   }
 
-  tr {
-    display: grid;
-    grid-template-columns: 200px 1fr 1fr 1fr 140px;
-    gap: 8px;
-    align-items: center;
-  }
+
 }

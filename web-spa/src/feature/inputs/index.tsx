@@ -44,12 +44,14 @@ export default function Inputs({ hideHeader }: ITableInputsProps) {
               <div className={styles.tableCreateContainer}>
                 <table className={styles.table}>
                   <thead className={styles.thead}>
-                    <td>Código</td>
-                    <td>Nome</td>
-                    <td>Preço Unitário</td>
-                    <td>Unidade Medida</td>
-                    <td>Grupo</td>
-                    <td>Gramatura</td>
+                    <tr>
+                      <td>Código</td>
+                      <td>Nome</td>
+                      <td>Preço Unitário</td>
+                      <td>Unidade Medida</td>
+                      <td>Grupo</td>
+                      <td>Gramatura</td>
+                    </tr>
                   </thead>
 
                   <tbody className={styles.tbody}>
@@ -71,12 +73,14 @@ export default function Inputs({ hideHeader }: ITableInputsProps) {
               <div className={styles.tableCreateContainer}>
                 <table className={styles.table}>
                   <thead className={styles.thead}>
-                    <td>Código</td>
-                    <td>Nome</td>
-                    <td>Preço Unitário</td>
-                    <td>Unidade Medida</td>
-                    <td>Grupo</td>
-                    <td>Gramatura</td>
+                    <tr>
+                      <td>Código</td>
+                      <td>Nome</td>
+                      <td>Preço Unitário</td>
+                      <td>Unidade Medida</td>
+                      <td>Grupo</td>
+                      <td>Gramatura</td>
+                    </tr>
                   </thead>
 
                   <tbody className={styles.tbody}>
