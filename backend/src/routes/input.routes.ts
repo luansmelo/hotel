@@ -23,7 +23,7 @@ router.post(
 );
 
 router.get(
-  "/all",
+  "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeInputController();

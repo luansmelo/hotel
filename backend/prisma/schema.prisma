@@ -65,7 +65,7 @@ model CategoryProductSchedule {
   id         String   @id @default(uuid())
   categoryId String
   productId  String
-  weekDay    Weekday  @default(MONDAY)
+  weekDay    Weekday  @default(SEGUNDA)
   category   Category @relation(fields: [categoryId], references: [id])
   product    Product  @relation(fields: [productId], references: [id])
 
@@ -82,11 +82,11 @@ model Category {
 }
 
 enum Weekday {
-  MONDAY
-  TUESDAY
-  WEDNESDAY
-  THURSDAY
-  FRIDAY
-  SATURDAY
-  SUNDAY
+  SEGUNDA
+  TERCA
+  QUARTA
+  QUINTA
+  SEXTA
+  SABADO
+  DOMINGO
 }

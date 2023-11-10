@@ -13,10 +13,10 @@ export class CategoryService implements CategoryServiceContract {
     await this.categoryRepository.save(input);
   }
   async getById(id: string): Promise<any> {
-    const category = this.categoryRepository.getById(id);
+    const category = await this.categoryRepository.getById(id);
 
     if (!category) {
-      throw new NotFoundError("Category not found");
+      throw new NotFoundError("Categoria não encontrada");
     }
 
     return category;
@@ -30,10 +30,14 @@ export class CategoryService implements CategoryServiceContract {
     await this.categoryRepository.deleteById(category.id);
   }
   async addProductToCategory(input: ProductToCategoryDTO): Promise<void> {
+    await this.getById(input.categoryId);
+
     await this.categoryRepository.addProductToCategory(input);
   }
 
   async deleteProduct(input: ProductToCategoryDTO): Promise<void> {
+    await this.getById(input.categoryId);
+
     await this.categoryRepository.deleteProduct(input);
   }
 }

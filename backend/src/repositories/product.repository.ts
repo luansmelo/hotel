@@ -15,6 +15,18 @@ export class ProductRepository implements ProductRepositoryContract {
     return db;
   }
 
+  async getByName(name: string) {
+    const db = await prisma.product.findUnique({ where: { name } });
+
+    return db;
+  }
+
+  async getAll() {
+    const db = await prisma.product.findMany();
+    
+    return db;
+  }
+
   async getPredefinedProduct(id: string) {
     const db = await prisma.product.findUnique({
       where: { id },

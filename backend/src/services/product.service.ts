@@ -9,6 +9,12 @@ export class ProductService implements ProductServiceContract {
   constructor(private readonly productRepository: ProductRepositoryContract) {}
 
   async create(input: ProductDTO) {
+    const product = await this.getByName(input.name);
+
+    if (product) {
+      throw new NotFoundError("Produto já cadastrado");
+    }
+
     return this.productRepository.save(input);
   }
 
@@ -20,6 +26,14 @@ export class ProductService implements ProductServiceContract {
     }
 
     return product;
+  }
+
+  async getByName(name: string): Promise<any> {
+    return this.productRepository.getByName(name);
+  }
+
+  async getAll(): Promise<any> {
+    return this.productRepository.getAll();
   }
 
   async getPredefinedProduct(id: string) {

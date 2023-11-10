@@ -10,7 +10,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
     });
   }
 
-  async getAll(): Promise<any> {
+  async getAll(): Promise<any | null> {
     const db = prisma.category.findMany({
       orderBy: {
         name: "asc",
@@ -19,8 +19,8 @@ export class CategoryRepository implements CategoryRepositoryContract {
 
     return db;
   }
-  async getById(id: string): Promise<any> {
-    const db = await prisma.category.findUnique({
+  async getById(id: string): Promise<any | null> {
+    return prisma.category.findUnique({
       where: { id },
       include: {
         categoryProductSchedule: {
@@ -30,15 +30,6 @@ export class CategoryRepository implements CategoryRepositoryContract {
         },
       },
     });
-
-    return {
-      id: db?.id,
-      name: db?.name,
-      products: db?.categoryProductSchedule?.map((item) => ({
-        weekDay: item?.weekDay as Weekdays,
-        product: item?.product,
-      })),
-    };
   }
 
   async deleteById(id: string): Promise<void> {
@@ -49,6 +40,19 @@ export class CategoryRepository implements CategoryRepositoryContract {
     await prisma.categoryProductSchedule.create({
       data: { ...input, weekDay: input.weekDay as Weekdays },
     });
+  }
+
+  async getProductInCategory(input: ProductToCategoryDTO): Promise<any> {
+    const db = await prisma.categoryProductSchedule.findUnique({
+      where: {
+        id: input.id,
+        categoryId: input.id,
+        productId: input.productId,
+        weekDay: input.weekDay as Weekdays,
+      },
+    });
+
+    return db;
   }
 
   async deleteProduct(input: ProductToCategoryDTO): Promise<void> {

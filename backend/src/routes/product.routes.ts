@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { ProductDTO } from "../dto/product.dto";
+import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
 import { makeProductController } from "../utils/factories/makeProductController";
 
 const router = Router();
@@ -14,6 +14,20 @@ router.post(
       const result = await controller.create(input);
 
       return response.status(201).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const controller = makeProductController();
+      const result = await controller.getAll();
+
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }
@@ -65,14 +79,13 @@ router.delete(
 );
 
 router.post(
-  "/add/:productId/input/:inputId",
+  "/add/input/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const productId = request.params.productId;
-      const inputId = request.params.inputId;
+      const input: AddInputToProductDTO = request.body;
 
       const controller = makeProductController();
-      await controller.addInputToProduct({ productId, inputId });
+      await controller.addInputToProduct(input);
 
       return response.status(200).send({ message: "Insumo adicionado!" });
     } catch (error) {

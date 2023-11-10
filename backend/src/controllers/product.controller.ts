@@ -12,6 +12,14 @@ export class ProductController {
     return this.productService.getById(id);
   }
 
+  async getByName(name: string) {
+    return this.productService.getByName(name);
+  }
+
+  async getAll() {
+    return this.productService.getAll();
+  }
+
   async deleteById(id: string) {
     return this.productService.deleteById(id);
   }
