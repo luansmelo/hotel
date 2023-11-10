@@ -5,7 +5,6 @@ export interface MenuDTO {
 export interface AddCategoryToMenuDTO {
   menuId: string;
   categoryId: string;
-  day: number;
 }
 
 export interface AddProductToMenuDTO {
@@ -13,6 +12,12 @@ export interface AddProductToMenuDTO {
   productId: string;
   day: number;
   category: number;
+}
+
+export interface MenuProductDTO {
+  menuId: string;
+  categoryId: string;
+  day: any;
 }
 
 export interface MenuProdutionMapDTO {

@@ -35,4 +35,19 @@ router.post(
   }
 );
 
+router.get(
+  "/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const controller = makeCategoryController();
+      const result = await controller.getById(id);
+
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { router, slug };

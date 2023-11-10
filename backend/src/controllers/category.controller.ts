@@ -11,4 +11,8 @@ export class CategoryController {
   async addProductToCategory(input: AddProductToCategoryDTO) {
     return this.categoryService.addProductToCategory(input);
   }
+
+  async getById(id: string) {
+    return this.categoryService.getById(id);
+  }
 }

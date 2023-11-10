@@ -53,9 +53,10 @@ model Input {
 }
 
 model Menu {
-  id      String  @id @default(uuid())
-  name    String
-  weekDay Weekday @default(MONDAY)
+  id   String @id @default(uuid())
+  name String
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
 
   @@map("menu")
 }
@@ -75,6 +76,7 @@ model Category {
   id                      String                    @id @default(uuid())
   name                    String
   categoryProductSchedule CategoryProductSchedule[]
+  menu                    Menu[]
 
   @@map("category")
 }

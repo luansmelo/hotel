@@ -1,10 +1,6 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { makeMenuController } from "../utils/factories/makeMenuController";
-import {
-  AddCategoryToMenuDTO,
-  AddProductToMenuDTO,
-  MenuDTO,
-} from "../dto/menu.dto";
+import { AddCategoryToMenuDTO, MenuDTO, MenuProductDTO } from "../dto/menu.dto";
 
 const router = Router();
 const slug = "/menu";
@@ -24,8 +20,60 @@ router.post(
   }
 );
 
+router.post(
+  "/add/category",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const input: AddCategoryToMenuDTO = request.body;
+
+      console.log("INPUT BODY", input);
+      const controller = makeMenuController();
+      await controller.addCategoryToMenu(input);
+
+      return response.status(200).send({ message: "Categoria adicionada" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.get(
-  "/all",
+  "/select/filter",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const input: MenuProductDTO = {
+        menuId: request.query.menu as string,
+        categoryId: request.query.category as string,
+        day: request.query.day as string,
+      };
+
+      const controller = makeMenuController();
+      const result = await controller.getSelectedMenu(input);
+
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const controller = makeMenuController();
+      const result = await controller.getById(id);
+
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeMenuController();
@@ -38,16 +86,17 @@ router.get(
   }
 );
 
-router.post(
-  "/add/category",
+router.delete(
+  "/",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddCategoryToMenuDTO = request.body;
-
+      const input: MenuProductDTO = request.body;
       const controller = makeMenuController();
-      await controller.addCategoryToMenu(input);
+      await controller.deleteProduct(input);
 
-      return response.status(200).send({ message: "Prato adicionado" });
+      return response
+        .status(200)
+        .send({ message: "Menu excluído com sucesso!" });
     } catch (error) {
       next(error);
     }

@@ -20,9 +20,25 @@ export class CategoryRepository implements CategoryRepositoryContract {
     return db;
   }
   async getById(id: string): Promise<any> {
-    const db = prisma.category.findUnique({ where: { id } });
+    const db = await prisma.category.findUnique({
+      where: { id },
+      include: {
+        categoryProductSchedule: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
 
-    return db;
+    return {
+      id: db?.id,
+      name: db?.name,
+      products: db?.categoryProductSchedule?.map((item) => ({
+        weekDay: item?.weekDay as Weekdays,
+        product: item?.product,
+      })),
+    };
   }
 
   async addProductToCategory(input: AddProductToCategoryDTO): Promise<void> {
