@@ -12,10 +12,6 @@ export class ProductService implements ProductServiceContract {
     return this.productRepository.save(input);
   }
 
-  async getAll() {
-    return this.productRepository.getAll();
-  }
-
   async getById(id: string): Promise<any> {
     const product = await this.productRepository.getById(id);
 

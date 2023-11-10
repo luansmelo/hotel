@@ -1,6 +1,10 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { makeMenuController } from "../utils/factories/makeMenuController";
-import { AddProductToMenuDTO, MenuDTO } from "../dto/menu.dto";
+import {
+  AddCategoryToMenuDTO,
+  AddProductToMenuDTO,
+  MenuDTO,
+} from "../dto/menu.dto";
 
 const router = Router();
 const slug = "/menu";
@@ -35,13 +39,13 @@ router.get(
 );
 
 router.post(
-  "/add/product",
+  "/add/category",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddProductToMenuDTO = request.body;
+      const input: AddCategoryToMenuDTO = request.body;
 
       const controller = makeMenuController();
-      await controller.addProductToMenu(input);
+      await controller.addCategoryToMenu(input);
 
       return response.status(200).send({ message: "Prato adicionado" });
     } catch (error) {

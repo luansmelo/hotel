@@ -3,7 +3,7 @@ import {
   MenuServiceContract,
 } from "../contracts/menu-contract";
 import { InputDTO } from "../dto/input.dto";
-import { AddProductToMenuDTO } from "../dto/menu.dto";
+import { AddCategoryToMenuDTO } from "../dto/menu.dto";
 
 export class MenuService implements MenuServiceContract {
   constructor(private readonly menuRepository: MenuRepositoryContract) {}
@@ -16,7 +16,7 @@ export class MenuService implements MenuServiceContract {
     return this.menuRepository.getList();
   }
 
-  addProductToMenu(input: AddProductToMenuDTO): Promise<void> {
-    return this.menuRepository.addProductToMenu(input);
+  addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void> {
+    return this.menuRepository.addCategoryToMenu(input);
   }
 }

@@ -20,11 +20,11 @@ model Account {
 }
 
 model Product {
-  id                          String                        @id @default(uuid())
-  name                        String
-  description                 String
-  inputs                      InputsOnProducts[]
-  menuCategoryProductSchedule MenuCategoryProductSchedule[]
+  id                      String                    @id @default(uuid())
+  name                    String
+  description             String
+  inputs                  InputsOnProducts[]
+  categoryProductSchedule CategoryProductSchedule[]
 
   @@map("product")
 }
@@ -53,31 +53,28 @@ model Input {
 }
 
 model Menu {
-  id                          String                        @id @default(uuid())
-  name                        String
-  weekDay                     Weekday                       @default(MONDAY)
-  menuCategoryProductSchedule MenuCategoryProductSchedule[]
+  id      String  @id @default(uuid())
+  name    String
+  weekDay Weekday @default(MONDAY)
 
   @@map("menu")
 }
 
-model MenuCategoryProductSchedule {
+model CategoryProductSchedule {
   id         String   @id @default(uuid())
-  menuId     String
   categoryId String
   productId  String
   weekDay    Weekday  @default(MONDAY)
-  menu       Menu     @relation(fields: [menuId], references: [id])
   category   Category @relation(fields: [categoryId], references: [id])
   product    Product  @relation(fields: [productId], references: [id])
 
-  @@map("categoryOnMenu")
+  @@map("categoryProductSchedule")
 }
 
 model Category {
-  id                          String                        @id @default(uuid())
-  name                        String
-  menuCategoryProductSchedule MenuCategoryProductSchedule[]
+  id                      String                    @id @default(uuid())
+  name                    String
+  categoryProductSchedule CategoryProductSchedule[]
 
   @@map("category")
 }
