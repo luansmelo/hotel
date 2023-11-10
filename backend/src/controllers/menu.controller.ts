@@ -28,8 +28,4 @@ export class MenuController {
   async getSelectedMenu(input: MenuProductDTO) {
     return this.menuService.getSelectedMenu(input);
   }
-
-  async deleteProduct(input: MenuProductDTO) {
-    return this.menuService.deleteProduct(input);
-  }
 }

@@ -36,11 +36,4 @@ export class MenuService implements MenuServiceContract {
   async getSelectedMenu(input: MenuProductDTO): Promise<any> {
     return this.menuRepository.getSelectedMenu(input);
   }
-
-  async deleteProduct(input: MenuProductDTO): Promise<void> {
-    console.log("INPUT", input);
-    // await this.getById(input.menu);
-
-    await this.menuRepository.deleteProduct(input);
-  }
 }

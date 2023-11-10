@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { AddProductToCategoryDTO, CategoryDTO } from "../dto/category.dto";
+import { ProductToCategoryDTO, CategoryDTO } from "../dto/category.dto";
 import { makeCategoryController } from "../utils/factories/makeCategoryController";
 
 const router = Router();
@@ -24,7 +24,7 @@ router.post(
   "/add/product",
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddProductToCategoryDTO = request.body;
+      const input: ProductToCategoryDTO = request.body;
       const controller = makeCategoryController();
       await controller.addProductToCategory(input);
 
@@ -44,6 +44,21 @@ router.get(
       const result = await controller.getById(id);
 
       return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/",
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const input: ProductToCategoryDTO = request.body;
+      const controller = makeCategoryController();
+      await controller.deleteProduct(input);
+
+      return response.status(200).send({ message: "Produto excluído!" });
     } catch (error) {
       next(error);
     }

@@ -21,7 +21,7 @@ model Account {
 
 model Product {
   id                      String                    @id @default(uuid())
-  name                    String
+  name                    String                    @unique
   description             String
   inputs                  InputsOnProducts[]
   categoryProductSchedule CategoryProductSchedule[]
@@ -53,8 +53,8 @@ model Input {
 }
 
 model Menu {
-  id   String @id @default(uuid())
-  name String
+  id         String    @id @default(uuid())
+  name       String
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 

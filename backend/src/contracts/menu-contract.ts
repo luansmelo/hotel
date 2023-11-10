@@ -6,7 +6,6 @@ export interface MenuRepositoryContract {
   getList(): Promise<any>;
   addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void>;
   getSelectedMenu(input: MenuProductDTO): Promise<any>;
-  deleteProduct(input: MenuProductDTO): Promise<void>;
 }
 
 export interface MenuServiceContract {
@@ -15,5 +14,4 @@ export interface MenuServiceContract {
   getAll(): Promise<any>;
   addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void>;
   getSelectedMenu(input: MenuProductDTO): Promise<any>;
-  deleteProduct(input: MenuProductDTO): Promise<void>;
 }

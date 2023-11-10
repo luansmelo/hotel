@@ -1,5 +1,5 @@
 import { CategoryServiceContract } from "../contracts/category-contract";
-import { AddProductToCategoryDTO, CategoryDTO } from "../dto/category.dto";
+import { ProductToCategoryDTO, CategoryDTO } from "../dto/category.dto";
 
 export class CategoryController {
   constructor(private readonly categoryService: CategoryServiceContract) {}
@@ -8,8 +8,12 @@ export class CategoryController {
     return this.categoryService.create(input);
   }
 
-  async addProductToCategory(input: AddProductToCategoryDTO) {
+  async addProductToCategory(input: ProductToCategoryDTO) {
     return this.categoryService.addProductToCategory(input);
+  }
+
+  async deleteProduct(input: ProductToCategoryDTO) {
+    return this.categoryService.deleteProduct(input);
   }
 
   async getById(id: string) {

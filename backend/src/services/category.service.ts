@@ -2,7 +2,7 @@ import {
   CategoryRepositoryContract,
   CategoryServiceContract,
 } from "../contracts/category-contract";
-import { CategoryDTO, AddProductToCategoryDTO } from "../dto/category.dto";
+import { CategoryDTO, ProductToCategoryDTO } from "../dto/category.dto";
 import { NotFoundError } from "../errors/httpErrors";
 
 export class CategoryService implements CategoryServiceContract {
@@ -29,7 +29,11 @@ export class CategoryService implements CategoryServiceContract {
 
     await this.categoryRepository.deleteById(category.id);
   }
-  async addProductToCategory(input: AddProductToCategoryDTO): Promise<void> {
+  async addProductToCategory(input: ProductToCategoryDTO): Promise<void> {
     await this.categoryRepository.addProductToCategory(input);
+  }
+
+  async deleteProduct(input: ProductToCategoryDTO): Promise<void> {
+    await this.categoryRepository.deleteProduct(input);
   }
 }

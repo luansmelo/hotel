@@ -86,21 +86,4 @@ router.get(
   }
 );
 
-router.delete(
-  "/",
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const input: MenuProductDTO = request.body;
-      const controller = makeMenuController();
-      await controller.deleteProduct(input);
-
-      return response
-        .status(200)
-        .send({ message: "Menu excluído com sucesso!" });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 export { router, slug };

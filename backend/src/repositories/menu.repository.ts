@@ -96,28 +96,6 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async deleteProduct(input: MenuProductDTO): Promise<void> {
-    await prisma.menu.update({
-      where: { id: input.menuId },
-      data: {
-        category: {
-          update: {
-            categoryProductSchedule: {
-              deleteMany: [
-                {
-                  weekDay: input.day ? { equals: input.day } : undefined,
-                  categoryId: input.categoryId
-                    ? { equals: input.categoryId }
-                    : undefined,
-                },
-              ],
-            },
-          },
-        },
-      },
-    });
-  }
-
   async getList(): Promise<any> {
     const db = await prisma.menu.findMany();
     return db;

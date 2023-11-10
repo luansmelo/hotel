@@ -16,7 +16,7 @@ export class ProductService implements ProductServiceContract {
     const product = await this.productRepository.getById(id);
 
     if (!product) {
-      throw new NotFoundError("Product not found");
+      throw new NotFoundError("Produto não encontrado");
     }
 
     return product;

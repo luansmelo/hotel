@@ -1,10 +1,9 @@
-import { Weekdays } from "../utils/enums/weekdays";
-
 export interface CategoryDTO {
   name: string;
 }
 
-export interface AddProductToCategoryDTO {
+export interface ProductToCategoryDTO {
+  id?: string;
   categoryId: string;
   productId: string;
   weekDay: string;
