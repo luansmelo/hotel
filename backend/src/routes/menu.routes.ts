@@ -1,15 +1,23 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { makeMenuController } from "../utils/factories/makeMenuController";
-import { AddCategoryToMenuDTO, MenuDTO, MenuProductDTO } from "../dto/menu.dto";
+import {
+  AddCategoryToMenuDTO,
+  AddCategoryToMenuSchema,
+  MenuDTO,
+  MenuProductDTO,
+  MenuSchema,
+} from "../dto/menu.dto";
+import { validate } from "../middleware/validate";
 
 const router = Router();
 const slug = "/menu";
 
 router.post(
   "/create",
+  validate(MenuSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: MenuDTO = request.body;
+      const input: MenuDTO = MenuSchema.parse(request.body);
       const controller = makeMenuController();
       const result = await controller.create(input);
 
@@ -22,11 +30,13 @@ router.post(
 
 router.post(
   "/add/category",
+  validate(AddCategoryToMenuSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddCategoryToMenuDTO = request.body;
+      const input: AddCategoryToMenuDTO = AddCategoryToMenuSchema.parse(
+        request.body
+      );
 
-      console.log("INPUT BODY", input);
       const controller = makeMenuController();
       await controller.addCategoryToMenu(input);
 

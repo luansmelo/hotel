@@ -1,16 +1,18 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { InputDTO } from "../dto/input.dto";
+import { InputDTO, InputSchema } from "../dto/input.dto";
 import { makeInputController } from "../utils/factories/makeInputController";
+import { validate } from "../middleware/validate";
 
 const router = Router();
 const slug = "/input";
 
 router.post(
   "/create",
+  validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: InputDTO = request.body;
-      console.log(input);
+      const input: InputDTO = InputSchema.parse(request.body);
+
       const controller = makeInputController();
 
       const result = await controller.create(input);
@@ -38,10 +40,11 @@ router.get(
 
 router.patch(
   "/:id",
+  validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const input: InputDTO = request.body;
+      const input: InputDTO = InputSchema.parse(request.body);
       const controller = makeInputController();
 
       await controller.updateById(id, input);
