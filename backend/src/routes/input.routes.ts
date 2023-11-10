@@ -15,7 +15,7 @@ router.post(
 
       const result = await controller.create(input);
 
-      return response.status(201).send({ inputList: result });
+      return response.status(201).send(result);
     } catch (error) {
       next(error);
     }

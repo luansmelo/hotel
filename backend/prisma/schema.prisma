@@ -30,11 +30,17 @@ model Product {
 }
 
 model InputsOnProducts {
-  id        String  @id @default(uuid())
-  inputId   String
-  productId String
-  input     Input   @relation(fields: [inputId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
+  id              String  @id @default(uuid())
+  productId       String
+  inputId         String
+  name            String
+  code            String  @default(uuid())
+  unitPrice       Float   
+  measurementUnit String
+  group           String
+  grammage        Float
+  input           Input   @relation(fields: [inputId], references: [id])
+  product         Product @relation(fields: [productId], references: [id])
 
   @@map("inputsOnProducts")
 }

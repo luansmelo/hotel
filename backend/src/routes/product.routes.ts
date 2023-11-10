@@ -1,15 +1,22 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
+import {
+  AddInputToProductDTO,
+  AddInputToProductSchema,
+  ProductDTO,
+  ProductSchema,
+} from "../dto/product.dto";
 import { makeProductController } from "../utils/factories/makeProductController";
+import { validate } from "../middleware/validate";
 
 const router = Router();
 const slug = "/product";
 
 router.post(
   "/create",
+  validate(ProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductDTO = request.body;
+      const input: ProductDTO = ProductSchema.parse(request.body);
       const controller = makeProductController();
       const result = await controller.create(input);
 
@@ -80,9 +87,12 @@ router.delete(
 
 router.post(
   "/add/input/",
+  validate(AddInputToProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddInputToProductDTO = request.body;
+      const input: AddInputToProductDTO = AddInputToProductSchema.parse(
+        request.body
+      );
 
       const controller = makeProductController();
       await controller.addInputToProduct(input);

@@ -4,7 +4,7 @@ import { InputDTO } from "../dto/input.dto";
 
 export class InputRepository implements InputRepositoryContract {
   async save(input: InputDTO) {
-    await prisma.input.create({
+    return prisma.input.create({
       data: input,
     });
   }

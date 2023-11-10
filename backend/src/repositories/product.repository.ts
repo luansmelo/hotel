@@ -23,20 +23,29 @@ export class ProductRepository implements ProductRepositoryContract {
 
   async getAll() {
     const db = await prisma.product.findMany();
-    
+
     return db;
   }
 
   async getPredefinedProduct(id: string) {
-    const db = await prisma.product.findUnique({
-      where: { id },
-      include: { inputs: { include: { input: true } } },
+    const db = await prisma.product.findFirst({
+      where: { id: id },
+      include: {
+        inputs: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+            unitPrice: true,
+            measurementUnit: true,
+            group: true,
+            grammage: true,
+          },
+        },
+      },
     });
 
-    return {
-      ...db,
-      inputs: db?.inputs?.map((input) => input.input),
-    };
+    return db;
   }
 
   async updateById(id: string, input: ProductDTO) {
@@ -53,10 +62,19 @@ export class ProductRepository implements ProductRepositoryContract {
   }
 
   async addInputToProduct(input: AddInputToProductDTO): Promise<void> {
-    await prisma.inputsOnProducts.create({
-      data: {
-        ...input,
-      },
+    const inputData = input.input.map((inputItem) => ({
+      productId: input.productId,
+      inputId: inputItem.id as string,
+      name: inputItem.name,
+      code: inputItem.code,
+      unitPrice: inputItem.unitPrice,
+      measurementUnit: inputItem.measurementUnit,
+      group: inputItem.group,
+      grammage: inputItem.grammage,
+    }));
+
+    await prisma.inputsOnProducts.createMany({
+      data: inputData,
     });
   }
 }

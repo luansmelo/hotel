@@ -1,7 +1,7 @@
 import { InputDTO } from "../dto/input.dto";
 
 export interface InputRepositoryContract {
-  save(input: InputDTO): Promise<void>;
+  save(input: InputDTO): Promise<any>;
   getAll(): Promise<any>;
   getById(id: string): Promise<any>;
   updateById(id: string, input: InputDTO): Promise<void>;
