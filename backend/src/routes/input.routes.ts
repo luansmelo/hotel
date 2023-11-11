@@ -31,7 +31,7 @@ router.get(
       const controller = makeInputController();
       const result = await controller.getAll();
 
-      return response.status(200).send({ inputList: result });
+      return response.status(200).send({ data: result });
     } catch (error) {
       next(error);
     }

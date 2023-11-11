@@ -1,10 +1,10 @@
 import { AccountServiceContract } from "../contracts/account-contract";
-import { AccountDTO } from "../dto/account.dto";
+import { AccountInputContract } from "../dto/account.dto";
 
 export class AccountController {
   constructor(private readonly inputService: AccountServiceContract) {}
 
-  async create(input: AccountDTO) {
+  async create(input: AccountInputContract) {
     return this.inputService.create(input);
   }
 

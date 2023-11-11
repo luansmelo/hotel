@@ -1,17 +1,18 @@
-import prisma from "../database";
 import { AddCategoryToMenuDTO, MenuDTO, MenuProductDTO } from "../dto/menu.dto";
 import { MenuRepositoryContract } from "../contracts/menu-contract";
 import { Weekdays } from "../utils/enums/weekdays";
+import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository implements MenuRepositoryContract {
+  constructor(private readonly db: PrismaClient) {}
   async save(input: MenuDTO): Promise<void> {
-    await prisma.menu.create({
+    await this.db.menu.create({
       data: input,
     });
   }
 
   async getById(id: string): Promise<any> {
-    const db = await prisma.menu.findUnique({
+    const db = await this.db.menu.findUnique({
       where: {
         id,
       },
@@ -40,7 +41,7 @@ export class MenuRepository implements MenuRepositoryContract {
   }
 
   async getSelectedMenu(input: MenuProductDTO): Promise<any> {
-    const menus = await prisma.menu.findMany({
+    const menus = await this.db.menu.findMany({
       where: {
         id: input.menuId ? { equals: input.menuId } : undefined,
         category: {
@@ -97,12 +98,12 @@ export class MenuRepository implements MenuRepositoryContract {
   }
 
   async getList(): Promise<any> {
-    const db = await prisma.menu.findMany();
+    const db = await this.db.menu.findMany();
     return db;
   }
 
   async addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void> {
-    await prisma.menu.update({
+    await this.db.menu.update({
       where: {
         id: input.menuId,
       },

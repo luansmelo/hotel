@@ -1,16 +1,20 @@
-import prisma from "../database";
 import { AccountRepositoryContract } from "../contracts/account-contract";
-import { AccountDTO } from "../dto/account.dto";
+import { AccountInputContract } from "../dto/account.dto";
+import { PrismaClient } from "@prisma/client";
 
 export class AccountRepository implements AccountRepositoryContract {
-  async save(input: AccountDTO) {
-    return prisma.account.create({
+  constructor(private readonly db: PrismaClient) {}
+  async save(input: AccountInputContract) {
+    return this.db.account.create({
       data: input,
+      select: {
+        id: true,
+      },
     });
   }
 
-  async getByEmail(email: string): Promise<AccountDTO | null> {
-    const db = await prisma.account.findUnique({ where: { email } });
+  async getByEmail(email: string): Promise<AccountInputContract> {
+    const db = await this.db.account.findUnique({ where: { email } });
 
     return db;
   }

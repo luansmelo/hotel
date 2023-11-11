@@ -68,6 +68,7 @@ router.delete(
       const input: ProductToCategoryDTO = ProductToCategorySchema.parse(
         request.body
       );
+
       const controller = makeCategoryController();
       await controller.deleteProduct(input);
 

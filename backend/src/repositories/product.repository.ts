@@ -1,34 +1,32 @@
-import prisma from "../database";
 import { ProductRepositoryContract } from "../contracts/products-contract";
 import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
+import { PrismaClient } from "@prisma/client";
 
 export class ProductRepository implements ProductRepositoryContract {
+  constructor(private readonly db: PrismaClient) {}
   async save(input: ProductDTO) {
-    await prisma.product.create({
+    await this.db.product.create({
       data: input,
     });
   }
 
   async getById(id: string) {
-    const db = await prisma.product.findUnique({ where: { id } });
-
+    const db = await this.db.product.findUnique({ where: { id } });
     return db;
   }
 
   async getByName(name: string) {
-    const db = await prisma.product.findUnique({ where: { name } });
-
+    const db = await this.db.product.findUnique({ where: { name } });
     return db;
   }
 
   async getAll() {
-    const db = await prisma.product.findMany();
-
+    const db = await this.db.product.findMany();
     return db;
   }
 
   async getPredefinedProduct(id: string) {
-    const db = await prisma.product.findFirst({
+    const db = await this.db.product.findFirst({
       where: { id: id },
       include: {
         inputs: {
@@ -44,19 +42,18 @@ export class ProductRepository implements ProductRepositoryContract {
         },
       },
     });
-
     return db;
   }
 
   async updateById(id: string, input: ProductDTO) {
-    await prisma.product.update({
+    await this.db.product.update({
       where: { id },
       data: input,
     });
   }
 
   async deleteById(id: string) {
-    await prisma.product.delete({
+    await this.db.product.delete({
       where: { id },
     });
   }
@@ -73,7 +70,7 @@ export class ProductRepository implements ProductRepositoryContract {
       grammage: inputItem.grammage,
     }));
 
-    await prisma.inputsOnProducts.createMany({
+    await this.db.inputsOnProducts.createMany({
       data: inputData,
     });
   }

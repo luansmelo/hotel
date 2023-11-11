@@ -1,6 +1,13 @@
 import zod from "zod";
 
-export interface AccountDTO {
+export interface AccountContract {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface AccountInputContract {
   name: string;
   email: string;
   password: string;

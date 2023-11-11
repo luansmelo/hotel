@@ -11,10 +11,12 @@ datasource db {
 }
 
 model Account {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id         String @id @default(uuid())
+  name       String
+  email      String @unique
+  password   String
+  created_at String
+  updated_at String
 
   @@map("account")
 }
@@ -25,6 +27,8 @@ model Product {
   description             String
   inputs                  InputsOnProducts[]
   categoryProductSchedule CategoryProductSchedule[]
+  created_at              String
+  updated_at              String
 
   @@map("product")
 }
@@ -35,12 +39,14 @@ model InputsOnProducts {
   inputId         String
   name            String
   code            String  @default(uuid())
-  unitPrice       Float   
+  unitPrice       Float
   measurementUnit String
   group           String
   grammage        Float
   input           Input   @relation(fields: [inputId], references: [id])
   product         Product @relation(fields: [productId], references: [id])
+  created_at      String
+  updated_at      String
 
   @@map("inputsOnProducts")
 }
@@ -54,6 +60,8 @@ model Input {
   measurementUnit String
   grammage        Float
   products        InputsOnProducts[]
+  created_at      String
+  updated_at      String
 
   @@map("input")
 }
@@ -63,6 +71,8 @@ model Menu {
   name       String
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
+  created_at String
+  updated_at String
 
   @@map("menu")
 }
@@ -74,6 +84,8 @@ model CategoryProductSchedule {
   weekDay    Weekday  @default(SEGUNDA)
   category   Category @relation(fields: [categoryId], references: [id])
   product    Product  @relation(fields: [productId], references: [id])
+  created_at String
+  updated_at String
 
   @@map("categoryProductSchedule")
 }
@@ -83,6 +95,8 @@ model Category {
   name                    String
   categoryProductSchedule CategoryProductSchedule[]
   menu                    Menu[]
+  created_at              String
+  updated_at              String
 
   @@map("category")
 }

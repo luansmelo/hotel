@@ -19,6 +19,7 @@ export const CategorySchema = zod.object({
 });
 
 export const ProductToCategorySchema = zod.object({
+  id: zod.string().optional(),
   categoryId: zod.string({
     required_error: "O id da categoria é obrigatório",
     invalid_type_error: "O id da categoria deve ser uma string",

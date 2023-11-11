@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { AccountDTO, AccountSchema } from "../dto/account.dto";
+import { AccountInputContract, AccountSchema } from "../dto/account.dto";
 import { makeAccountController } from "../utils/factories/makeAccountController";
 import { validate } from "../middleware/validate";
 
@@ -11,7 +11,7 @@ router.post(
   validate(AccountSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AccountDTO = AccountSchema.parse(request.body);
+      const input: AccountInputContract = AccountSchema.parse(request.body);
       const controller = makeAccountController();
       const result = await controller.create(input);
 
