@@ -1,10 +1,10 @@
 import { ProductServiceContract } from "../utils/contracts/products-contract";
-import { AddInputToProduct, ProductRegister } from "../dto/product.dto";
+import { AddInputToProduct, ProductInput } from "../dto/product.dto";
 
 export class ProductController {
   constructor(private readonly repository: ProductServiceContract) {}
 
-  async create(input: ProductRegister) {
+  async create(input: ProductInput) {
     return this.repository.create(input);
   }
 

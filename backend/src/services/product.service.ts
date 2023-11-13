@@ -2,14 +2,14 @@ import {
   ProductRepositoryContract,
   ProductServiceContract,
 } from "../utils/contracts/products-contract";
-import { AddInputToProduct, ProductRegister } from "../dto/product.dto";
+import { AddInputToProduct, ProductInput } from "../dto/product.dto";
 import { NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
 
 export class ProductService implements ProductServiceContract {
   constructor(private readonly repository: ProductRepositoryContract) {}
 
-  async create(input: ProductRegister) {
+  async create(input: ProductInput) {
     const product = await this.getByName(input.name);
 
     if (product) {

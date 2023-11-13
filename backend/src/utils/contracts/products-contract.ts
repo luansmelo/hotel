@@ -2,7 +2,7 @@ import {
   AddInputToProduct,
   AddInputToProductData,
   ProductContract,
-  ProductRegister,
+  ProductInput,
 } from "../../dto/product.dto";
 
 export interface ProductRepositoryContract {
@@ -16,7 +16,7 @@ export interface ProductRepositoryContract {
 }
 
 export interface ProductServiceContract {
-  create(input: ProductRegister): Promise<void>;
+  create(input: ProductInput): Promise<void>;
   getById(id: string): Promise<ProductContract | null>;
   getByName(name: string): Promise<ProductContract | null>;
   getAll(): Promise<ProductContract[] | null>;

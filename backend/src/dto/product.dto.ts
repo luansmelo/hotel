@@ -8,7 +8,7 @@ export interface ProductContract {
   updated_at: string;
 }
 
-export interface ProductRegister {
+export interface ProductInput {
   name: string;
   description: string;
 }
