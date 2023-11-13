@@ -1,4 +1,4 @@
-import { CategoryRepositoryContract } from "../contracts/category-contract";
+import { CategoryRepositoryContract } from "../utils/contracts/category-contract";
 import { ProductToCategoryDTO, CategoryDTO } from "../dto/category.dto";
 import { Weekdays } from "../utils/enums/weekdays";
 import { PrismaClient } from "@prisma/client";

@@ -4,8 +4,8 @@ import { InputRepository } from "../../repositories/input.repository";
 import { InputService } from "../../services/input.service";
 
 export function makeInputController(): InputController {
-  const inputRepository = new InputRepository(prisma);
-  const inputService = new InputService(inputRepository);
-  const inputController = new InputController(inputService);
-  return inputController;
+  const repository = new InputRepository(prisma);
+  const service = new InputService(repository);
+  const controller = new InputController(service);
+  return controller;
 }

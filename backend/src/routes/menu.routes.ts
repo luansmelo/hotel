@@ -8,16 +8,18 @@ import {
   MenuSchema,
 } from "../dto/menu.dto";
 import { validate } from "../middleware/validate";
+import { authenticated } from "../middleware/authenticated";
 
 const router = Router();
 const slug = "/menu";
 
 router.post(
   "/create",
+  authenticated,
   validate(MenuSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: MenuDTO = MenuSchema.parse(request.body);
+      const input: MenuDTO = MenuSchema.parse(request.body) as MenuDTO;
       const controller = makeMenuController();
       const result = await controller.create(input);
 
@@ -35,7 +37,7 @@ router.post(
     try {
       const input: AddCategoryToMenuDTO = AddCategoryToMenuSchema.parse(
         request.body
-      );
+      ) as AddCategoryToMenuDTO;
 
       const controller = makeMenuController();
       await controller.addCategoryToMenu(input);

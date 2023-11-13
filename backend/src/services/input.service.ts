@@ -1,23 +1,23 @@
 import {
   InputRepositoryContract,
   InputServiceContract,
-} from "../contracts/input-contract";
-import { InputDTO } from "../dto/input.dto";
-import { ConflictError, NotFoundError } from "../errors/httpErrors";
+} from "../utils/contracts/input-contract";
+import { InputRegister } from "../dto/input.dto";
+import { NotFoundError } from "../errors/httpErrors";
 
 export class InputService implements InputServiceContract {
-  constructor(private readonly inputRepository: InputRepositoryContract) {}
+  constructor(private readonly repository: InputRepositoryContract) {}
 
-  async create(input: InputDTO) {
-    return this.inputRepository.save(input);
+  async create(input: InputRegister) {
+    return this.repository.save(input);
   }
 
   async getAll() {
-    return this.inputRepository.getAll();
+    return this.repository.getAll();
   }
 
   async getById(id: string) {
-    const input = await this.inputRepository.getById(id);
+    const input = await this.repository.getById(id);
 
     if (!input) {
       throw new NotFoundError("Insumo não encontrado");
@@ -26,15 +26,15 @@ export class InputService implements InputServiceContract {
     return input;
   }
 
-  async updateById(id: string, input: InputDTO) {
+  async updateById(id: string, input: InputRegister) {
     const inputExists = await this.getById(id);
 
-    return this.inputRepository.updateById(inputExists.id, input);
+    return this.repository.updateById(inputExists.id, input);
   }
 
   async deleteById(id: string) {
     const input = await this.getById(id);
 
-    return this.inputRepository.deleteById(input.id);
+    return this.repository.deleteById(input.id);
   }
 }

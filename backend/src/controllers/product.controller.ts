@@ -1,34 +1,34 @@
-import { ProductServiceContract } from "../contracts/products-contract";
-import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
+import { ProductServiceContract } from "../utils/contracts/products-contract";
+import { AddInputToProduct, ProductRegister } from "../dto/product.dto";
 
 export class ProductController {
-  constructor(private readonly productService: ProductServiceContract) {}
+  constructor(private readonly repository: ProductServiceContract) {}
 
-  async create(input: ProductDTO) {
-    return this.productService.create(input);
+  async create(input: ProductRegister) {
+    return this.repository.create(input);
   }
 
   async getById(id: string) {
-    return this.productService.getById(id);
+    return this.repository.getById(id);
   }
 
   async getByName(name: string) {
-    return this.productService.getByName(name);
+    return this.repository.getByName(name);
   }
 
   async getAll() {
-    return this.productService.getAll();
+    return this.repository.getAll();
   }
 
   async deleteById(id: string) {
-    return this.productService.deleteById(id);
+    return this.repository.deleteById(id);
   }
 
   async getPredefinedProduct(id: string) {
-    return this.productService.getPredefinedProduct(id);
+    return this.repository.getPredefinedProduct(id);
   }
 
-  async addInputToProduct(input: AddInputToProductDTO): Promise<void> {
-    return this.productService.addInputToProduct(input);
+  async addInputToProduct(input: AddInputToProduct): Promise<void> {
+    return this.repository.addInputToProduct(input);
   }
 }

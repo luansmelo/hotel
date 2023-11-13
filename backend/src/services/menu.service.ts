@@ -1,20 +1,31 @@
 import {
   MenuRepositoryContract,
   MenuServiceContract,
-} from "../contracts/menu-contract";
-import { InputDTO } from "../dto/input.dto";
-import { AddCategoryToMenuDTO, MenuProductDTO } from "../dto/menu.dto";
+} from "../utils/contracts/menu-contract";
+import {
+  AddCategoryToMenuDTO,
+  MenuData,
+  MenuProductDTO,
+} from "../dto/menu.dto";
 import { NotFoundError } from "../errors/httpErrors";
+import { uuid } from "uuidv4";
 
 export class MenuService implements MenuServiceContract {
-  constructor(private readonly menuRepository: MenuRepositoryContract) {}
+  constructor(private readonly repository: MenuRepositoryContract) {}
 
-  async create(input: InputDTO) {
-    return this.menuRepository.save(input);
+  async create(input: MenuData) {
+    const data = {
+      id: uuid(),
+      name: input.name,
+      created_at: new Date().toDateString(),
+      updated_at: new Date().toDateString(),
+    };
+
+    return this.repository.save(data);
   }
 
   async getById(id: string): Promise<any> {
-    const menu = await this.menuRepository.getById(id);
+    const menu = await this.repository.getById(id);
 
     if (!menu) {
       throw new NotFoundError("Cardápio não encontrado");
@@ -24,16 +35,16 @@ export class MenuService implements MenuServiceContract {
   }
 
   async getAll() {
-    return this.menuRepository.getList();
+    return this.repository.getList();
   }
 
   async addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void> {
     await this.getById(input.menuId);
 
-    return this.menuRepository.addCategoryToMenu(input);
+    return this.repository.addCategoryToMenu(input);
   }
 
   async getSelectedMenu(input: MenuProductDTO): Promise<any> {
-    return this.menuRepository.getSelectedMenu(input);
+    return this.repository.getSelectedMenu(input);
   }
 }

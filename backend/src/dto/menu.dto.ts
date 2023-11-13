@@ -1,5 +1,12 @@
 import zod from "zod";
 
+export interface MenuData {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface MenuDTO {
   name: string;
 }

@@ -1,4 +1,4 @@
-import { InputRepositoryContract } from "../contracts/input-contract";
+import { InputRepositoryContract } from "../utils/contracts/input-contract";
 import { InputDTO } from "../dto/input.dto";
 import { PrismaClient } from "@prisma/client";
 

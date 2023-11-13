@@ -1,10 +1,14 @@
-import { ProductRepositoryContract } from "../contracts/products-contract";
-import { AddInputToProductDTO, ProductDTO } from "../dto/product.dto";
+import { ProductRepositoryContract } from "../utils/contracts/products-contract";
+import {
+  AddInputToProductData,
+  ProductRegister,
+  ProductData,
+} from "../dto/product.dto";
 import { PrismaClient } from "@prisma/client";
 
 export class ProductRepository implements ProductRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
-  async save(input: ProductDTO) {
+  async save(input: ProductData) {
     await this.db.product.create({
       data: input,
     });
@@ -45,7 +49,7 @@ export class ProductRepository implements ProductRepositoryContract {
     return db;
   }
 
-  async updateById(id: string, input: ProductDTO) {
+  async updateById(id: string, input: ProductRegister) {
     await this.db.product.update({
       where: { id },
       data: input,
@@ -58,8 +62,9 @@ export class ProductRepository implements ProductRepositoryContract {
     });
   }
 
-  async addInputToProduct(input: AddInputToProductDTO): Promise<void> {
+  async addInputToProduct(input: AddInputToProductData): Promise<void> {
     const inputData = input.input.map((inputItem) => ({
+      id: inputItem.id,
       productId: input.productId,
       inputId: inputItem.id as string,
       name: inputItem.name,
@@ -68,6 +73,8 @@ export class ProductRepository implements ProductRepositoryContract {
       measurementUnit: inputItem.measurementUnit,
       group: inputItem.group,
       grammage: inputItem.grammage,
+      created_at: inputItem.created_at,
+      updated_at: inputItem.updated_at,
     }));
 
     await this.db.inputsOnProducts.createMany({

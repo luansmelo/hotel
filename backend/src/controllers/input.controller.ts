@@ -1,4 +1,4 @@
-import { InputServiceContract } from "../contracts/input-contract";
+import { InputServiceContract } from "../utils/contracts/input-contract";
 import { InputDTO } from "../dto/input.dto";
 
 export class InputController {

@@ -1,11 +1,16 @@
-import { AddCategoryToMenuDTO, MenuDTO, MenuProductDTO } from "../dto/menu.dto";
-import { MenuRepositoryContract } from "../contracts/menu-contract";
+import {
+  AddCategoryToMenuDTO,
+  MenuDTO,
+  MenuData,
+  MenuProductDTO,
+} from "../dto/menu.dto";
+import { MenuRepositoryContract } from "../utils/contracts/menu-contract";
 import { Weekdays } from "../utils/enums/weekdays";
 import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository implements MenuRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
-  async save(input: MenuDTO): Promise<void> {
+  async save(input: MenuData): Promise<void> {
     await this.db.menu.create({
       data: input,
     });

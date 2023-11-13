@@ -4,8 +4,8 @@ import { MenuRepository } from "../../repositories/menu.repository";
 import { MenuService } from "../../services/menu.service";
 
 export function makeMenuController(): MenuController {
-  const menuRepository = new MenuRepository(prisma);
-  const menuService = new MenuService(menuRepository);
-  const menuController = new MenuController(menuService);
-  return menuController;
+  const repository = new MenuRepository(prisma);
+  const service = new MenuService(repository);
+  const controller = new MenuController(service);
+  return controller;
 }

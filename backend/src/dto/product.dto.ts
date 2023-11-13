@@ -1,34 +1,25 @@
-import zod from "zod";
-import { InputDTO, InputSchema } from "./input.dto";
+import { InputData } from "./input.dto";
 
-export interface ProductDTO {
+export interface ProductData {
+  id: string;
+  name: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProductRegister {
   name: string;
   description: string;
 }
 
-export interface AddInputToProductDTO {
+export interface AddInputToProductData {
+  id: string;
   productId: string;
-  input: InputDTO[];
+  input: InputData[];
 }
 
-export const ProductSchema = zod.object({
-  name: zod
-    .string({
-      required_error: "O nome é obrigatório",
-    })
-    .min(3, "O nome deve terpelo menos 3 caracteres"),
-  description: zod
-    .string({
-      required_error: "A descrição é obrigatória",
-    })
-    .min(3, "A descrição deve ter pelo menos 3 caracteres"),
-});
-
-export const AddInputToProductSchema = zod.object({
-  productId: zod
-    .string({
-      invalid_type_error: "O id do produto é obrigatório",
-    })
-    .uuid(),
-  input: zod.array(InputSchema),
-});
+export interface AddInputToProduct {
+  productId: string;
+  input: InputData[];
+}

@@ -1,4 +1,4 @@
-import { MenuServiceContract } from "../contracts/menu-contract";
+import { MenuServiceContract } from "../utils/contracts/menu-contract";
 import {
   AddCategoryToMenuDTO,
   AddProductToMenuDTO,

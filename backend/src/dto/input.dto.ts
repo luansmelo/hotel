@@ -1,7 +1,18 @@
 import zod from "zod";
 
-export interface InputDTO {
-  id?: string;
+export interface InputData {
+  id: string;
+  name: string;
+  code: string;
+  unitPrice: number;
+  measurementUnit: string;
+  group: string;
+  grammage: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InputRegister {
   name: string;
   code: string;
   unitPrice: number;

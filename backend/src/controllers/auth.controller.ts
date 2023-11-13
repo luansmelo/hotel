@@ -1,4 +1,4 @@
-import { AuthServiceContract } from "../contracts/auth-contract";
+import { AuthServiceContract } from "../utils/contracts/auth-contract";
 import { AuthDTO } from "../dto/auth.dto";
 
 export class AuthController {

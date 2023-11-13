@@ -1,4 +1,4 @@
-import { CategoryServiceContract } from "../contracts/category-contract";
+import { CategoryServiceContract } from "../utils/contracts/category-contract";
 import { ProductToCategoryDTO, CategoryDTO } from "../dto/category.dto";
 
 export class CategoryController {
