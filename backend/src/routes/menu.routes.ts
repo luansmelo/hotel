@@ -1,14 +1,15 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { makeMenuController } from "../utils/factories/makeMenuController";
 import {
-  AddCategoryToMenuDTO,
+  AddCategoryToMenuInput,
   AddCategoryToMenuSchema,
-  MenuDTO,
-  MenuProductDTO,
+  MenuInput,
+  MenuProductInput,
   MenuSchema,
 } from "../dto/menu.dto";
 import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
+import { Weekdays } from "../utils/enums/weekdays";
 
 const router = Router();
 const slug = "/menu";
@@ -19,7 +20,7 @@ router.post(
   validate(MenuSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: MenuDTO = MenuSchema.parse(request.body) as MenuDTO;
+      const input: MenuInput = MenuSchema.parse(request.body) as MenuInput;
       const controller = makeMenuController();
       const result = await controller.create(input);
 
@@ -32,12 +33,13 @@ router.post(
 
 router.post(
   "/add/category",
+  authenticated,
   validate(AddCategoryToMenuSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddCategoryToMenuDTO = AddCategoryToMenuSchema.parse(
+      const input: AddCategoryToMenuInput = AddCategoryToMenuSchema.parse(
         request.body
-      ) as AddCategoryToMenuDTO;
+      ) as AddCategoryToMenuInput;
 
       const controller = makeMenuController();
       await controller.addCategoryToMenu(input);
@@ -51,12 +53,13 @@ router.post(
 
 router.get(
   "/select/filter",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: MenuProductDTO = {
+      const input: MenuProductInput = {
         menuId: request.query.menu as string,
         categoryId: request.query.category as string,
-        day: request.query.day as string,
+        day: request.query.day as Weekdays,
       };
 
       const controller = makeMenuController();
@@ -71,6 +74,7 @@ router.get(
 
 router.get(
   "/:id",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -86,6 +90,7 @@ router.get(
 
 router.get(
   "/",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeMenuController();

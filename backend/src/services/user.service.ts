@@ -3,7 +3,7 @@ import {
   UserServiceContract,
 } from "../utils/contracts/user-contract";
 import bcrypt from "bcrypt";
-import { UserLoginData, UserRegistrationData } from "../dto/user.dto";
+import { UserLoginInput, UserContractInput } from "../dto/user.dto";
 import {
   ConflictError,
   NotFoundError,
@@ -15,7 +15,7 @@ import JwtUtils from "../utils/jwtUtils";
 export class UserService implements UserServiceContract {
   constructor(private readonly repository: UserRepositoryContract) {}
 
-  async signup(input: UserRegistrationData) {
+  async signup(input: UserContractInput) {
     const user = await this.repository.getByEmail(input.email);
 
     if (user) throw new ConflictError("user already exists");
@@ -31,14 +31,14 @@ export class UserService implements UserServiceContract {
       updated_at: new Date().toDateString(),
     };
 
-    await this.repository.create(data);
+    await this.repository.save(data);
 
     return {
       access_token: JwtUtils.generateToken(data.id),
     };
   }
 
-  async signin(input: UserLoginData) {
+  async signin(input: UserLoginInput) {
     const user = await this.repository.getByEmail(input.email);
 
     if (!user) throw new NotFoundError("Conta não encontrada");

@@ -1,32 +1,43 @@
 import zod from "zod";
+import { Weekdays } from "../utils/enums/weekdays";
 
-export interface MenuData {
+export interface MenuInput {
+  name: string;
+}
+
+export interface MenuContract {
   id: string;
   name: string;
   created_at: string;
   updated_at: string;
 }
 
-export interface MenuDTO {
-  name: string;
-}
-
-export interface AddCategoryToMenuDTO {
+export interface AddCategoryToMenuInput {
   menuId: string;
   categoryId: string;
 }
 
-export interface AddProductToMenuDTO {
-  menuId: string;
-  productId: string;
-  day: number;
-  category: number;
-}
-
-export interface MenuProductDTO {
+export interface AddCategoryToMenuContract {
+  id: string;
   menuId: string;
   categoryId: string;
-  day: any;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MenuProductInput {
+  menuId: string;
+  categoryId: string;
+  day: Weekdays;
+}
+
+export interface MenuProductContract {
+  id: string;
+  menuId: string;
+  categoryId: string;
+  day: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface MenuProdutionMapDTO {

@@ -1,13 +1,16 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { InputRegister, InputSchema } from "../dto/input.dto";
+import { InputRegister } from "../dto/input.dto";
 import { makeInputController } from "../utils/factories/makeInputController";
 import { validate } from "../middleware/validate";
+import { InputSchema } from "../validation/input.validation";
+import { authenticated } from "../middleware/authenticated";
 
 const router = Router();
 const slug = "/input";
 
 router.post(
   "/create",
+  authenticated,
   validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -28,6 +31,7 @@ router.post(
 
 router.get(
   "/",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeInputController();
@@ -42,6 +46,7 @@ router.get(
 
 router.patch(
   "/:id",
+  authenticated,
   validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -62,6 +67,7 @@ router.patch(
 
 router.delete(
   "/:id",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;

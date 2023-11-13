@@ -3,9 +3,10 @@ import {
   MenuServiceContract,
 } from "../utils/contracts/menu-contract";
 import {
-  AddCategoryToMenuDTO,
-  MenuData,
-  MenuProductDTO,
+  AddCategoryToMenuInput,
+  MenuInput,
+  MenuProductContract,
+  MenuProductInput,
 } from "../dto/menu.dto";
 import { NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
@@ -13,7 +14,7 @@ import { uuid } from "uuidv4";
 export class MenuService implements MenuServiceContract {
   constructor(private readonly repository: MenuRepositoryContract) {}
 
-  async create(input: MenuData) {
+  async create(input: MenuInput) {
     const data = {
       id: uuid(),
       name: input.name,
@@ -38,13 +39,20 @@ export class MenuService implements MenuServiceContract {
     return this.repository.getList();
   }
 
-  async addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void> {
+  async addCategoryToMenu(input: AddCategoryToMenuInput): Promise<void> {
     await this.getById(input.menuId);
 
-    return this.repository.addCategoryToMenu(input);
+    const data = {
+      id: uuid(),
+      ...input,
+      created_at: new Date().toDateString(),
+      updated_at: new Date().toDateString(),
+    };
+
+    return this.repository.addCategoryToMenu(data);
   }
 
-  async getSelectedMenu(input: MenuProductDTO): Promise<any> {
+  async getSelectedMenu(input: MenuProductInput) {
     return this.repository.getSelectedMenu(input);
   }
 }

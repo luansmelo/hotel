@@ -1,14 +1,14 @@
 import { UserServiceContract } from "../utils/contracts/user-contract";
-import { UserLoginData, UserRegistrationData } from "../dto/user.dto";
+import { UserLoginInput, UserContractInput } from "../dto/user.dto";
 
 export class UserController {
   constructor(private readonly inputService: UserServiceContract) {}
 
-  async signup(input: UserRegistrationData) {
+  async signup(input: UserContractInput) {
     return this.inputService.signup(input);
   }
 
-  async signin(input: UserLoginData) {
+  async signin(input: UserLoginInput) {
     return this.inputService.signin(input);
   }
 }

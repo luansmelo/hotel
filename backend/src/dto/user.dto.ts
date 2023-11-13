@@ -7,13 +7,13 @@ export interface UserData {
   updated_at: string;
 }
 
-export interface UserRegistrationData {
+export interface UserContractInput {
   name: string;
   email: string;
   password: string;
 }
 
-export interface UserLoginData {
+export interface UserLoginInput {
   email: string;
   password: string;
 }

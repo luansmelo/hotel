@@ -1,10 +1,10 @@
 import { InputServiceContract } from "../utils/contracts/input-contract";
-import { InputDTO } from "../dto/input.dto";
+import { InputRegister } from "../dto/input.dto";
 
 export class InputController {
   constructor(private readonly inputService: InputServiceContract) {}
 
-  async create(input: InputDTO) {
+  async create(input: InputRegister) {
     return this.inputService.create(input);
   }
 
@@ -12,7 +12,7 @@ export class InputController {
     return this.inputService.getAll();
   }
 
-  async updateById(id: string, input: InputDTO) {
+  async updateById(id: string, input: InputRegister) {
     return this.inputService.updateById(id, input);
   }
 

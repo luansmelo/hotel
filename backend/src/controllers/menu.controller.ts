@@ -1,15 +1,14 @@
 import { MenuServiceContract } from "../utils/contracts/menu-contract";
 import {
-  AddCategoryToMenuDTO,
-  AddProductToMenuDTO,
-  MenuDTO,
+  AddCategoryToMenuInput,
+  MenuInput,
   MenuProductDTO,
 } from "../dto/menu.dto";
 
 export class MenuController {
   constructor(private readonly menuService: MenuServiceContract) {}
 
-  async create(input: MenuDTO) {
+  async create(input: MenuInput) {
     return this.menuService.create(input);
   }
 
@@ -21,7 +20,7 @@ export class MenuController {
     return this.menuService.getById(id);
   }
 
-  async addCategoryToMenu(input: AddCategoryToMenuDTO) {
+  async addCategoryToMenu(input: AddCategoryToMenuInput) {
     return this.menuService.addCategoryToMenu(input);
   }
 

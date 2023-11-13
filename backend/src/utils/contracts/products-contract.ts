@@ -1,15 +1,15 @@
 import {
   AddInputToProduct,
   AddInputToProductData,
-  ProductData,
+  ProductContract,
   ProductRegister,
 } from "../../dto/product.dto";
 
 export interface ProductRepositoryContract {
-  save(input: ProductData): Promise<void>;
-  getById(id: string): Promise<any>;
-  getByName(name: string): Promise<any>;
-  getAll(): Promise<any>;
+  save(input: ProductContract): Promise<void>;
+  getById(id: string): Promise<ProductContract | null>;
+  getByName(name: string): Promise<ProductContract | null>;
+  getAll(): Promise<ProductContract[] | null>;
   deleteById(id: string): Promise<void>;
   addInputToProduct(input: AddInputToProductData): Promise<void>;
   getPredefinedProduct(id: string): Promise<any>;
@@ -17,9 +17,9 @@ export interface ProductRepositoryContract {
 
 export interface ProductServiceContract {
   create(input: ProductRegister): Promise<void>;
-  getById(id: string): Promise<any>;
-  getByName(name: string): Promise<any>;
-  getAll(): Promise<any>;
+  getById(id: string): Promise<ProductContract | null>;
+  getByName(name: string): Promise<ProductContract | null>;
+  getAll(): Promise<ProductContract[] | null>;
   deleteById(id: string): Promise<void>;
   addInputToProduct(input: AddInputToProduct): Promise<void>;
   getPredefinedProduct(id: string): Promise<any>;

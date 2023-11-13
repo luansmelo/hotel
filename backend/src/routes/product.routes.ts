@@ -6,12 +6,14 @@ import {
   ProductSchema,
 } from "../validation/product.validation";
 import { AddInputToProduct, ProductRegister } from "../dto/product.dto";
+import { authenticated } from "../middleware/authenticated";
 
 const router = Router();
 const slug = "/product";
 
 router.post(
   "/create",
+  authenticated,
   validate(ProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -30,6 +32,7 @@ router.post(
 
 router.get(
   "/",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeProductController();
@@ -44,6 +47,7 @@ router.get(
 
 router.get(
   "/details/:id",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -59,6 +63,7 @@ router.get(
 
 router.get(
   ":id",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -74,6 +79,7 @@ router.get(
 
 router.delete(
   "/:id",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -88,6 +94,7 @@ router.delete(
 
 router.post(
   "/add/input/",
+  authenticated,
   validate(AddInputToProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {

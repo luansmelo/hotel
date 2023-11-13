@@ -1,10 +1,10 @@
 import { InputRepositoryContract } from "../utils/contracts/input-contract";
-import { InputDTO } from "../dto/input.dto";
+import { InputContract } from "../dto/input.dto";
 import { PrismaClient } from "@prisma/client";
 
 export class InputRepository implements InputRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
-  async save(input: InputDTO) {
+  async save(input: InputContract) {
     return this.db.input.create({
       data: input,
     });
@@ -22,7 +22,7 @@ export class InputRepository implements InputRepositoryContract {
     return db;
   }
 
-  async updateById(id: string, input: InputDTO) {
+  async updateById(id: string, input: InputContract) {
     await this.db.input.update({
       where: { id },
       data: input,

@@ -1,35 +1,26 @@
-import zod from "zod";
-
-export interface CategoryDTO {
+export interface CategoryInput {
   name: string;
 }
 
-export interface ProductToCategoryDTO {
-  id?: string;
+export interface CategoryContract {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProductToCategoryInput {
+  id: string;
   categoryId: string;
   productId: string;
   weekDay: string;
 }
 
-export const CategorySchema = zod.object({
-  name: zod.string({
-    required_error: "O nome da categoria é obrigatório",
-    invalid_type_error: "O nome da categoria deve ser uma string",
-  }),
-});
-
-export const ProductToCategorySchema = zod.object({
-  id: zod.string().optional(),
-  categoryId: zod.string({
-    required_error: "O id da categoria é obrigatório",
-    invalid_type_error: "O id da categoria deve ser uma string",
-  }),
-  productId: zod.string({
-    required_error: "O id do produto é obrigatório",
-    invalid_type_error: "O id do produto deve ser uma string",
-  }),
-  weekDay: zod.string({
-    required_error: "O dia da semana é obrigatório",
-    invalid_type_error: "O dia da semana deve ser uma string",
-  }),
-});
+export interface ProductToCategoryContract {
+  id: string;
+  categoryId: string;
+  productId: string;
+  weekDay: string;
+  created_at: string;
+  updated_at: string;
+}

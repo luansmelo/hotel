@@ -2,29 +2,29 @@ import { ProductRepositoryContract } from "../utils/contracts/products-contract"
 import {
   AddInputToProductData,
   ProductRegister,
-  ProductData,
+  ProductContract,
 } from "../dto/product.dto";
 import { PrismaClient } from "@prisma/client";
 
 export class ProductRepository implements ProductRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
-  async save(input: ProductData) {
+  async save(input: ProductContract) {
     await this.db.product.create({
       data: input,
     });
   }
 
-  async getById(id: string) {
+  async getById(id: string): Promise<ProductContract | null> {
     const db = await this.db.product.findUnique({ where: { id } });
     return db;
   }
 
-  async getByName(name: string) {
+  async getByName(name: string): Promise<ProductContract | null> {
     const db = await this.db.product.findUnique({ where: { name } });
     return db;
   }
 
-  async getAll() {
+  async getAll(): Promise<ProductContract[] | null> {
     const db = await this.db.product.findMany();
     return db;
   }

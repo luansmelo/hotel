@@ -1,22 +1,24 @@
 import {
-  AddCategoryToMenuDTO,
-  MenuDTO,
-  MenuData,
-  MenuProductDTO,
+  AddCategoryToMenuContract,
+  AddCategoryToMenuInput,
+  MenuContract,
+  MenuInput,
+  MenuProductContract,
+  MenuProductInput,
 } from "../../dto/menu.dto";
 
 export interface MenuRepositoryContract {
-  save(input: MenuData): Promise<void>;
-  getById(id: string): Promise<any>;
-  getList(): Promise<any>;
-  addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void>;
-  getSelectedMenu(input: MenuProductDTO): Promise<any>;
+  save(input: MenuContract): Promise<void>;
+  getById(id: string): Promise<MenuContract | null>;
+  getList(): Promise<MenuContract[] | null>;
+  addCategoryToMenu(input: AddCategoryToMenuContract): Promise<void>;
+  getSelectedMenu(input: MenuProductInput): Promise<any | null>;
 }
 
 export interface MenuServiceContract {
-  create(input: MenuDTO): Promise<void>;
-  getById(id: string): Promise<any>;
-  getAll(): Promise<any>;
-  addCategoryToMenu(input: AddCategoryToMenuDTO): Promise<void>;
-  getSelectedMenu(input: MenuProductDTO): Promise<any>;
+  create(input: MenuInput): Promise<void>;
+  getById(id: string): Promise<MenuContract | null>;
+  getAll(): Promise<MenuContract[] | null>;
+  addCategoryToMenu(input: AddCategoryToMenuInput): Promise<void>;
+  getSelectedMenu(input: MenuProductInput): Promise<any | null>;
 }

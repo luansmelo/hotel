@@ -1,22 +1,22 @@
 import { Request, Response, Router, NextFunction } from "express";
-import {
-  ProductToCategoryDTO,
-  CategoryDTO,
-  CategorySchema,
-  ProductToCategorySchema,
-} from "../dto/category.dto";
+import { ProductToCategoryInput, CategoryInput } from "../dto/category.dto";
 import { makeCategoryController } from "../utils/factories/makeCategoryController";
 import { validate } from "../middleware/validate";
+import { authenticated } from "../middleware/authenticated";
+import { CategorySchema, ProductToCategorySchema } from "../validation/category.validation";
 
 const router = Router();
 const slug = "/category";
 
 router.post(
   "/create",
+  authenticated,
   validate(CategorySchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: CategoryDTO = CategorySchema.parse(request.body);
+      const input: CategoryInput = CategorySchema.parse(
+        request.body
+      ) as CategoryInput;
       const controller = makeCategoryController();
       const result = await controller.create(input);
 
@@ -29,12 +29,13 @@ router.post(
 
 router.post(
   "/add/product",
+  authenticated,
   validate(ProductToCategorySchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductToCategoryDTO = ProductToCategorySchema.parse(
+      const input: ProductToCategoryInput = ProductToCategorySchema.parse(
         request.body
-      );
+      ) as ProductToCategoryInput;
       const controller = makeCategoryController();
       await controller.addProductToCategory(input);
 
@@ -47,6 +48,7 @@ router.post(
 
 router.get(
   "/:id",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -62,12 +64,13 @@ router.get(
 
 router.delete(
   "/",
+  authenticated,
   validate(ProductToCategorySchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductToCategoryDTO = ProductToCategorySchema.parse(
+      const input: ProductToCategoryInput = ProductToCategorySchema.parse(
         request.body
-      );
+      ) as ProductToCategoryInput;
 
       const controller = makeCategoryController();
       await controller.deleteProduct(input);

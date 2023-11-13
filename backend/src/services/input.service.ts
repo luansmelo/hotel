@@ -4,12 +4,20 @@ import {
 } from "../utils/contracts/input-contract";
 import { InputRegister } from "../dto/input.dto";
 import { NotFoundError } from "../errors/httpErrors";
+import { uuid } from "uuidv4";
 
 export class InputService implements InputServiceContract {
   constructor(private readonly repository: InputRepositoryContract) {}
 
   async create(input: InputRegister) {
-    return this.repository.save(input);
+    const data = {
+      id: uuid(),
+      ...input,
+      created_at: new Date().toDateString(),
+      updated_at: new Date().toDateString(),
+    };
+
+    return this.repository.save(data);
   }
 
   async getAll() {

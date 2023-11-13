@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { validate } from "../middleware/validate";
-import { UserLoginData, UserRegistrationData } from "../dto/user.dto";
+import { UserLoginInput, UserContractInput } from "../dto/user.dto";
 import { makeUserController } from "../utils/factories/makeUserController";
 import { UserLoginSchema, UserSchema } from "../validation/user.validation";
 
@@ -12,9 +12,9 @@ router.post(
   validate(UserSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: UserRegistrationData = UserSchema.parse(
+      const input: UserContractInput = UserSchema.parse(
         request.body
-      ) as UserRegistrationData;
+      ) as UserContractInput;
       const controller = makeUserController();
       const result = await controller.signup(input);
 
@@ -30,9 +30,9 @@ router.post(
   validate(UserLoginSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: UserLoginData = UserLoginSchema.parse(
+      const input: UserLoginInput = UserLoginSchema.parse(
         request.body
-      ) as UserLoginData;
+      ) as UserLoginInput;
       const controller = makeUserController();
       const result = await controller.signin(input);
 

@@ -16,7 +16,7 @@ export class ProductService implements ProductServiceContract {
       throw new NotFoundError("Produto já cadastrado");
     }
 
-    const payload = {
+    const data = {
       id: uuid(),
       name: input.name,
       description: input.description,
@@ -24,7 +24,7 @@ export class ProductService implements ProductServiceContract {
       updated_at: new Date().toDateString(),
     };
 
-    return this.repository.save(payload);
+    return this.repository.save(data);
   }
 
   async getById(id: string): Promise<any> {
@@ -46,21 +46,27 @@ export class ProductService implements ProductServiceContract {
   }
 
   async getPredefinedProduct(id: string) {
+    await this.getById(id);
+
     return this.repository.getPredefinedProduct(id);
   }
 
-  deleteById(id: string): Promise<void> {
+  async deleteById(id: string): Promise<void> {
+    await this.getById(id);
+
     return this.repository.deleteById(id);
   }
 
   async addInputToProduct(input: AddInputToProduct): Promise<void> {
-    const payload = {
+    await this.getById(input.productId);
+
+    const data = {
       id: uuid(),
       ...input,
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),
     };
 
-    return this.repository.addInputToProduct(payload);
+    return this.repository.addInputToProduct(data);
   }
 }
