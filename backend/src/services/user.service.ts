@@ -31,9 +31,14 @@ export class UserService implements UserServiceContract {
       updated_at: new Date().toDateString(),
     };
 
-    await this.repository.save(data);
+    const userCreated = await this.repository.save(data);
 
     return {
+      user: {
+        id: userCreated.id,
+        name: userCreated.name,
+        email: userCreated.email,
+      },
       access_token: JwtUtils.generateToken(data.id),
     };
   }
@@ -41,13 +46,18 @@ export class UserService implements UserServiceContract {
   async signin(input: UserLoginInput) {
     const user = await this.repository.getByEmail(input.email);
 
-    if (!user) throw new NotFoundError("Conta não encontrada");
+    if (!user) throw new NotFoundError("conta não encontrada");
 
-    const isPasswordValid = await bcrypt.compare(input.password, user.password);
+    const isValid = await bcrypt.compare(input.password, user.password);
 
-    if (!isPasswordValid) throw new UnauthorizedError("Senha incorreta");
+    if (!isValid) throw new UnauthorizedError("crendênciais inválidas");
 
     return {
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
       access_token: JwtUtils.generateToken(user.id),
     };
   }

@@ -1,0 +1,28 @@
+.AddButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 20px;
+  padding-block: 10px;
+  border-radius: 6px;
+  background-color: #84a59d;
+  border: none;
+  gap: 20px;
+  cursor: pointer;
+  transition: 0.3s filter ease;
+  height: 52px;
+  width: 100%;
+}
+
+.AddButtonContainer:hover {
+  filter: brightness(0.9);
+}
+
+.DisabledButton {
+  background-color: #ccc; /* Altere para a cor desejada para o botão desativado */
+  cursor: not-allowed; /* O cursor se torna 'não permitido' quando o botão está desativado */
+}
+
+.DisabledButton:hover {
+  filter: unset;
+}

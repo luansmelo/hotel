@@ -1,0 +1,53 @@
+
+.InputBody {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tableInputsContainer {
+  margin-bottom: 100px;
+}
+
+.tableCreateContainer {
+  margin-bottom: 16px;
+}
+
+.table {
+  width: 100%;
+}
+
+.thead {
+  display: flex;
+  background: #f8bdbd;
+  padding: 16px;
+  justify-content: space-between;
+  
+  td {
+    text-align: left;
+    color: #000000de;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.17px;
+  }
+}
+
+.tbody {
+  tr:nth-child(2n + 1) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(252, 205, 205, 0.37);
+  }
+
+  tr {
+    display: flex;
+    // justify-content: space-between;
+    // gap: 8px;
+    align-items: center;
+  }
+}

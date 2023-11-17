@@ -5,7 +5,7 @@ import {
   AddInputToProductSchema,
   ProductSchema,
 } from "../validation/product.validation";
-import { AddInputToProduct, ProductRegister } from "../dto/product.dto";
+import { AddInputToProduct, ProductInput } from "../dto/product.dto";
 import { authenticated } from "../middleware/authenticated";
 
 const router = Router();
@@ -17,9 +17,9 @@ router.post(
   validate(ProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductRegister = ProductSchema.parse(
+      const input: ProductInput = ProductSchema.parse(
         request.body
-      ) as ProductRegister;
+      ) as ProductInput;
       const controller = makeProductController();
       const result = await controller.create(input);
 
@@ -38,7 +38,7 @@ router.get(
       const controller = makeProductController();
       const result = await controller.getAll();
 
-      return response.status(200).send(result);
+      return response.status(200).send({ data: result });
     } catch (error) {
       next(error);
     }
