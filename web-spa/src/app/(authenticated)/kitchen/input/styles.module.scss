@@ -1,53 +1,44 @@
-
-.InputBody {
+.inputWrapper {
   display: flex;
+  height: 100%;
   flex-direction: column;
-  gap: 24px;
 }
 
-.buttonsWrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tableInputsContainer {
-  margin-bottom: 100px;
-}
-
-.tableCreateContainer {
+.inputContainer {
   margin-bottom: 16px;
-}
-
-.table {
-  width: 100%;
-}
-
-.thead {
   display: flex;
-  background: #f8bdbd;
-  padding: 16px;
   justify-content: space-between;
-  
-  td {
-    text-align: left;
-    color: #000000de;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0.17px;
-  }
 }
 
-.tbody {
-  tr:nth-child(2n + 1) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(252, 205, 205, 0.37);
-  }
+.ringContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  // margin-top: auto;
+}
 
-  tr {
-    display: flex;
-    // justify-content: space-between;
-    // gap: 8px;
-    align-items: center;
-  }
+.imageContainer {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 100%;
+  // margin-top: auto;
+}
+
+.button {
+  background-color: #84a59d;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 1s ease;
+}
+
+.button:hover {
+  background-color: #6c8b86;
+  transform: scale(1.1);
 }

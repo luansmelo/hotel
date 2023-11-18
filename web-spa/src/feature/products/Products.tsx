@@ -1,4 +1,4 @@
-import InputSearchProduct from '@/components/atoms/InputSearchProduct'
+import InputSearchProduct from '@/components/atoms/search'
 import styles from './styles.module.scss'
 import AddButton from '@/components/addButton'
 import { Fade, Modal, TextField } from '@mui/material'

@@ -1,4 +1,4 @@
-import { AuthForm } from '@/components/molecules/AuthForm/AuthForm'
+import { AuthForm } from '@/components/auth/AuthForm/AuthForm'
 import { AuthService, UserRegister } from '@/services/auth/auth'
 import {
   FormControl,

@@ -23,7 +23,7 @@ export const initialOpenProductModal: IOpenModalProduct = {
   editOpen: false,
   isOpen: false,
   productData: {
-    code: 0,
+    code: '',
     name: '',
     group: '',
     kcal: 0,

@@ -4,10 +4,12 @@ import { InputContract } from '@/atom/business'
 import { handleToastify } from '@/utils/toastify'
 import api from '@/config/api'
 import { InputService } from '@/services/input/input'
+import { toast } from 'react-toastify'
+import { InputProps } from '@/components/input/InputList/types'
 
 interface InputContextContract {
-  inputList: InputContract[]
-  isAddLoading: boolean
+  inputList: InputProps[]
+  loading: boolean
   isUpdateLoading: boolean
   handleRequestInput: (input: InputContract) => Promise<void>
   handleUpdateInput: (input: InputContract) => Promise<void>
@@ -21,39 +23,40 @@ export const InputContext = createContext<InputContextContract>(
 export const InputProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [inputList, setInputList] = useState<InputContract[]>([])
-  const [isAddLoading, setIsAddLoading] = useState<boolean>(false)
+  const [inputList, setInputList] = useState<InputProps[]>([] as InputProps[])
+  const [loading, setLoading] = useState<boolean>(false)
   const [isUpdateLoading, setIsUpdateLoading] = useState<boolean>(false)
 
   const input = new InputService()
   const fetchInputList = async () => {
     try {
+      setLoading(true)
       const res = await input.list()
-      console.log('RESPOSTA', res)
-      if (res?.ok) {
-        const data = await res.json()
-        console.log(data)
-        setInputList(data)
-      }
+      setInputList(res?.data)
     } catch (error) {
-      setInputList([])
+      console.log(error)
+    } finally {
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500)
     }
   }
 
   const handleRequestInput = async (data: InputContract) => {
     try {
-      setIsAddLoading(true)
+      setLoading(true)
 
       const res = await input.handle(data)
       if (res?.ok) {
+        toast.success('Insumo criado com sucesso!')
         await fetchInputList()
-        handleToastify('Insumo criado com sucesso!', 'success')
-        setIsAddLoading(false)
       } else {
-        handleToastify('Não foi possível criar novo insumo.', 'error')
+        toast.error('Não foi possível criar novo insumo.')
       }
     } catch (error) {
-      handleToastify('Não foi possível criar novo insumo.', 'error')
+      toast.error('Não foi possível criar novo insumo.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -106,13 +109,14 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     fetchInputList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <InputContext.Provider
       value={{
         inputList,
-        isAddLoading,
+        loading,
         isUpdateLoading,
         handleUpdateInput,
         handleRequestInput,

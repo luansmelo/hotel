@@ -1,0 +1,25 @@
+.thead {
+  display: flex;
+  background: #f8bdbd;
+  padding: 16px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  width: 100%;
+}
+
+.tr {
+  display: flex;
+  width: 100%;
+}
+
+.th {
+  flex: 1;
+}
+
+.text_container {
+  color: #000000de;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.17px;
+}

@@ -1,6 +1,6 @@
 import { IInputsProps } from '@/atom/business'
 import styles from './styles.module.scss'
-import InputLine from './InputLine'
+import InputLine from '../../input/InputLine'
 
 interface ITableInputsProps {
   inputs: IInputsProps[]

@@ -1,7 +1,7 @@
 'use client'
 
 import { BusinessProvider } from '@/context/BusinessContext'
-import { InputProvider } from '@/context/InputContext'
+import { InputProvider } from '@/context/input'
 import { MapProvider } from '@/context/MapaContext'
 import { ProductProvider } from '@/context/ProductContext'
 import { AuthProvider } from '@/context/auth'

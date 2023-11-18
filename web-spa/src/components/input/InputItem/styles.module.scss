@@ -1,0 +1,19 @@
+.tr {
+  display: flex;
+  padding: 16px;
+
+  &:nth-child(odd) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(252, 205, 205, 0.37);
+  }
+
+  th {
+    flex: 1;
+    color: #000000de;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.17px;
+  }
+}
+

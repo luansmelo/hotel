@@ -1,5 +1,5 @@
 'use client'
-import { AuthForm } from '@/components/molecules/AuthForm/AuthForm'
+import { AuthForm } from '@/components/auth/AuthForm/AuthForm'
 import { useContext, useState } from 'react'
 import { TextField } from '@mui/material'
 import { AuthContext } from '@/context/auth'

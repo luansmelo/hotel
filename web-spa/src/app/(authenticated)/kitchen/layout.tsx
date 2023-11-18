@@ -2,8 +2,8 @@
 
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import Header from '@/components/atoms/MenuHeader/Header'
-import Menu from '@/components/menu/Menu'
 import styles from '@/app/page.module.css'
+import Menu from '@/components/menu/Menu'
 
 interface LayoutProps {
   children: React.ReactNode

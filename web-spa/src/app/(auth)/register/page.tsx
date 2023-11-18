@@ -1,5 +1,5 @@
 'use client'
-import { RegisterForm } from '@/components/organisms/RegisterForm/RegisterForm'
+import { RegisterForm } from '@/components/auth/RegisterForm/RegisterForm'
 
 export default function Register() {
   return <RegisterForm />
