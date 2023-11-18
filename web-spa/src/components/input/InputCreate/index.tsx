@@ -12,7 +12,7 @@ interface IInputLineProps {
   handleCancelNewInput?: () => void
 }
 
-export default function InputLine({ handleCancelNewInput }: IInputLineProps) {
+export default function InputCreate({ handleCancelNewInput }: IInputLineProps) {
   const [name, setName] = useState('')
   const [measurementUnit, setMeasurementUnit] = useState('')
   const [unitPrice, setUnitPrice] = useState(0)

@@ -1,29 +1,28 @@
 .inputWrapper {
   display: flex;
-  height: 100%;
   flex-direction: column;
+  gap: 6px;
 }
 
 .inputContainer {
   margin-bottom: 16px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
 
-.ringContainer {
+.searchAndButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  // width: 100%; // Ocupa a largura total
+}
+
+.ringContainer,
+.imageContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  // margin-top: auto;
-}
-
-.imageContainer {
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  height: 100%;
-  // margin-top: auto;
+  width: 100%;
 }
 
 .button {
@@ -35,10 +34,15 @@
   height: 50px;
   font-size: 20px;
   cursor: pointer;
-  transition: background-color 1s ease;
+  transition: background-color 1s ease, transform 0.3s ease;
 }
 
 .button:hover {
   background-color: #6c8b86;
   transform: scale(1.1);
+}
+
+.inputSearch {
+  // flex-grow: 1;
+  margin-right: 16px; // Adiciona margem à direita para separar o input do botão
 }
