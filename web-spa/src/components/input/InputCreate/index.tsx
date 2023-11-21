@@ -1,6 +1,6 @@
 import { InputContract } from '@/atom/business'
 import { useContext } from 'react'
-import { Box, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import { InputContext } from '@/context/input'
 import { InputForm } from '@/components/input/InputForm/InputForm'
 import { handleToastify } from '@/utils/toastify'
@@ -57,37 +57,39 @@ export default function InputCreate({
     return Object.values(newErrors).every((error) => error === '')
   }
 
+  const handleModalClose = () => {
+    setErrors({})
+    handleCloseModal()
+  }
+
   const handleCreate = async () => {
     try {
-      if (!validateForm()) {
-        throw new Error('Preencha todos os campos')
-      }
-
       const numericUnitPrice = Number(form.unitPrice)
 
       if (isNaN(numericUnitPrice)) {
-        throw new Error(
-          'Os campos de preço e gramatura devem ser números válidos'
-        )
+        throw new Error('O campo de preço unitário deve ser um número válido')
       }
 
       await handleRequestInput({
         ...form,
         unitPrice: numericUnitPrice,
       })
-
-      handleCancelNewInput && handleCancelNewInput()
     } catch (error: any) {
-      handleToastify(error.message, 'error')
+      console.log(error)
+    } finally {
+      handleModalClose()
+      setErrors({})
     }
   }
 
   return (
-    <Modal open={showModal} onClose={handleCloseModal}>
+    <Modal open={showModal} onClose={handleModalClose}>
       <InputForm
         submit={async (e) => {
           e.preventDefault()
-          await handleCreate()
+          if (validateForm()) {
+            await handleCreate()
+          }
         }}
         loading={loading}
         errors={errors}
@@ -101,16 +103,21 @@ export default function InputCreate({
           variant="outlined"
           value={form.name}
           onChange={handleSetState}
+          autoComplete="off"
           sx={{
             '& .MuiInputBase-root': {
               background: '#1F2128',
               color: '#BDBDBD',
               outline: 'none',
               margin: 0,
+              '&:focus': {
+                background: '#1F2128',
+                outline: 'none',
+              },
             },
 
             '& .MuiFormHelperText-root': {
-              margin: 0,
+              margin: '0',
               lineHeight: 1,
             },
           }}
@@ -139,6 +146,7 @@ export default function InputCreate({
           variant="outlined"
           value={form.measurementUnit}
           onChange={handleSetState}
+          autoComplete="off"
           sx={{
             '& .MuiInputBase-root': {
               background: '#1F2128',
@@ -148,7 +156,7 @@ export default function InputCreate({
             },
 
             '& .MuiFormHelperText-root': {
-              margin: 0,
+              margin: '0',
               lineHeight: 1,
             },
           }}
@@ -178,16 +186,20 @@ export default function InputCreate({
           type="number"
           value={form.unitPrice}
           onChange={handleSetState}
+          autoComplete="off"
           sx={{
             '& .MuiInputBase-root': {
               background: '#1F2128',
               color: '#BDBDBD',
               outline: 'none',
               margin: 0,
+              '&:focus': {
+                outline: 'none',
+              },
             },
 
             '& .MuiFormHelperText-root': {
-              margin: 0,
+              margin: '0',
               lineHeight: 1,
             },
           }}
@@ -216,6 +228,7 @@ export default function InputCreate({
           variant="outlined"
           value={form.code}
           onChange={handleSetState}
+          autoComplete="off"
           sx={{
             '& .MuiInputBase-root': {
               background: '#1F2128',
@@ -225,7 +238,7 @@ export default function InputCreate({
             },
 
             '& .MuiFormHelperText-root': {
-              margin: 0,
+              margin: '0',
               lineHeight: 1,
             },
           }}
@@ -254,6 +267,7 @@ export default function InputCreate({
           variant="outlined"
           value={form.group}
           onChange={handleSetState}
+          autoComplete="off"
           sx={{
             '& .MuiInputBase-root': {
               background: '#1F2128',
@@ -263,7 +277,7 @@ export default function InputCreate({
             },
 
             '& .MuiFormHelperText-root': {
-              margin: 0,
+              margin: '0',
               lineHeight: 1,
             },
           }}

@@ -75,7 +75,7 @@ router.delete(
 
       await controller.deleteById(id);
 
-      response.status(200).send({ message: "Insumo excluído com sucesso!" });
+      response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
     }

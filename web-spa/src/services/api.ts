@@ -6,7 +6,7 @@ export class API {
   private static instance: API | null = null
   private apiurl: string
 
-  private constructor(apiurl: string) {
+  private constructor() {
     this.apiurl = apiurl
   }
 
@@ -14,9 +14,9 @@ export class API {
     return cookies.get('at')
   }
 
-  static getInstance(apiurl: string): API {
+  static getInstance(): API {
     if (!API.instance) {
-      API.instance = new API(apiurl)
+      API.instance = new API()
     }
     return API.instance
   }
@@ -34,7 +34,7 @@ export class API {
   }
 
   async post(endpoint: string, body: any) {
-    const response = await fetch(`${this.apiurl}/${endpoint}`, {
+    const response = await fetch(`${this.apiurl}${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export class API {
   }
 
   async put(endpoint: string, body: any) {
-    const response = await fetch(`${this.apiurl}/${endpoint}`, {
+    const response = await fetch(`${this.apiurl}${endpoint}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export class API {
   }
 
   async delete(endpoint: string) {
-    const response = await fetch(`${this.apiurl}/${endpoint}`, {
+    const response = await fetch(`${this.apiurl}${endpoint}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

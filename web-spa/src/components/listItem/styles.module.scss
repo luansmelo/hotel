@@ -1,0 +1,30 @@
+.tr {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  &:nth-child(odd) {
+    background: #272a34;
+  }
+
+  th,
+  td {
+    color: #bdbdbd;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.17px;
+    flex: 1;
+    margin-left: 32px;
+  }
+}
+
+
+.buttonContainer {
+  background-color: #1F2128;
+  border-radius: 50%;
+}
+
+.contentContainer {
+  display: flex;
+  flex: 1;
+}

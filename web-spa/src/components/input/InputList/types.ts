@@ -9,4 +9,5 @@ export interface InputProps {
 
 export interface InputListProps {
   inputList: InputProps[]
+  handleDelete: (id: string) => void
 }

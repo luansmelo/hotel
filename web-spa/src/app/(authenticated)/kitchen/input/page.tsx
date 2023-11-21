@@ -15,7 +15,7 @@ import { handleToastify } from '@/utils/toastify'
 
 export default function Input() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const { loading, inputList } = useContext(InputContext)
+  const { loading, inputList, handleDelete } = useContext(InputContext)
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -91,7 +91,7 @@ export default function Input() {
       <TableHeader headers={TABLE_HEADERS} />
 
       <div>
-        <InputList inputList={filteredInputList} />
+        <InputList inputList={filteredInputList} handleDelete={handleDelete} />
       </div>
 
       {showCreateForm && (

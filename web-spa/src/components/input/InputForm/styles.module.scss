@@ -1,14 +1,17 @@
 .containerWrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .formWrapper {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  width: 100%; 
-  gap: 8px;
+
+  padding: 32px;
+  width: 100%;  
+  gap: 16px;
 }
 
 .button {

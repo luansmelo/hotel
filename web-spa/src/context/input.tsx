@@ -17,7 +17,7 @@ interface InputContextContract {
   isUpdateLoading: boolean
   handleRequestInput: (input: InputContract) => Promise<void>
   handleUpdateInput: (input: InputContract) => Promise<void>
-  handleDeleteInput: (input: InputContract) => Promise<void>
+  handleDelete: (id: string) => Promise<void>
   errors: Partial<InputContract>
   setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
 }
@@ -54,6 +54,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(true)
 
       const res = await input.handle(data)
+
       if (res?.ok) {
         toast.success('Insumo criado com sucesso!')
         await fetchInputList()
@@ -97,26 +98,21 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const handleDeleteInput = async (input: InputContract) => {
+  const handleDelete = async (id: string) => {
     try {
-      setIsUpdateLoading(true)
+      setLoading(true)
 
-      const response = await api.delete(`/input/${input.id}`)
+      const res = await input.delete(id)
 
-      if (response.status === 200) {
+      if (res.message === 'sucesso') {
         await fetchInputList()
-        setTimeout(() => {
-          handleToastify('Insumo excluído com sucesso!', 'success')
-        }, 500)
-      } else {
-        setTimeout(() => {
-          handleToastify('Não foi possível excluir o insumo.', 'error')
-        })
+        handleToastify('Insumo excluído com sucesso!', 'success')
       }
     } catch (error) {
-      setTimeout(() => {
-        handleToastify('Não foi possível excluir o insumo.', 'error')
-      })
+      console.log(error)
+      handleToastify('Não foi possível excluir o insumo.', 'error')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -135,7 +131,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         setErrors,
         handleUpdateInput,
         handleRequestInput,
-        handleDeleteInput,
+        handleDelete,
       }}
     >
       {children}
