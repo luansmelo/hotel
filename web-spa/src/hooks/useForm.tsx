@@ -1,29 +1,21 @@
-import { useState, ChangeEvent } from 'react'
+import { useState } from 'react'
 
-type FormFields = Record<string, any>
+const useForm = <T extends object>(initialState: T) => {
+  const [form, setForm] = useState(initialState)
 
-type FormProps<T> = {
-  initialState: T
-}
-
-const useForm = <T extends FormFields>({ initialState }: FormProps<T>) => {
-  const [form, setForm] = useState<T>(initialState)
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSetState = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-
-    setForm((prevForm) => {
-      return {
-        ...prevForm,
-        [name]: value,
-      }
-    })
+    setForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
   }
+
   const clear = () => {
     setForm(initialState)
   }
 
-  return { form, handleInputChange, clear }
+  return { form, handleSetState, clear, setForm }
 }
 
 export default useForm

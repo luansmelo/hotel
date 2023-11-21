@@ -1,7 +1,6 @@
 .inputWrapper {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .inputContainer {
@@ -13,7 +12,7 @@
 .searchAndButtonContainer {
   display: flex;
   justify-content: space-between;
-  // width: 100%; // Ocupa a largura total
+  margin-bottom: 10px;
 }
 
 .ringContainer,
@@ -26,7 +25,7 @@
 }
 
 .button {
-  background-color: #84a59d;
+  background-color: #636168;
   color: #ffffff;
   border: none;
   border-radius: 50%;
@@ -38,11 +37,10 @@
 }
 
 .button:hover {
-  background-color: #6c8b86;
+  background-color: #757183;
   transform: scale(1.1);
 }
 
 .inputSearch {
-  // flex-grow: 1;
-  margin-right: 16px; // Adiciona margem à direita para separar o input do botão
+  margin-right: 16px; 
 }

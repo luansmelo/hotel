@@ -12,14 +12,14 @@ const Menu: React.FC = () => {
     <div className={styles.menuContainer}>
       <div className={styles.main}>
         <div className={styles.imageContainer}>
-          <Image src={'/chef-hat.png'} alt="Logo" width={110} height={110} />
+          <Image src={'/chef-hat.png'} alt="Logo" width={75} height={75} />
           <p>App</p>
           <hr />
         </div>
         <div className={styles.menuButtonContainer}>
           <MenuButton
             Icon={PanelTop}
-            text="Mapa de Menu"
+            text="Menu"
             selectedFeature="mapa-de-menu"
             active={activeButton === 'mapa-de-menu'}
             onClick={() => setActiveButton('mapa-de-menu')}
@@ -33,7 +33,7 @@ const Menu: React.FC = () => {
           />
           <MenuButton
             Icon={Soup}
-            text="Produtos"
+            text="Ficha Técnica"
             selectedFeature="product"
             active={activeButton === 'product'}
             onClick={() => setActiveButton('product')}

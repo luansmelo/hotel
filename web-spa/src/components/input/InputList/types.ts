@@ -4,7 +4,6 @@ export interface InputProps {
   measurementUnit: string
   unitPrice: number
   code: string
-  grammage: number
   group: string
 }
 

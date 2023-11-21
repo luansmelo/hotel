@@ -3,6 +3,5 @@ export const TABLE_HEADERS = [
   'Preço Unitário',
   'Unidade de Medida',
   'Código',
-  'Gramatura',
   'Grupo',
 ]

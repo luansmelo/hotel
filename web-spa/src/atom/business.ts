@@ -57,7 +57,6 @@ export interface InputContract {
   code: string
   unitPrice: number
   measurementUnit: string
-  grammage: number
   group: string
 }
 

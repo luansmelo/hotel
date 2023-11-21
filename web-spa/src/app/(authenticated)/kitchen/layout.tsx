@@ -12,15 +12,16 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <main className={styles.main}>
-      <div>
+      <div className={styles.sideBar}>
         <Menu />
       </div>
 
-      <div className={styles.mainContainer}>
-        <div>
+      <div className={styles.contentAndTopBar}>
+        <div className={styles.topBar}>
           <Header />
         </div>
-        <div className={styles.mainView}>{children}</div>
+
+        <div className={styles.content}>{children}</div>
       </div>
     </main>
   )

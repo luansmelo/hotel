@@ -11,6 +11,7 @@ import styles from './styles.module.scss'
 import Dropdown from '@/components/dropDown'
 import { InputContext } from '@/context/input'
 import InputCreate from '@/components/input/InputCreate'
+import { handleToastify } from '@/utils/toastify'
 
 export default function Input() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -24,13 +25,8 @@ export default function Input() {
   }
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (showCreateForm) {
-      setShowCreateForm(false)
-      setAnchorEl(null)
-    } else {
-      setAnchorEl(event.currentTarget)
-      setMenuOpen(!menuOpen)
-    }
+    setAnchorEl(event.currentTarget)
+    setMenuOpen(!menuOpen)
   }
 
   const handleCloseDropdown = () => {
@@ -42,6 +38,8 @@ export default function Input() {
     handleCloseDropdown()
     if (action === 'Criar insumo') {
       setShowCreateForm(true)
+    } else {
+      handleToastify('Opção indisponível.', 'error')
     }
   }
 
@@ -62,65 +60,67 @@ export default function Input() {
   }
 
   return (
-    <Fade in={true} timeout={500}>
-      <div className={styles.inputWrapper}>
-        <div className={styles.inputWrapper}>
-          <div className={styles.searchAndButtonContainer}>
-            {showCreateForm ? (
-              <div className={styles.placeholder}></div>
-            ) : (
-              <InputSearch
-                search={'insumo'}
-                onChange={handleSearchChange}
-                disabled={showCreateForm}
-              />
-            )}
-            <button className={styles.button} onClick={handleButtonClick}>
-              {showCreateForm ? '←' : '+'}
-            </button>
-          </div>
+    <div className={styles.inputWrapper}>
+      <div className={styles.searchAndButtonContainer}>
+        <InputSearch
+          search={'insumo'}
+          onChange={handleSearchChange}
+          disabled={showCreateForm}
+        />
 
-          <Dropdown
-            anchorEl={anchorEl}
-            onClose={handleCloseDropdown}
-            actions={[
-              {
-                label: 'Criar insumo',
-                onClick: () => handleDropdownAction('Criar insumo'),
-              },
-            ]}
-          />
-        </div>
-        <TableHeader headers={TABLE_HEADERS} />
-
-        {showCreateForm ? (
-          <InputCreate handleCancelNewInput={() => setShowCreateForm(false)} />
-        ) : (
-          <>
-            {!hasResults && !searchTerm && (
-              <div className={styles.imageContainer}>
-                Nenhum insumo cadastrado.
-              </div>
-            )}
-
-            {!hasResults && searchTerm && (
-              <Fade in={true} timeout={750}>
-                <div className={styles.imageContainer}>
-                  <Image
-                    src="/no-data.png"
-                    alt="Nenhum dado encontrado"
-                    height={266}
-                    width={407}
-                    key={1}
-                  />
-                </div>
-              </Fade>
-            )}
-
-            {hasResults && <InputList inputList={filteredInputList} />}
-          </>
-        )}
+        <button className={styles.button} onClick={handleButtonClick}>
+          +
+        </button>
       </div>
-    </Fade>
+
+      <Dropdown
+        anchorEl={anchorEl}
+        onClose={handleCloseDropdown}
+        actions={[
+          {
+            label: 'Criar insumo',
+            onClick: () => handleDropdownAction('Criar insumo'),
+          },
+          {
+            label: 'Upload arquivo de insumo',
+            onClick: () => handleDropdownAction('upload arquivo de insumo'),
+          },
+        ]}
+      />
+
+      <TableHeader headers={TABLE_HEADERS} />
+
+      <div>
+        <InputList inputList={filteredInputList} />
+      </div>
+
+      {showCreateForm && (
+        <InputCreate
+          handleCancelNewInput={() => setShowCreateForm(false)}
+          showModal={showCreateForm}
+          handleCloseModal={() => setShowCreateForm(false)}
+        />
+      )}
+
+      {!hasResults && !searchTerm && (
+        <Fade in={!showCreateForm} timeout={500}>
+          <div className={styles.imageContainer}>Nenhum insumo cadastrado.</div>
+        </Fade>
+      )}
+
+      {!hasResults && searchTerm && (
+        <Fade in={!showCreateForm} timeout={750}>
+          <div className={styles.imageContainer}>
+            <Image
+              src="/no-data.png"
+              alt="Nenhum dado encontrado"
+              height={266}
+              width={407}
+              key={1}
+            />
+          </div>
+        </Fade>
+      )}
+    </div>
   )
 }

@@ -3,15 +3,16 @@
   flex-direction: column;
   width: 260px;
   height: 100%;
+  border-radius: 10px;
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  border: 2px solid white;
   height: 100%;
   flex-shrink: 0;
-  background: #fff;
+  background: #30333F;
+  border-radius: 10px;
   padding: 24px;
   gap: 30px;
 
@@ -23,26 +24,26 @@
   gap: 20px;
 }
 
-
 .imageContainer {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-top: 40px;
 }
 
 .imageContainer p {
-  color: #fbd9d8;
+  color: #BDBDBD;
   font-family: Pattaya;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 111.111% */
+  line-height: 20px;
   margin-bottom: 10px;
 }
 
 .imageContainer hr {
-  width: 151.004px;
+  width: 100%;
   height: 0px;
   transform: rotate(-0.43deg);
 }

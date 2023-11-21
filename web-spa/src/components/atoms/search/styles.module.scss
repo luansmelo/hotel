@@ -7,13 +7,15 @@
   }
   input {
     &::placeholder {
-      color: #84a59d;
+      color: #BDBDBD;
     }
     padding-left: 52px;
     border-radius: 8px;
-    background: #fff;
+    background: #1F2128;
     height: 50px;
     width: 410px;
     border: none;
+    outline: none;
+    color: #BDBDBD;
   }
 }

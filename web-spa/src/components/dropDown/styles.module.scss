@@ -1,21 +1,12 @@
-.dropdown {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 20px 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  border-radius: 12px;
-}
+.menuItem {
+  transition: background-color 0.3s;
+  
+  &:hover {
+    background-color: #757183;
+  }
 
-.dropdown-content {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  width: 100%;
-}
-
-.menuItemText {
-  text-align: left;
+  .menuItemText {
+    text-align: left;
+    color: #BDBDBD;
+  }
 }

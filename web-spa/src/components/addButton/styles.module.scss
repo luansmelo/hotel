@@ -5,13 +5,15 @@
   padding-inline: 20px;
   padding-block: 10px;
   border-radius: 6px;
-  background-color: #84a59d;
+  background-color: #696282;
   border: none;
   gap: 20px;
   cursor: pointer;
   transition: 0.3s filter ease;
-  height: 52px;
+  height: 40px;
   width: 100%;
+
+  color: #fff;
 }
 
 .AddButtonContainer:hover {

@@ -7,6 +7,10 @@ import { InputService } from '@/services/input/input'
 import { toast } from 'react-toastify'
 import { InputProps } from '@/components/input/InputList/types'
 
+export interface InputErrors {
+  [key: string]: string
+}
+
 interface InputContextContract {
   inputList: InputProps[]
   loading: boolean
@@ -14,6 +18,8 @@ interface InputContextContract {
   handleRequestInput: (input: InputContract) => Promise<void>
   handleUpdateInput: (input: InputContract) => Promise<void>
   handleDeleteInput: (input: InputContract) => Promise<void>
+  errors: Partial<InputContract>
+  setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
 }
 
 export const InputContext = createContext<InputContextContract>(
@@ -26,6 +32,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
   const [inputList, setInputList] = useState<InputProps[]>([] as InputProps[])
   const [loading, setLoading] = useState<boolean>(false)
   const [isUpdateLoading, setIsUpdateLoading] = useState<boolean>(false)
+  const [errors, setErrors] = useState<Partial<InputErrors>>({})
 
   const input = new InputService()
   const fetchInputList = async () => {
@@ -52,9 +59,15 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         await fetchInputList()
       } else {
         toast.error('Não foi possível criar novo insumo.')
+        setErrors({
+          createError: 'Não foi possível criar novo insumo.',
+        })
       }
     } catch (error) {
       toast.error('Não foi possível criar novo insumo.')
+      setErrors({
+        createError: 'Não foi possível criar novo insumo.',
+      })
     } finally {
       setLoading(false)
     }
@@ -118,6 +131,8 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         inputList,
         loading,
         isUpdateLoading,
+        errors,
+        setErrors,
         handleUpdateInput,
         handleRequestInput,
         handleDeleteInput,
