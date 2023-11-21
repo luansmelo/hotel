@@ -5,7 +5,6 @@ export interface InputContract {
   unitPrice: number;
   measurementUnit: string;
   group: string;
-  grammage: number;
   created_at: string;
   updated_at: string;
 }
@@ -16,5 +15,4 @@ export interface InputRegister {
   unitPrice: number;
   measurementUnit: string;
   group: string;
-  grammage: number;
 }

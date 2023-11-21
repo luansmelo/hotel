@@ -38,10 +38,8 @@ model InputsOnProducts {
   productId       String
   inputId         String
   name            String
-  code            String  @default(uuid())
   unitPrice       Float
   measurementUnit String
-  group           String
   grammage        Float
   input           Input   @relation(fields: [inputId], references: [id])
   product         Product @relation(fields: [productId], references: [id])
@@ -58,7 +56,6 @@ model Input {
   unitPrice       Float
   group           String
   measurementUnit String
-  grammage        Float
   products        InputsOnProducts[]
   created_at      String
   updated_at      String
