@@ -20,12 +20,12 @@
 }
 
 .mainButtonActivated {
-  background: #016A92;
+  background: #036B85;
   color: white;
 }
 
 .mainButton:hover {
-  background: #0384B4;
+  background: #0488A6;
 }
 .mainButton svg {
   margin-right: 16px;

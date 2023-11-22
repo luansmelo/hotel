@@ -7,6 +7,7 @@
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .searchAndButtonContainer {
@@ -28,17 +29,16 @@
   background-color: #04B2D9;
   color: #fff;
   border: none;
-  border-radius: 50%;
-  width: 50px;
+  border-radius: 8px;
   height: 50px;
-  font-size: 20px;
+  width: 380px;
   cursor: pointer;
   transition: background-color 1s ease, transform 0.3s ease;
 }
 
 .button:hover {
-  background-color: #0468BF;
-  transform: scale(1.1);
+  background-color: #0488A6;
+  transform: scale(1.01);
 }
 
 .inputSearch {

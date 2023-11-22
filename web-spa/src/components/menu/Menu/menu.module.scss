@@ -1,7 +1,9 @@
+/* menu.module.scss */
+
 .menuContainer {
   display: flex;
   flex-direction: column;
-  width: 260px;
+  width: 100%;
   height: 100%;
   border-radius: 10px;
 }
@@ -21,6 +23,15 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.menuButton {
+  width: 100%;
+}
+
+.menuButtonIcon {
+  /* Adiciona estilo ao ícone */
+  margin-bottom: 8px; /* Espaçamento entre o ícone e o texto */
 }
 
 .imageContainer {
@@ -43,4 +54,29 @@
   height: 1px;
   border: none;
   background-color: #636168;
+}
+
+/* Oculta a logo em telas menores e exibe apenas os botões */
+@media screen and (max-width: 768px) {
+  .imageContainer {
+    display: none;
+  }
+
+  .menuButtonContainer {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .menuButton {
+    width: 100%;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column; /* Altera a direção para coluna em telas menores */
+    align-items: center; /* Alinha os itens ao centro */
+    text-align: center; /* Alinha o texto ao centro */
+  }
+
+  .menuButtonIcon {
+    margin-bottom: 8px;
+  }
 }

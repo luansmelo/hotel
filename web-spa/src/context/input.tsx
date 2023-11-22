@@ -2,7 +2,6 @@
 import React, { createContext, ReactNode, useState, useEffect } from 'react'
 import { InputContract } from '@/atom/business'
 import { handleToastify } from '@/utils/toastify'
-import api from '@/config/api'
 import { InputService } from '@/services/input/input'
 import { toast } from 'react-toastify'
 import { InputProps } from '@/components/input/InputList/types'
@@ -14,9 +13,8 @@ export interface InputErrors {
 interface InputContextContract {
   inputList: InputProps[]
   loading: boolean
-  isUpdateLoading: boolean
-  handleRequestInput: (input: InputContract) => Promise<void>
-  handleUpdateInput: (input: InputContract) => Promise<void>
+  handleCreate: (input: InputContract) => Promise<void>
+  handleEdit: (input: InputContract) => Promise<void>
   handleDelete: (id: string) => Promise<void>
   errors: Partial<InputContract>
   setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
@@ -31,7 +29,6 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [inputList, setInputList] = useState<InputProps[]>([] as InputProps[])
   const [loading, setLoading] = useState<boolean>(false)
-  const [isUpdateLoading, setIsUpdateLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<Partial<InputErrors>>({})
 
   const input = new InputService()
@@ -49,7 +46,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const handleRequestInput = async (data: InputContract) => {
+  const handleCreate = async (data: InputContract) => {
     try {
       setLoading(true)
 
@@ -74,27 +71,25 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const handleUpdateInput = async (input: InputContract) => {
+  const handleEdit = async (data: InputContract) => {
     try {
-      setIsUpdateLoading(true)
-      alert(input.id)
+      setLoading(true)
 
-      const response = await api.patch(`/input/${input.id}`, input)
+      const response = await input.update(data)
 
-      if (response.status === 200) {
-        await fetchInputList()
-        setTimeout(() => {
-          handleToastify('Insumo atualizado com sucesso!', 'success')
-        }, 500)
-      } else {
-        setTimeout(() => {
-          handleToastify('Não foi possível atualizar o insumo.', 'error')
-        })
-      }
+      console.log('RESPONSE:', response)
+      // if (response.status === 200) {
+      //   await fetchInputList()
+      //   setTimeout(() => {
+      //     handleToastify('Insumo atualizado com sucesso!', 'success')
+      //   }, 500)
+      // } else {
+      //   setTimeout(() => {
+      //     handleToastify('Não foi possível atualizar o insumo.', 'error')
+      //   })
+      // }
     } catch (error) {
-      setTimeout(() => {
-        handleToastify('Não foi possível atualizar o insumo.', 'error')
-      })
+      console.log('error')
     }
   }
 
@@ -126,11 +121,10 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         inputList,
         loading,
-        isUpdateLoading,
         errors,
         setErrors,
-        handleUpdateInput,
-        handleRequestInput,
+        handleEdit,
+        handleCreate,
         handleDelete,
       }}
     >

@@ -9,17 +9,16 @@ interface InputProps {
   loading: boolean
   errors: Record<string, string | number>
   setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
-  handleCreate: (input: InputContract) => Promise<void>
+  handleEdit: (input: InputContract) => Promise<void>
   showModal: boolean
   handleCloseModal: () => void
 }
-
-export default function InputCreate({
+export default function InputEdit({
   loading,
   errors,
   showModal,
   setErrors,
-  handleCreate,
+  handleEdit,
   handleCloseModal,
 }: InputProps) {
   const { form, handleSetState } = useForm({
@@ -60,7 +59,7 @@ export default function InputCreate({
     handleCloseModal()
   }
 
-  const createInput = async () => {
+  const handleUpdate = async () => {
     try {
       const numericUnitPrice = Number(form.unitPrice)
 
@@ -68,7 +67,7 @@ export default function InputCreate({
         throw new Error('O campo de preço unitário deve ser um número válido')
       }
 
-      await handleCreate({
+      await handleEdit({
         ...form,
         unitPrice: numericUnitPrice,
       })
@@ -86,11 +85,10 @@ export default function InputCreate({
         submit={async (e) => {
           e.preventDefault()
           if (validateForm()) {
-            await createInput()
+            await handleUpdate()
           }
         }}
         loading={loading}
-        errors={errors}
       >
         <TextField
           fullWidth

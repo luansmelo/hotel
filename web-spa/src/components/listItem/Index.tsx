@@ -3,15 +3,24 @@ import { IconButton } from '@mui/material'
 import { MoreHorizontal } from 'lucide-react'
 import Dropdown from '../dropDown'
 import styles from './styles.module.scss'
+import ConfirmDialog from '../dialog'
+import { InputContract } from '@/atom/business'
 
 interface ListItemProps {
   children: React.ReactNode
   onDelete: () => void
-  onEdit: () => void
+  onEdit: (input: InputContract) => void
+  input: InputContract
 }
 
-const ListItem: React.FC<ListItemProps> = ({ children, onDelete, onEdit }) => {
+const ListItem: React.FC<ListItemProps> = ({
+  children,
+  onDelete,
+  onEdit,
+  input,
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [confirmationOpen, setConfirmationOpen] = useState(false)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -22,13 +31,22 @@ const ListItem: React.FC<ListItemProps> = ({ children, onDelete, onEdit }) => {
   }
 
   const handleConfirmDelete = () => {
-    onDelete()
+    setConfirmationOpen(true)
     handleClose()
   }
 
   const handleEdit = () => {
-    onEdit()
+    onEdit(input)
     handleClose()
+  }
+
+  const handleCancelConfirmation = () => {
+    setConfirmationOpen(false)
+  }
+
+  const handleConfirmConfirmation = () => {
+    onDelete()
+    setConfirmationOpen(false)
   }
 
   return (
@@ -45,6 +63,12 @@ const ListItem: React.FC<ListItemProps> = ({ children, onDelete, onEdit }) => {
             { label: 'Editar', onClick: handleEdit },
             { label: 'Excluir', onClick: handleConfirmDelete },
           ]}
+        />
+
+        <ConfirmDialog
+          open={confirmationOpen}
+          onClose={handleCancelConfirmation}
+          onConfirm={handleConfirmConfirmation}
         />
       </div>
     </tr>
