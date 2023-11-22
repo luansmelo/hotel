@@ -18,7 +18,10 @@ export const InputForm: React.FC<IInputFormProps> = ({
         }}
       >
         {children}
-        <AddButton loading={loading} text="Adicionar" Icon={Save} />
+        <div className={styles.buttonContainer}>
+          <hr className={styles.hr} />
+          <AddButton loading={loading} text="Adicionar" Icon={Save} />
+        </div>
       </form>
     </div>
   )

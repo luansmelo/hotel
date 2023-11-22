@@ -17,7 +17,7 @@ export default function AddButton({
   Icon = Plus,
   isButtonDisabled,
   loading,
-  colorLoading = '#FFEF92',
+  colorLoading = '#0468BF',
 }: AddButtonProps) {
   return (
     <button

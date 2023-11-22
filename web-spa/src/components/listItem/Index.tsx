@@ -36,7 +36,7 @@ const ListItem: React.FC<ListItemProps> = ({ children, onDelete, onEdit }) => {
       <div className={styles.contentContainer}>{children}</div>
       <div className={styles.buttonContainer}>
         <IconButton onClick={handleClick}>
-          <MoreHorizontal color="#696282" />
+          <MoreHorizontal color="#04B2D9" />
         </IconButton>
         <Dropdown
           anchorEl={anchorEl}

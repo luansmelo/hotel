@@ -1,12 +1,12 @@
 .mainButton {
   width: 100%;
-  color: #BDBDBD;
+  color: #fff;
   padding: 14px;
   display: flex;
   height: 50px;
   flex-shrink: 0;
   border-radius: 6px;
-  background: #636168;
+  background: #00A3E0;
   align-items: center;
   border: none;
   font-family: sans-serif;
@@ -15,17 +15,17 @@
   font-weight: 500;
   text-align: center;
 
-  transition: 0.2s background ease;
+  transition: 0.5s background ease;
   cursor: pointer;
 }
 
 .mainButtonActivated {
-  background: #696282;
+  background: #016A92;
   color: white;
 }
+
 .mainButton:hover {
-  background: #757183;
-  color: white;
+  background: #0384B4;
 }
 .mainButton svg {
   margin-right: 16px;

@@ -1,4 +1,3 @@
-import InputItem from '@/components/input/InputItem'
 import styles from './styles.module.scss'
 import { InputListProps } from './types'
 import ListItem from '@/components/listItem/Index'
@@ -7,7 +6,7 @@ function InputList({ inputList, handleDelete }: InputListProps) {
   return (
     <table className={styles.table}>
       <tbody className={styles.tbody}>
-        {inputList.map((input) => (
+        {inputList?.map((input) => (
           <ListItem
             key={input.id}
             onDelete={() => handleDelete(input.id)}

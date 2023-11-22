@@ -26,7 +26,7 @@ const Dropdown: React.FC<DropdownProps> = ({ actions, onClose, anchorEl }) => {
             '4px 4px 8px 0 rgba(0, 0, 0, 0.2), 6px 6px 20px 0 rgba(0, 0, 0, 0.19)',
           minWidth: '160px',
           backgroundColor: '#30333F',
-          borderRadius: '4px', // Adicione a propriedade borderRadius para evitar as pontinhas cinzas
+          borderRadius: '4px',
         },
       }}
     >

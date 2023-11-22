@@ -1,6 +1,6 @@
 'use client'
 import { Apple, Microwave, PanelTop, Soup } from 'lucide-react'
-import Image from '../../atoms/Image'
+import Image from 'next/image'
 import styles from './menu.module.scss'
 import MenuButton from '../button/MenuButton'
 import { useState } from 'react'
@@ -12,10 +12,16 @@ const Menu: React.FC = () => {
     <div className={styles.menuContainer}>
       <div className={styles.main}>
         <div className={styles.imageContainer}>
-          <Image src={'/chef-hat.png'} alt="Logo" width={75} height={75} />
-          <p>App</p>
-          <hr />
+          <Image
+            src={'/chef-hat.png'}
+            alt="Logo"
+            width={120}
+            height={100}
+            quality={100}
+            layout="intrinsic"
+          />
         </div>
+        <hr className={styles.hr} />
         <div className={styles.menuButtonContainer}>
           <MenuButton
             Icon={PanelTop}
