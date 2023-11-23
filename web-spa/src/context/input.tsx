@@ -75,21 +75,15 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
     try {
       setLoading(true)
 
-      const response = await input.update(data)
-
-      console.log('RESPONSE:', response)
-      // if (response.status === 200) {
-      //   await fetchInputList()
-      //   setTimeout(() => {
-      //     handleToastify('Insumo atualizado com sucesso!', 'success')
-      //   }, 500)
-      // } else {
-      //   setTimeout(() => {
-      //     handleToastify('Não foi possível atualizar o insumo.', 'error')
-      //   })
-      // }
+      const res = await input.update(data)
+      if (res.message === 'sucesso') {
+        handleToastify('Insumo atualizado com sucesso!', 'success')
+        await fetchInputList()
+      }
     } catch (error) {
       console.log('error')
+    } finally {
+      setLoading(false)
     }
   }
 

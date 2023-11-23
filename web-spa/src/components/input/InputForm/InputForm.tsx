@@ -8,6 +8,7 @@ export const InputForm: React.FC<IInputFormProps> = ({
   children,
   loading,
   submit,
+  text,
 }) => {
   return (
     <Box
@@ -30,7 +31,7 @@ export const InputForm: React.FC<IInputFormProps> = ({
       {children}
       <div className={styles.buttonContainer}>
         <hr className={styles.hr} />
-        <AddButton loading={loading} text="Adicionar" Icon={Save} />
+        <AddButton loading={loading} text={text} Icon={Save} />
         <div></div>
       </div>
     </Box>

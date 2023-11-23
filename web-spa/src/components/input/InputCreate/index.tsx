@@ -1,5 +1,12 @@
 import { InputContract } from '@/atom/business'
-import { TextField } from '@mui/material'
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material'
 import { InputForm } from '@/components/input/InputForm/InputForm'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
@@ -34,20 +41,17 @@ export default function InputCreate({
     const numericUnitPrice = Number(form.unitPrice)
 
     const newErrors = {
-      name: form.name.length < 3 ? 'Nome deve ter no mínimo 3 caracteres' : '',
+      name: form.name.trim() === '' ? 'Nome é obrigatório' : '',
       measurementUnit:
-        form.measurementUnit.length < 2
-          ? 'Unidade de medida deve ter no mínimo 3 caracteres'
+        form.measurementUnit.trim() === ''
+          ? 'Unidade de medida é obrigatória'
           : '',
       unitPrice:
         form.unitPrice.trim() === '' || isNaN(numericUnitPrice)
           ? 'Preço unitário deve ser um número válido'
           : '',
-      code:
-        form.code.length < 3 ? 'Código deve ter no mínimo 3 caracteres' : '',
-
-      group:
-        form.group.length < 3 ? 'Grupo deve ter no mínimo 3 caracteres' : '',
+      code: form.code.trim() === '' ? 'Código é obrigatório' : '',
+      group: form.group.trim() === '' ? 'Grupo é obrigatório' : '',
     }
 
     setErrors(newErrors)
@@ -91,6 +95,7 @@ export default function InputCreate({
         }}
         loading={loading}
         errors={errors}
+        text="CRIAR"
       >
         <TextField
           fullWidth
@@ -122,34 +127,56 @@ export default function InputCreate({
           helperText={errors.name}
         />
 
-        <TextField
-          size="small"
-          id="name"
-          label="Unidade Medida"
-          name="measurementUnit"
-          variant="outlined"
-          value={form.measurementUnit}
-          onChange={handleSetState}
-          autoComplete="off"
-          sx={{
-            minHeight: '70px',
-          }}
-          InputProps={{
-            style: {
+        <FormControl fullWidth size="small" sx={{ minHeight: '70px' }}>
+          <InputLabel
+            id="measurementUnitLabel"
+            sx={{
+              color: '#BDBDBD',
+            }}
+          >
+            Unidade de Medida
+          </InputLabel>
+          <Select
+            labelId="measurementUnitLabel"
+            id="measurementUnit"
+            name="measurementUnit"
+            value={form.measurementUnit}
+            onChange={handleSetState}
+            label="Unidade de Medida"
+            error={!!errors.measurementUnit}
+            sx={{
               background: '#1F2128',
               color: '#BDBDBD',
               outline: 'none',
               margin: 0,
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: '#BDBDBD',
-            },
-          }}
-          error={!!errors.measurementUnit}
-          helperText={errors.measurementUnit}
-        />
+              '&:focus': {
+                background: '#1F2128',
+              },
+            }}
+          >
+            <MenuItem
+              value="KG"
+              sx={{
+                color: '#BDBDBD',
+              }}
+            >
+              KG
+            </MenuItem>
+            <MenuItem
+              value="LT"
+              sx={{
+                color: '#BDBDBD',
+              }}
+            >
+              LT
+            </MenuItem>
+          </Select>
+          {errors.measurementUnit && (
+            <FormHelperText sx={{ color: '#f44336' }}>
+              {errors.measurementUnit}
+            </FormHelperText>
+          )}
+        </FormControl>
 
         <TextField
           size="small"

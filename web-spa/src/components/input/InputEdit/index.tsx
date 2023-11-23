@@ -4,13 +4,15 @@ import { InputForm } from '@/components/input/InputForm/InputForm'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
 import { InputErrors } from '@/context/input'
+import { InputProps } from '../InputList/types'
 
-interface InputProps {
+interface InputEditProps {
+  showModal: boolean
+  input: InputProps
   loading: boolean
   errors: Record<string, string | number>
   setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
   handleEdit: (input: InputContract) => Promise<void>
-  showModal: boolean
   handleCloseModal: () => void
 }
 export default function InputEdit({
@@ -20,14 +22,9 @@ export default function InputEdit({
   setErrors,
   handleEdit,
   handleCloseModal,
-}: InputProps) {
-  const { form, handleSetState } = useForm({
-    name: '',
-    measurementUnit: '',
-    unitPrice: '',
-    code: '',
-    group: '',
-  })
+  input,
+}: InputEditProps) {
+  const { form, handleSetState } = useForm(input)
 
   const validateForm = () => {
     const numericUnitPrice = Number(form.unitPrice)
@@ -38,10 +35,9 @@ export default function InputEdit({
         form.measurementUnit.length < 2
           ? 'Unidade de medida deve ter no mínimo 3 caracteres'
           : '',
-      unitPrice:
-        form.unitPrice.trim() === '' || isNaN(numericUnitPrice)
-          ? 'Preço unitário deve ser um número válido'
-          : '',
+      unitPrice: isNaN(numericUnitPrice)
+        ? 'Preço unitário deve ser um número válido'
+        : '',
       code:
         form.code.length < 3 ? 'Código deve ter no mínimo 3 caracteres' : '',
 
@@ -89,6 +85,8 @@ export default function InputEdit({
           }
         }}
         loading={loading}
+        errors={errors}
+        text="ATUALIZAR"
       >
         <TextField
           fullWidth

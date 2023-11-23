@@ -1,26 +1,19 @@
-import React, { useState } from 'react'
 import { IconButton } from '@mui/material'
 import { MoreHorizontal } from 'lucide-react'
 import Dropdown from '../dropDown'
 import styles from './styles.module.scss'
 import ConfirmDialog from '../dialog'
-import { InputContract } from '@/atom/business'
+import { useState } from 'react'
 
 interface ListItemProps {
   children: React.ReactNode
   onDelete: () => void
-  onEdit: (input: InputContract) => void
-  input: InputContract
+  onEdit: () => void
 }
 
-const ListItem: React.FC<ListItemProps> = ({
-  children,
-  onDelete,
-  onEdit,
-  input,
-}) => {
+const ListItem = ({ children, onDelete, onEdit }: ListItemProps) => {
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [confirmationOpen, setConfirmationOpen] = useState(false)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -30,23 +23,18 @@ const ListItem: React.FC<ListItemProps> = ({
     setAnchorEl(null)
   }
 
-  const handleConfirmDelete = () => {
-    setConfirmationOpen(true)
+  const handleDeleteClick = () => {
+    setIsConfirmDialogOpen(true)
+  }
+
+  const handleEditClick = () => {
+    onEdit()
     handleClose()
   }
 
-  const handleEdit = () => {
-    onEdit(input)
+  const handleDropdownClose = () => {
     handleClose()
-  }
-
-  const handleCancelConfirmation = () => {
-    setConfirmationOpen(false)
-  }
-
-  const handleConfirmConfirmation = () => {
-    onDelete()
-    setConfirmationOpen(false)
+    setIsConfirmDialogOpen(false)
   }
 
   return (
@@ -60,17 +48,17 @@ const ListItem: React.FC<ListItemProps> = ({
           anchorEl={anchorEl}
           onClose={handleClose}
           actions={[
-            { label: 'Editar', onClick: handleEdit },
-            { label: 'Excluir', onClick: handleConfirmDelete },
+            { label: 'Editar', onClick: handleEditClick },
+            { label: 'Excluir', onClick: handleDeleteClick },
           ]}
         />
-
-        <ConfirmDialog
-          open={confirmationOpen}
-          onClose={handleCancelConfirmation}
-          onConfirm={handleConfirmConfirmation}
-        />
       </div>
+
+      <ConfirmDialog
+        open={isConfirmDialogOpen}
+        onClose={handleDropdownClose}
+        onConfirm={onDelete}
+      />
     </tr>
   )
 }

@@ -1,5 +1,5 @@
 'use client'
-import { Apple, Microwave, PanelTop, Soup } from 'lucide-react'
+import { Apple, Microwave, PanelTop, Soup, Upload } from 'lucide-react'
 import Image from 'next/image'
 import styles from './menu.module.scss'
 import MenuButton from '../button/MenuButton'
@@ -50,6 +50,13 @@ const Menu: React.FC = () => {
             selectedFeature="input"
             active={activeButton === 'input'}
             onClick={() => setActiveButton('input')}
+          />
+          <MenuButton
+            Icon={Upload}
+            text="Upload"
+            selectedFeature="upload"
+            active={activeButton === 'upload'}
+            onClick={() => setActiveButton('upload')}
           />
         </div>
       </div>

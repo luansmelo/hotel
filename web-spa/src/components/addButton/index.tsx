@@ -31,7 +31,6 @@ export default function AddButton({
         <Ring color={colorLoading} width="60px" height="32px" duration="1s" />
       ) : (
         <>
-          <Icon color="#ffffff" />
           <p>{text}</p>
         </>
       )}

@@ -2,7 +2,12 @@ import styles from './styles.module.scss'
 import { InputListProps } from './types'
 import ListItem from '@/components/listItem/Index'
 
-function InputList({ inputList, handleDelete, handleEdit }: InputListProps) {
+function InputList({
+  inputList,
+  handleDelete,
+  handleSelectInput,
+  openEditModal,
+}: InputListProps) {
   return (
     <>
       <table className={styles.table}>
@@ -11,8 +16,10 @@ function InputList({ inputList, handleDelete, handleEdit }: InputListProps) {
             <ListItem
               key={input.id}
               onDelete={() => handleDelete(input.id)}
-              onEdit={() => handleEdit && handleEdit(input)}
-              input={input}
+              onEdit={() => {
+                openEditModal()
+                handleSelectInput(input)
+              }}
             >
               <>
                 <th>{input.name}</th>

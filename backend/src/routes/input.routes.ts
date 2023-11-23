@@ -44,7 +44,7 @@ router.get(
   }
 );
 
-router.patch(
+router.put(
   "/:id",
   authenticated,
   validate(InputSchema),
@@ -57,8 +57,8 @@ router.patch(
       const controller = makeInputController();
 
       await controller.updateById(id, input);
-
-      return response.status(200).send({ message: "Insumo atualizado!" });
+      console.log("chegou aqui");
+      return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
     }

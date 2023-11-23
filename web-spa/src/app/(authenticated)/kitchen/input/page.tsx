@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useMemo, useState } from 'react'
 import { Ring } from 'react-cssfx-loading'
 import InputSearch from '@/components/atoms/search'
 import TableHeader from '@/components/atoms/TableHeader'
@@ -10,9 +10,9 @@ import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import { InputContext } from '@/context/input'
 import InputCreate from '@/components/input/InputCreate'
-import { InputProps } from '@/components/input/InputList/types'
-
-const Input: React.FC<InputProps> = () => {
+import { InputListProps, InputProps } from '@/components/input/InputList/types'
+import InputEdit from '@/components/input/InputEdit'
+const Input: React.FC<InputListProps> = () => {
   const {
     loading,
     inputList,
@@ -25,20 +25,37 @@ const Input: React.FC<InputProps> = () => {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
+  const [selectedInput, setSelectedInput] = useState<InputProps>(
+    {} as InputProps
+  )
+
+  const [showEditModal, setShowEditModal] = useState(false)
+
+  const openEditModal = () => {
+    console.log('Abrindo o modal de edição')
+    setShowEditModal(true)
+  }
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
+  }
+
+  const handleSelectedInput = (input: InputProps) => {
+    setSelectedInput(input)
   }
 
   const handleButtonClick = () => {
     setShowCreateForm(true)
   }
 
-  const filteredInputList = searchTerm
-    ? inputList.filter(
-        (input) => input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : inputList
+  const filteredInputList = useMemo(() => {
+    return searchTerm
+      ? inputList.filter(
+          (input) =>
+            input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : inputList
+  }, [inputList, searchTerm])
 
   const hasResults = filteredInputList?.length > 0
 
@@ -69,8 +86,21 @@ const Input: React.FC<InputProps> = () => {
       <InputList
         inputList={filteredInputList}
         handleDelete={handleDelete}
-        handleEdit={handleEdit}
+        handleSelectInput={handleSelectedInput}
+        openEditModal={openEditModal}
       />
+
+      {showEditModal && (
+        <InputEdit
+          loading={loading}
+          errors={errors}
+          showModal={showEditModal}
+          setErrors={setErrors}
+          handleEdit={handleEdit}
+          handleCloseModal={() => setShowEditModal(false)}
+          input={selectedInput}
+        />
+      )}
 
       {showCreateForm && (
         <InputCreate
