@@ -1,9 +1,18 @@
-import { useState } from 'react'
+import { useState, ChangeEvent } from 'react'
+
+interface SelectChangeEvent<T = string> {
+  target: {
+    name: string
+    value: T
+  }
+}
+
+type FormInputEvent = ChangeEvent<HTMLInputElement> | SelectChangeEvent
 
 const useForm = <T extends object>(initialState: T) => {
   const [form, setForm] = useState(initialState)
 
-  const handleSetState = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSetState = (e: FormInputEvent) => {
     const { name, value } = e.target
     setForm((prevState) => ({
       ...prevState,

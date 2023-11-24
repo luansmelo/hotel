@@ -155,28 +155,12 @@ export default function InputCreate({
               },
             }}
           >
-            {['KG', 'LT'].map((option) => (
+            {['KG', 'LT', 'CAIXA'].map((option) => (
               <MenuItem
                 key={option}
                 value={option}
                 sx={{
                   color: '#BDBDBD',
-                  // background: '#1F2128',
-
-                  '& .MuiMenu-list': {
-                    background: '#1F2128',
-                    padding: '300px',
-                  },
-
-                  '& .MuiMenuItem-root': {
-                    // Estilos dos itens do menu
-                    background: '#272a34', // Cor de fundo dos itens no dropdown
-                    color: '#ffffff', // Cor do texto nos itens no dropdown
-
-                    '&:hover': {
-                      background: '#1F2128', // Cor de fundo ao passar o mouse
-                    },
-                  },
                 }}
               >
                 {option}
@@ -276,22 +260,17 @@ export default function InputCreate({
               },
             }}
           >
-            <MenuItem
-              value="padaria"
-              sx={{
-                color: '#BDBDBD',
-              }}
-            >
-              padaria
-            </MenuItem>
-            <MenuItem
-              value="congelados"
-              sx={{
-                color: '#BDBDBD',
-              }}
-            >
-              congelados
-            </MenuItem>
+            {['CONGELADOS', 'PADARIA', 'LANCHONETE'].map((option) => (
+              <MenuItem
+                key={option}
+                value={option}
+                sx={{
+                  color: '#BDBDBD',
+                }}
+              >
+                {option}
+              </MenuItem>
+            ))}
           </Select>
           {errors.group && (
             <FormHelperText sx={{ color: '#f44336' }}>

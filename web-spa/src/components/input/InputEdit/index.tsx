@@ -1,5 +1,12 @@
 import { InputContract } from '@/atom/business'
-import { TextField } from '@mui/material'
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material'
 import { InputForm } from '@/components/input/InputForm/InputForm'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
@@ -118,34 +125,52 @@ export default function InputEdit({
           helperText={errors.name}
         />
 
-        <TextField
-          size="small"
-          id="name"
-          label="Unidade Medida"
-          name="measurementUnit"
-          variant="outlined"
-          value={form.measurementUnit}
-          onChange={handleSetState}
-          autoComplete="off"
-          sx={{
-            minHeight: '70px',
-          }}
-          InputProps={{
-            style: {
+        <FormControl fullWidth size="small" sx={{ minHeight: '70px' }}>
+          <InputLabel
+            id="measurementUnitLabel"
+            sx={{
+              color: '#BDBDBD',
+            }}
+          >
+            Unidade de Medida
+          </InputLabel>
+          <Select
+            labelId="measurementUnitLabel"
+            id="measurementUnit"
+            name="measurementUnit"
+            value={form.measurementUnit}
+            onChange={handleSetState}
+            label="Unidade de Medida"
+            error={!!errors.measurementUnit}
+            sx={{
               background: '#1F2128',
               color: '#BDBDBD',
               outline: 'none',
               margin: 0,
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: '#BDBDBD',
-            },
-          }}
-          error={!!errors.measurementUnit}
-          helperText={errors.measurementUnit}
-        />
+
+              '&:focus': {
+                background: '#1F2128',
+              },
+            }}
+          >
+            {['KG', 'LT', 'CAIXA'].map((option) => (
+              <MenuItem
+                key={option}
+                value={option}
+                sx={{
+                  color: '#BDBDBD',
+                }}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+          {errors.measurementUnit && (
+            <FormHelperText sx={{ color: '#f44336' }}>
+              {errors.measurementUnit}
+            </FormHelperText>
+          )}
+        </FormControl>
 
         <TextField
           size="small"
@@ -206,34 +231,51 @@ export default function InputEdit({
           helperText={errors.code}
         />
 
-        <TextField
-          size="small"
-          id="grupo"
-          label="Grupo"
-          name="group"
-          variant="outlined"
-          value={form.group}
-          onChange={handleSetState}
-          autoComplete="off"
-          sx={{
-            minHeight: '70px',
-          }}
-          InputProps={{
-            style: {
+        <FormControl fullWidth size="small" sx={{ minHeight: '70px' }}>
+          <InputLabel
+            id="groupLabel"
+            sx={{
+              color: '#BDBDBD',
+            }}
+          >
+            Grupo
+          </InputLabel>
+          <Select
+            labelId="groupLabel"
+            id="group"
+            name="group"
+            value={form.group}
+            onChange={handleSetState}
+            label="Grupo"
+            error={!!errors.group}
+            sx={{
               background: '#1F2128',
               color: '#BDBDBD',
               outline: 'none',
               margin: 0,
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: '#BDBDBD',
-            },
-          }}
-          error={!!errors.group}
-          helperText={errors.group}
-        />
+              '&:focus': {
+                background: '#1F2128',
+              },
+            }}
+          >
+            {['CONGELADOS', 'PADARIA', 'LANCHONETE'].map((option) => (
+              <MenuItem
+                key={option}
+                value={option}
+                sx={{
+                  color: '#BDBDBD',
+                }}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+          {errors.group && (
+            <FormHelperText sx={{ color: '#f44336' }}>
+              {errors.group}
+            </FormHelperText>
+          )}
+        </FormControl>
       </InputForm>
     </Modal>
   )
