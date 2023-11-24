@@ -149,27 +149,39 @@ export default function InputCreate({
               color: '#BDBDBD',
               outline: 'none',
               margin: 0,
+
               '&:focus': {
                 background: '#1F2128',
               },
             }}
           >
-            <MenuItem
-              value="KG"
-              sx={{
-                color: '#BDBDBD',
-              }}
-            >
-              KG
-            </MenuItem>
-            <MenuItem
-              value="LT"
-              sx={{
-                color: '#BDBDBD',
-              }}
-            >
-              LT
-            </MenuItem>
+            {['KG', 'LT'].map((option) => (
+              <MenuItem
+                key={option}
+                value={option}
+                sx={{
+                  color: '#BDBDBD',
+                  // background: '#1F2128',
+
+                  '& .MuiMenu-list': {
+                    background: '#1F2128',
+                    padding: '300px',
+                  },
+
+                  '& .MuiMenuItem-root': {
+                    // Estilos dos itens do menu
+                    background: '#272a34', // Cor de fundo dos itens no dropdown
+                    color: '#ffffff', // Cor do texto nos itens no dropdown
+
+                    '&:hover': {
+                      background: '#1F2128', // Cor de fundo ao passar o mouse
+                    },
+                  },
+                }}
+              >
+                {option}
+              </MenuItem>
+            ))}
           </Select>
           {errors.measurementUnit && (
             <FormHelperText sx={{ color: '#f44336' }}>
@@ -237,34 +249,56 @@ export default function InputCreate({
           helperText={errors.code}
         />
 
-        <TextField
-          size="small"
-          id="grupo"
-          label="Grupo"
-          name="group"
-          variant="outlined"
-          value={form.group}
-          onChange={handleSetState}
-          autoComplete="off"
-          sx={{
-            minHeight: '70px',
-          }}
-          InputProps={{
-            style: {
+        <FormControl fullWidth size="small" sx={{ minHeight: '70px' }}>
+          <InputLabel
+            id="groupLabel"
+            sx={{
+              color: '#BDBDBD',
+            }}
+          >
+            Grupo
+          </InputLabel>
+          <Select
+            labelId="groupLabel"
+            id="group"
+            name="group"
+            value={form.group}
+            onChange={handleSetState}
+            label="Grupo"
+            error={!!errors.group}
+            sx={{
               background: '#1F2128',
               color: '#BDBDBD',
               outline: 'none',
               margin: 0,
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: '#BDBDBD',
-            },
-          }}
-          error={!!errors.group}
-          helperText={errors.group}
-        />
+              '&:focus': {
+                background: '#1F2128',
+              },
+            }}
+          >
+            <MenuItem
+              value="padaria"
+              sx={{
+                color: '#BDBDBD',
+              }}
+            >
+              padaria
+            </MenuItem>
+            <MenuItem
+              value="congelados"
+              sx={{
+                color: '#BDBDBD',
+              }}
+            >
+              congelados
+            </MenuItem>
+          </Select>
+          {errors.group && (
+            <FormHelperText sx={{ color: '#f44336' }}>
+              {errors.group}
+            </FormHelperText>
+          )}
+        </FormControl>
       </InputForm>
     </Modal>
   )
