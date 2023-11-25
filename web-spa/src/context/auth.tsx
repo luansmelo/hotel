@@ -1,11 +1,19 @@
 'use client'
 
-import { createContext, ReactNode } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 import { AuthService, UserLogin } from '@/services/auth/auth'
 import { useRouter } from 'next/navigation'
 import cookies from 'js-cookie'
+import { Input } from '@/components/input/types'
+import { InputErrors } from './input'
+import { handleToastify } from '@/utils/toastify'
 
+export interface AuthError {
+  errors: Partial<Input>
+  setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
+}
 interface AuthContextType {
+  loading: boolean
   signIn: (input: UserLogin) => Promise<void>
   signOut: () => void
 }
@@ -13,10 +21,12 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   async function signIn(input: UserLogin) {
     try {
+      setLoading(true)
       const response = new AuthService()
 
       const user = await response.login(input)
@@ -33,9 +43,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         })
 
         router.push('/kitchen')
+      } else {
+        const error = await user?.json()
+        handleToastify(error.error, 'error')
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000)
     }
   }
 
@@ -48,6 +65,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
+        loading,
+
         signIn,
         signOut,
       }}

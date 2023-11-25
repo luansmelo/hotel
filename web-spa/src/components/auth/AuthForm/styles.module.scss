@@ -7,11 +7,14 @@
 }
 
 .registerContainer {
-  background-color: white;
+  background-color: #30333F;
   width: 450px;
+  // height: 400px;
   border-radius: 10px;
   padding: 36px;
-  box-shadow: 0px 9px 44px 8px rgba(76, 78, 100, 0.12), 0px 23px 36px 3px rgba(76, 78, 100, 0.14), 0px 11px 14px -7px rgba(76, 78, 100, 0.20);
+  box-shadow: 0px 9px 44px 8px rgba(76, 78, 100, 0.12),
+    0px 23px 36px 3px rgba(76, 78, 100, 0.14),
+    0px 11px 14px -7px rgba(76, 78, 100, 0.20);
 }
 
 .formWrapper {
@@ -19,30 +22,36 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  
+  // margin-bottom: 20px;
 }
 
-.logo{
+.logo {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-
-  p {
-    color: #F28482;
-    font-family: Pattaya;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 20px;
-  }
-
-  span {
-    width: 150px;
-    height: 2px;
-    background-color: #F28482;
-  }
 }
 
+.accountText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  color: #fff;
+
+}
+
+.accountLink {
+  color: #f27127;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s, font-size 0.3s;
+}
+
+.accountLink:hover {
+  color: #f1550d;
+  font-size: 17px; 
+}
 .createNewAccountInputsWrapper {
   display: flex;
   align-items: center;
