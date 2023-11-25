@@ -1,8 +1,13 @@
-import { Error } from '@/utils/interface'
-
 export interface LoginProps {
   email: string
   password: string
+}
+
+export interface RegisterProps {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
 }
 
 export interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,5 +21,9 @@ export interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 export interface LoginFormProps {
   signIn: (input: LoginProps) => Promise<void>
   loading: boolean
-  error: Error<LoginProps>
+}
+
+export interface RegisterFormProps {
+  register: (input: RegisterProps) => Promise<void>
+  loading: boolean
 }

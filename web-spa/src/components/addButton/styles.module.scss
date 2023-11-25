@@ -12,7 +12,7 @@
   transition: 0.3s filter ease;
   height: 40px;
   width: 100%;
-
+  outline: none;
   color: #fff;
 }
 
@@ -21,8 +21,8 @@
 }
 
 .DisabledButton {
-  background-color: #ccc; /* Altere para a cor desejada para o botão desativado */
-  cursor: not-allowed; /* O cursor se torna 'não permitido' quando o botão está desativado */
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .DisabledButton:hover {

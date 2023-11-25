@@ -4,14 +4,7 @@ import { LoginForm } from '@/components/auth/LoginForm/LoginForm'
 import { AuthContext } from '@/context/auth'
 import { useContext } from 'react'
 export default function Login() {
-  const { signIn, loading, errors, setErrors } = useContext(AuthContext)
+  const { signIn, loading } = useContext(AuthContext)
 
-  return (
-    <LoginForm
-      signIn={signIn}
-      loading={loading}
-      errors={errors}
-      setErrors={setErrors}
-    />
-  )
+  return <LoginForm signIn={signIn} loading={loading} />
 }

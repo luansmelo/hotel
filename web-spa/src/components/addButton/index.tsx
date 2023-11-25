@@ -22,10 +22,10 @@ export default function AddButton({
   return (
     <button
       className={`${styles.AddButtonContainer} ${
-        isButtonDisabled ? styles.DisabledButton : ''
+        isButtonDisabled || loading ? styles.DisabledButton : ''
       }`}
       onClick={onClickButton}
-      disabled={isButtonDisabled}
+      disabled={isButtonDisabled || loading}
     >
       {loading ? (
         <Ring color={colorLoading} width="60px" height="32px" duration="1s" />

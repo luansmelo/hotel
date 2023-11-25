@@ -1,7 +1,8 @@
 import { AuthForm } from '@/components/auth/AuthForm/AuthForm'
-import { AuthService, UserRegister } from '@/services/auth/auth'
+
 import {
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -10,22 +11,61 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
-import cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
-export const RegisterForm = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const router = useRouter()
+import useForm from '@/hooks/useForm'
+import { Error } from '@/utils/interface'
+import { RegisterFormProps, RegisterProps } from '../AuthForm/types'
+export const RegisterForm = ({ register, loading }: RegisterFormProps) => {
+  const { form, handleSetState } = useForm({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
 
-  const user = new AuthService()
+  const [localError, setLocalError] = useState<Error<RegisterProps>>({
+    errors: {},
+    setErrors: () => {},
+  })
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
+  const validateForm = () => {
+    const newErrors: Partial<RegisterProps> = {
+      name: !form.name ? 'O nome é obrigatório.' : '',
+      email: !form.email
+        ? 'O email é obrigatório.'
+        : !/\S+@\S+\.\S+/.test(form.email)
+        ? 'Digite um email válido.'
+        : '',
+      password: !form.password
+        ? 'A senha é obrigatória.'
+        : form.password.length < 6
+        ? 'A senha deve ter pelo menos 6 caracteres.'
+        : '',
+      confirmPassword: !form.confirmPassword
+        ? 'A confirmação da senha é obrigatória.'
+        : form.confirmPassword !== form.password
+        ? 'As senhas não conferem.'
+        : '',
+    }
 
+    setLocalError({
+      ...localError,
+      errors: newErrors,
+    })
+
+    return Object.values(newErrors).every((error) => !error)
+  }
+
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  })
+
+  const handleClickShowPassword = (field: 'password' | 'confirmPassword') => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }))
+  }
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -33,115 +73,157 @@ export const RegisterForm = () => {
   }
 
   const handleRegisterSubmit = async () => {
-    if (!name || !email || !password) {
-      setLoading(false)
-      return
-    }
-
-    setLoading(true)
-
-    const userData: UserRegister = {
-      name,
-      email,
-      password,
-    }
-
-    try {
-      const response = await user.register(userData)
-
-      if (!response?.ok) {
-        const data = await response?.json()
-        setLoading(false)
-
-        cookies.set('at', data.access_token, {
-          expires: 60 * 60 * 24 * 7,
-        })
-
-        toast.success('Usuário criado com sucesso!')
-
-        router.push('/kitchen')
-      }
-    } catch (error) {
-      setLoading(false)
+    if (validateForm()) {
+      await register(form)
     }
   }
   return (
     <AuthForm
       forgotPassword={false}
       register
+      loading={loading}
       submit={async (e) => {
         e.preventDefault()
         await handleRegisterSubmit()
       }}
-      loading={loading}
     >
       <TextField
+        autoComplete="off"
         fullWidth
-        placeholder="Nome Completo"
         type="text"
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value)
+        name="name"
+        value={form.name}
+        label="Nome"
+        sx={{
+          minheight: '70px',
         }}
+        InputProps={{
+          style: {
+            background: '#1F2128',
+            color: '#BDBDBD',
+            outline: 'none',
+            margin: 0,
+          },
+        }}
+        InputLabelProps={{
+          style: {
+            color: '#BDBDBD',
+          },
+        }}
+        onChange={handleSetState}
+        error={Boolean(localError?.errors?.name)}
+        helperText={localError?.errors?.name}
       />
 
       <TextField
         fullWidth
-        placeholder="Email"
         type="email"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value)
+        name="email"
+        label="Email"
+        value={form.email}
+        sx={{
+          minheight: '70px',
         }}
+        InputProps={{
+          style: {
+            background: '#1F2128',
+            color: '#BDBDBD',
+            outline: 'none',
+            margin: 0,
+          },
+        }}
+        InputLabelProps={{
+          style: {
+            color: '#BDBDBD',
+          },
+        }}
+        onChange={handleSetState}
+        error={Boolean(localError?.errors?.email)}
+        helperText={localError?.errors?.email}
       />
-      <FormControl variant="outlined" fullWidth>
-        <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+      <FormControl variant="outlined" fullWidth sx={{ height: '70px' }}>
+        <InputLabel
+          htmlFor="outlined-adornment-password"
+          style={{ color: '#BDBDBD' }}
+        >
+          Senha
+        </InputLabel>
         <OutlinedInput
-          id="outlined-adornment-password"
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value)
+          sx={{
+            background: '#1F2128',
+            color: '#BDBDBD',
+            outline: 'none',
+            margin: 0,
           }}
+          id="outlined-adornment-password"
+          type={showPassword.password ? 'text' : 'password'}
+          name="password"
+          value={form.password}
+          onChange={handleSetState}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
+                onClick={() => handleClickShowPassword('password')}
                 onMouseDown={handleMouseDownPassword}
                 edge="end"
               >
-                {showPassword ? <EyeOff /> : <Eye />}
+                {showPassword.password ? (
+                  <EyeOff color="#0488A6" />
+                ) : (
+                  <Eye color="#0488A6" />
+                )}
               </IconButton>
             </InputAdornment>
           }
           label="Senha"
         />
+        <FormHelperText error={Boolean(localError?.errors?.password)}>
+          {localError?.errors?.password}
+        </FormHelperText>
       </FormControl>
-      <FormControl variant="outlined" fullWidth>
-        <InputLabel htmlFor="outlined-adornment-confirm-password">
+
+      <FormControl variant="outlined" fullWidth sx={{ height: '70px' }}>
+        <InputLabel
+          htmlFor="outlined-adornment-confirm-password"
+          style={{ color: '#BDBDBD' }}
+        >
           Confirmar Senha
         </InputLabel>
         <OutlinedInput
+          sx={{
+            background: '#1F2128',
+            color: '#BDBDBD',
+            outline: 'none',
+            margin: 0,
+          }}
           id="outlined-adornment-confirm-password"
-          type={showPassword ? 'text' : 'password'}
-          value={confirmPassword}
-          error={password.length > 0 && password !== confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
+          type={showPassword.confirmPassword ? 'text' : 'password'}
+          name="confirmPassword"
+          value={form.confirmPassword}
+          error={Boolean(localError?.errors?.confirmPassword)}
+          onChange={handleSetState}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
+                onClick={() => handleClickShowPassword('confirmPassword')}
                 onMouseDown={handleMouseDownPassword}
                 edge="end"
               >
-                {showPassword ? <EyeOff /> : <Eye />}
+                {showPassword.confirmPassword ? (
+                  <EyeOff color="#0488A6" />
+                ) : (
+                  <Eye color="#0488A6" />
+                )}
               </IconButton>
             </InputAdornment>
           }
           label="Confirmar Senha"
         />
+        <FormHelperText error={Boolean(localError?.errors?.confirmPassword)}>
+          {localError?.errors?.confirmPassword}
+        </FormHelperText>
       </FormControl>
     </AuthForm>
   )

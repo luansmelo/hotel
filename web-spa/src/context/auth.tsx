@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, ReactNode, useState } from 'react'
-import { AuthService, UserLogin } from '@/services/auth/auth'
+import { AuthService, UserLogin, UserRegister } from '@/services/auth/auth'
 import { useRouter } from 'next/navigation'
 import cookies from 'js-cookie'
 import { Input } from '@/components/input/types'
@@ -15,6 +15,7 @@ export interface AuthError {
 interface AuthContextType {
   loading: boolean
   signIn: (input: UserLogin) => Promise<void>
+  signUp: (input: UserRegister) => Promise<void>
   signOut: () => void
 }
 
@@ -56,6 +57,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function signUp(input: UserRegister) {
+    try {
+      setLoading(true)
+      const response = new AuthService()
+
+      const user = await response.register(input)
+
+      if (user?.ok) {
+        const data = await user.json()
+
+        cookies.set('user', JSON.stringify(data.user), {
+          expires: 60 * 60 * 24 * 7,
+        })
+
+        cookies.set('at', data.access_token, {
+          expires: 60 * 60 * 24 * 7,
+        })
+
+        router.push('/kitchen')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000)
+    }
+  }
   async function signOut() {
     cookies.remove('at')
     cookies.remove('user')
@@ -66,8 +95,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     <AuthContext.Provider
       value={{
         loading,
-
         signIn,
+        signUp,
         signOut,
       }}
     >

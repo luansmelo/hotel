@@ -1,9 +1,7 @@
 import { AuthFormProps } from './types'
 import Link from 'next/link'
 import styles from './styles.module.scss'
-import Image from 'next/image'
 import AddButton from '@/components/addButton'
-
 export const AuthForm: React.FC<AuthFormProps> = ({
   children,
   loading,
@@ -13,10 +11,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({
   return (
     <div className={styles.registerWrapper}>
       <div className={styles.registerContainer}>
-        <div className={styles.logo} style={{ marginBottom: '20px' }}>
-          <Image src="/chef-hat.png" alt="" width={110} height={110} />
-        </div>
-
         <form
           className={styles.formWrapper}
           onSubmit={(e) => {

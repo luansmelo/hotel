@@ -54,6 +54,7 @@ export const LoginForm = ({ signIn, loading }: LoginFormProps) => {
       }}
     >
       <TextField
+        autoComplete="off"
         fullWidth
         placeholder="Email"
         type="text"
@@ -81,6 +82,7 @@ export const LoginForm = ({ signIn, loading }: LoginFormProps) => {
         helperText={localError?.errors?.email}
       />
       <TextField
+        autoComplete="off"
         fullWidth
         placeholder="Password"
         type="password"
