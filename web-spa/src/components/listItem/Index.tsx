@@ -10,7 +10,6 @@ interface ListItemProps {
   onDelete: () => void
   onEdit: () => void
 }
-
 const ListItem = ({ children, onDelete, onEdit }: ListItemProps) => {
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -31,7 +30,6 @@ const ListItem = ({ children, onDelete, onEdit }: ListItemProps) => {
     onEdit()
     handleClose()
   }
-
   const handleDropdownClose = () => {
     handleClose()
     setIsConfirmDialogOpen(false)

@@ -1,4 +1,3 @@
-import { InputContract } from '@/atom/business'
 import {
   FormControl,
   FormHelperText,
@@ -10,28 +9,18 @@ import {
 import { InputForm } from '@/components/input/InputForm/InputForm'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
-import { InputErrors } from '@/context/input'
-import { InputProps } from '../InputList/types'
+import { Input, InputProps } from '../types'
 
-interface InputEditProps {
-  showModal: boolean
-  input: InputProps
-  loading: boolean
-  errors: Record<string, string | number>
-  setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
-  handleEdit: (input: InputContract) => Promise<void>
-  handleCloseModal: () => void
-}
 export default function InputEdit({
   loading,
   errors,
   showModal,
   setErrors,
-  handleEdit,
+  handleSave,
   handleCloseModal,
   input,
-}: InputEditProps) {
-  const { form, handleSetState } = useForm(input)
+}: InputProps) {
+  const { form, handleSetState } = useForm(input as Input)
 
   const validateForm = () => {
     const numericUnitPrice = Number(form.unitPrice)
@@ -70,7 +59,7 @@ export default function InputEdit({
         throw new Error('O campo de preço unitário deve ser um número válido')
       }
 
-      await handleEdit({
+      await handleSave({
         ...form,
         unitPrice: numericUnitPrice,
       })

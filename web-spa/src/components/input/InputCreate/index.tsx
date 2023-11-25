@@ -1,4 +1,3 @@
-import { InputContract } from '@/atom/business'
 import {
   FormControl,
   FormHelperText,
@@ -10,23 +9,15 @@ import {
 import { InputForm } from '@/components/input/InputForm/InputForm'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
-import { InputErrors } from '@/context/input'
-
-interface InputProps {
-  loading: boolean
-  errors: Record<string, string | number>
-  setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
-  handleCreate: (input: InputContract) => Promise<void>
-  showModal: boolean
-  handleCloseModal: () => void
-}
+import { InputProps } from '../types'
 
 export default function InputCreate({
   loading,
   errors,
   showModal,
+  inputList,
   setErrors,
-  handleCreate,
+  handleSave,
   handleCloseModal,
 }: InputProps) {
   const { form, handleSetState } = useForm({
@@ -50,7 +41,12 @@ export default function InputCreate({
         form.unitPrice.trim() === '' || isNaN(numericUnitPrice)
           ? 'Preço unitário deve ser um número válido'
           : '',
-      code: form.code.trim() === '' ? 'Código é obrigatório' : '',
+      code:
+        form.code.trim() === ''
+          ? 'Código é obrigatório'
+          : inputList?.some((input) => input.code === form.code)
+          ? 'Código já existe. Escolha outro.'
+          : '',
       group: form.group.trim() === '' ? 'Grupo é obrigatório' : '',
     }
 
@@ -72,7 +68,7 @@ export default function InputCreate({
         throw new Error('O campo de preço unitário deve ser um número válido')
       }
 
-      await handleCreate({
+      await handleSave({
         ...form,
         unitPrice: numericUnitPrice,
       })

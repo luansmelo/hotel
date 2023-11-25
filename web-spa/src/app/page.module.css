@@ -4,7 +4,6 @@
   padding: 1.875rem;
   display: flex;
   min-height: 100vh;
-  width: 100%;
   gap: 1.25rem;
 }
 
@@ -22,8 +21,10 @@
 }
 
 .content {
+  width: 100%;
   background-color: #30333F;
   padding: 1.5rem;
   border-radius: 0.625rem;
   flex: 1;
+  overflow: auto;
 }

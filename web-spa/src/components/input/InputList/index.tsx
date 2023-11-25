@@ -1,9 +1,9 @@
 import React from 'react'
 import { Pagination, PaginationItem } from '@mui/material'
 import styles from './styles.module.scss'
-import { InputListProps } from './types'
 import ListItem from '@/components/listItem/Index'
 import { Skeleton } from '@mui/material'
+import { Input, InputListProps } from '../types'
 
 function InputList({
   inputList,
@@ -24,9 +24,9 @@ function InputList({
 
   const skeletonCell = (
     <Skeleton
-      height={60}
+      height={36}
       sx={{
-        padding: '1.5rem',
+        padding: '4px 8px 4px 8px',
         '&:nth-child(odd)': {
           background: '#272a34',
         },
@@ -34,7 +34,6 @@ function InputList({
       }}
       variant="rectangular"
       width="100%"
-      animation="wave"
     />
   )
 
@@ -44,15 +43,15 @@ function InputList({
         <tbody className={styles.tbody}>
           {loading ? (
             <tr>
-              {Array.from({ length: 7 }).map((_, colIndex) => (
+              {Array.from({ length: itemsPerPage }).map((_, colIndex) => (
                 <React.Fragment key={colIndex}>{skeletonCell}</React.Fragment>
               ))}
             </tr>
           ) : (
-            paginatedItems?.map((input) => (
+            paginatedItems?.map((input: Input) => (
               <ListItem
                 key={input.id}
-                onDelete={() => handleDelete(input.id)}
+                onDelete={() => handleDelete(input?.id)}
                 onEdit={() => {
                   openEditModal()
                   handleSelectInput(input)
@@ -60,7 +59,7 @@ function InputList({
               >
                 <>
                   <td>{input.name}</td>
-                  <td>{input.unitPrice.toFixed(0)}</td>
+                  <td>{input.unitPrice.toFixed(2).replace('.', ',')}</td>
                   <td>{input.measurementUnit}</td>
                   <td>{input.code}</td>
                   <td>{input.group}</td>

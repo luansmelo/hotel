@@ -6,11 +6,14 @@
 .tbody {
   display: flex;
   flex-direction: column;
-  height: 26.10rem;
+  min-height: 15.78rem;
+  max-height: 15.78rem;
+  border-radius: 0 0 6px 6px; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6); 
 }
 
 .pagination {
   display: flex;
   justify-content: flex-end;
-  margin: 20px 0;
+  margin-top: 10px;
 }

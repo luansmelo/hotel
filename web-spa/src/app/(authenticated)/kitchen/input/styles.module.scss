@@ -1,6 +1,7 @@
 .inputWrapper {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .inputContainer {
@@ -16,13 +17,16 @@
   margin-bottom: 10px;
 }
 
-.ringContainer,
-.imageContainer {
+.textContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100%;
+  p {
+    color: #BDBDBD;
+    font-size: 18px;
+    text-align: center;
+  }
 }
 
 .button {

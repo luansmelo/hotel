@@ -63,7 +63,6 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         await fetchInputList()
       } else {
         const error = await res?.json()
-        toast.error(error.error)
         setErrors({
           createError: 'Não foi possível criar novo insumo.',
         })

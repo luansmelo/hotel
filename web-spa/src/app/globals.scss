@@ -3,7 +3,6 @@
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-
   --primary: '#8E98A8';
   --secondary: '#fdedec';
   --tertiary-normal: '#ffef92';
@@ -18,12 +17,15 @@
 html,
 body, #root {
   overflow-x: hidden;
+  overflow: hidden;
   background-color: #1F2128;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-
 }
 
 a {

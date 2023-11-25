@@ -3,14 +3,13 @@ import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import TableHeader from '@/components/atoms/TableHeader'
 import InputList from '@/components/input/InputList'
-import Image from '@/components/atoms/Image'
 import { TABLE_HEADERS } from '@/constants/tableHeader'
 import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import { InputContext } from '@/context/input'
 import InputCreate from '@/components/input/InputCreate'
-import { InputListProps, InputProps } from '@/components/input/InputList/types'
 import InputEdit from '@/components/input/InputEdit'
+import { Input, InputListProps } from '@/components/input/types'
 const Input: React.FC<InputListProps> = () => {
   const {
     loading,
@@ -24,14 +23,11 @@ const Input: React.FC<InputListProps> = () => {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
-  const [selectedInput, setSelectedInput] = useState<InputProps>(
-    {} as InputProps
-  )
+  const [selectedInput, setSelectedInput] = useState<Input>({} as Input)
 
   const [showEditModal, setShowEditModal] = useState(false)
 
   const openEditModal = () => {
-    console.log('Abrindo o modal de edição')
     setShowEditModal(true)
   }
 
@@ -39,7 +35,7 @@ const Input: React.FC<InputListProps> = () => {
     setSearchTerm(event.target.value)
   }
 
-  const handleSelectedInput = (input: InputProps) => {
+  const handleSelectedInput = (input: Input) => {
     setSelectedInput(input)
   }
 
@@ -75,13 +71,15 @@ const Input: React.FC<InputListProps> = () => {
 
       <TableHeader headers={TABLE_HEADERS} />
 
-      <InputList
-        loading={loading}
-        inputList={filteredInputList}
-        handleDelete={handleDelete}
-        handleSelectInput={handleSelectedInput}
-        openEditModal={openEditModal}
-      />
+      {hasResults && (
+        <InputList
+          loading={loading}
+          inputList={filteredInputList}
+          handleDelete={handleDelete}
+          handleSelectInput={handleSelectedInput}
+          openEditModal={openEditModal}
+        />
+      )}
 
       {showEditModal && (
         <InputEdit
@@ -89,7 +87,7 @@ const Input: React.FC<InputListProps> = () => {
           errors={errors}
           showModal={showEditModal}
           setErrors={setErrors}
-          handleEdit={handleEdit}
+          handleSave={handleEdit}
           handleCloseModal={() => setShowEditModal(false)}
           input={selectedInput}
         />
@@ -99,32 +97,26 @@ const Input: React.FC<InputListProps> = () => {
         <InputCreate
           loading={loading}
           errors={errors}
+          inputList={inputList}
           setErrors={setErrors}
-          handleCreate={handleCreate}
+          handleSave={handleCreate}
           showModal={showCreateForm}
           handleCloseModal={() => setShowCreateForm(false)}
         />
       )}
+      <div className={styles.textContainer}>
+        <div>
+          {!hasResults && !searchTerm && <p>Nenhum insumo cadastrado.</p>}
+        </div>
 
-      {!hasResults && !searchTerm && (
-        <Fade in={!showCreateForm} timeout={500}>
-          <div className={styles.imageContainer}>Nenhum insumo cadastrado.</div>
-        </Fade>
-      )}
-
-      {!hasResults && searchTerm && (
-        <Fade in={!showCreateForm} timeout={750}>
-          <div className={styles.imageContainer}>
-            <Image
-              src="/no-data.png"
-              alt="Nenhum dado encontrado"
-              height={266}
-              width={407}
-              key={1}
-            />
-          </div>
-        </Fade>
-      )}
+        <div>
+          {!hasResults && searchTerm && (
+            <Fade in={!showCreateForm} timeout={500}>
+              <p>Insumo não encontrado</p>
+            </Fade>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
