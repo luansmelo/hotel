@@ -4,9 +4,13 @@ import { Typography, MenuItem } from '@mui/material'
 import { AuthContext } from '@/context/auth'
 import UserMenu from '@/components/userMenu'
 import styles from './styles.module.scss'
+import cookies from 'js-cookie'
 export default function Header() {
   const settings = ['Documentação', 'Sair']
-  const { user, signOut } = useContext(AuthContext)
+  const { signOut } = useContext(AuthContext)
+
+  const user = cookies.get('user')
+  const parsedUser = user ? JSON.parse(user) : null
 
   const handleExit = () => {
     signOut()
@@ -15,7 +19,7 @@ export default function Header() {
   return (
     <div className={styles.main}>
       <div className={styles.perfilContainer}>
-        <UserMenu name={user?.name || 'R'}>
+        <UserMenu name={parsedUser?.name || 'R'}>
           {settings.map((setting) => (
             <MenuItem
               key={setting}

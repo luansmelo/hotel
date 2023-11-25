@@ -1,5 +1,11 @@
 'use client'
-import React, { createContext, ReactNode, useState, useEffect } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react'
 import { InputContract } from '@/atom/business'
 import { handleToastify } from '@/utils/toastify'
 import { InputService } from '@/services/input/input'
@@ -31,10 +37,11 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<Partial<InputErrors>>({})
 
-  const input = new InputService()
+  const input = useMemo(() => new InputService(), [])
+
   const fetchInputList = async () => {
+    setLoading(true)
     try {
-      setLoading(true)
       const res = await input.list()
       setInputList(res?.data)
     } catch (error) {
@@ -42,10 +49,9 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
     } finally {
       setTimeout(() => {
         setLoading(false)
-      }, 1500)
+      }, 2000)
     }
   }
-
   const handleCreate = async (data: InputContract) => {
     try {
       setLoading(true)
@@ -56,15 +62,16 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         toast.success('Insumo criado com sucesso!')
         await fetchInputList()
       } else {
-        toast.error('Não foi possível criar novo insumo.')
+        const error = await res?.json()
+        toast.error(error.error)
         setErrors({
           createError: 'Não foi possível criar novo insumo.',
         })
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error('Não foi possível criar novo insumo.')
       setErrors({
-        createError: 'Não foi possível criar novo insumo.',
+        createError: error.message,
       })
     } finally {
       setLoading(false)

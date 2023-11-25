@@ -8,6 +8,7 @@ export interface InputProps {
 }
 
 export interface InputListProps {
+  loading: boolean
   inputList: InputProps[]
   handleDelete: (id: string) => void
   handleSelectInput: (data: InputProps) => void

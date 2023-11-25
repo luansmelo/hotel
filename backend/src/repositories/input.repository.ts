@@ -16,6 +16,12 @@ export class InputRepository implements InputRepositoryContract {
     return db;
   }
 
+  async getByCode(code: string): Promise<any> {
+    const db = await this.db.input.findUnique({ where: { code } });
+
+    return db;
+  }
+
   async getAll() {
     const db = await this.db.input.findMany();
 

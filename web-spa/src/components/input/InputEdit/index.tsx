@@ -142,6 +142,14 @@ export default function InputEdit({
             onChange={handleSetState}
             label="Unidade de Medida"
             error={!!errors.measurementUnit}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  background: '#1F2128',
+                  color: '#BDBDBD',
+                },
+              },
+            }}
             sx={{
               background: '#1F2128',
               color: '#BDBDBD',
@@ -248,6 +256,14 @@ export default function InputEdit({
             onChange={handleSetState}
             label="Grupo"
             error={!!errors.group}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  background: '#1F2128',
+                  color: '#BDBDBD',
+                },
+              },
+            }}
             sx={{
               background: '#1F2128',
               color: '#BDBDBD',

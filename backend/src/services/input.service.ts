@@ -3,7 +3,7 @@ import {
   InputServiceContract,
 } from "../utils/contracts/input-contract";
 import { InputRegister } from "../dto/input.dto";
-import { NotFoundError } from "../errors/httpErrors";
+import { ConflictError, NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
 
 export class InputService implements InputServiceContract {
@@ -16,6 +16,12 @@ export class InputService implements InputServiceContract {
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),
     };
+
+    const inputExists = await this.repository.getByCode(input.code);
+
+    if (inputExists) {
+      throw new ConflictError("O código deve ser único");
+    }
 
     return this.repository.save(data);
   }

@@ -1,18 +1,11 @@
 'use client'
 
-import React, { createContext, useState, ReactNode } from 'react'
+import { createContext, ReactNode } from 'react'
 import { AuthService, UserLogin } from '@/services/auth/auth'
 import { useRouter } from 'next/navigation'
 import cookies from 'js-cookie'
 
-interface User {
-  name: string
-  email: string
-}
-
 interface AuthContextType {
-  user: User | null
-  setUser: React.Dispatch<React.SetStateAction<User | null>>
   signIn: (input: UserLogin) => Promise<void>
   signOut: () => void
 }
@@ -20,7 +13,6 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
 
   async function signIn(input: UserLogin) {
@@ -32,11 +24,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (user?.ok) {
         const data = await user.json()
 
-        cookies.set('at', data.access_token, {
+        cookies.set('user', JSON.stringify(data.user), {
           expires: 60 * 60 * 24 * 7,
         })
 
-        setUser(data.user)
+        cookies.set('at', data.access_token, {
+          expires: 60 * 60 * 24 * 7,
+        })
 
         router.push('/kitchen')
       }
@@ -47,15 +41,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signOut() {
     cookies.remove('at')
-    setUser(null)
+    cookies.remove('user')
     router.push('/')
   }
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        setUser,
         signIn,
         signOut,
       }}

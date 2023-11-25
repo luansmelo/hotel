@@ -41,6 +41,12 @@
   transform: scale(1.01);
 }
 
+.button:disabled {
+  background-color: #9e9e9e;
+  color: #fff;
+  cursor: not-allowed;
+}
+
 .inputSearch {
   margin-right: 16px; 
 }

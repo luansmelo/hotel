@@ -52,7 +52,7 @@ model InputsOnProducts {
 model Input {
   id              String             @id @default(uuid())
   name            String
-  code            String
+  code            String @unique
   unitPrice       Float
   group           String
   measurementUnit String

@@ -1,6 +1,5 @@
 'use client'
-import { ChangeEvent, useContext, useMemo, useState } from 'react'
-import { Ring } from 'react-cssfx-loading'
+import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import TableHeader from '@/components/atoms/TableHeader'
 import InputList from '@/components/input/InputList'
@@ -48,24 +47,13 @@ const Input: React.FC<InputListProps> = () => {
     setShowCreateForm(true)
   }
 
-  const filteredInputList = useMemo(() => {
-    return searchTerm
-      ? inputList.filter(
-          (input) =>
-            input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      : inputList
-  }, [inputList, searchTerm])
+  const filteredInputList = searchTerm
+    ? inputList.filter(
+        (input) => input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : inputList
 
   const hasResults = filteredInputList?.length > 0
-
-  if (loading) {
-    return (
-      <div className={styles.ringContainer}>
-        <Ring color={'#04B2D9'} width="60px" height="60px" duration="1s" />
-      </div>
-    )
-  }
 
   return (
     <div className={styles.inputWrapper}>
@@ -76,7 +64,11 @@ const Input: React.FC<InputListProps> = () => {
           disabled={showCreateForm}
         />
 
-        <button className={styles.button} onClick={handleButtonClick}>
+        <button
+          className={styles.button}
+          onClick={handleButtonClick}
+          disabled={loading}
+        >
           CADASTRAR
         </button>
       </div>
@@ -84,6 +76,7 @@ const Input: React.FC<InputListProps> = () => {
       <TableHeader headers={TABLE_HEADERS} />
 
       <InputList
+        loading={loading}
         inputList={filteredInputList}
         handleDelete={handleDelete}
         handleSelectInput={handleSelectedInput}

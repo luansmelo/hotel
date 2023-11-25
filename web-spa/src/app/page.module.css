@@ -1,15 +1,11 @@
 .main {
   margin: 0;
   padding: 0;
-  background-color: #1F2128;
-  padding: 30px;
+  padding: 1.875rem;
   display: flex;
-  height: 100vh;
-  gap: 20px;
-}
-
-.sideBar {
-  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  gap: 1.25rem;
 }
 
 .contentAndTopBar {
@@ -20,14 +16,14 @@
 
 .topBar {
   background-color: #30333F;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
   border-radius: 10px;
 }
 
 .content {
   background-color: #30333F;
-  padding: 40px;
-  border-radius: 10px;
+  padding: 1.5rem;
+  border-radius: 0.625rem;
   flex: 1;
 }

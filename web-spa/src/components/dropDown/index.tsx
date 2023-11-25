@@ -18,12 +18,7 @@ const Dropdown: React.FC<DropdownProps> = ({ actions, onClose, anchorEl }) => {
       open={Boolean(anchorEl)}
       onClose={onClose}
       MenuListProps={{
-        'aria-labelledby': 'basic-button',
         style: {
-          padding: 0,
-          outline: 'none',
-          boxShadow:
-            '4px 4px 8px 0 rgba(0, 0, 0, 0.2), 6px 6px 20px 0 rgba(0, 0, 0, 0.19)',
           minWidth: '160px',
           backgroundColor: '#30333F',
           borderRadius: '4px',
