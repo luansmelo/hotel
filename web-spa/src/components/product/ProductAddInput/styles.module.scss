@@ -1,0 +1,261 @@
+.modalProductContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #30333F;
+  padding: 24px;
+  border-radius: 0 0 12px 12px;
+  width: 800px;
+}
+
+.EditWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+
+.nameAndVariantWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.productCreate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 14px;
+  border-radius: 6px;
+  background: #0488A6;
+  gap: 4px;
+  border: unset;
+  border-width: unset;
+
+  color: #BDBDBD;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.imageContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.imageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+
+  gap: 1rem;
+
+  p {
+    color: #BDBDBD;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 6px 0;
+  }
+}
+
+.image {
+  border-radius: 10%;
+  height: 100%;
+}
+
+.containerWrapper {
+  display: flex;
+  // flex-direction: column;
+  gap: 1rem;
+}
+/// table input
+.tableInputsContainer {
+  margin-bottom: 100px;
+}
+
+
+
+.inputListTable {
+  max-height: 200px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #0488a6;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #1f2128;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .tr {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 1fr;
+    gap: 8px;
+    align-items: center;
+    padding: 8px;
+
+    td {
+      text-align: left;
+      color: #bdbdbd;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.17px;
+      margin-right: 4px;
+    }
+
+    td:last-child {
+      gap: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.inputListContainer {
+  display: flex;
+
+}
+
+.tableInputListContainer {
+  max-height: 200px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #0488a6;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #1f2128;
+  }
+}
+
+.table {
+  width: 100%;
+}
+
+.thead {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr 1fr ;
+  gap: 8px;
+  background: #1F2128;
+  padding: 16px;
+  justify-content: center;
+  border-radius: 12px 12px 0 0;
+
+  td {
+    text-align: left;
+    color: #BDBDBD;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.17px;
+  }
+}
+
+
+.tbody {
+  tr:nth-of-type(odd) {
+    background: #272a34;
+  }
+  
+  tr {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr;
+    gap: 8px;
+    align-items: center;
+    padding: 8px;
+    
+    td {
+      text-align: left;
+      color: #BDBDBD;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.17px;
+      margin-right: 4px;
+    }
+
+    td:last-child {
+      gap: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.tr {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 8px;
+
+  td {
+    text-align: left;
+    color: #BDBDBD;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.17px;
+    margin-right: 4px;
+  }
+
+  td:last-child {
+    gap: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.productActionDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #F56D15;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.productActionAdd {
+  // display: flex;
+  // // justify-content: center;
+  // // align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #F56D15;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+

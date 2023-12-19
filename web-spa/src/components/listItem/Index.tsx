@@ -9,8 +9,14 @@ interface ListItemProps {
   children: React.ReactNode
   onDelete: () => void
   onEdit: () => void
+  actions?: { label: string; onClick: () => void }[]
 }
-const ListItem = ({ children, onDelete, onEdit }: ListItemProps) => {
+const ListItem = ({
+  children,
+  onDelete,
+  onEdit,
+  actions = [],
+}: ListItemProps) => {
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -46,6 +52,7 @@ const ListItem = ({ children, onDelete, onEdit }: ListItemProps) => {
           anchorEl={anchorEl}
           onClose={handleClose}
           actions={[
+            ...actions!,
             { label: 'Editar', onClick: handleEditClick },
             { label: 'Excluir', onClick: handleDeleteClick },
           ]}

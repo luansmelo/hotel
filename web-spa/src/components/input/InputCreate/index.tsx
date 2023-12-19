@@ -6,7 +6,7 @@ import {
   Select,
   TextField,
 } from '@mui/material'
-import { InputForm } from '@/components/input/InputForm/InputForm'
+import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
 import { InputProps } from '../types'
@@ -82,7 +82,7 @@ export default function InputCreate({
 
   return (
     <Modal open={showModal} onClose={handleModalClose}>
-      <InputForm
+      <Form
         submit={async (e) => {
           e.preventDefault()
           if (validateForm()) {
@@ -290,7 +290,7 @@ export default function InputCreate({
             </FormHelperText>
           )}
         </FormControl>
-      </InputForm>
+      </Form>
     </Modal>
   )
 }

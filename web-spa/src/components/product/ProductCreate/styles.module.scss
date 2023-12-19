@@ -1,30 +1,21 @@
-.createProductContainer {
+.productContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
 }
 
 .createProductTitle {
-  margin-bottom: 24px;
-
   color: #000;
   font-size: 32px;
   font-weight: 500;
   line-height: 20px;
 }
 
-.createProductContent {
-  display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  padding-inline: 40px;
-  padding-block: 60px;
-  gap: 56px;
-
-  border-radius: 10px;
-  background: #BDBDBD;
-}
-
-.sideLeft {
+.inputContainer {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  width: 100%;
 }
 
 .uploadFileContainer {
@@ -32,20 +23,16 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  // width: 100%;
-  height: 100%;
-  // height: 417px;
-  gap: 8px;
-
   border-radius: 4px;
-  border: 1px dashed rgba(0, 0, 0, 0.12);
-
+  border: 1px dashed #636168;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
   input {
     display: none;
   }
 
-  > p {
-    color: rgba(0, 0, 0, 0.6);
+  p {
+    color: #BDBDBD;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.17px;
@@ -58,7 +45,7 @@
   gap: 2px;
 
   p {
-    color: rgba(0, 0, 0, 0.87);
+    color: #BDBDBD;
     font-size: 16px;
     font-weight: 400;
     letter-spacing: 0.15px;

@@ -1,69 +1,72 @@
 'use client'
-import React, { ChangeEvent, useContext, useState } from 'react'
-import { Ring } from 'react-cssfx-loading'
-import InputSearch from '@/components/atoms/search'
-import TableHeader from '@/components/atoms/TableHeader'
-import InputList from '@/components/input/InputList'
-import Image from '@/components/atoms/Image'
-import { TABLE_HEADERS } from '@/constants/tableHeader'
 import { Fade } from '@mui/material'
+import React, { ChangeEvent, useContext, useState } from 'react'
+import InputSearch from '@/components/atoms/search'
 import styles from './styles.module.scss'
 import Dropdown from '@/components/dropDown'
-import { InputContext } from '@/context/input'
-import InputCreate from '@/components/input/InputCreate'
-import { handleToastify } from '@/utils/toastify'
+import { ProductContext } from '@/context/product'
+import ProductList from '@/components/product/ProductList'
+import ProductCreate from '@/components/product/ProductCreate'
+import { Product, ProductProps } from '@/components/product/types'
+import CreateProductModal from '@/components/product/ProductAddInput'
 
 export default function Product() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const { loading, inputList, handleDelete } = useContext(InputContext)
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showAddInputModal, setShowAddInputModal] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<ProductProps>(
+    {} as ProductProps
+  )
+
+  const { loading, productList, productDetail, handleSave, handleDelete } =
+    useContext(ProductContext)
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
 
+  const openEditModal = () => {
+    setShowEditModal(true)
+  }
+
+  const openAddInputModal = () => {
+    setShowAddInputModal(true)
+  }
+
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
-    setMenuOpen(!menuOpen)
   }
 
   const handleCloseDropdown = () => {
-    setAnchorEl(null)
     setShowCreateForm(false)
+  }
+
+  const handleSelectedProduct = (product: ProductProps) => {
+    setSelectedProduct(product)
   }
 
   const handleDropdownAction = (action: string) => {
     handleCloseDropdown()
-    if (action === 'Criar insumo') {
+    if (action === 'Criar Produto') {
       setShowCreateForm(true)
-    } else {
-      handleToastify('Opção indisponível.', 'error')
     }
   }
 
-  const filteredInputList = searchTerm
-    ? inputList.filter(
+  const filteredProductList = searchTerm
+    ? productList?.filter(
         (input) => input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    : inputList
+    : productList
 
-  const hasResults = filteredInputList?.length > 0
-
-  if (loading) {
-    return (
-      <div className={styles.ringContainer}>
-        <Ring color={'#84A59D'} width="60px" height="60px" duration="1s" />
-      </div>
-    )
-  }
+  const hasResults = filteredProductList?.length > 0
 
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.searchAndButtonContainer}>
         <InputSearch
-          search={'insumo'}
+          search={'produto'}
           onChange={handleSearchChange}
           disabled={showCreateForm}
         />
@@ -78,48 +81,55 @@ export default function Product() {
         onClose={handleCloseDropdown}
         actions={[
           {
-            label: 'Criar insumo',
-            onClick: () => handleDropdownAction('Criar insumo'),
-          },
-          {
-            label: 'Upload arquivo de insumo',
-            onClick: () => handleDropdownAction('upload arquivo de insumo'),
+            label: 'Criar Produto',
+            onClick: () => handleDropdownAction('Criar Produto'),
           },
         ]}
       />
 
-      <TableHeader headers={TABLE_HEADERS} />
       <div>
-        <InputList inputList={filteredInputList} handleDelete={handleDelete} />
+        <ProductList
+          loading={loading}
+          productList={filteredProductList}
+          openEditModal={openEditModal}
+          handleSelectProduct={handleSelectedProduct}
+          handleDelete={handleDelete}
+          openAddInputModal={openAddInputModal}
+        />
       </div>
 
       {showCreateForm && (
-        <InputCreate
-          handleCancelNewInput={() => setShowCreateForm(false)}
+        <ProductCreate
+          loading={loading}
           showModal={showCreateForm}
+          errors={{}}
+          setErrors={() => {}}
+          handleSave={handleSave}
           handleCloseModal={() => setShowCreateForm(false)}
         />
       )}
 
-      {!hasResults && !searchTerm && (
-        <Fade in={!showCreateForm} timeout={500}>
-          <div className={styles.imageContainer}>Nenhum insumo cadastrado.</div>
-        </Fade>
+      {showAddInputModal && (
+        <CreateProductModal
+          isOpen={showAddInputModal}
+          product={selectedProduct}
+          onClose={() => setShowAddInputModal(false)}
+        />
       )}
 
-      {!hasResults && searchTerm && (
-        <Fade in={!showCreateForm} timeout={750}>
-          <div className={styles.imageContainer}>
-            <Image
-              src="/no-data.png"
-              alt="Nenhum dado encontrado"
-              height={266}
-              width={407}
-              key={1}
-            />
-          </div>
-        </Fade>
-      )}
+      <div className={styles.textContainer}>
+        <div>
+          {!hasResults && !searchTerm && <p>Nenhum produto cadastrado.</p>}
+        </div>
+
+        <div>
+          {!hasResults && searchTerm && (
+            <Fade in={!showCreateForm} timeout={500}>
+              <p>Produto não encontrado</p>
+            </Fade>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

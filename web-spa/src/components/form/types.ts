@@ -1,4 +1,4 @@
-export interface IInputFormProps {
+export interface FormProps {
   children: React.ReactNode
   loading: boolean
   submit: (e: React.FormEvent<HTMLFormElement>) => void

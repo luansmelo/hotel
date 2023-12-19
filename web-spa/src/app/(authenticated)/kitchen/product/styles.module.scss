@@ -15,17 +15,20 @@
   margin-bottom: 10px;
 }
 
-.ringContainer,
-.imageContainer {
+.textContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 100%;
+  p {
+    color: #BDBDBD;
+    font-size: 18px;
+    text-align: center;
+  }
 }
 
 .button {
-  background-color: #84A59D;
+  background-color: #00A3E0;
   color: #ffffff;
   border: none;
   border-radius: 50%;
@@ -37,7 +40,7 @@
 }
 
 .button:hover {
-  background-color: #77958D;
+  background-color: #0488A6;
   transform: scale(1.1);
 }
 

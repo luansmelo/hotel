@@ -1,12 +1,13 @@
+import { useContext } from 'react'
 import styles from './styles.module.scss'
 import { Autocomplete, Fade, TextField } from '@mui/material'
 import AddButton from '@/components/addButton'
 import { PlusCircle, SaveIcon, Trash2 } from 'lucide-react'
 import TemplateModal from '@/components/Modal/templateModal'
-import { useInputContext } from '@/context/input'
+import { InputContext } from '@/context/input'
 import { useCallback, useEffect, useState } from 'react'
 import { IInputResponse, IProductInputResponse } from '@/atom/business'
-import { useProductContext } from '@/context/ProductContext'
+import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
 
 interface IProductModalProps {
@@ -20,14 +21,14 @@ export default function CreateProductModal({
   onClose,
   productId,
 }: IProductModalProps) {
-  const { inputList } = useInputContext()
+  const { inputList } = useContext(InputContext)
   const {
-    handleGetProductDetails,
+    handleProductDetails,
     productDetail,
     isDetailLoading,
     handleAddInputsToProduct,
     handleRemoveInputFromProduct,
-  } = useProductContext()
+  } = useContext(ProductContext)
 
   const convertToIInputResponse = (
     productInput: IProductInputResponse
@@ -63,7 +64,7 @@ export default function CreateProductModal({
   const [curInputList, setCurInputList] = useState<IInputResponse[]>([])
   const [selectedNewInput, setSelectedNewInput] = useState<IInputResponse>()
   const [hasError, setHasError] = useState(true)
-  const [currProductDetail, setCurrProductDetail] = useState(productDetail)
+
   const [isLoading, setIsLoading] = useState(true)
 
   const handleClose = () => {

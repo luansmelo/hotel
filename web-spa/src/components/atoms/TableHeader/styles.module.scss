@@ -5,17 +5,12 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   width: 100%;
-
-
 }
 
 .tr {
   display: flex;
   width: 100%;
-}
-
-.th {
-  flex: 1;
+  column-gap: 6rem;
 }
 
 .text_container {

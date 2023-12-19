@@ -1,6 +1,13 @@
 import { InputContract } from '@/atom/business'
 import { InputErrors } from '@/context/input'
 
+export interface InputToProductProps {
+  id: string
+  name: string
+  measurementUnit: string
+  grammage: number
+}
+
 export interface Input {
   id: string
   name: string
@@ -8,6 +15,7 @@ export interface Input {
   unitPrice: number
   code: string
   group: string
+  grammage?: number
 }
 
 export interface InputListProps {

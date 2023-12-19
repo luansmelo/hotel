@@ -17,7 +17,7 @@ export default function InputSearch({
     <div className={styles.inputCointainer}>
       <Search size={24} color="#BDBDBD" />
       <input
-        placeholder={`Buscar o nome do ${search}`}
+        placeholder={`Buscar ${search}`}
         onChange={onChange}
         disabled={disabled}
       />

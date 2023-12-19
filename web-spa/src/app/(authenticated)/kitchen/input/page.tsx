@@ -3,7 +3,7 @@ import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import TableHeader from '@/components/atoms/TableHeader'
 import InputList from '@/components/input/InputList'
-import { TABLE_HEADERS } from '@/constants/tableHeader'
+import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import { InputContext } from '@/context/input'
@@ -24,7 +24,6 @@ const Input: React.FC<InputListProps> = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [selectedInput, setSelectedInput] = useState<Input>({} as Input)
-
   const [showEditModal, setShowEditModal] = useState(false)
 
   const openEditModal = () => {
@@ -44,7 +43,7 @@ const Input: React.FC<InputListProps> = () => {
   }
 
   const filteredInputList = searchTerm
-    ? inputList.filter(
+    ? inputList?.filter(
         (input) => input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : inputList
@@ -69,7 +68,7 @@ const Input: React.FC<InputListProps> = () => {
         </button>
       </div>
 
-      <TableHeader headers={TABLE_HEADERS} />
+      <TableHeader headers={TABLE_HEADERS_INPUT} />
 
       {hasResults && (
         <InputList

@@ -1,10 +1,10 @@
-import { IInputFormProps } from './types'
 import { Save } from 'lucide-react'
 import styles from './styles.module.scss'
 import AddButton from '@/components/addButton'
 import { Box } from '@mui/material'
+import { FormProps } from './types'
 
-export const InputForm: React.FC<IInputFormProps> = ({
+export const Form: React.FC<FormProps> = ({
   children,
   loading,
   submit,

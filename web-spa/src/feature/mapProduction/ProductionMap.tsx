@@ -2,12 +2,12 @@
 import SelectBusiness from '@/components/selectBusiness'
 import styles from './styles.module.scss'
 import DateTabs, { DATE_TABS } from '@/components/DateTabs'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Fade, TextField } from '@mui/material'
 import SelectCategory from '@/components/selectCategory'
 import { categoryList, useMapContext } from '@/context/MapaContext'
 import ProductListTable from './MenuProductTable'
-import { useProductContext } from '@/context/ProductContext'
+import { ProductContext } from '@/context/product'
 
 const colorObj: Record<string, string> = {
   'Café da Manhã': '#FFD700',
@@ -27,7 +27,7 @@ export default function ProductionMap() {
     setCurrentDateTab,
   } = useMapContext()
 
-  const { productList } = useProductContext()
+  const { productList } = useContext(ProductContext)
 
   const handleChangeQttyPerson = (value: number) => {
     if (value > 0) setPeopleNumber(value)

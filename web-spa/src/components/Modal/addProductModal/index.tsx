@@ -11,7 +11,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useAtomValue } from 'jotai'
 import AddButton from '@/components/addButton'
 import AddProductTable from './addProductTable'
-import { useProductContext } from '@/context/ProductContext'
+import { useProductContext } from '@/context/product'
 import { useBusinessContext } from '@/context/BusinessContext'
 import { useMapContext } from '@/context/MapaContext'
 

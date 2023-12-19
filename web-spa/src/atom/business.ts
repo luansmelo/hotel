@@ -72,16 +72,13 @@ export interface IProductProps {
 export interface IProductResponse {
   id?: string
   name: string
-  productDescription: string
+  description: string
 }
 
 export interface IProductInputResponse {
   productId: string
   inputId: string
   productInputName: string
-  productInputMeasurementUnit: string
-  productInputGroup: string
-  productInputUnitPrice: number
   productInputQtty: number
 }
 

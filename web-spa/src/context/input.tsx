@@ -10,14 +10,14 @@ import { InputContract } from '@/atom/business'
 import { handleToastify } from '@/utils/toastify'
 import { InputService } from '@/services/input/input'
 import { toast } from 'react-toastify'
-import { InputProps } from '@/components/input/InputList/types'
+import { Input } from '@/components/input/types'
 
 export interface InputErrors {
   [key: string]: string
 }
 
 interface InputContextContract {
-  inputList: InputProps[]
+  inputList: Input[]
   loading: boolean
   handleCreate: (input: InputContract) => Promise<void>
   handleEdit: (input: InputContract) => Promise<void>
@@ -33,7 +33,7 @@ export const InputContext = createContext<InputContextContract>(
 export const InputProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [inputList, setInputList] = useState<InputProps[]>([] as InputProps[])
+  const [inputList, setInputList] = useState<Input[]>([] as Input[])
   const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<Partial<InputErrors>>({})
 
@@ -62,7 +62,6 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         toast.success('Insumo criado com sucesso!')
         await fetchInputList()
       } else {
-        const error = await res?.json()
         setErrors({
           createError: 'Não foi possível criar novo insumo.',
         })
