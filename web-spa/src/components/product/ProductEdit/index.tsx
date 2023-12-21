@@ -5,11 +5,10 @@ import AddButton from '@/components/addButton'
 import { FileUp, SaveIcon } from 'lucide-react'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
-import { AddInputToProductModalProps, InputsOnProducts } from '../types'
+import { AddInputToProductModalProps } from '../types'
 import Modal from '@/components/Modal/modal/Modal'
 import CustomTextArea from '@/components/customTextArea'
-import { Input, InputToProductProps } from '@/components/input/types'
-import ConfirmDialog from '@/components/dialog'
+import { Input } from '@/components/input/types'
 import TableHeader from '@/components/atoms/TableHeader'
 import { TABLE_HEADERS_INPUT_DETAILS } from '@/constants/tableHeader'
 
@@ -18,13 +17,8 @@ export default function ProductEditModal({
   product,
   onClose,
 }: AddInputToProductModalProps) {
-  const {
-    loading,
-    productDetail,
-    setProductDetail,
-    handleAddInputsToProduct,
-    handleProductDetails,
-  } = useContext(ProductContext)
+  const { loading, productDetail, handleEdit, handleProductDetails } =
+    useContext(ProductContext)
 
   const [inputState, setInputState] = useState<{
     [inputName: string]: {
@@ -34,8 +28,6 @@ export default function ProductEditModal({
       measurementUnit: string
     }
   }>({})
-
-  const [selectedInputs, setSelectedInputs] = useState<Input[]>([])
 
   const fetchProductDetails = async () => {
     try {
@@ -58,24 +50,19 @@ export default function ProductEditModal({
     onClose()
     const inputsOnProductsArray = prepareInputsForProduct()
 
-    await handleAddInputsToProduct(inputsOnProductsArray)
+    await handleEdit(productDetail?.id, inputsOnProductsArray)
   }
 
   const prepareInputsForProduct = () => {
     const existingInputs = productDetail?.inputs || []
 
-    const addedInputsSinceLastOpen = selectedInputs.filter(
-      (input) =>
-        !existingInputs.some(
-          (existingInput: Input) => existingInput.name === input.name
-        )
-    )
-
-    const allInputs = [...existingInputs, ...addedInputsSinceLastOpen]
-    console.log('lista:', allInputs)
-    const productInputResponse: InputsOnProducts = {
+    const productInputResponse = {
       productId: product.id || '',
-      input: allInputs.map((input: Input) => ({
+      name: inputState[productDetail.name]?.name || productDetail.name,
+      description:
+        inputState[productDetail.description]?.description ||
+        productDetail.description,
+      inputs: existingInputs.map((input: Input) => ({
         id: input.id || '',
         name: input.name,
         grammage: Number(input.grammage) || 0,
@@ -318,7 +305,7 @@ export default function ProductEditModal({
               text="SALVAR"
               Icon={SaveIcon}
               onClickButton={saveProductWithInputs}
-              isButtonDisabled={!selectedInputs.length}
+              // isButtonDisabled={!selectedInputs.length}
             />
           </div>
         )}

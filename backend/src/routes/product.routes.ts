@@ -112,4 +112,15 @@ router.put(
   }
 );
 
+router.put("/:id", authenticated, async (request, response, next) => {
+  try {
+    const id = request.params.id;
+    const controller = makeProductController();
+    await controller.updatePredefinedProduct(id, request.body);
+    return response.status(200).send({ message: "sucesso" });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { router, slug };

@@ -33,3 +33,16 @@ export interface AddInputToProductModalProps {
   product: ProductProps
   onClose: () => void
 }
+
+export interface UpdatedProductInfo {
+  productId?: string
+  name: string
+  description: string
+  inputs: UpdatedInputInfo[]
+}
+
+export interface UpdatedInputInfo {
+  id: string
+  grammage: number
+  measurementUnit: string
+}

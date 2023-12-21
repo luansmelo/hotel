@@ -1,5 +1,9 @@
 import { InputContract } from '@/atom/business'
-import { InputsOnProducts, Product } from '@/components/product/types'
+import {
+  InputsOnProducts,
+  Product,
+  UpdatedProductInfo,
+} from '@/components/product/types'
 import { API } from '@/services/api'
 
 const api = API.getInstance()
@@ -29,6 +33,19 @@ export class ProductService {
     try {
       const response = await api.get(`/product/details/${id}`)
 
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async updatePredefinedProduct(
+    productId: string,
+    updatedInfo: UpdatedProductInfo
+  ) {
+    try {
+      const response = await api.put(`/product/${productId}`, updatedInfo)
+      console.log('Response', response)
       return response
     } catch (error) {
       console.log(error)

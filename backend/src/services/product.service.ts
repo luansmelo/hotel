@@ -2,7 +2,11 @@ import {
   ProductRepositoryContract,
   ProductServiceContract,
 } from "../utils/contracts/products-contract";
-import { AddInputToProduct, ProductInput } from "../dto/product.dto";
+import {
+  AddInputToProduct,
+  ProductInput,
+  UpdatedProductInfo,
+} from "../dto/product.dto";
 import { NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
 
@@ -69,5 +73,14 @@ export class ProductService implements ProductServiceContract {
     };
 
     return this.repository.addInputToProduct(data);
+  }
+
+  async updatePredefinedProduct(
+    id: string,
+    updatedInfo: UpdatedProductInfo
+  ): Promise<void> {
+    await this.getById(id);
+
+    return this.repository.updatePredefinedProduct(id, updatedInfo);
   }
 }

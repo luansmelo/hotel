@@ -1,5 +1,9 @@
 import { ProductServiceContract } from "../utils/contracts/products-contract";
-import { AddInputToProduct, ProductInput } from "../dto/product.dto";
+import {
+  AddInputToProduct,
+  ProductInput,
+  UpdatedProductInfo,
+} from "../dto/product.dto";
 
 export class ProductController {
   constructor(private readonly service: ProductServiceContract) {}
@@ -29,7 +33,10 @@ export class ProductController {
   }
 
   async addInputToProduct(input: AddInputToProduct): Promise<void> {
-    console.log("CHEGOU AQUI", input);
     return this.service.addInputToProduct(input);
+  }
+
+  async updatePredefinedProduct(id: string, updatedInfo: UpdatedProductInfo) {
+    return this.service.updatePredefinedProduct(id, updatedInfo);
   }
 }

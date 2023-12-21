@@ -4,6 +4,7 @@ import {
   InputsOnProducts,
   ProductProps,
   Product,
+  UpdatedProductInfo,
 } from '@/components/product/types'
 import { ProductService } from '@/services/product/product'
 import { handleToastify } from '@/utils/toastify'
@@ -25,6 +26,7 @@ interface ProductContract {
   setProductList: Dispatch<SetStateAction<Product[]>>
   setProductDetail: Dispatch<SetStateAction<ProductProps>>
   handleSave: (input: Product) => Promise<void>
+  handleEdit: (productId: string, input: UpdatedProductInfo) => Promise<void>
   handleDelete: (id: string) => Promise<void>
   handleProductDetails: (id: string) => Promise<void>
   handleAddInputsToProduct: (input: InputsOnProducts) => Promise<void>
@@ -132,6 +134,20 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
+  const handleEdit = async (productId: string, data: UpdatedProductInfo) => {
+    try {
+      const res = await product.updatePredefinedProduct(productId, data)
+      if (res.message === 'sucesso') {
+        handleToastify('Produto atualizado com sucesso!', 'success')
+        await fetchProductList()
+      }
+    } catch (error) {
+      console.log('error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleRemoveInputFromProduct = async (
     productId: string,
     inputId: string
@@ -182,6 +198,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
         setProductDetail,
         handleDelete,
         handleSave,
+        handleEdit,
         handleProductDetails,
         handleAddInputsToProduct,
         handleRemoveInputFromProduct,

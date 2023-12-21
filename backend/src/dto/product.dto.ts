@@ -25,3 +25,15 @@ export interface AddInputToProduct {
   productId: string;
   input: Input[];
 }
+
+export interface UpdatedProductInfo {
+  name: string;
+  description: string;
+  inputs: UpdatedInputInfo[];
+}
+
+export interface UpdatedInputInfo {
+  id: string;
+  grammage: number;
+  measurementUnit: string;
+}

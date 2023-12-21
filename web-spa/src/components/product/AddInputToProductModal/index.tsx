@@ -144,7 +144,7 @@ export default function AddInputToProductModal({
     )
 
     const allInputs = [...existingInputs, ...addedInputsSinceLastOpen]
-    console.log('lista:', allInputs)
+
     const productInputResponse: InputsOnProducts = {
       productId: product.id || '',
       input: allInputs.map((input: Input) => ({
