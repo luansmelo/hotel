@@ -53,7 +53,7 @@ router.get(
       const id = request.params.id;
       const controller = makeProductController();
       const result = await controller.getPredefinedProduct(id);
-      console.log(result);
+
       return response.status(200).send(result);
     } catch (error) {
       next(error);
@@ -85,14 +85,14 @@ router.delete(
       const id = request.params.id;
       const controller = makeProductController();
       const result = await controller.deleteById(id);
-      return response.status(200).send(result);
+      return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
     }
   }
 );
 
-router.post(
+router.put(
   "/add/input/",
   authenticated,
   validate(AddInputToProductSchema),
@@ -105,7 +105,7 @@ router.post(
       const controller = makeProductController();
       await controller.addInputToProduct(input);
 
-      return response.status(200).send({ message: "Insumo adicionado!" });
+      return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
     }

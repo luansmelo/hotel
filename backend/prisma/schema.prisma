@@ -24,21 +24,30 @@ model User {
 model Product {
   id                      String                    @id @default(uuid())
   name                    String                    @unique
-  description             String
+  description             String                    @db.VarChar(1000)
   inputs                  InputsOnProducts[]
   categoryProductSchedule CategoryProductSchedule[]
   created_at              String
   updated_at              String
+  // productMedia            ProductMedia[]
 
   @@map("product")
 }
+
+// model ProductMedia {
+//   id         String  @id @default(uuid())
+//   productId  String
+//   url        String
+//   product    Product @relation(fields: [productId], references: [id])
+//   created_at String
+//   updated_at String
+// }
 
 model InputsOnProducts {
   id              String  @id @default(uuid())
   productId       String
   inputId         String
   name            String
-  unitPrice       Float
   measurementUnit String
   grammage        Float
   input           Input   @relation(fields: [inputId], references: [id])
@@ -52,7 +61,7 @@ model InputsOnProducts {
 model Input {
   id              String             @id @default(uuid())
   name            String
-  code            String @unique
+  code            String             @unique
   unitPrice       Float
   group           String
   measurementUnit String

@@ -17,7 +17,7 @@ export class ProductService {
 
   async addInputToProduct(input: InputsOnProducts) {
     try {
-      const response = await api.post('/product/add/input', input)
+      const response = await api.put('/product/add/input', input)
 
       return response
     } catch (error) {

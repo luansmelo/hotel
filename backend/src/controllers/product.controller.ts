@@ -29,6 +29,7 @@ export class ProductController {
   }
 
   async addInputToProduct(input: AddInputToProduct): Promise<void> {
+    console.log("CHEGOU AQUI", input);
     return this.service.addInputToProduct(input);
   }
 }

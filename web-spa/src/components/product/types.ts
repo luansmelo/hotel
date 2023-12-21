@@ -26,3 +26,9 @@ export interface ProductListProps {
   openEditModal: () => void
   openAddInputModal: () => void
 }
+
+export interface AddInputToProductModalProps {
+  isOpen: boolean
+  product: ProductProps
+  onClose: () => void
+}

@@ -1,9 +1,7 @@
 'use client'
 import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
-import TableHeader from '@/components/atoms/TableHeader'
 import InputList from '@/components/input/InputList'
-import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import { InputContext } from '@/context/input'
@@ -67,8 +65,6 @@ const Input: React.FC<InputListProps> = () => {
           CADASTRAR
         </button>
       </div>
-
-      <TableHeader headers={TABLE_HEADERS_INPUT} />
 
       {hasResults && (
         <InputList

@@ -1,4 +1,4 @@
-import { InputContract } from "./input.dto";
+import { Input, InputContract } from "./input.dto";
 
 export interface ProductContract {
   id: string;
@@ -16,10 +16,12 @@ export interface ProductInput {
 export interface AddInputToProductData {
   id: string;
   productId: string;
-  input: InputContract[];
+  input: Input[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface AddInputToProduct {
   productId: string;
-  input: InputContract[];
+  input: Input[];
 }

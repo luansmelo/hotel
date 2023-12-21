@@ -9,6 +9,13 @@ export interface InputContract {
   updated_at: string;
 }
 
+export interface Input {
+  id: string;
+  name: string;
+  measurementUnit: string;
+  grammage: number;
+}
+
 export interface InputRegister {
   name: string;
   code: string;

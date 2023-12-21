@@ -62,6 +62,7 @@ export class ProductService implements ProductServiceContract {
 
     const data = {
       id: uuid(),
+
       ...input,
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),

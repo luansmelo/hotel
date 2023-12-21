@@ -28,20 +28,26 @@
 }
 
 .button {
-  background-color: #00A3E0;
-  color: #ffffff;
+  background-color: #04B2D9;
+  color: #fff;
   border: none;
-  border-radius: 50%;
-  width: 50px;
+  border-radius: 8px;
   height: 50px;
-  font-size: 20px;
+  width: 380px;
+  outline: 0;
   cursor: pointer;
   transition: background-color 1s ease, transform 0.3s ease;
 }
 
 .button:hover {
   background-color: #0488A6;
-  transform: scale(1.1);
+  transform: scale(1.01);
+}
+
+.button:disabled {
+  background-color: #9e9e9e;
+  color: #fff;
+  cursor: not-allowed;
 }
 
 .inputSearch {

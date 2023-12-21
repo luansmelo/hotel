@@ -4,6 +4,8 @@ import styles from './styles.module.scss'
 import ListItem from '@/components/listItem/Index'
 import { Skeleton } from '@mui/material'
 import { Input, InputListProps } from '../types'
+import TableHeader from '@/components/atoms/TableHeader'
+import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 
 function InputList({
   inputList,
@@ -40,6 +42,7 @@ function InputList({
   return (
     <div className={styles.container}>
       <table className={styles.table}>
+        <TableHeader headers={TABLE_HEADERS_INPUT} />
         <tbody className={styles.tbody}>
           {loading ? (
             <tr>

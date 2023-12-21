@@ -12,6 +12,21 @@ services:
       MYSQL_DATABASE: hotel
     ports:
       - "3306:3306"
+      
+  spa:
+    build:
+      context: ./web-spa
+    container_name: spa
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
 
-volumes:
-  db_data:
+  api:
+    build:
+      context: ./backend
+    container_name: Api
+    ports:
+      - "3003:3003"
+    depends_on:
+      - db

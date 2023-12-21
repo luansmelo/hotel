@@ -19,6 +19,7 @@ export interface InputErrors {
 interface InputContextContract {
   inputList: Input[]
   loading: boolean
+  setInputList: React.Dispatch<React.SetStateAction<Input[]>>
   handleCreate: (input: InputContract) => Promise<void>
   handleEdit: (input: InputContract) => Promise<void>
   handleDelete: (id: string) => Promise<void>
@@ -121,6 +122,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         inputList,
         loading,
         errors,
+        setInputList,
         setErrors,
         handleEdit,
         handleCreate,

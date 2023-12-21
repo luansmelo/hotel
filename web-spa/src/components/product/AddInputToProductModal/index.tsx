@@ -1,37 +1,27 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material'
+import { FormControl, MenuItem, Select, TextField } from '@mui/material'
 import AddButton from '@/components/addButton'
 import { SaveIcon, Trash2, Plus } from 'lucide-react'
 import { InputContext } from '@/context/input'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
-import { InputsOnProducts, ProductProps } from '../types'
+import { AddInputToProductModalProps, InputsOnProducts } from '../types'
 import Modal from '@/components/Modal/modal/Modal'
 import CustomTextArea from '@/components/customTextArea'
-import { Input } from '@/components/input/types'
+import { Input, InputToProductProps } from '@/components/input/types'
 import InputSearch from '@/components/atoms/search'
+import ConfirmDialog from '@/components/dialog'
 
-interface CreateProductModalProps {
-  isOpen: boolean
-  product: ProductProps
-  onClose: () => void
-}
-
-export default function CreateProductModal({
+export default function AddInputToProductModal({
   isOpen,
   product,
   onClose,
-}: CreateProductModalProps) {
+}: AddInputToProductModalProps) {
   const {
     loading,
     productDetail,
+    setProductDetail,
     handleAddInputsToProduct,
     handleProductDetails,
   } = useContext(ProductContext)
@@ -43,11 +33,13 @@ export default function CreateProductModal({
       measurementUnit: string
     }
   }>({})
-  const [searchTerm, setSearchTerm] = useState('')
-  const [existingInputs, setExistingInputs] = useState<Input[]>([])
-  const [manipulatedInputs, setManipulatedInputs] = useState<Input[]>([])
 
-  const handleDetails = async () => {
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedInputs, setSelectedInputs] = useState<Input[]>([])
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
+  const [inputToRemove, setInputToRemove] = useState<Input | null>(null)
+
+  const fetchProductDetails = async () => {
     try {
       await handleProductDetails(product.id)
     } catch (error) {
@@ -56,12 +48,11 @@ export default function CreateProductModal({
   }
 
   useEffect(() => {
-    // Atualize existingInputs quando houver mudança nos detalhes do produto
-    setExistingInputs(productDetail?.inputs || [])
+    setSelectedInputs(productDetail?.inputs || [])
   }, [productDetail])
 
   useEffect(() => {
-    handleDetails()
+    fetchProductDetails()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -69,15 +60,20 @@ export default function CreateProductModal({
     ? inputList?.filter(
         (input: Input) =>
           input?.name?.toLowerCase().includes(searchTerm.toLowerCase()) &&
-          !manipulatedInputs.some(
-            (currentInput) => currentInput.name === input.name
-          ) &&
-          !existingInputs.some(
+          !selectedInputs.some(
             (currentInput) => currentInput.name === input.name
           )
       )
     : inputList
 
+  const openDeleteConfirmationDialog = (input: Input) => {
+    setInputToRemove(input)
+    setIsConfirmDialogOpen(true)
+  }
+  const closeDeleteConfirmationDialog = () => {
+    setIsConfirmDialogOpen(false)
+    setInputToRemove(null)
+  }
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
@@ -86,20 +82,16 @@ export default function CreateProductModal({
     onClose()
   }
 
-  const handleAddNewInput = (input: Input) => {
+  const addInputToSelectedList = (input: Input) => {
     if (
-      !existingInputs.some(
-        (currentInput) => currentInput.name === input.name
-      ) &&
-      !manipulatedInputs.some(
-        (currentInput) => currentInput.name === input.name
-      )
+      !selectedInputs.some((currentInput) => currentInput.name === input.name)
     ) {
       const newInput = {
         id: input.id || '',
         name: input.name,
         grammage: Number(inputState[input.name]?.grammage) || 0,
-        measurementUnit: input.measurementUnit,
+        measurementUnit:
+          inputState[input.name]?.measurementUnit || input.measurementUnit,
       }
 
       setInputState((prevState) => ({
@@ -110,60 +102,62 @@ export default function CreateProductModal({
         },
       }))
 
-      setManipulatedInputs((prevInputs: Input[]) => [
-        ...prevInputs,
+      setSelectedInputs((prevInputs: Input[]) => [
         newInput as Input,
+        ...prevInputs,
       ])
     } else {
       console.log('JÁ TEM ESSE INPUT NA LISTA')
     }
   }
 
-  const handleRemoveInput = (input: Input) => {
-    setManipulatedInputs((prevInputs) =>
+  const removeInputFromSelectedList = (input: Input) => {
+    setSelectedInputs((prevInputs) =>
       prevInputs.filter((currentInput) => currentInput.id !== input.id)
     )
 
-    const updatedInputList = (productDetail.inputs || []).filter(
-      (current: Input) => current.id !== input.id
-    )
-    productDetail.inputs = updatedInputList
+    setProductDetail((prevProductDetail) => ({
+      ...prevProductDetail,
+      inputs: (prevProductDetail?.inputs || []).filter(
+        (current: InputToProductProps) => current.id !== input.id
+      ),
+    }))
 
-    setExistingInputs((prevInputs) =>
-      prevInputs.filter((currentInput) => currentInput.id !== input.id)
-    )
+    closeDeleteConfirmationDialog()
   }
 
-  const handleOnSave = async () => {
+  const saveProductWithInputs = async () => {
     onClose()
-    const inputsOnProductsArray = getBodyInputToProducts()
+    const inputsOnProductsArray = prepareInputsForProduct()
 
-    console.log('O QUE ENVIADO', inputsOnProductsArray)
     await handleAddInputsToProduct(inputsOnProductsArray)
   }
 
-  const getBodyInputToProducts = () => {
-    const addedInputsSinceLastOpen = existingInputs.filter(
+  const prepareInputsForProduct = () => {
+    const existingInputs = productDetail?.inputs || []
+
+    const addedInputsSinceLastOpen = selectedInputs.filter(
       (input) =>
         !existingInputs.some(
-          (existingInput) => existingInput.name === input.name
+          (existingInput: Input) => existingInput.name === input.name
         )
     )
 
+    const allInputs = [...existingInputs, ...addedInputsSinceLastOpen]
+    console.log('lista:', allInputs)
     const productInputResponse: InputsOnProducts = {
       productId: product.id || '',
-      input: addedInputsSinceLastOpen.map((input: Input) => ({
+      input: allInputs.map((input: Input) => ({
         id: input.id || '',
         name: input.name,
-        grammage: Number(inputState[input.name]?.grammage) || 0,
-        measurementUnit: input.measurementUnit,
+        grammage: Number(input.grammage) || 0,
+        measurementUnit:
+          inputState[input.name]?.measurementUnit || input.measurementUnit,
       })),
     }
 
     return productInputResponse
   }
-
-  console.log(filteredProductList)
 
   return (
     <Modal open={isOpen} onClose={handleClose}>
@@ -172,29 +166,44 @@ export default function CreateProductModal({
           <Hypnosis color="var(--color-primary)" />
         ) : (
           <div className={styles.EditWrapper}>
-            <div>
-              <InputSearch
-                search={'insumo'}
-                onChange={handleSearchChange}
-                // disabled={showCreateForm}
-              />
+            <div className={styles.inputListSearch}>
+              <div>
+                <InputSearch
+                  search={'insumo'}
+                  onChange={handleSearchChange}
+                  // disabled={showCreateForm}
+                />
+              </div>
+              <p>{product.name}</p>
             </div>
+
+            <p>Adicionar insumo</p>
+
             <div className={styles.containerWrapper}>
               <div className={styles.inputListTable}>
                 <table className={styles.table}>
                   <tbody className={styles.tbody}>
-                    {!filteredProductList.length ? (
-                      <p>Nenhum insumo encontrado</p>
-                    ) : (
+                    {filteredProductList.length === 0 && (
+                      <tr>
+                        <td colSpan={4}>
+                          <p>Nenhum insumo encontrado</p>
+                        </td>
+                      </tr>
+                    )}
+                    {filteredProductList.length > 0 &&
                       filteredProductList?.map((input: Input) => {
                         const isInputInList = productDetail?.inputs?.some(
                           (currentInput: Input) =>
                             currentInput.name === input.name
                         )
 
-                        const isInputInManipulatedList = manipulatedInputs.some(
+                        const isInputInManipulatedList = selectedInputs.some(
                           (currentInput) => currentInput.name === input.name
                         )
+
+                        const isGrammageValid =
+                          !isNaN(Number(inputState[input.name]?.grammage)) &&
+                          Number(inputState[input.name]?.grammage) > 0
 
                         if (!isInputInList && !isInputInManipulatedList) {
                           return (
@@ -202,14 +211,6 @@ export default function CreateProductModal({
                               <td>{input.name}</td>
                               <td>
                                 <FormControl size="small" key={input.id}>
-                                  <InputLabel
-                                    id={`measurementUnit-${input.id}`}
-                                    sx={{
-                                      color: '#BDBDBD',
-                                    }}
-                                  >
-                                    {input.measurementUnit}
-                                  </InputLabel>
                                   <Select
                                     key={input.id}
                                     labelId={`measurementUnit-${input.id}`}
@@ -217,7 +218,7 @@ export default function CreateProductModal({
                                     name={`measurementUnit-${input.id}`}
                                     value={
                                       inputState[input.name]?.measurementUnit ||
-                                      ''
+                                      input.measurementUnit
                                     }
                                     onChange={(event) => {
                                       const { value } = event.target
@@ -225,7 +226,7 @@ export default function CreateProductModal({
                                         ...prevState,
                                         [input.name]: {
                                           ...prevState[input.name],
-                                          measurementUnit: value,
+                                          measurementUnit: value || '0',
                                         },
                                       }))
                                     }}
@@ -249,7 +250,7 @@ export default function CreateProductModal({
                                       '& .MuiSelect-icon': {
                                         fill: '#0488A6',
                                       },
-                                      width: '90px',
+                                      width: '100px',
                                     }}
                                   >
                                     {['KG', 'LT', 'CAIXA'].map((option) => (
@@ -275,7 +276,7 @@ export default function CreateProductModal({
                                   variant="outlined"
                                   name={'grammage'}
                                   sx={{
-                                    width: '90px',
+                                    width: '100px',
                                     color: '#BDBDBD',
                                     '& fieldset': {
                                       borderColor: '#0488A6',
@@ -312,27 +313,34 @@ export default function CreateProductModal({
                                 />
                               </td>
                               <td>
-                                <div
-                                  className={styles.productActionDelete}
-                                  onClick={() => handleAddNewInput(input)}
+                                <button
+                                  className={styles.productActionAdd}
+                                  onClick={() => addInputToSelectedList(input)}
+                                  disabled={!isGrammageValid}
                                 >
                                   <Plus color="white" size={18} />
-                                </div>
+                                </button>
                               </td>
                             </tr>
                           )
                         }
 
                         return null
-                      })
-                    )}
+                      })}
                   </tbody>
                 </table>
               </div>
-              <CustomTextArea value={productDetail.description} rows={10} />
-            </div>
 
-            <div className={styles.tableCreateContainer}>
+              <div className={styles.textAreaContainer}>
+                <CustomTextArea value={productDetail.description} rows={10} />
+              </div>
+            </div>
+            <br />
+
+            <hr />
+
+            <p>Lista de insumos</p>
+            <div className={styles.containerWrapper}>
               <table className={styles.table}>
                 <thead className={styles.thead}>
                   <td>Nome</td>
@@ -340,51 +348,52 @@ export default function CreateProductModal({
                   <td>Gramatura</td>
                 </thead>
 
-                <tbody className={styles.tbody}>
-                  {manipulatedInputs?.map((input: Input) => (
-                    <tr key={input.id} className={styles.tr}>
-                      <td>{input.name}</td>
-                      <td>{input.measurementUnit}</td>
-                      <td>{input.grammage}</td>
-                      <td>
-                        <div
-                          className={styles.productActionDelete}
-                          onClick={() => handleRemoveInput(input)}
-                        >
-                          <Trash2 color="white" size={18} />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-
-                  {(existingInputs || []).map((input: Input) => (
-                    <tr key={input.id} className={styles.tr}>
-                      <td>{input.name}</td>
-                      <td>{input.measurementUnit}</td>
-                      <td>{input.grammage}</td>
-                      <td>
-                        <div
-                          className={styles.productActionDelete}
-                          onClick={() => handleRemoveInput(input)}
-                        >
-                          <Trash2 color="white" size={18} />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                <div className={styles.tbodyContainer}>
+                  <tbody className={styles.tbody}>
+                    {selectedInputs.length ? (
+                      selectedInputs?.map((input: Input) => (
+                        <tr key={input.id} className={styles.tr}>
+                          <td>{input.name}</td>
+                          <td>{input.measurementUnit}</td>
+                          <td>{input.grammage}</td>
+                          <td>
+                            <div
+                              className={styles.productActionDelete}
+                              onClick={() =>
+                                openDeleteConfirmationDialog(input)
+                              }
+                            >
+                              <Trash2 color="white" size={18} />
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <div className={styles.paragraphContainer}>
+                        <p>Nenhum insumo adicionado</p>
+                      </div>
+                    )}
+                  </tbody>
+                </div>
               </table>
             </div>
 
             <AddButton
               text="SALVAR"
               Icon={SaveIcon}
-              onClickButton={handleOnSave}
-              isButtonDisabled={!productDetail?.inputs?.length}
+              onClickButton={saveProductWithInputs}
+              isButtonDisabled={!selectedInputs.length}
             />
           </div>
         )}
       </div>
+      {inputToRemove && (
+        <ConfirmDialog
+          open={isConfirmDialogOpen}
+          onClose={closeDeleteConfirmationDialog}
+          onConfirm={() => removeInputFromSelectedList(inputToRemove as Input)}
+        />
+      )}
     </Modal>
   )
 }

@@ -1,17 +1,15 @@
 'use client'
 import { Fade } from '@mui/material'
-import React, { ChangeEvent, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import styles from './styles.module.scss'
-import Dropdown from '@/components/dropDown'
 import { ProductContext } from '@/context/product'
 import ProductList from '@/components/product/ProductList'
 import ProductCreate from '@/components/product/ProductCreate'
 import { Product, ProductProps } from '@/components/product/types'
-import CreateProductModal from '@/components/product/ProductAddInput'
+import AddInputToProduct from '@/components/product/AddInputToProductModal'
 
 export default function Product() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -20,7 +18,7 @@ export default function Product() {
     {} as ProductProps
   )
 
-  const { loading, productList, productDetail, handleSave, handleDelete } =
+  const { loading, productList, handleSave, handleDelete } =
     useContext(ProductContext)
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,23 +33,12 @@ export default function Product() {
     setShowAddInputModal(true)
   }
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleCloseDropdown = () => {
-    setShowCreateForm(false)
+  const handleButtonClick = () => {
+    setShowCreateForm(true)
   }
 
   const handleSelectedProduct = (product: ProductProps) => {
     setSelectedProduct(product)
-  }
-
-  const handleDropdownAction = (action: string) => {
-    handleCloseDropdown()
-    if (action === 'Criar Produto') {
-      setShowCreateForm(true)
-    }
   }
 
   const filteredProductList = searchTerm
@@ -71,21 +58,14 @@ export default function Product() {
           disabled={showCreateForm}
         />
 
-        <button className={styles.button} onClick={handleButtonClick}>
-          +
+        <button
+          className={styles.button}
+          onClick={handleButtonClick}
+          disabled={loading}
+        >
+          CADASTRAR
         </button>
       </div>
-
-      <Dropdown
-        anchorEl={anchorEl}
-        onClose={handleCloseDropdown}
-        actions={[
-          {
-            label: 'Criar Produto',
-            onClick: () => handleDropdownAction('Criar Produto'),
-          },
-        ]}
-      />
 
       <div>
         <ProductList
@@ -110,7 +90,7 @@ export default function Product() {
       )}
 
       {showAddInputModal && (
-        <CreateProductModal
+        <AddInputToProduct
           isOpen={showAddInputModal}
           product={selectedProduct}
           onClose={() => setShowAddInputModal(false)}

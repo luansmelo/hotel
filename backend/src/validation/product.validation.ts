@@ -1,5 +1,5 @@
 import zod from "zod";
-import { InputSchema } from "../dto/input.dto";
+import { InputToProductSchema } from "./input.validation";
 
 export const ProductSchema = zod.object({
   name: zod
@@ -20,5 +20,5 @@ export const AddInputToProductSchema = zod.object({
       invalid_type_error: "O id do produto é obrigatório",
     })
     .uuid(),
-  input: zod.array(InputSchema),
+  input: zod.array(InputToProductSchema),
 });

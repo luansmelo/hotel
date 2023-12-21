@@ -22,8 +22,6 @@ function ProductList({
   const offset = currentPage * itemsPerPage
   const paginatedItems = productList?.slice(offset, offset + itemsPerPage)
 
-  console.log(productList, 'productList')
-
   const skeletonCell = (
     <Skeleton
       height={36}
