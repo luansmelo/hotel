@@ -9,6 +9,7 @@ import ProductCreate from '@/components/product/ProductCreate'
 import { Product, ProductProps } from '@/components/product/types'
 import AddInputToProduct from '@/components/product/AddInputToProductModal'
 import InputProductDetail from '@/components/product/ProductDetail'
+import ProductEdit from '@/components/product/ProductEdit'
 
 export default function Product() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -93,6 +94,14 @@ export default function Product() {
           setErrors={() => {}}
           handleSave={handleSave}
           handleCloseModal={() => setShowCreateForm(false)}
+        />
+      )}
+
+      {showEditModal && (
+        <ProductEdit
+          isOpen={showEditModal}
+          product={selectedProduct}
+          onClose={() => setShowEditModal(false)}
         />
       )}
 
