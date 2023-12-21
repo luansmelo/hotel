@@ -6,4 +6,11 @@ export const TABLE_HEADERS_INPUT = [
   'Grupo',
 ]
 
+export const TABLE_HEADERS_PRODUCT_DETAILS = [
+  'Descrição',
+  'Quantidade',
+  'Custo Médio',
+  'Ultima Compra',
+]
+
 export const TABLE_HEADERS_PRODUCT = ['Nome']

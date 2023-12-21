@@ -24,6 +24,7 @@ export interface ProductListProps {
   handleDelete: (id: string) => void
   handleSelectProduct: (data: ProductProps) => void
   openEditModal: () => void
+  handleDetailModal: () => void
   openAddInputModal: () => void
 }
 

@@ -35,6 +35,13 @@ export class ProductRepository implements ProductRepositoryContract {
             name: true,
             measurementUnit: true,
             grammage: true,
+            input: {
+              select: {
+                code: true,
+                unitPrice: true,
+                group: true,
+              },
+            },
           },
         },
       },

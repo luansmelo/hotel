@@ -8,11 +8,13 @@ import ProductList from '@/components/product/ProductList'
 import ProductCreate from '@/components/product/ProductCreate'
 import { Product, ProductProps } from '@/components/product/types'
 import AddInputToProduct from '@/components/product/AddInputToProductModal'
+import InputProductDetail from '@/components/product/ProductDetail'
 
 export default function Product() {
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
+  const [showDetailModal, setShowDetailModal] = useState(false)
   const [showAddInputModal, setShowAddInputModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<ProductProps>(
     {} as ProductProps
@@ -39,6 +41,10 @@ export default function Product() {
 
   const handleSelectedProduct = (product: ProductProps) => {
     setSelectedProduct(product)
+  }
+
+  const handleDetailModal = () => {
+    setShowDetailModal(true)
   }
 
   const filteredProductList = searchTerm
@@ -75,6 +81,7 @@ export default function Product() {
           handleSelectProduct={handleSelectedProduct}
           handleDelete={handleDelete}
           openAddInputModal={openAddInputModal}
+          handleDetailModal={handleDetailModal}
         />
       </div>
 
@@ -94,6 +101,14 @@ export default function Product() {
           isOpen={showAddInputModal}
           product={selectedProduct}
           onClose={() => setShowAddInputModal(false)}
+        />
+      )}
+
+      {showDetailModal && (
+        <InputProductDetail
+          isOpen={showDetailModal}
+          onClose={() => setShowDetailModal(false)}
+          product={selectedProduct}
         />
       )}
 

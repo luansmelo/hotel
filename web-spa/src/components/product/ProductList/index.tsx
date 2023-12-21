@@ -10,6 +10,7 @@ function ProductList({
   loading,
   handleDelete,
   handleSelectProduct,
+  handleDetailModal,
   openEditModal,
   openAddInputModal,
 }: ProductListProps) {
@@ -62,7 +63,8 @@ function ProductList({
                   {
                     label: 'Visualizar prato',
                     onClick: () => {
-                      console.log('Custom action for product:', product)
+                      handleDetailModal()
+                      handleSelectProduct(product as ProductProps)
                     },
                   },
                 ]}
