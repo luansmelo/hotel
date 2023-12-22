@@ -7,7 +7,7 @@ import {
   ProductInput,
   UpdatedProductInfo,
 } from "../dto/product.dto";
-import { NotFoundError } from "../errors/httpErrors";
+import { NotFoundError, UnauthorizedError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
 
 export class ProductService implements ProductServiceContract {
@@ -62,11 +62,19 @@ export class ProductService implements ProductServiceContract {
   }
 
   async addInputToProduct(input: AddInputToProduct): Promise<void> {
-    await this.getById(input.productId);
+    const product = await this.getPredefinedProduct(input.productId);
+
+    const inputIdsToAdd = input.input.map((i) => i.id);
+    const inputOnProduct = product.inputs.some((productInput) =>
+      inputIdsToAdd.includes(productInput.input.id)
+    );
+
+    if (inputOnProduct) {
+      throw new UnauthorizedError("Input já foi adicionado ao produto");
+    }
 
     const data = {
       id: uuid(),
-
       ...input,
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),

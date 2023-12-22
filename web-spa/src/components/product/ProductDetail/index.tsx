@@ -41,10 +41,11 @@ export default function InputProductDetailModal({
     return productDetail?.inputs
       ?.reduce((totalCost: number, input: any) => {
         const {
-          grammage,
           input: { unitPrice },
         } = input
-        return totalCost + grammage * unitPrice
+
+        const validUnitPrice = Number(unitPrice)
+        return isNaN(validUnitPrice) ? totalCost : totalCost + validUnitPrice
       }, 0)
       .toFixed(2)
   }

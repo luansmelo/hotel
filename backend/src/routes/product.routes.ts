@@ -92,7 +92,7 @@ router.delete(
   }
 );
 
-router.put(
+router.post(
   "/add/input/",
   authenticated,
   validate(AddInputToProductSchema),

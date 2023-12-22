@@ -10,14 +10,13 @@ interface CustomTextAreaProps {
 const CustomTextArea = ({ value, onChange, rows }: CustomTextAreaProps) => {
   return (
     <div className={styles.customTextArea}>
-      <div className={styles.textAreaContainer}>
-        <textarea
-          className={styles.textArea}
-          rows={rows}
-          value={value}
-          onChange={onChange || (() => {})}
-        />
-      </div>
+      <textarea
+        className={styles.textArea}
+        rows={rows}
+        value={value}
+        onChange={onChange || (() => {})}
+        disabled={!onChange}
+      />
     </div>
   )
 }
