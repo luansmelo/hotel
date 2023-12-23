@@ -1,7 +1,7 @@
 'use client'
 
 import { MenuService } from '@/services/menu'
-import { MenuProps } from '@/utils/interfaces/menu'
+import { MenuCategoryProps, MenuProps } from '@/utils/interfaces/menu'
 import { handleToastify } from '@/utils/toastify'
 import React, { createContext, useState, ReactNode, useEffect } from 'react'
 
@@ -9,6 +9,7 @@ interface MenuContract {
   loading: boolean
   menuList: string[]
   handleSave: (menu: MenuProps) => Promise<void>
+  handleAddCategoryToMenu: (input: MenuCategoryProps) => Promise<void>
   fetchMenuList: () => Promise<void>
 }
 export const MenuContext = createContext<MenuContract>({} as MenuContract)
@@ -52,6 +53,20 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
+  const handleAddCategoryToMenu = async (input: MenuCategoryProps) => {
+    try {
+      const response = await menu.addCategoryToMenu(input)
+
+      if (response?.ok) {
+        handleToastify('Categoria adicionada ao menu com sucesso!', 'success')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      fetchMenuList()
+    }
+  }
+
   useEffect(() => {
     fetchMenuList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,6 +78,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
         loading,
         menuList,
         handleSave,
+        handleAddCategoryToMenu,
         fetchMenuList,
       }}
     >

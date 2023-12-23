@@ -16,6 +16,10 @@ export class CategoryController {
     return this.service.deleteProduct(input);
   }
 
+  async getAll() {
+    return this.service.getAll();
+  }
+
   async getById(id: string) {
     return this.service.getById(id);
   }

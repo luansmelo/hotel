@@ -3,7 +3,10 @@ import { ProductToCategoryInput, CategoryInput } from "../dto/category.dto";
 import { makeCategoryController } from "../utils/factories/makeCategoryController";
 import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
-import { CategorySchema, ProductToCategorySchema } from "../validation/category.validation";
+import {
+  CategorySchema,
+  ProductToCategorySchema,
+} from "../validation/category.validation";
 
 const router = Router();
 const slug = "/category";
@@ -21,6 +24,20 @@ router.post(
       const result = await controller.create(input);
 
       return response.status(201).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/",
+  authenticated,
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const controller = makeCategoryController();
+      const result = await controller.getAll();
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }

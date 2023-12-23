@@ -6,12 +6,14 @@ import { useEffect, useState, useCallback, useContext } from 'react'
 import { IProductResponse } from '@/atom/business'
 import { Fade } from '@mui/material'
 import Select from '@/components/select'
-import { categoryList, useMapContext } from '@/context/MapaContext'
+import { useMapContext } from '@/context/MapaContext'
 import { useBusinessContext } from '@/context/BusinessContext'
 import MenuProductTable from '@/feature/mapMenu/MenuProductTable'
 import Dropdown from '@/components/dropDown'
 import MenuCreate from '@/components/menuMap/MenuCreate'
 import { MenuContext } from '@/context/menu'
+import CategoryCreate from '@/components/category/CategoryCreate'
+import { CategoryContext } from '@/context/category'
 
 export const colorObj: Record<string, string> = {
   'Café da Manhã': '#FFD700',
@@ -24,9 +26,10 @@ export const colorObj: Record<string, string> = {
 
 export default function MenuMap() {
   const [openCreateMenu, setOpenCreateMenu] = useState(false)
+  const [openCreateCategory, setOpenCreateCategory] = useState(false)
   const {
     currentSelectCategory,
-    setcurrentSelectCategory,
+
     setCurrentDateTab,
     currentDateTab,
     fetchMenuProducts,
@@ -36,6 +39,7 @@ export default function MenuMap() {
   const { currentMenuId } = useBusinessContext()
 
   const { loading, menuList, handleSave } = useContext(MenuContext)
+  const { categoryList, handleCreateCategory } = useContext(CategoryContext)
 
   const handleList = useCallback(
     async (currentMenuId: string) => {
@@ -44,13 +48,21 @@ export default function MenuMap() {
     [fetchMenuProducts]
   )
 
+  console.log(categoryList)
+
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState<null | HTMLElement>(
     null
   )
   const [menu, setMenu] = useState<string>('')
+  const [category, setCategory] = useState<string>('')
 
   const openCreateMenuModal = () => {
     setOpenCreateMenu(true)
+    setDropdownAnchorEl(null)
+  }
+
+  const openCreateCategoryModal = () => {
+    setOpenCreateCategory(true)
     setDropdownAnchorEl(null)
   }
 
@@ -67,7 +79,7 @@ export default function MenuMap() {
   }, [currentMenuId, handleList])
 
   const handleCategory = (value: string) => {
-    setcurrentSelectCategory(value)
+    setCategory(value)
   }
   const handleMenu = (value: string) => {
     setMenu(value)
@@ -91,7 +103,7 @@ export default function MenuMap() {
               { label: 'Criar Menu', onClick: openCreateMenuModal },
               {
                 label: 'Criar Categoria',
-                onClick: () => console.log('Criar Categoria'),
+                onClick: openCreateCategoryModal,
               },
               {
                 label: 'Adicionar Categoria ao Menu',
@@ -118,13 +130,24 @@ export default function MenuMap() {
               setErrors={() => {}}
             />
           )}
+
+          {openCreateCategory && (
+            <CategoryCreate
+              isOpenModel={openCreateCategory}
+              loading={loading}
+              errors={{}}
+              setErrors={() => {}}
+              closeModal={() => setOpenCreateCategory(false)}
+              handleSave={handleCreateCategory}
+            />
+          )}
         </div>
 
         <div className={styles.DateTabsContainer}>
           <Select
             data={categoryList}
             onClick={handleCategory}
-            value={currentSelectCategory}
+            value={category}
           />
           <DateTabs
             currentDateTab={currentDateTab}
