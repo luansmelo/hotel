@@ -1,14 +1,15 @@
 import { ProductRepositoryContract } from "../utils/contracts/products-contract";
 import {
-  AddInputToProduct,
   AddInputToProductData,
   ProductContract,
+  ProductInputRemove,
   UpdatedProductInfo,
 } from "../dto/product.dto";
-import { InputsOnProducts, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 export class ProductRepository implements ProductRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
+
   async save(input: ProductContract) {
     await this.db.product.create({
       data: input,
@@ -63,6 +64,7 @@ export class ProductRepository implements ProductRepositoryContract {
   }
 
   async updatePredefinedProduct(id: string, updatedInfo: UpdatedProductInfo) {
+    console.log(id, updatedInfo);
     await this.db.product.update({
       where: { id },
       data: {
@@ -98,5 +100,17 @@ export class ProductRepository implements ProductRepositoryContract {
       updated_at: input.updated_at,
     }));
     await this.db.inputsOnProducts.createMany({ data });
+  }
+
+  async removeInputFromProduct(input: ProductInputRemove): Promise<void> {
+    console.log("REMOVIDO", input);
+    await this.db.inputsOnProducts.deleteMany({
+      where: {
+        productId: input.productId,
+        inputId: input.inputId,
+      },
+    });
+
+    console.log("REMOVEU");
   }
 }

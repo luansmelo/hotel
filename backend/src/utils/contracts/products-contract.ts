@@ -3,6 +3,7 @@ import {
   AddInputToProductData,
   ProductContract,
   ProductInput,
+  ProductInputRemove,
   UpdatedProductInfo,
 } from "../../dto/product.dto";
 
@@ -18,6 +19,7 @@ export interface ProductRepositoryContract {
     id: string,
     updatedInfo: UpdatedProductInfo
   ): Promise<void>;
+  removeInputFromProduct(input: ProductInputRemove): Promise<void>;
 }
 
 export interface ProductServiceContract {
@@ -32,4 +34,5 @@ export interface ProductServiceContract {
     id: string,
     updatedInfo: UpdatedProductInfo
   ): Promise<void>;
+  removeInputFromProduct(input: ProductInputRemove): Promise<void>;
 }

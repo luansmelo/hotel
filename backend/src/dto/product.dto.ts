@@ -13,6 +13,11 @@ export interface ProductInput {
   description: string;
 }
 
+export interface ProductInputRemove {
+  productId: string;
+  inputId: string;
+}
+
 export interface AddInputToProductData {
   id: string;
   productId: string;

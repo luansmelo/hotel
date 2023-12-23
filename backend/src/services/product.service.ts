@@ -4,6 +4,7 @@ import {
 } from "../utils/contracts/products-contract";
 import {
   AddInputToProduct,
+  AddInputToProductData,
   ProductInput,
   UpdatedProductInfo,
 } from "../dto/product.dto";
@@ -90,5 +91,11 @@ export class ProductService implements ProductServiceContract {
     await this.getById(id);
 
     return this.repository.updatePredefinedProduct(id, updatedInfo);
+  }
+
+  async removeInputFromProduct(input: AddInputToProductData): Promise<void> {
+    await this.getById(input.productId);
+
+    return this.repository.removeInputFromProduct(input);
   }
 }

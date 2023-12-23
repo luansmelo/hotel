@@ -2,6 +2,7 @@ import { InputContract } from '@/atom/business'
 import {
   InputsOnProducts,
   Product,
+  ProductRemoveProps,
   UpdatedProductInfo,
 } from '@/components/product/types'
 import { API } from '@/services/api'
@@ -22,6 +23,18 @@ export class ProductService {
   async addInputToProduct(input: InputsOnProducts) {
     try {
       const response = await api.post('/product/add/input', input)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async removeInputToProduct(input: ProductRemoveProps) {
+    try {
+      const response = await api.delete(
+        `/product/${input.productId}/input/${input.inputId}`
+      )
 
       return response
     } catch (error) {

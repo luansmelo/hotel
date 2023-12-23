@@ -1,5 +1,10 @@
 import { InputToProductProps } from '../input/types'
 
+export interface ProductRemoveProps {
+  productId: string
+  inputId: string
+}
+
 export interface InputsOnProducts {
   productId: string
   input: InputToProductProps[]

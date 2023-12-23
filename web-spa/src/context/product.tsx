@@ -5,10 +5,11 @@ import {
   ProductProps,
   Product,
   UpdatedProductInfo,
+  ProductRemoveProps,
 } from '@/components/product/types'
 import { ProductService } from '@/services/product/product'
 import { handleToastify } from '@/utils/toastify'
-import axios from 'axios'
+
 import React, {
   createContext,
   useState,
@@ -30,10 +31,7 @@ interface ProductContract {
   handleDelete: (id: string) => Promise<void>
   handleProductDetails: (id: string) => Promise<void>
   handleAddInputsToProduct: (input: InputsOnProducts) => Promise<void>
-  handleRemoveInputFromProduct: (
-    productId: string,
-    inputId: string
-  ) => Promise<void>
+  handleDeleteInputsToProduct: (input: ProductRemoveProps) => Promise<void>
 }
 
 export const ProductContext = createContext<ProductContract>(
@@ -123,7 +121,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       const response = await product.addInputToProduct(input)
 
       console.log('RES', response)
-      if (response.message === 'sucesso') {
+      if (response?.ok) {
         handleToastify('Inputs adicionados ao produto com sucesso!', 'success')
       }
     } catch (error) {
@@ -134,6 +132,21 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
+  const handleDeleteInputsToProduct = async (input: ProductRemoveProps) => {
+    try {
+      setLoading(true)
+      const res = await product.removeInputToProduct(input)
+
+      if (res.message === 'sucesso') {
+        handleToastify('Input removido do produto com sucesso!', 'success')
+        await handleProductDetails(input.productId)
+      }
+    } catch (error) {
+      console.log('error', error)
+    } finally {
+      setLoading(false)
+    }
+  }
   const handleEdit = async (productId: string, data: UpdatedProductInfo) => {
     try {
       const res = await product.updatePredefinedProduct(productId, data)
@@ -145,46 +158,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       console.log('error')
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleRemoveInputFromProduct = async (
-    productId: string,
-    inputId: string
-  ) => {
-    const apiUrl = `https://localhost:7196/api/product/removeInputFromProduct/${productId}/${inputId}`
-
-    try {
-      setLoading(true)
-
-      const response = await axios.delete(apiUrl, {
-        headers: {
-          Accept: '*/*',
-        },
-      })
-
-      if (response.status === 200) {
-        await fetchProductList()
-        setTimeout(() => {
-          handleToastify('Input removido com sucesso do produto!', 'success')
-        }, 750)
-      } else {
-        await fetchProductList()
-        setTimeout(() => {
-          handleToastify(
-            'Não foi possível remover o input do produto.',
-            'error'
-          )
-        }, 750)
-      }
-    } catch (error) {
-      setTimeout(() => {
-        handleToastify('Não foi possível remover o input do produto.', 'error')
-      }, 750)
-    } finally {
-      setTimeout(() => {
-        setLoading(false)
-      }, 750)
     }
   }
 
@@ -201,7 +174,8 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
         handleEdit,
         handleProductDetails,
         handleAddInputsToProduct,
-        handleRemoveInputFromProduct,
+
+        handleDeleteInputsToProduct,
       }}
     >
       {children}

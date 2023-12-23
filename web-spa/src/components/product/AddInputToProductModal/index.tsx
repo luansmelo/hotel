@@ -1,6 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { Autocomplete, TextField } from '@mui/material'
+import {
+  Autocomplete,
+  FormControl,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material'
 import AddButton from '@/components/addButton'
 import { SaveIcon, Trash2, PlusCircle } from 'lucide-react'
 import { InputContext } from '@/context/input'
@@ -11,6 +17,7 @@ import Modal from '@/components/Modal/modal/Modal'
 import CustomTextArea from '@/components/customTextArea'
 import { Input, InputToProductProps } from '@/components/input/types'
 import ConfirmDialog from '@/components/dialog'
+import { handleToastify } from '@/utils/toastify'
 
 export default function AddInputToProductModal({
   isOpen,
@@ -37,7 +44,7 @@ export default function AddInputToProductModal({
   const [inputToRemove, setInputToRemove] = useState<Input | null>(null)
   const [addedInputs, setAddedInputs] = useState<Input[]>([])
   const [selectedInput, setSelectedInput] = useState<Input>()
-
+  const [isGrammageValid, setIsGrammageValid] = useState(true)
   const fetchProductDetails = async () => {
     try {
       await handleProductDetails(product.id)
@@ -60,6 +67,11 @@ export default function AddInputToProductModal({
     setInputToRemove(null)
   }
 
+  const validateGrammage = useCallback((value: string) => {
+    const isValid = Number(value) > 0 && !isNaN(Number(value))
+    setIsGrammageValid(isValid)
+  }, [])
+
   const addSelectedInput = (value: string) => {
     setSelectedInput(inputList.find((input) => input.name === value))
   }
@@ -67,7 +79,6 @@ export default function AddInputToProductModal({
   const handleClose = () => {
     onClose()
   }
-
   const addInputToSelectedList = (input: Input) => {
     if (!addedInputs.some((currentInput) => currentInput.name === input.name)) {
       const newInput = {
@@ -90,8 +101,10 @@ export default function AddInputToProductModal({
         ...prevAddedInputs,
         newInput as Input,
       ])
+
+      handleToastify('Insumo adicionado com sucesso!', 'success')
     } else {
-      console.log('JÁ TEM ESSE INPUT NA LISTA')
+      handleToastify('Produto não pode ser adicionado!', 'error')
     }
   }
 
@@ -111,14 +124,22 @@ export default function AddInputToProductModal({
       ),
     }))
 
+    setInputState((prevState) => ({
+      ...prevState,
+      [input.name]: {
+        grammage: '',
+        measurementUnit: '',
+      },
+    }))
+
     closeDeleteConfirmationDialog()
+    handleToastify('Insumo removido com sucesso!', 'success')
   }
 
   const saveProductWithInputs = async () => {
     onClose()
     const inputsOnProductsArray = prepareInputsForProduct()
-
-    console.log('INPUT', inputsOnProductsArray)
+    console.log('VALR:', inputsOnProductsArray)
     await handleAddInputsToProduct(inputsOnProductsArray)
     setAddedInputs([])
   }
@@ -129,7 +150,7 @@ export default function AddInputToProductModal({
       input: addedInputs.map((input: Input) => ({
         id: input.id || '',
         name: input.name,
-        grammage: Number(input.grammage) || 0,
+        grammage: Number(inputState[input.name]?.grammage) || 0,
         measurementUnit:
           inputState[input.name]?.measurementUnit || input.measurementUnit,
       })),
@@ -251,8 +272,118 @@ export default function AddInputToProductModal({
                       [...addedInputs].map((input: Input) => (
                         <tr key={input.id} className={styles.tr}>
                           <td>{input.name}</td>
-                          <td>{input.measurementUnit}</td>
-                          <td>{input.grammage}</td>
+                          <td>
+                            <FormControl size="small" key={input.id} fullWidth>
+                              <Select
+                                key={input.id}
+                                label="Unidade de Medida"
+                                id={`measurementUnit-${input.id}`}
+                                name={'measurementUnit'}
+                                defaultValue={input.measurementUnit}
+                                value={
+                                  inputState[input.name]?.measurementUnit ||
+                                  input.measurementUnit
+                                }
+                                onChange={(event) => {
+                                  const { value } = event.target
+                                  setInputState((prevState) => ({
+                                    ...prevState,
+                                    [input.name]: {
+                                      ...prevState[input.name],
+                                      measurementUnit: value || '0',
+                                    },
+                                  }))
+                                }}
+                                MenuProps={{
+                                  PaperProps: {
+                                    sx: {
+                                      outline: '1px solid #0488A6',
+                                      background: '#1F2128',
+                                      color: '#BDBDBD',
+                                    },
+                                  },
+                                }}
+                                sx={{
+                                  color: '#BDBDBD',
+                                  margin: 0,
+                                  '&:before, &:after, &:hover:not(.Mui-disabled):before':
+                                    {
+                                      borderColor: '#0488A6 !important',
+                                    },
+                                  '& .MuiSelect-icon': {
+                                    fill: '#0488A6',
+                                  },
+                                  '& fieldset': {
+                                    borderColor: '#0488A6 !important',
+                                  },
+                                  '&:hover fieldset': {
+                                    borderColor: '#0488A6 !important',
+                                  },
+                                }}
+                              >
+                                {['KG', 'LT', 'CAIXA'].map((option) => (
+                                  <MenuItem
+                                    key={option}
+                                    value={option}
+                                    sx={{
+                                      color: '#BDBDBD',
+                                    }}
+                                  >
+                                    {option}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td>
+                            <TextField
+                              key={input.id}
+                              size="small"
+                              id={`Gramatura-${input.id}`}
+                              label="Gramatura"
+                              variant="outlined"
+                              name={`grammage`}
+                              sx={{
+                                color: '#BDBDBD',
+                                '& fieldset': {
+                                  borderColor: '#0488A6',
+                                },
+                                '&:hover fieldset': {
+                                  borderColor: '#0488A6',
+                                },
+                              }}
+                              InputLabelProps={{
+                                style: {
+                                  color: '#BDBDBD',
+                                },
+                              }}
+                              InputProps={{
+                                inputProps: {
+                                  inputMode: 'numeric',
+                                },
+                                style: {
+                                  color: '#BDBDBD',
+                                },
+                              }}
+                              autoComplete="off"
+                              defaultValue={
+                                inputState[input.name]?.grammage ||
+                                input.grammage
+                              }
+                              onChange={(event) => {
+                                const { value } = event.target
+
+                                validateGrammage(value as string)
+                                setInputState((prevState) => ({
+                                  ...prevState,
+                                  [input.name]: {
+                                    ...prevState[input.name],
+                                    grammage: value,
+                                  },
+                                }))
+                              }}
+                            />
+                          </td>
                           <td>
                             <div
                               className={styles.productActionDelete}
@@ -279,7 +410,7 @@ export default function AddInputToProductModal({
               text="SALVAR"
               Icon={SaveIcon}
               onClickButton={saveProductWithInputs}
-              isButtonDisabled={!addedInputs.length}
+              isButtonDisabled={!isGrammageValid}
             />
           </div>
         )}

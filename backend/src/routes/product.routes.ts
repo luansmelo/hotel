@@ -5,7 +5,11 @@ import {
   AddInputToProductSchema,
   ProductSchema,
 } from "../validation/product.validation";
-import { AddInputToProduct, ProductInput } from "../dto/product.dto";
+import {
+  AddInputToProduct,
+  ProductInput,
+  ProductInputRemove,
+} from "../dto/product.dto";
 import { authenticated } from "../middleware/authenticated";
 
 const router = Router();
@@ -104,6 +108,27 @@ router.post(
 
       const controller = makeProductController();
       await controller.addInputToProduct(input);
+
+      return response.status(200).send({ message: "sucesso" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/:productId/input/:inputId",
+  authenticated,
+
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const input: ProductInputRemove = {
+        productId: request.params.productId,
+        inputId: request.params.inputId,
+      };
+
+      const controller = makeProductController();
+      await controller.removeInputFromProduct(input);
 
       return response.status(200).send({ message: "sucesso" });
     } catch (error) {

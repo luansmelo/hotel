@@ -2,6 +2,7 @@ import { ProductServiceContract } from "../utils/contracts/products-contract";
 import {
   AddInputToProduct,
   ProductInput,
+  ProductInputRemove,
   UpdatedProductInfo,
 } from "../dto/product.dto";
 
@@ -38,5 +39,9 @@ export class ProductController {
 
   async updatePredefinedProduct(id: string, updatedInfo: UpdatedProductInfo) {
     return this.service.updatePredefinedProduct(id, updatedInfo);
+  }
+
+  async removeInputFromProduct(input: ProductInputRemove): Promise<void> {
+    return this.service.removeInputFromProduct(input);
   }
 }
