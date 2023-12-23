@@ -64,25 +64,27 @@ export default function DateTabs({
         scrollButtons="auto"
         variant="fullWidth"
         sx={{
+          '&.MuiTabs-root': {
+            color: '#BDBDBD',
+          },
           '& .MuiTabs-flexContainer': {
-            background: '#f8bdbd',
+            background: '#1F2128',
             borderRadius: '8px',
           },
           '& .MuiButtonBase-root.Mui-selected': {
-            background: '#F28482',
-            color: '#FFEF92',
-
-            ':first-child': {
-              borderTopLeftRadius: '8px',
-              borderBottomLeftRadius: '8px',
-            },
-            ':last-child': {
-              borderTopRightRadius: '8px',
-              borderBottomRightRadius: '8px',
-            },
+            background: '#036B85',
+            color: '#BDBDBD',
+          },
+          '& .MuiButtonBase-root.Mui-selected:first-child': {
+            borderTopLeftRadius: '8px',
+            borderBottomLeftRadius: '8px',
+          },
+          '& .MuiButtonBase-root.Mui-selected:last-child': {
+            borderTopRightRadius: '8px',
+            borderBottomRightRadius: '8px',
           },
           '& .MuiTabs-indicator': {
-            background: '#FFEF92',
+            background: '#F27127',
           },
         }}
       >

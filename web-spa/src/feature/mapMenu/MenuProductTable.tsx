@@ -22,17 +22,6 @@ export default function MenuProductTable({
   return (
     <>
       <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr
-            style={{
-              background: headColor,
-              color: headColor ? '#ffffff' : '#000',
-            }}
-          >
-            <td style={{ color: headColor ? '#ffffff' : '#000' }}>Nome</td>
-          </tr>
-        </thead>
-
         {isLoading ? (
           <div
             style={{

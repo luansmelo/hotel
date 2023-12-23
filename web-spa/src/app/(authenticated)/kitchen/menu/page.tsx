@@ -1,17 +1,15 @@
 'use client'
 
-import SelectBusiness from '@/components/selectBusiness'
 import styles from './styles.module.scss'
-import AddButton from '@/components/addButton'
 import DateTabs from '@/components/DateTabs'
 import { useEffect, useState, useCallback } from 'react'
 import { IProductProps, IProductResponse } from '@/atom/business'
 import AddProductModal from '@/components/Modal/addProductModal'
 import { Fade, Modal } from '@mui/material'
-import SelectCategory from '@/components/selectCategory'
-import MenuProductTable from '@/feature/mapMenu/MenuProductTable'
+import Select from '@/components/select'
 import { categoryList, useMapContext } from '@/context/MapaContext'
 import { useBusinessContext } from '@/context/BusinessContext'
+import MenuProductTable from '@/feature/mapMenu/MenuProductTable'
 
 export const colorObj: Record<string, string> = {
   'Café da Manhã': '#FFD700',
@@ -64,16 +62,21 @@ export default function MenuMap() {
     <Fade in={true} timeout={500}>
       <div className={styles.MenuMapContainer}>
         <div className={styles.buttonsContainer}>
-          <SelectBusiness />
-          <AddButton
-            text="Adicionar Produto"
-            onClickButton={() => setisOpenCreateMenu(true)}
+          <Select
+            data={categoryList}
+            onClick={handleChangeCategory}
+            value={currentSelectCategory}
           />
+          <button
+            className={styles.button}
+            onClick={() => setisOpenCreateMenu(true)}
+          >
+            +
+          </button>
         </div>
 
         <div className={styles.DateTabsContainer}>
-          <SelectCategory
-            color={colorObj[currentSelectCategory] ?? ''}
+          <Select
             data={categoryList}
             onClick={handleChangeCategory}
             value={currentSelectCategory}

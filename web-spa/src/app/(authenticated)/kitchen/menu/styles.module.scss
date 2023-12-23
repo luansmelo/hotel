@@ -11,10 +11,29 @@
   height: 100%;
 }
 
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .searchAndButtonContainer {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+.DateTabsContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.MenuMapContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .textContainer {
@@ -33,9 +52,10 @@
   background-color: #04B2D9;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  height: 50px;
-  width: 380px;
+  border-radius: 50%;
+  padding: 12px 16px;
+  font-size: 24px;
+  line-height: 24px;
   outline: 0;
   cursor: pointer;
   transition: background-color 1s ease, transform 0.3s ease;

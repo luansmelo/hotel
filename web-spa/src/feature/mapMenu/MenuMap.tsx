@@ -12,7 +12,7 @@ import {
 } from '@/atom/business'
 import AddProductModal from '@/components/Modal/addProductModal'
 import { Fade, Modal } from '@mui/material'
-import SelectCategory from '@/components/selectCategory'
+import SelectCategory from '@/components/select'
 import MenuProductTable from './MenuProductTable'
 import { categoryList, useMapContext } from '@/context/MapaContext'
 import { useBusinessContext } from '@/context/BusinessContext'
