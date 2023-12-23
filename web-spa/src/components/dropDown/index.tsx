@@ -19,9 +19,9 @@ const Dropdown: React.FC<DropdownProps> = ({ actions, onClose, anchorEl }) => {
       onClose={onClose}
       MenuListProps={{
         style: {
-          minWidth: '160px',
           backgroundColor: '#30333F',
           borderRadius: '4px',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
         },
       }}
     >

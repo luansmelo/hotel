@@ -64,6 +64,7 @@ export default function DateTabs({
         scrollButtons="auto"
         variant="fullWidth"
         sx={{
+          color: '#fff',
           '&.MuiTabs-root': {
             color: '#BDBDBD',
           },
@@ -88,9 +89,20 @@ export default function DateTabs({
           },
         }}
       >
-        {dateTabsList.map((date) => {
-          return <Tab key={date.key} value={date.key} label={date.name} />
-        })}
+        {dateTabsList.map((date) => (
+          <Tab
+            key={date.key}
+            value={date.key}
+            label={date.name}
+            sx={{
+              color: '#BDBDBD',
+              '&:hover': {
+                color: '#FFF',
+                background: '#0488A6',
+              },
+            }}
+          />
+        ))}
       </Tabs>
     </div>
   )

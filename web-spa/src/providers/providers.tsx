@@ -6,6 +6,7 @@ import { MapProvider } from '@/context/MapaContext'
 import { ProductProvider } from '@/context/product'
 import { AuthProvider } from '@/context/auth'
 import { ThemeProvider, createTheme } from '@mui/material'
+import { MenuProvider } from '@/context/menu'
 
 const theme = createTheme({
   palette: {
@@ -18,11 +19,13 @@ export const Providers = ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider theme={theme}>
     <AuthProvider>
       <BusinessProvider>
-        <MapProvider>
-          <ProductProvider>
-            <InputProvider>{children}</InputProvider>
-          </ProductProvider>
-        </MapProvider>
+        <MenuProvider>
+          <MapProvider>
+            <ProductProvider>
+              <InputProvider>{children}</InputProvider>
+            </ProductProvider>
+          </MapProvider>
+        </MenuProvider>
       </BusinessProvider>
     </AuthProvider>
   </ThemeProvider>
