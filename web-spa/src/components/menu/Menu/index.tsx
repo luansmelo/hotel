@@ -26,9 +26,9 @@ const Menu: React.FC = () => {
           <MenuButton
             Icon={PanelTop}
             text="Menu"
-            selectedFeature="mapa-de-menu"
-            active={activeButton === 'mapa-de-menu'}
-            onClick={() => setActiveButton('mapa-de-menu')}
+            selectedFeature="menu"
+            active={activeButton === 'menu'}
+            onClick={() => setActiveButton('menu')}
           />
           <MenuButton
             Icon={Microwave}

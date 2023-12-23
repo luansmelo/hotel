@@ -15,7 +15,6 @@ export default function SelectBusiness() {
 
   console.log('currentMenu:', currentMenu)
   console.log('menuList:', menuList)
-  const { currentFeature } = useAppContext()
 
   const handleNewBusinessNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -144,16 +143,14 @@ export default function SelectBusiness() {
             </FormControl>
           </Fade>
 
-          {currentFeature === FEATURES.MENU_MAP && (
-            <div
-              className={styles.IconWrapper}
-              onClick={() => setAddBusiness(true)}
-            >
-              <Fade in={true} timeout={750}>
-                <Plus height={24} width={24} />
-              </Fade>
-            </div>
-          )}
+          <div
+            className={styles.IconWrapper}
+            onClick={() => setAddBusiness(true)}
+          >
+            <Fade in={true} timeout={750}>
+              <Plus height={24} width={24} />
+            </Fade>
+          </div>
         </div>
       )}
     </div>
