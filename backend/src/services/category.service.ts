@@ -41,6 +41,7 @@ export class CategoryService implements CategoryServiceContract {
     const data = {
       id: uuid(),
       ...input,
+      weekDay: input.weekDay,
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),
     };

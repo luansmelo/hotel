@@ -97,3 +97,21 @@ model Category {
 
   @@map("category")
 }
+
+model Group {
+  id         String @id @default(uuid())
+  name       String @unique
+  created_at String
+  updated_at String
+
+  @@map("group")
+}
+
+model MeasurementUnit {
+  id         String @id @default(uuid())
+  name       String @unique
+  created_at String
+  updated_at String
+
+  @@map("measurementUnit")
+}
