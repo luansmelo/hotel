@@ -40,7 +40,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
   }
   async addProductToCategory(input: ProductToCategoryContract): Promise<void> {
     await this.db.categoryProductSchedule.create({
-      data: { ...input, weekDay: input.weekDay as Weekdays },
+      data: { ...input, weekDay: Weekdays[input.weekDay] },
     });
   }
   async getProductInCategory(
@@ -51,7 +51,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
         id: input.id,
         categoryId: input.id,
         productId: input.productId,
-        weekDay: input.weekDay as Weekdays,
+        weekDay: Weekdays[input.weekDay],
       },
     });
 
@@ -63,7 +63,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
         id: input.id,
         categoryId: input.categoryId,
         productId: input.productId,
-        weekDay: input.weekDay as Weekdays,
+        weekDay: Weekdays[input.weekDay],
       },
     });
   }

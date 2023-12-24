@@ -1,18 +1,10 @@
 import styles from './styles.module.scss'
-import {
-  AllProduct,
-  IProductProps,
-  IProductResponse,
-  businessSelectedAtom,
-} from '@/atom/business'
+import { IProductProps, IProductResponse } from '@/atom/business'
 import TemplateModal from '../templateModal'
 import { TextField } from '@mui/material'
-import { useState, useEffect, useCallback } from 'react'
-import { useAtomValue } from 'jotai'
-import AddButton from '@/components/addButton'
+import { useState, useEffect, useCallback, useContext } from 'react'
 import AddProductTable from './addProductTable'
-import { useProductContext } from '@/context/product'
-import { useBusinessContext } from '@/context/BusinessContext'
+import { ProductContext } from '@/context/product'
 import { useMapContext } from '@/context/MapaContext'
 
 interface IProductModalProps {
@@ -29,13 +21,11 @@ export default function AddProductModal({
   handleOnSave,
 }: IProductModalProps) {
   const [productSelected, setproductSelected] = useState<IProductProps>()
-  const { productList } = useProductContext()
+  const { productList } = useContext(ProductContext)
   const { menuProductList } = useMapContext()
-  const businessSelected = useAtomValue(businessSelectedAtom)
+
   const [currProductList, setCurrProductList] = useState<IProductResponse[]>()
 
-  console.log('currProductList', currProductList)
-  console.log('productList', productList)
   const handleList = useCallback(() => {
     const lista = productList.filter(
       (product) =>
@@ -44,7 +34,6 @@ export default function AddProductModal({
         )
     )
 
-    console.log('lista', lista)
     setCurrProductList(lista)
   }, [productList, menuProductList, setCurrProductList])
 

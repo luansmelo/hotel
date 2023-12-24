@@ -1,7 +1,7 @@
 'use client'
 
 import { CategoryService } from '@/services/category'
-import { CategoryProps } from '@/utils/interfaces/category'
+import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
 import { MenuProps } from '@/utils/interfaces/menu'
 import { handleToastify } from '@/utils/toastify'
 import React, { createContext, useState, ReactNode, useEffect } from 'react'
@@ -10,7 +10,7 @@ interface CategoryContract {
   loading: boolean
   categoryList: string[]
   handleCreateCategory: (input: MenuProps) => Promise<void>
-
+  handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
   fetchCategoryList: () => Promise<void>
 }
 export const CategoryContext = createContext<CategoryContract>(
@@ -56,6 +56,20 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
+  const handleProductAddCategory = async (input: ProductOnCategory) => {
+    try {
+      const response = await category.addProduct(input)
+
+      if (response?.ok) {
+        handleToastify('Produto adicionado com sucesso!', 'success')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      fetchCategoryList()
+    }
+  }
+
   useEffect(() => {
     fetchCategoryList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,6 +81,7 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
         loading,
         categoryList,
         handleCreateCategory,
+        handleProductAddCategory,
         fetchCategoryList,
       }}
     >

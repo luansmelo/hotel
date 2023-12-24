@@ -1,3 +1,5 @@
+import { Weekdays } from "../utils/enums/weekdays";
+
 export interface CategoryInput {
   name: string;
 }
@@ -13,7 +15,7 @@ export interface ProductToCategoryInput {
   id: string;
   categoryId: string;
   productId: string;
-  weekDay: string;
+  weekDay: Weekdays;
 }
 
 export interface ProductToCategoryContract {

@@ -35,7 +35,7 @@ export default function MenuCreate({
 
   const createInput = async () => {
     try {
-      await handleSave({ ...form })
+      if (handleSave) await handleSave(form)
     } catch (error) {
       console.log(error)
     } finally {

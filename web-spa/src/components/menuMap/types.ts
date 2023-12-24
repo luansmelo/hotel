@@ -1,11 +1,18 @@
-import { InputErrors } from '@/context/input'
+import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
 import { MenuProps } from '@/utils/interfaces/menu'
 
 export interface MenuMapProps {
   loading: boolean
-  errors: Record<string, string | number>
-  setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
-  handleSave: (input: MenuProps) => Promise<void>
+  handleSave?: (input: MenuProps) => Promise<void>
+  handleProductAddCategory?: (input: ProductOnCategory) => Promise<void>
   closeModal: () => void
   isOpenModel: boolean
+}
+
+export interface AddProductToCategoryProps {
+  isOpenModel: boolean
+  day: string
+  categoryList: CategoryProps
+  closeModal: () => void
+  handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
 }

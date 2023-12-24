@@ -30,7 +30,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     setLoading(true)
     try {
       const response = await menu.list()
-
+      console.log(response)
       setMenuList(response || [])
     } catch (error) {
       console.log(error)

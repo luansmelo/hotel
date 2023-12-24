@@ -47,6 +47,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
   )
 
   const product = useMemo(() => new ProductService(), [])
+
   const fetchProductList = async () => {
     setLoading(true)
     try {

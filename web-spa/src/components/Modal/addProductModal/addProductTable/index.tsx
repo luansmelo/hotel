@@ -2,23 +2,35 @@
 import { IProductResponse } from '@/atom/business'
 import styles from './styles.module.scss'
 
-import { useState } from 'react'
 import AddButton from '@/components/addButton'
 import { Hypnosis } from 'react-cssfx-loading'
 import { useMapContext } from '@/context/MapaContext'
 import { useBusinessContext } from '@/context/BusinessContext'
 import { SearchX } from 'lucide-react'
+import { useContext } from 'react'
+import { CategoryContext } from '@/context/category'
 
 interface ITableProductsProps {
+  weekDay: string
+  categoryId: string
   productData: IProductResponse[]
 }
-export default function AddProductTable({ productData }: ITableProductsProps) {
-  const { addProductToMenu, currentSelectCategory, isLoading } = useMapContext()
-  const { currentMenuId } = useBusinessContext()
+export default function AddProductTable({
+  productData,
+  weekDay,
+  categoryId,
+}: ITableProductsProps) {
+  const { isLoading } = useMapContext()
+  const { handleProductAddCategory } = useContext(CategoryContext)
 
   const handleClickAddProduct = (product: IProductResponse) => {
-    console.log('handleClickAddProduct', product)
-    product.id && addProductToMenu(product.id, currentMenuId)
+    const data = {
+      categoryId: categoryId || '',
+      productId: product.id || '',
+      weekDay: weekDay || '',
+    }
+
+    product.id && handleProductAddCategory(data)
   }
 
   return (
@@ -57,7 +69,6 @@ export default function AddProductTable({ productData }: ITableProductsProps) {
               </div>
             ) : (
               <>
-                {' '}
                 <tbody
                   className={styles.tbody}
                   style={{

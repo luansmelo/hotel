@@ -27,7 +27,26 @@ export class ProductRepository implements ProductRepositoryContract {
   }
 
   async getAll(): Promise<ProductContract[] | null> {
-    const db = await this.db.product.findMany();
+    const db = await this.db.product.findMany({
+      include: {
+        inputs: {
+          select: {
+            id: true,
+            name: true,
+            measurementUnit: true,
+            grammage: true,
+            input: {
+              select: {
+                id: true,
+                code: true,
+                unitPrice: true,
+                group: true,
+              },
+            },
+          },
+        },
+      }
+    });
     return db;
   }
 
@@ -103,7 +122,6 @@ export class ProductRepository implements ProductRepositoryContract {
   }
 
   async removeInputFromProduct(input: ProductInputRemove): Promise<void> {
-    console.log("REMOVIDO", input);
     await this.db.inputsOnProducts.deleteMany({
       where: {
         productId: input.productId,

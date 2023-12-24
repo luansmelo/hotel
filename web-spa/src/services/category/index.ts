@@ -1,6 +1,6 @@
 import { InputContract } from '@/atom/business'
 import { API } from '@/services/api'
-import { CategoryProps } from '@/utils/interfaces/category'
+import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
 
 const api = API.getInstance()
 
@@ -18,6 +18,16 @@ export class CategoryService {
   async list() {
     try {
       const response = await api.get('/category')
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async addProduct(input: ProductOnCategory) {
+    try {
+      const response = await api.post('/category/add/product', input)
 
       return response
     } catch (error) {
