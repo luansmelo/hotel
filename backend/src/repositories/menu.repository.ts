@@ -83,6 +83,8 @@ export class MenuRepository implements MenuRepositoryContract {
       },
     });
 
+    console.log(menus.map((menu) => menu.category?.categoryProductSchedule));
+
     return menus.map((menu) => {
       return {
         id: menu.id,
@@ -90,7 +92,7 @@ export class MenuRepository implements MenuRepositoryContract {
         categoryId: menu.categoryId,
         data: menu.category?.categoryProductSchedule.map((item) => {
           return {
-            weekDay: item?.weekDay as Weekdays,
+            weekDay: item?.weekDay as string,
             products: {
               id: item?.product.id,
               name: item?.product.name,

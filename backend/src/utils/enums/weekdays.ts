@@ -1,9 +1,9 @@
 export enum Weekdays {
-  SUNDAY = "DOMINGO",
-  MONDAY = "SEGUNDA",
-  TUESDAY = "TERÇA",
-  WEDNESDAY = "QUARTA",
-  THURSDAY = "QUINTA",
-  FRIDAY = "SEXTA",
-  SATURDAY = "SÁBADO",
+  "DOMINGO",
+  "SEGUNDA",
+  "TERÇA",
+  "QUARTA",
+  "QUINTA",
+  "SEXTA",
+  "SÁBADO",
 }

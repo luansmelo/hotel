@@ -22,11 +22,6 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
   const [categoryList, setCategoryList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
 
-  // useEffect(() => {
-  //   const currentMenuId = dataMenu?.find((menu) => menu.name == currentMenu)?.id
-  //   setCurrentMenuId(currentMenuId || '')
-  // }, [currentMenu, dataMenu])
-
   const category = new CategoryService()
 
   const fetchCategoryList = async () => {

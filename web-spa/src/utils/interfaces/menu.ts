@@ -5,4 +5,5 @@ export interface MenuProps {
 export interface MenuCategoryProps {
   menuId: string
   categoryId: string
+  weekDay?: string
 }

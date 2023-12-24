@@ -28,7 +28,7 @@ export interface AddCategoryToMenuContract {
 export interface MenuProductInput {
   menuId: string;
   categoryId: string;
-  day: Weekdays;
+  day: string;
 }
 
 export interface MenuProductContract {

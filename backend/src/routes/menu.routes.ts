@@ -59,8 +59,10 @@ router.get(
       const input: MenuProductInput = {
         menuId: request.query.menu as string,
         categoryId: request.query.category as string,
-        day: request.query.day as Weekdays,
+        day: request.query.day as string,
       };
+
+      console.log("CONTROLLER", request.query.day);
 
       const controller = makeMenuController();
       const result = await controller.getSelectedMenu(input);

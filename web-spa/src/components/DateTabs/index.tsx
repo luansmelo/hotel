@@ -2,43 +2,43 @@ import styles from './styles.module.scss'
 import { Tab, Tabs } from '@mui/material'
 
 export enum DATE_TABS {
-  SUNDAY,
-  MONDAY,
-  TUESDAY,
-  WEDNESDAY,
-  THURSDAY,
-  FRIDAY,
-  SATURDAY,
+  SEGUNDA,
+  'TERÇA',
+  QUARTA,
+  QUINTA,
+  SEXTA,
+  'SÁBADO',
+  DOMINGO,
 }
 
 const dateTabsList = [
   {
     name: 'Domingo',
-    key: DATE_TABS.SUNDAY,
+    key: DATE_TABS.DOMINGO,
   },
   {
     name: 'Segunda',
-    key: DATE_TABS.MONDAY,
+    key: DATE_TABS.SEGUNDA,
   },
   {
     name: 'Terça',
-    key: DATE_TABS.TUESDAY,
+    key: DATE_TABS.TERÇA,
   },
   {
     name: 'Quarta',
-    key: DATE_TABS.WEDNESDAY,
+    key: DATE_TABS.QUARTA,
   },
   {
     name: 'Quinta',
-    key: DATE_TABS.THURSDAY,
+    key: DATE_TABS.QUINTA,
   },
   {
     name: 'Sexta',
-    key: DATE_TABS.FRIDAY,
+    key: DATE_TABS.SEXTA,
   },
   {
     name: 'Sábado',
-    key: DATE_TABS.SATURDAY,
+    key: DATE_TABS.SÁBADO,
   },
 ]
 

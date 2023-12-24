@@ -1,14 +1,24 @@
 'use client'
 
+import { IProductInputDataResponse } from '@/atom/business'
 import { MenuService } from '@/services/menu'
 import { MenuCategoryProps, MenuProps } from '@/utils/interfaces/menu'
 import { handleToastify } from '@/utils/toastify'
-import React, { createContext, useState, ReactNode, useEffect } from 'react'
+import React, {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react'
 
 interface MenuContract {
   loading: boolean
   menuList: string[]
+  menuProductList: IProductInputDataResponse[]
   handleSave: (menu: MenuProps) => Promise<void>
+  fetchMenuProducts: (input: MenuCategoryProps) => Promise<void>
   handleAddCategoryToMenu: (input: MenuCategoryProps) => Promise<void>
   fetchMenuList: () => Promise<void>
 }
@@ -18,13 +28,11 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [menuList, setMenuList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
+  const [menuProductList, setMenuProductList] = useState<
+    IProductInputDataResponse[]
+  >([])
 
-  // useEffect(() => {
-  //   const currentMenuId = dataMenu?.find((menu) => menu.name == currentMenu)?.id
-  //   setCurrentMenuId(currentMenuId || '')
-  // }, [currentMenu, dataMenu])
-
-  const menu = new MenuService()
+  const menu = useMemo(() => new MenuService(), [])
 
   const fetchMenuList = async () => {
     setLoading(true)
@@ -38,6 +46,24 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(false)
     }
   }
+
+  const fetchMenuProducts = useCallback(
+    async (input: MenuCategoryProps) => {
+      try {
+        setLoading(true)
+        const response = await menu.getMenu(input)
+
+        setMenuProductList(response)
+      } catch (error) {
+        console.error('Erro ao obter produtos do menu:', error)
+      } finally {
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
+      }
+    },
+    [menu, setMenuProductList, setLoading]
+  )
 
   const handleSave = async (input: MenuProps) => {
     try {
@@ -77,6 +103,8 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         loading,
         menuList,
+        menuProductList,
+        fetchMenuProducts,
         handleSave,
         handleAddCategoryToMenu,
         fetchMenuList,

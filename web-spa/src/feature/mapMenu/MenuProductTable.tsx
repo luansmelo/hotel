@@ -2,37 +2,36 @@
 import { IProductInputDataResponse, IProductResponse } from '@/atom/business'
 import styles from './styles.module.scss'
 import { Eye, SearchX, Trash2 } from 'lucide-react'
-import { useMapContext } from '@/context/MapaContext'
 import { Hypnosis } from 'react-cssfx-loading'
+import { useContext } from 'react'
+import { MenuContext } from '@/context/menu'
 
 interface ITableProductsProps {
   onClickView?: (product?: IProductInputDataResponse) => void
   onClickDelete?: (product: IProductResponse) => void
-  headColor?: string
   removeEye?: boolean
 }
 export default function MenuProductTable({
-  headColor,
   onClickDelete,
   onClickView,
   removeEye,
 }: ITableProductsProps) {
-  const { menuProductList, isLoading } = useMapContext()
+  const { menuProductList, loading } = useContext(MenuContext)
 
   return (
     <>
       <table className={styles.table}>
-        {isLoading ? (
+        {loading ? (
           <div
             style={{
               width: '100%',
-              height: '260px',
+              height: '350px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
             }}
           >
-            <Hypnosis color="#F28482" />
+            <Hypnosis color="#00A3E0" />
           </div>
         ) : (
           <tbody className={styles.tbody}>
@@ -50,29 +49,32 @@ export default function MenuProductTable({
               </div>
             ) : (
               <>
-                {menuProductList.map((product) => (
-                  <tr className={styles.tr} key={product.product.name}>
-                    <td>{product.product.name}</td>
-                    <td>
-                      {!removeEye && (
-                        <div
-                          className={styles.productActionView}
-                          onClick={() => onClickView && onClickView(product)}
-                        >
-                          <Eye color="#D96262" size={18} />
-                        </div>
-                      )}
-                      <div
-                        className={styles.productActionDelete}
-                        onClick={() =>
-                          onClickDelete && onClickDelete(product.product)
-                        }
-                      >
-                        <Trash2 color="white" size={18} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {menuProductList.map(
+                  (menu) =>
+                    menu?.data?.map((item) => (
+                      <tr className={styles.tr} key={item.products.name}>
+                        <td>{item.products.name}</td>
+                        <td>
+                          {!removeEye && (
+                            <div
+                              className={styles.productActionView}
+                              onClick={() => onClickView && onClickView(item)}
+                            >
+                              <Eye color="#D96262" size={18} />
+                            </div>
+                          )}
+                          <div
+                            className={styles.productActionDelete}
+                            onClick={() =>
+                              onClickDelete && onClickDelete(item.products)
+                            }
+                          >
+                            <Trash2 color="white" size={18} />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                )}
               </>
             )}
           </tbody>

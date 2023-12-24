@@ -47,7 +47,7 @@ export default function Select({ data, value, onClick }: SelectProps) {
             },
           }}
         >
-          {data.map((input: any) => (
+          {data?.map((input: any) => (
             <MenuItem key={input.id} value={input?.name}>
               {input?.name}
             </MenuItem>

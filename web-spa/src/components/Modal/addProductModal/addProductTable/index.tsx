@@ -5,23 +5,22 @@ import styles from './styles.module.scss'
 import AddButton from '@/components/addButton'
 import { Hypnosis } from 'react-cssfx-loading'
 import { useMapContext } from '@/context/MapaContext'
-import { useBusinessContext } from '@/context/BusinessContext'
 import { SearchX } from 'lucide-react'
-import { useContext } from 'react'
-import { CategoryContext } from '@/context/category'
+import { ProductOnCategory } from '@/utils/interfaces/category'
 
 interface ITableProductsProps {
   weekDay: string
   categoryId: string
+  handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
   productData: IProductResponse[]
 }
 export default function AddProductTable({
   productData,
   weekDay,
   categoryId,
+  handleProductAddCategory,
 }: ITableProductsProps) {
   const { isLoading } = useMapContext()
-  const { handleProductAddCategory } = useContext(CategoryContext)
 
   const handleClickAddProduct = (product: IProductResponse) => {
     const data = {
