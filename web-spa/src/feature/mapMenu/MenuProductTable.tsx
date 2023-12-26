@@ -1,22 +1,23 @@
-'use client'
-import { IProductInputDataResponse, IProductResponse } from '@/atom/business'
-import styles from './styles.module.scss'
 import { Eye, SearchX, Trash2 } from 'lucide-react'
 import { Hypnosis } from 'react-cssfx-loading'
+import styles from './styles.module.scss'
 import { useContext } from 'react'
 import { MenuContext } from '@/context/menu'
+import { IProductInputDataResponse, IProductResponse } from '@/atom/business'
 
 interface ITableProductsProps {
   onClickView?: (product?: IProductInputDataResponse) => void
   onClickDelete?: (product: IProductResponse) => void
   removeEye?: boolean
 }
+
 export default function MenuProductTable({
   onClickDelete,
   onClickView,
   removeEye,
 }: ITableProductsProps) {
   const { menuProductList, loading } = useContext(MenuContext)
+  console.log('AQUI', menuProductList)
 
   return (
     <>
@@ -35,7 +36,7 @@ export default function MenuProductTable({
           </div>
         ) : (
           <tbody className={styles.tbody}>
-            {menuProductList.length === 0 ? (
+            {menuProductList?.category?.length === 0 ? (
               <div
                 style={{
                   width: '100%',
@@ -49,11 +50,11 @@ export default function MenuProductTable({
               </div>
             ) : (
               <>
-                {menuProductList.map(
+                {menuProductList?.category?.map(
                   (menu) =>
-                    menu?.data?.map((item) => (
-                      <tr className={styles.tr} key={item.products.name}>
-                        <td>{item.products.name}</td>
+                    menu?.schedule?.map((item) => (
+                      <tr className={styles.tr} key={item.id}>
+                        <td>{item.name}</td>
                         <td>
                           {!removeEye && (
                             <div
@@ -65,9 +66,7 @@ export default function MenuProductTable({
                           )}
                           <div
                             className={styles.productActionDelete}
-                            onClick={() =>
-                              onClickDelete && onClickDelete(item.products)
-                            }
+                            onClick={() => onClickDelete && onClickDelete(item)}
                           >
                             <Trash2 color="white" size={18} />
                           </div>
