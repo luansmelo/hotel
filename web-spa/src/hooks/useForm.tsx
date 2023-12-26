@@ -20,6 +20,8 @@ const useForm = <T extends object>(initialState: T) => {
     }))
   }
 
+  console.log("FORM", form)
+
   const clear = () => {
     setForm(initialState)
   }

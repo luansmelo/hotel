@@ -29,7 +29,6 @@ model Product {
   categoryProductSchedule CategoryProductSchedule[]
   created_at              String
   updated_at              String
-  // productMedia            ProductMedia[]
 
   @@map("product")
 }
@@ -64,14 +63,25 @@ model Input {
 }
 
 model Menu {
-  id         String    @id @default(uuid())
-  name       String
-  categoryId String?
-  category   Category? @relation(fields: [categoryId], references: [id])
+  id           String         @id @default(uuid())
+  name         String
+  created_at   String
+  updated_at   String
+  menuCategory MenuCategory[]
+
+  @@map("menu")
+}
+
+model MenuCategory {
+  id         String   @id @default(uuid())
+  menuId     String
+  categoryId String
+  menu       Menu     @relation(fields: [menuId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
   created_at String
   updated_at String
 
-  @@map("menu")
+  @@map("menuCategory")
 }
 
 model CategoryProductSchedule {
@@ -91,7 +101,7 @@ model Category {
   id                      String                    @id @default(uuid())
   name                    String
   categoryProductSchedule CategoryProductSchedule[]
-  menu                    Menu[]
+  menus                   MenuCategory[]
   created_at              String
   updated_at              String
 

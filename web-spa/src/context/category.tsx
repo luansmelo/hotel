@@ -8,7 +8,7 @@ import React, { createContext, useState, ReactNode, useEffect } from 'react'
 
 interface CategoryContract {
   loading: boolean
-  categoryList: string[]
+  categoryList: CategoryProps[]
   handleCreateCategory: (input: MenuProps) => Promise<void>
   handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
   fetchCategoryList: () => Promise<void>
@@ -19,7 +19,7 @@ export const CategoryContext = createContext<CategoryContract>(
 export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [categoryList, setCategoryList] = useState<string[]>([])
+  const [categoryList, setCategoryList] = useState<CategoryProps[]>([])
   const [loading, setLoading] = useState(false)
 
   const category = new CategoryService()

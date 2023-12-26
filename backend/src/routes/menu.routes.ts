@@ -62,8 +62,6 @@ router.get(
         day: request.query.day as string,
       };
 
-      console.log("CONTROLLER", request.query.day);
-
       const controller = makeMenuController();
       const result = await controller.getSelectedMenu(input);
 
@@ -95,8 +93,9 @@ router.get(
   authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
+      const input: string = request.query.day as string;
       const controller = makeMenuController();
-      const result = await controller.getAll();
+      const result = await controller.getAll(input);
 
       return response.status(200).send(result);
     } catch (error) {

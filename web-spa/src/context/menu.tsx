@@ -15,7 +15,7 @@ import React, {
 
 interface MenuContract {
   loading: boolean
-  menuList: string[]
+  menuList: MenuProps[]
   menuProductList: IProductInputDataResponse[]
   handleSave: (menu: MenuProps) => Promise<void>
   fetchMenuProducts: (input: MenuCategoryProps) => Promise<void>
@@ -26,7 +26,7 @@ export const MenuContext = createContext<MenuContract>({} as MenuContract)
 export const MenuProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [menuList, setMenuList] = useState<string[]>([])
+  const [menuList, setMenuList] = useState<MenuProps[]>([])
   const [loading, setLoading] = useState(false)
   const [menuProductList, setMenuProductList] = useState<
     IProductInputDataResponse[]

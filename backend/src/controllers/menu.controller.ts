@@ -12,8 +12,8 @@ export class MenuController {
     return this.service.create(input);
   }
 
-  async getAll() {
-    return this.service.getAll();
+  async getAll(day?: string) {
+    return this.service.getAll(day);
   }
 
   async getById(id: string) {

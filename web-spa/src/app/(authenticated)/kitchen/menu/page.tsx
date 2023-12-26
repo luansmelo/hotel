@@ -13,11 +13,11 @@ import { CategoryContext } from '@/context/category'
 import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
 import { CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/feature/mapMenu/MenuProductTable'
+import { MenuCategoryProps } from '@/utils/interfaces/menu'
 
-interface CategoryType {
-  id: string
+export interface Menu {
+  menuId: string
   name: string
-  // outras propriedades, se houver
 }
 
 export default function MenuMap() {
@@ -30,7 +30,7 @@ export default function MenuMap() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryProps>(
     {} as CategoryProps
   )
-  const [selectedMenu, setSelectedMenu] = useState<string>('')
+  const [selectedMenu, setSelectedMenu] = useState<Menu>({} as Menu)
   const { loading, menuList, handleSave, fetchMenuProducts } =
     useContext(MenuContext)
   const { categoryList, handleCreateCategory, handleProductAddCategory } =
@@ -44,18 +44,13 @@ export default function MenuMap() {
 
   useEffect(() => {
     const data = {
-      menuId: selectedMenu,
-      categoryId: selectedCategory.categoryId!,
+      menuId: selectedMenu.menuId,
+      categoryId: selectedCategory.id,
       weekDay: DATE_TABS[currentDateTab],
     }
 
-    fetchMenuProducts(data)
-  }, [
-    fetchMenuProducts,
-    currentDateTab,
-    selectedCategory.categoryId,
-    selectedMenu,
-  ])
+    fetchMenuProducts(data as MenuCategoryProps)
+  }, [fetchMenuProducts, currentDateTab, selectedCategory.id, selectedMenu])
 
   const openCreateMenuModal = () => {
     setOpenCreateMenu(true)
@@ -82,11 +77,11 @@ export default function MenuMap() {
 
   const handleCategory = (value: string) => {
     const categoryFind = categoryList.find(
-      (category: any) => category.name === value
+      (category) => category.name === value
     )
 
     setSelectedCategory({
-      categoryId: categoryFind?.id ?? '',
+      id: categoryFind?.id ?? '',
       name: categoryFind?.name ?? '',
     })
 
@@ -94,9 +89,12 @@ export default function MenuMap() {
   }
 
   const handleMenu = (value: string) => {
-    const menuFind = menuList.find((menu: any) => menu.name === value)
+    const menuFind = menuList.find((menu) => menu.name === value)
 
-    setSelectedMenu(menuFind?.id ?? '')
+    setSelectedMenu({
+      menuId: menuFind?.menuId ?? '',
+      name: menuFind?.name ?? '',
+    })
 
     setMenu(value)
   }

@@ -4,7 +4,6 @@ import {
   MenuProductInput,
 } from "../dto/menu.dto";
 import { MenuRepositoryContract } from "../utils/contracts/menu-contract";
-import { Weekdays } from "../utils/enums/weekdays";
 import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository implements MenuRepositoryContract {
@@ -21,23 +20,7 @@ export class MenuRepository implements MenuRepositoryContract {
         id,
       },
       include: {
-        category: {
-          include: {
-            categoryProductSchedule: {
-              include: {
-                product: {
-                  include: {
-                    inputs: {
-                      include: {
-                        input: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
+        menuCategory: true,
       },
     });
 
@@ -45,35 +28,25 @@ export class MenuRepository implements MenuRepositoryContract {
   }
 
   async getSelectedMenu(input: MenuProductInput): Promise<any | null> {
-    const menus = await this.db.menu.findMany({
+    return this.db.menu.findUnique({
       where: {
-        id: input.menuId ? { equals: input.menuId } : undefined,
-        category: {
-          categoryProductSchedule: {
-            some: {
-              weekDay: input.day ? { equals: input.day } : undefined,
-              categoryId: input.categoryId
-                ? { equals: input.categoryId }
-                : undefined,
-            },
-          },
-        },
+        id: input.menuId,
       },
       include: {
-        category: {
+        menuCategory: {
+          where: {
+            categoryId: input.categoryId,
+          },
           include: {
-            categoryProductSchedule: {
-              where: {
-                weekDay: input.day ? { equals: input.day } : undefined,
-              },
+            category: {
               include: {
-                product: {
-                  include: {
-                    inputs: {
-                      include: {
-                        input: true,
-                      },
-                    },
+                categoryProductSchedule: {
+                  select: {
+                    weekDay: true,
+                    product: true,
+                  },
+                  where: {
+                    weekDay: input.day,
                   },
                 },
               },
@@ -82,38 +55,27 @@ export class MenuRepository implements MenuRepositoryContract {
         },
       },
     });
+  }
 
-    console.log(menus.map((menu) => menu.category?.categoryProductSchedule));
-
-    return menus.map((menu) => {
-      return {
-        id: menu.id,
-        name: menu.name,
-        categoryId: menu.categoryId,
-        data: menu.category?.categoryProductSchedule.map((item) => {
-          return {
-            weekDay: item?.weekDay as string,
-            products: {
-              id: item?.product.id,
-              name: item?.product.name,
-            },
-          };
-        }),
-      };
+  async getList(): Promise<any> {
+    return this.db.menu.findMany({
+      include: {
+        menuCategory: {
+          include: {
+            category: true,
+          },
+        },
+      },
     });
   }
 
-  async getList(): Promise<MenuContract[] | null> {
-    const db = await this.db.menu.findMany();
-    return db;
-  }
-
   async addCategoryToMenu(input: AddCategoryToMenuContract): Promise<void> {
-    await this.db.menu.update({
+    await this.db.menuCategory.update({
       where: {
         id: input.menuId,
       },
       data: {
+        menuId: input.menuId,
         categoryId: input.categoryId,
       },
     });

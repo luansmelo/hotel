@@ -35,8 +35,17 @@ export class MenuService implements MenuServiceContract {
     return menu;
   }
 
-  async getAll() {
-    return this.repository.getList();
+  async getAll(day?: string) {
+    const menus = await this.repository.getList(day);
+
+    return menus?.map((list) => ({
+      menuId: list.id,
+      name: list.name,
+      category: list.menuCategory.map((category) => ({
+        id: category.category.id,
+        name: category.category.name,
+      })),
+    }));
   }
 
   async addCategoryToMenu(input: AddCategoryToMenuInput): Promise<void> {
@@ -53,6 +62,27 @@ export class MenuService implements MenuServiceContract {
   }
 
   async getSelectedMenu(input: MenuProductInput) {
-    return this.repository.getSelectedMenu(input);
+    const menu = await this.repository.getSelectedMenu(input);
+
+    const data = {
+      menuId: menu.id,
+      name: menu.name,
+      category: menu.menuCategory.map((category) => ({
+        id: category.category.id,
+        name: category.category.name,
+        schedule: category.category.categoryProductSchedule.map((schedule) => ({
+          id: schedule.product.id,
+          name: schedule.product.name,
+          description: schedule.product.description,
+          weekDay: schedule.weekDay,
+        })),
+      })),
+    };
+
+    if (!data) {
+      throw new NotFoundError("Cardápio não encontrado");
+    }
+
+    return data;
   }
 }

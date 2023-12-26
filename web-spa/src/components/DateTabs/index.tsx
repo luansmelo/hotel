@@ -43,12 +43,14 @@ const dateTabsList = [
 ]
 
 interface IDateTabsProps {
+  disabled?: boolean
   currentDateTab: DATE_TABS
   setCurrentDateTab: React.Dispatch<React.SetStateAction<DATE_TABS>>
 }
 
 export default function DateTabs({
   currentDateTab,
+  disabled,
   setCurrentDateTab,
 }: IDateTabsProps) {
   const handleChange = (event: React.SyntheticEvent, newValue: DATE_TABS) => {
@@ -59,22 +61,35 @@ export default function DateTabs({
     <div className={styles.DateTabsContainer}>
       <Tabs
         value={currentDateTab}
+        disabled={disabled}
         onChange={handleChange}
         aria-label="wrapped label tabs example"
         scrollButtons="auto"
         variant="fullWidth"
         sx={{
-          color: '#fff',
+          color: disabled
+            ? currentDateTab === DATE_TABS.DOMINGO
+              ? '#036B85'
+              : '#808080'
+            : '#fff',
           '&.MuiTabs-root': {
-            color: '#BDBDBD',
+            color: disabled
+              ? currentDateTab === DATE_TABS.DOMINGO
+                ? '#036B85'
+                : '#808080'
+              : '#BDBDBD',
           },
           '& .MuiTabs-flexContainer': {
-            background: '#1F2128',
+            background: disabled ? '#272a34' : '#1F2128',
             borderRadius: '8px',
           },
           '& .MuiButtonBase-root.Mui-selected': {
-            background: '#036B85',
-            color: '#BDBDBD',
+            background: disabled ? '#272a34' : '#036B85',
+            color: disabled
+              ? currentDateTab === DATE_TABS.DOMINGO
+                ? '#808080'
+                : '#BDBDBD'
+              : '#BDBDBD',
           },
           '& .MuiButtonBase-root.Mui-selected:first-child': {
             borderTopLeftRadius: '8px',
@@ -85,7 +100,7 @@ export default function DateTabs({
             borderBottomRightRadius: '8px',
           },
           '& .MuiTabs-indicator': {
-            background: '#F27127',
+            background: disabled ? '#808080' : '#F27127',
           },
         }}
       >
@@ -94,11 +109,20 @@ export default function DateTabs({
             key={date.key}
             value={date.key}
             label={date.name}
+            disabled={disabled}
             sx={{
-              color: '#BDBDBD',
+              color: disabled
+                ? currentDateTab === DATE_TABS.DOMINGO
+                  ? '#036B85'
+                  : '#808080'
+                : '#BDBDBD',
               '&:hover': {
-                color: '#FFF',
-                background: '#0488A6',
+                color: disabled
+                  ? currentDateTab === DATE_TABS.DOMINGO
+                    ? '#036B85'
+                    : '#808080'
+                  : '#FFF',
+                background: disabled ? '#A9A9A9' : '#0488A6',
               },
             }}
           />
