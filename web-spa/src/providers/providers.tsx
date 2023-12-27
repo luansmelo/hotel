@@ -2,7 +2,6 @@
 
 import { BusinessProvider } from '@/context/BusinessContext'
 import { InputProvider } from '@/context/input'
-import { MapProvider } from '@/context/MapaContext'
 import { ProductProvider } from '@/context/product'
 import { AuthProvider } from '@/context/auth'
 import { ThemeProvider, createTheme } from '@mui/material'
@@ -22,11 +21,9 @@ export const Providers = ({ children }: { children: React.ReactNode }) => (
       <BusinessProvider>
         <MenuProvider>
           <CategoryProvider>
-            <MapProvider>
-              <ProductProvider>
-                <InputProvider>{children}</InputProvider>
-              </ProductProvider>
-            </MapProvider>
+            <ProductProvider>
+              <InputProvider>{children}</InputProvider>
+            </ProductProvider>
           </CategoryProvider>
         </MenuProvider>
       </BusinessProvider>

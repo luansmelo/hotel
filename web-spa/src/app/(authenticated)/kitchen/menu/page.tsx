@@ -12,7 +12,7 @@ import CategoryCreate from '@/components/category/CategoryCreate'
 import { CategoryContext } from '@/context/category'
 import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
 import { CategoryProps } from '@/utils/interfaces/category'
-import MenuProductTable from '@/feature/mapMenu/MenuProductTable'
+import MenuProductTable from '@/components/menuMap/MenuProductRender'
 import { MenuCategoryProps } from '@/utils/interfaces/menu'
 
 export interface Menu {
@@ -48,6 +48,8 @@ export default function MenuMap() {
   )
   const [menu, setMenu] = useState<string>('')
   const [category, setCategory] = useState<string>('')
+
+  console.log(selectedMenu)
 
   useEffect(() => {
     const data = {
@@ -173,7 +175,7 @@ export default function MenuMap() {
           />
         )}
 
-        {selectedMenu.menuId && (
+        {selectedMenu?.menuId && (
           <Fade in={true} timeout={500}>
             <div className={styles.DateTabsContainer}>
               {selectedMenu.category && (
@@ -198,6 +200,7 @@ export default function MenuMap() {
         <div>
           <MenuProductTable
             removeEye
+            menuProductList={menuProductList}
             onClickDelete={() => console.log('remover')}
           />
         </div>

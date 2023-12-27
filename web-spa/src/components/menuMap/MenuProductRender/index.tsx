@@ -6,17 +6,19 @@ import { MenuContext } from '@/context/menu'
 import { IProductInputDataResponse } from '@/atom/business'
 
 interface ITableProductsProps {
+  menuProductList?: IProductInputDataResponse[]
   onClickView?: (product?: IProductInputDataResponse) => void
   onClickDelete?: (product: any) => void
   removeEye?: boolean
 }
 
 export default function MenuProductTable({
+  menuProductList,
   onClickDelete,
   onClickView,
   removeEye,
 }: ITableProductsProps) {
-  const { menuProductList, loading } = useContext(MenuContext)
+  const { loading } = useContext(MenuContext)
 
   return (
     <>

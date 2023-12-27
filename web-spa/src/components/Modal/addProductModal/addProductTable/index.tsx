@@ -4,7 +4,6 @@ import styles from './styles.module.scss'
 
 import AddButton from '@/components/addButton'
 import { Hypnosis } from 'react-cssfx-loading'
-import { useMapContext } from '@/context/MapaContext'
 import { SearchX } from 'lucide-react'
 import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
 
@@ -20,8 +19,7 @@ export default function AddProductTable({
   category,
   handleProductAddCategory,
 }: ITableProductsProps) {
-  const { isLoading } = useMapContext()
-
+  const isLoading = false
   const handleClickAddProduct = (product: IProductResponse) => {
     const data = {
       categoryId: category.id || '',

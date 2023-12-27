@@ -7,7 +7,6 @@ export interface CategoryProps {
 }
 
 export interface ProductOnCategory {
-  menuId: string
   categoryId: string
   productId: string
   weekDay: string
