@@ -2,6 +2,7 @@ import { Product } from '@/components/product/types'
 
 export interface ProductWeekDay {
   productId: string
+  name: string
   weekDay: string
 }
 

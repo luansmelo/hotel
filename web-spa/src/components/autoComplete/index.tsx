@@ -14,6 +14,7 @@ export interface Item {
 export const AutoComplete = <T extends Item>({
   label,
   data,
+
   addSelectedItem,
 }: AutoCompleteProps<T>) => {
   return (
@@ -21,6 +22,7 @@ export const AutoComplete = <T extends Item>({
       size="small"
       disablePortal
       id="combo-box-demo"
+      value={''}
       options={(data || []).map((item) => item.name)}
       sx={{
         '& .MuiAutocomplete-inputRoot': {

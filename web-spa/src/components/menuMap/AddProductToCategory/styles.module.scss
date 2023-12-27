@@ -1,6 +1,19 @@
 .modalContainer {
   width: 800px;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.80rem;
+
+  p {
+    text-align: left;
+    color: #BDBDBD;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.17px;
+
+  }
 }
 
 .table {
@@ -78,6 +91,23 @@
   border-width: unset;
 
   color: #BDBDBD;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.productActionDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #F56D15;
 
   cursor: pointer;
   transition: 0.3s filter ease;
