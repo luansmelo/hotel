@@ -49,11 +49,14 @@ const AddProductToCategory = memo(function AddProductToCategory({
             categoryItem.schedule?.some(
               (scheduleItem) => scheduleItem.name === product.name
             )
+        ) &&
+        !addedProducts.some(
+          (addedProduct) => addedProduct.name === product.name
         )
     )
 
-    setCurrProductList(list)
-  }, [productList, setCurrProductList, menuProductList])
+    setCurrProductList(list || [])
+  }, [productList, setCurrProductList, menuProductList, addedProducts])
 
   useEffect(() => {
     handleList()
