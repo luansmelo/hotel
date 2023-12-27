@@ -63,11 +63,12 @@ model Input {
 }
 
 model Menu {
-  id           String         @id @default(uuid())
-  name         String
-  created_at   String
-  updated_at   String
-  menuCategory MenuCategory[]
+  id                      String                    @id @default(uuid())
+  name                    String
+  created_at              String
+  updated_at              String
+  menuCategory            MenuCategory[]
+  categoryProductSchedule CategoryProductSchedule[]
 
   @@map("menu")
 }
@@ -86,9 +87,11 @@ model MenuCategory {
 
 model CategoryProductSchedule {
   id         String   @id @default(uuid())
+  menuId     String
   categoryId String
   productId  String
   weekDay    String
+  menu       Menu     @relation(fields: [menuId], references: [id])
   category   Category @relation(fields: [categoryId], references: [id])
   product    Product  @relation(fields: [productId], references: [id])
   created_at String

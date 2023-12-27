@@ -46,7 +46,7 @@ const dateTabsList = [
 interface IDateTabsProps {
   disabled?: boolean
   currentDateTab: DATE_TABS
-  setCurrentDateTab: React.Dispatch<React.SetStateAction<DATE_TABS>>
+  setCurrentDateTab: React.Dispatch<React.SetStateAction<DATE_TABS | undefined>>
 }
 
 const DateTabs = memo(
@@ -58,7 +58,7 @@ const DateTabs = memo(
     return (
       <div className={styles.DateTabsContainer}>
         <Tabs
-          value={currentDateTab}
+          value={currentDateTab !== undefined ? currentDateTab : false}
           disabled={disabled}
           onChange={handleChange}
           aria-label="wrapped label tabs example"

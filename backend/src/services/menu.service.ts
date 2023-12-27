@@ -65,7 +65,7 @@ export class MenuService implements MenuServiceContract {
     const menu = await this.repository.getSelectedMenu(input);
 
     const data = {
-      menuId: menu.id,
+      menuId: menu?.id,
       name: menu.name,
       category: menu.menuCategory.map((category) => ({
         id: category.category.id,

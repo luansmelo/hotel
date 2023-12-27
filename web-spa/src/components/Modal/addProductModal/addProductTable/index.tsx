@@ -33,11 +33,6 @@ export default function AddProductTable({
   return (
     <>
       <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            <td>Name</td>
-          </tr>
-        </thead>
         {isLoading ? (
           <div
             style={{

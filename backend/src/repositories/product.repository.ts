@@ -127,7 +127,5 @@ export class ProductRepository implements ProductRepositoryContract {
         inputId: input.inputId,
       },
     });
-
-    console.log("REMOVEU");
   }
 }

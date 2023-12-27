@@ -2,10 +2,10 @@ import Modal from '@/components/Modal/modal/Modal'
 import { AddProductToCategoryProps } from '../types'
 import AddProductTable from '@/components/Modal/addProductModal/addProductTable'
 import { IProductResponse } from '@/atom/business'
-import { memo, useCallback, useContext, useEffect, useState } from 'react'
 import { ProductContext } from '@/context/product'
-import styles from './styles.module.scss'
 import { CategoryProps } from '@/utils/interfaces/category'
+import styles from './styles.module.scss'
+import { memo, useCallback, useContext, useEffect, useState } from 'react'
 
 const AddProductToCategory = memo(function AddProductToCategory({
   day,
@@ -39,7 +39,11 @@ const AddProductToCategory = memo(function AddProductToCategory({
     <Modal open={isOpenModel} onClose={closeModal}>
       <div className={styles.modalContainer}>
         <div className={styles.modalProductContainer}>
-          <>Categoria {menuProductList.name}</>
+          <div>
+            <p>Categorias:</p>
+
+            <div>Lista de categorias com Select</div>
+          </div>
           {currProductList && (
             <div style={{ marginTop: '24px' }}>
               <AddProductTable

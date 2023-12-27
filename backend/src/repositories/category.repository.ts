@@ -3,6 +3,8 @@ import {
   ProductToCategoryInput,
   CategoryContract,
   ProductToCategoryContract,
+  ProductCategoryInput,
+  ProductCategoryContract,
 } from "../dto/category.dto";
 import { Weekdays } from "../utils/enums/weekdays";
 import { PrismaClient } from "@prisma/client";
@@ -39,9 +41,17 @@ export class CategoryRepository implements CategoryRepositoryContract {
     await this.db.category.delete({ where: { id } });
   }
 
-  async addProductToCategory(input: ProductToCategoryContract): Promise<void> {
-    await this.db.categoryProductSchedule.create({
-      data: { ...input, weekDay: input.weekDay },
+  async addProductToCategory(input: ProductCategoryContract[]): Promise<void> {
+    await this.db.categoryProductSchedule.createMany({
+      data: input.map((item) => ({
+        id: item.id,
+        menuId: item.menuId,
+        categoryId: item.categoryId,
+        productId: item.productId,
+        weekDay: item.weekDay,
+        created_at: item.created_at,
+        updated_at: item.updated_at,
+      })),
     });
   }
 

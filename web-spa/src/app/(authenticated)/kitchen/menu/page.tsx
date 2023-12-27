@@ -24,10 +24,14 @@ export interface Menu {
 export default function MenuMap() {
   const [openCreateMenu, setOpenCreateMenu] = useState(false)
   const [openCreateCategory, setOpenCreateCategory] = useState(false)
-  const [openAddCategoryToMenu, setOpenAddCategoryToMenu] = useState(false)
-  const [currentDateTab, setCurrentDateTab] = useState<DATE_TABS>(
-    DATE_TABS.DOMINGO
+  const [openAddProductToCateogory, setOpenAddProductToCategory] =
+    useState(false)
+  const [currentDateTab, setCurrentDateTab] = useState<DATE_TABS | undefined>(
+    undefined
   )
+
+  console.log(currentDateTab)
+
   const [selectedCategory, setSelectedCategory] = useState<CategoryProps>(
     {} as CategoryProps
   )
@@ -49,17 +53,17 @@ export default function MenuMap() {
   const [menu, setMenu] = useState<string>('')
   const [category, setCategory] = useState<string>('')
 
-  console.log(selectedMenu)
-
   useEffect(() => {
-    const data = {
-      menuId: selectedMenu.menuId,
-      categoryId: selectedCategory.id,
-      weekDay: DATE_TABS[currentDateTab],
-    }
+    if (currentDateTab !== undefined && selectedMenu && selectedCategory) {
+      const data = {
+        menuId: selectedMenu.menuId,
+        categoryId: selectedCategory.id,
+        weekDay: DATE_TABS[currentDateTab],
+      }
 
-    fetchMenuProducts(data as MenuCategoryProps)
-  }, [fetchMenuProducts, currentDateTab, selectedCategory.id, selectedMenu])
+      fetchMenuProducts(data as MenuCategoryProps)
+    }
+  }, [fetchMenuProducts, currentDateTab, selectedCategory, selectedMenu])
 
   const openCreateMenuModal = () => {
     setOpenCreateMenu(true)
@@ -71,8 +75,8 @@ export default function MenuMap() {
     setDropdownAnchorEl(null)
   }
 
-  const openAddCategoryToMenuModal = () => {
-    setOpenAddCategoryToMenu(true)
+  const openAddProductToCategory = () => {
+    setOpenAddProductToCategory(true)
     setDropdownAnchorEl(null)
   }
 
@@ -96,14 +100,13 @@ export default function MenuMap() {
       id: categoryFind?.id ?? '',
       name: categoryFind?.name ?? '',
     })
-    setCurrentDateTab(DATE_TABS.DOMINGO)
 
     setCategory(value)
   }
   const resetModalState = () => {
     setSelectedCategory({} as CategoryProps)
     setCategory('')
-    setCurrentDateTab(DATE_TABS.DOMINGO)
+
     setMenuProductList([])
   }
   const handleMenu = (value: string) => {
@@ -113,6 +116,10 @@ export default function MenuMap() {
     resetModalState()
     setMenu(value)
   }
+
+  useEffect(() => {
+    setMenuProductList([])
+  }, [setMenuProductList])
 
   return (
     <Fade in={true} timeout={500}>
@@ -131,8 +138,8 @@ export default function MenuMap() {
                 onClick: openCreateCategoryModal,
               },
               {
-                label: 'Adicionar Categoria ao Menu',
-                onClick: openAddCategoryToMenuModal,
+                label: 'Adicionar Produto a Categoria',
+                onClick: openAddProductToCategory,
               },
               {
                 label: 'Adicionar Produto à Categoria',
@@ -165,12 +172,12 @@ export default function MenuMap() {
             />
           )}
         </div>
-        {openAddCategoryToMenu && (
+        {openAddProductToCateogory && (
           <AddProductToCategory
-            day={DATE_TABS[currentDateTab]}
+            day={DATE_TABS[currentDateTab!]}
             menuProductList={menuProductList}
-            isOpenModel={openAddCategoryToMenu}
-            closeModal={() => setOpenAddCategoryToMenu(false)}
+            isOpenModel={openAddProductToCateogory}
+            closeModal={() => setOpenAddProductToCategory(false)}
             handleProductAddCategory={handleProductAddCategory}
           />
         )}
@@ -189,8 +196,8 @@ export default function MenuMap() {
               {selectedCategory.id && (
                 <DateTabs
                   disabled={!selectedCategory.id}
-                  currentDateTab={currentDateTab}
-                  setCurrentDateTab={setCurrentDateTab}
+                  currentDateTab={currentDateTab!}
+                  setCurrentDateTab={setCurrentDateTab!}
                 />
               )}
             </div>

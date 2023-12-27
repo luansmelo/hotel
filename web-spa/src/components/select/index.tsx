@@ -12,6 +12,7 @@ export default function Select({
     <div className={styles.Select}>
       <FormControl fullWidth>
         <MSelect
+          key={'select'}
           id="demo-simple-select"
           value={value}
           disabled={disabled}

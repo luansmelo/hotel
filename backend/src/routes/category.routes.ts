@@ -1,10 +1,15 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { ProductToCategoryInput, CategoryInput } from "../dto/category.dto";
+import {
+  ProductToCategoryInput,
+  CategoryInput,
+  ProductCategoryInput,
+} from "../dto/category.dto";
 import { makeCategoryController } from "../utils/factories/makeCategoryController";
 import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
 import {
   CategorySchema,
+  ProductCategorySchema,
   ProductToCategorySchema,
 } from "../validation/category.validation";
 
@@ -47,12 +52,11 @@ router.get(
 router.post(
   "/add/product",
   authenticated,
-  validate(ProductToCategorySchema),
+
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductToCategoryInput = ProductToCategorySchema.parse(
-        request.body
-      ) as ProductToCategoryInput;
+      const input: ProductCategoryInput = request.body;
+      console.log("INPUT", input, "controller");
       const controller = makeCategoryController();
       await controller.addProductToCategory(input);
 

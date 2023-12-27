@@ -3,6 +3,8 @@ import {
   CategoryInput,
   ProductToCategoryContract,
   CategoryContract,
+  ProductCategoryInput,
+  ProductCategoryContract,
 } from "../../dto/category.dto";
 
 export interface CategoryRepositoryContract {
@@ -13,7 +15,7 @@ export interface CategoryRepositoryContract {
     input: ProductToCategoryInput
   ): Promise<ProductToCategoryContract | null>;
   deleteById(id: string): Promise<void>;
-  addProductToCategory(input: ProductToCategoryContract): Promise<void>;
+  addProductToCategory(input: ProductCategoryContract[]): Promise<void>;
   deleteProduct(input: ProductToCategoryInput): Promise<void>;
 }
 
@@ -22,6 +24,6 @@ export interface CategoryServiceContract {
   getById(id: string): Promise<CategoryContract | null>;
   getAll(): Promise<CategoryContract | null>;
   deleteById(id: string): Promise<void>;
-  addProductToCategory(input: ProductToCategoryInput): Promise<void>;
+  addProductToCategory(input: ProductCategoryInput): Promise<void>;
   deleteProduct(input: ProductToCategoryInput): Promise<void>;
 }

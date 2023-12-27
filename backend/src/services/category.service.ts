@@ -2,7 +2,11 @@ import {
   CategoryRepositoryContract,
   CategoryServiceContract,
 } from "../utils/contracts/category-contract";
-import { CategoryInput, ProductToCategoryInput } from "../dto/category.dto";
+import {
+  CategoryInput,
+  ProductCategoryInput,
+  ProductToCategoryInput,
+} from "../dto/category.dto";
 import { NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
 
@@ -35,18 +39,20 @@ export class CategoryService implements CategoryServiceContract {
 
     await this.repository.deleteById(category.id);
   }
-  async addProductToCategory(input: ProductToCategoryInput): Promise<void> {
+  async addProductToCategory(input: ProductCategoryInput): Promise<void> {
     await this.getById(input.categoryId);
 
-    const data = {
+    const products = input.product.map((addedProduct) => ({
       id: uuid(),
-      ...input,
-      weekDay: input.weekDay,
+      menuId: input.menuId,
+      categoryId: input.categoryId,
+      productId: addedProduct.productId,
+      weekDay: addedProduct.weekDay,
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),
-    };
+    }))
 
-    await this.repository.addProductToCategory(data);
+    await this.repository.addProductToCategory(products);
   }
 
   async deleteProduct(input: ProductToCategoryInput): Promise<void> {
