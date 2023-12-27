@@ -1,4 +1,9 @@
-import { Autocomplete as MuiAutocomplete, TextField } from '@mui/material'
+import {
+  Autocomplete as MuiAutocomplete,
+  TextField,
+  Paper,
+} from '@mui/material'
+import { FC } from 'react'
 
 export interface AutoCompleteProps<T = any> {
   label: string
@@ -11,12 +16,11 @@ export interface Item {
   name: string
 }
 
-export const AutoComplete = <T extends Item>({
+const AutoComplete: FC<AutoCompleteProps<Item>> = ({
   label,
   data,
-
   addSelectedItem,
-}: AutoCompleteProps<T>) => {
+}) => {
   return (
     <MuiAutocomplete
       size="small"
@@ -33,6 +37,9 @@ export const AutoComplete = <T extends Item>({
           color: '#BDBDBD',
         },
         width: '100%',
+        '& .MuiAutocomplete-listbox li:hover': {
+          background: '#0488A6',
+        },
       }}
       renderInput={(params) => (
         <TextField
@@ -55,7 +62,21 @@ export const AutoComplete = <T extends Item>({
           fullWidth
         />
       )}
+      PaperComponent={({ children }) => (
+        <Paper
+          elevation={3}
+          sx={{
+            background: '#272a34',
+            marginTop: '8px',
+            color: '#BDBDBD',
+          }}
+        >
+          {children}
+        </Paper>
+      )}
       onChange={(_, value) => addSelectedItem(value || '')}
     />
   )
 }
+
+export default AutoComplete

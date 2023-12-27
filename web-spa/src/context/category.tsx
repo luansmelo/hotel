@@ -2,14 +2,13 @@
 
 import { CategoryService } from '@/services/category'
 import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
-import { MenuProps } from '@/utils/interfaces/menu'
 import { handleToastify } from '@/utils/toastify'
 import React, { createContext, useState, ReactNode, useEffect } from 'react'
 
 interface CategoryContract {
   loading: boolean
   categoryList: CategoryProps[]
-  handleCreateCategory: (input: MenuProps) => Promise<void>
+  handleCreateCategory: (input: CategoryProps) => Promise<void>
   handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
   fetchCategoryList: () => Promise<void>
 }

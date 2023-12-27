@@ -6,9 +6,11 @@ import { ProductContext } from '@/context/product'
 import { CategoryProps, ProductWeekDay } from '@/utils/interfaces/category'
 import styles from './styles.module.scss'
 import { memo, useCallback, useContext, useEffect, useState } from 'react'
-import { AutoComplete } from '@/components/autoComplete'
 import { PlusCircle, SaveIcon } from 'lucide-react'
 import AddButton from '@/components/addButton'
+import AutoComplete from '@/components/autoComplete'
+import { handleToastify } from '@/utils/toastify'
+import ConfirmDialog from '@/components/dialog'
 
 const AddProductToCategory = memo(function AddProductToCategory({
   day,
@@ -22,6 +24,15 @@ const AddProductToCategory = memo(function AddProductToCategory({
   const [addedProducts, setAddedProducts] = useState<ProductWeekDay[]>([])
   const [selectedProduct, setSelectedProducts] =
     useState<IProductResponse | null>(null)
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
+
+  const openDeleteConfirmationDialog = () => {
+    setIsConfirmDialogOpen(true)
+  }
+
+  const closeDeleteConfirmationDialog = () => {
+    setIsConfirmDialogOpen(false)
+  }
 
   const addSelectedProduct = (value: string) => {
     setSelectedProducts(
@@ -33,9 +44,9 @@ const AddProductToCategory = memo(function AddProductToCategory({
     setAddedProducts((prevProducts) =>
       prevProducts.filter((product) => product.productId !== productId)
     )
+    handleToastify('Produto removido!', 'success')
+    closeDeleteConfirmationDialog()
   }
-
-  console.log(addedProducts)
 
   const handleAddProduct = () => {
     if (selectedProduct) {
@@ -47,6 +58,7 @@ const AddProductToCategory = memo(function AddProductToCategory({
           weekDay: day,
         },
       ])
+      handleToastify('Produto adicionado!', 'success')
       setSelectedProducts(null)
     }
   }
@@ -132,7 +144,13 @@ const AddProductToCategory = memo(function AddProductToCategory({
 
         <AddProductTable
           productData={addedProducts}
-          onDelete={handleRemoveProduct}
+          onDelete={openDeleteConfirmationDialog}
+        />
+
+        <ConfirmDialog
+          open={isConfirmDialogOpen}
+          onClose={closeDeleteConfirmationDialog}
+          onConfirm={() => handleRemoveProduct(addedProducts[0].productId)}
         />
         <AddButton
           text="SALVAR"

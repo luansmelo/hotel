@@ -33,7 +33,7 @@ export default function CategoryCreate({
 
   const createCategory = async () => {
     try {
-      await handleSave({ ...form })
+      await handleSave(form)
     } catch (error) {
       console.log(error)
     } finally {
