@@ -6,6 +6,8 @@ import { ProductContext } from '@/context/product'
 import { CategoryProps } from '@/utils/interfaces/category'
 import styles from './styles.module.scss'
 import { memo, useCallback, useContext, useEffect, useState } from 'react'
+import { AutoComplete } from '@/components/autoComplete'
+import { PlusCircle } from 'lucide-react'
 
 const AddProductToCategory = memo(function AddProductToCategory({
   day,
@@ -15,7 +17,29 @@ const AddProductToCategory = memo(function AddProductToCategory({
   handleProductAddCategory,
 }: AddProductToCategoryProps) {
   const { productList } = useContext(ProductContext)
-  const [currProductList, setCurrProductList] = useState<IProductResponse[]>()
+  const [currProductList, setCurrProductList] = useState<IProductResponse[]>([])
+  const [addedProducts, setAddedProducts] = useState<IProductResponse[]>([])
+  const [selectedProduct, setSelectedProducts] = useState<IProductResponse>()
+
+  const addSelectedProduct = (value: string) => {
+    setSelectedProducts(
+      currProductList.find((input) => input.name === value) as IProductResponse
+    )
+  }
+
+  const handleRemoveProduct = (productId: string) => {
+    const updatedProducts = addedProducts.filter(
+      (product) => product.id !== productId
+    )
+    setAddedProducts(updatedProducts)
+  }
+
+  const handleAddProduct = () => {
+    if (selectedProduct) {
+      setAddedProducts([...addedProducts, selectedProduct])
+      setSelectedProducts(undefined)
+    }
+  }
 
   const handleList = useCallback(() => {
     const list = productList?.filter(
@@ -45,15 +69,39 @@ const AddProductToCategory = memo(function AddProductToCategory({
             <div>Lista de categorias com Select</div>
           </div>
           {currProductList && (
-            <div style={{ marginTop: '24px' }}>
-              <AddProductTable
-                weekDay={day}
-                productData={currProductList}
-                category={menuProductList}
-                handleProductAddCategory={handleProductAddCategory}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignContent: 'center',
+                alignItems: 'center',
+                gap: '16px',
+                marginBottom: '16px',
+              }}
+            >
+              <AutoComplete
+                data={currProductList}
+                addSelectedItem={addSelectedProduct}
+                label="Produtos"
               />
+
+              <div
+                className={styles.productCreate}
+                style={{ height: '40px' }}
+                onClick={handleAddProduct}
+              >
+                <PlusCircle color="white" size={18} />
+              </div>
             </div>
           )}
+
+          <AddProductTable
+            weekDay={day}
+            category={menuProductList}
+            productData={addedProducts}
+            onDelete={handleRemoveProduct}
+            handleProductAddCategory={handleProductAddCategory}
+          />
         </div>
       </div>
     </Modal>

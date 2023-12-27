@@ -1,24 +1,59 @@
 import { Eye, SearchX, Trash2 } from 'lucide-react'
 import { Hypnosis } from 'react-cssfx-loading'
 import styles from './styles.module.scss'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { MenuContext } from '@/context/menu'
 import { IProductInputDataResponse } from '@/atom/business'
+import { MenuCategoryProps } from '@/utils/interfaces/menu'
+import { CategoryProps } from '@/utils/interfaces/category'
+import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
+import { Product } from '@/components/product/types'
+
+export interface Data {
+  selectedMenu: Menu
+  selectedCategory: CategoryProps
+  currentDateTab: string
+}
 
 interface ITableProductsProps {
-  menuProductList?: IProductInputDataResponse[]
+  data: Data
+  fetchMenuProducts: (payload: MenuCategoryProps) => Promise<void>
+  menuProductList?: any
   onClickView?: (product?: IProductInputDataResponse) => void
-  onClickDelete?: (product: any) => void
+  onClickDelete?: (product: Product) => void
   removeEye?: boolean
 }
 
 export default function MenuProductTable({
+  data,
   menuProductList,
+  removeEye,
+  fetchMenuProducts,
   onClickDelete,
   onClickView,
-  removeEye,
 }: ITableProductsProps) {
   const { loading } = useContext(MenuContext)
+
+  useEffect(() => {
+    if (
+      data.currentDateTab !== undefined &&
+      data.selectedMenu &&
+      data.selectedCategory
+    ) {
+      const payload = {
+        menuId: data.selectedMenu.menuId,
+        categoryId: data.selectedCategory.id || '',
+        weekDay: data.currentDateTab || '',
+      }
+
+      fetchMenuProducts(payload)
+    }
+  }, [
+    fetchMenuProducts,
+    data.currentDateTab,
+    data.selectedCategory,
+    data.selectedMenu,
+  ])
 
   return (
     <>
@@ -52,7 +87,7 @@ export default function MenuProductTable({
             ) : (
               <>
                 {menuProductList?.category?.map(
-                  (menu) =>
+                  (menu: CategoryProps) =>
                     menu?.schedule?.map((item) => (
                       <tr className={styles.tr} key={item.id}>
                         <td>{item.name}</td>

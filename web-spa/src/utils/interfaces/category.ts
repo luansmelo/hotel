@@ -1,5 +1,10 @@
 import { Product } from '@/components/product/types'
 
+export interface ProductWeekDay {
+  productId: string
+  weekDay: string
+}
+
 export interface CategoryProps {
   id?: string
   name: string
@@ -7,7 +12,7 @@ export interface CategoryProps {
 }
 
 export interface ProductOnCategory {
+  menuId: string
   categoryId: string
-  productId: string
-  weekDay: string
+  product: ProductWeekDay[]
 }

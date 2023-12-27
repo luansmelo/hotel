@@ -4,12 +4,13 @@ import styles from './styles.module.scss'
 
 import AddButton from '@/components/addButton'
 import { Hypnosis } from 'react-cssfx-loading'
-import { SearchX } from 'lucide-react'
+import { SearchX, Trash2 } from 'lucide-react'
 import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
 
 interface ITableProductsProps {
   weekDay: string
   category: CategoryProps
+  onDelete: (productId: string) => void
   handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
   productData: IProductResponse[]
 }
@@ -17,14 +18,14 @@ export default function AddProductTable({
   productData,
   weekDay,
   category,
+  onDelete,
   handleProductAddCategory,
 }: ITableProductsProps) {
   const isLoading = false
   const handleClickAddProduct = (product: IProductResponse) => {
     const data = {
+      menuId: category.menuId || '',
       categoryId: category.id || '',
-      productId: product.id || '',
-      weekDay: weekDay || '',
     }
 
     product.id && handleProductAddCategory(data)
@@ -73,13 +74,12 @@ export default function AddProductTable({
                       <tr className={styles.tr} key={product.name}>
                         <td>{product.name}</td>
                         <td className={styles.tdButton}>
-                          <AddButton
-                            text="Adicionar Produto"
-                            onClickButton={() => handleClickAddProduct(product)}
-                          />
+                          <div onClick={() => onDelete(product.id!)}>
+                            <Trash2 size={20} color="#D96262" />
+                          </div>
                         </td>
                       </tr>
-                    )
+                    )!
                   })}
                 </tbody>
               </>

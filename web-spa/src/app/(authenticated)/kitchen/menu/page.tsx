@@ -13,7 +13,6 @@ import { CategoryContext } from '@/context/category'
 import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
 import { CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
-import { MenuCategoryProps } from '@/utils/interfaces/menu'
 
 export interface Menu {
   menuId: string
@@ -29,8 +28,6 @@ export default function MenuMap() {
   const [currentDateTab, setCurrentDateTab] = useState<DATE_TABS | undefined>(
     undefined
   )
-
-  console.log(currentDateTab)
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryProps>(
     {} as CategoryProps
@@ -52,18 +49,6 @@ export default function MenuMap() {
   )
   const [menu, setMenu] = useState<string>('')
   const [category, setCategory] = useState<string>('')
-
-  useEffect(() => {
-    if (currentDateTab !== undefined && selectedMenu && selectedCategory) {
-      const data = {
-        menuId: selectedMenu.menuId,
-        categoryId: selectedCategory.id,
-        weekDay: DATE_TABS[currentDateTab],
-      }
-
-      fetchMenuProducts(data as MenuCategoryProps)
-    }
-  }, [fetchMenuProducts, currentDateTab, selectedCategory, selectedMenu])
 
   const openCreateMenuModal = () => {
     setOpenCreateMenu(true)
@@ -207,8 +192,16 @@ export default function MenuMap() {
         <div>
           <MenuProductTable
             removeEye
-            menuProductList={menuProductList}
-            onClickDelete={() => console.log('remover')}
+            fetchMenuProducts={fetchMenuProducts}
+            {...{
+              data: {
+                selectedMenu,
+                selectedCategory,
+                currentDateTab: DATE_TABS[currentDateTab!],
+              },
+              menuProductList,
+              onClickDelete: () => console.log('remover'),
+            }}
           />
         </div>
       </div>

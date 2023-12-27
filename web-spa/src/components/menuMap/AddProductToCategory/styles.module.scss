@@ -65,3 +65,24 @@
     gap: 24px;
   }
 }
+
+.productCreate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 14px;
+  border-radius: 6px;
+  background: #0488A6;
+  gap: 4px;
+  border: unset;
+  border-width: unset;
+
+  color: #BDBDBD;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}

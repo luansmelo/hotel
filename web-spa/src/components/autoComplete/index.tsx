@@ -1,27 +1,27 @@
 import { Autocomplete as MuiAutocomplete, TextField } from '@mui/material'
 
-export interface AutoCompleteProps {
+export interface AutoCompleteProps<T = any> {
   label: string
-  data?: Item[]
+  data?: T[]
   addSelectedItem: (value: string) => void
 }
 
 export interface Item {
-  id: string
+  id?: string
   name: string
 }
 
-export const AutoComplete = ({
+export const AutoComplete = <T extends Item>({
   label,
   data,
   addSelectedItem,
-}: AutoCompleteProps) => {
+}: AutoCompleteProps<T>) => {
   return (
     <MuiAutocomplete
       size="small"
       disablePortal
       id="combo-box-demo"
-      options={data?.map((item: Item) => item.name) || []}
+      options={(data || []).map((item) => item.name)}
       sx={{
         '& .MuiAutocomplete-inputRoot': {
           height: '40px',
