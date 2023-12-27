@@ -38,11 +38,13 @@ export class CategoryRepository implements CategoryRepositoryContract {
   async deleteById(id: string): Promise<void> {
     await this.db.category.delete({ where: { id } });
   }
+
   async addProductToCategory(input: ProductToCategoryContract): Promise<void> {
     await this.db.categoryProductSchedule.create({
-      data: { ...input, weekDay: Weekdays[input.weekDay] },
+      data: { ...input, weekDay: input.weekDay },
     });
   }
+
   async getProductInCategory(
     input: ProductToCategoryInput
   ): Promise<ProductToCategoryContract | null> {
@@ -57,6 +59,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
 
     return db;
   }
+
   async deleteProduct(input: ProductToCategoryInput): Promise<void> {
     await this.db.categoryProductSchedule.delete({
       where: {

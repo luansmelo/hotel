@@ -1,3 +1,7 @@
+export interface MenuCreateProps {
+  name: string
+}
+
 export interface MenuProps {
   menuId: string
   name: string

@@ -3,11 +3,11 @@ import { Hypnosis } from 'react-cssfx-loading'
 import styles from './styles.module.scss'
 import { useContext } from 'react'
 import { MenuContext } from '@/context/menu'
-import { IProductInputDataResponse, IProductResponse } from '@/atom/business'
+import { IProductInputDataResponse } from '@/atom/business'
 
 interface ITableProductsProps {
   onClickView?: (product?: IProductInputDataResponse) => void
-  onClickDelete?: (product: IProductResponse) => void
+  onClickDelete?: (product: any) => void
   removeEye?: boolean
 }
 
@@ -17,7 +17,6 @@ export default function MenuProductTable({
   removeEye,
 }: ITableProductsProps) {
   const { menuProductList, loading } = useContext(MenuContext)
-  console.log('AQUI', menuProductList)
 
   return (
     <>

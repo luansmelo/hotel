@@ -2,7 +2,11 @@
 
 import { IProductInputDataResponse } from '@/atom/business'
 import { MenuService } from '@/services/menu'
-import { MenuCategoryProps, MenuProps } from '@/utils/interfaces/menu'
+import {
+  MenuCategoryProps,
+  MenuCreateProps,
+  MenuProps,
+} from '@/utils/interfaces/menu'
 import { handleToastify } from '@/utils/toastify'
 import React, {
   createContext,
@@ -17,7 +21,10 @@ interface MenuContract {
   loading: boolean
   menuList: MenuProps[]
   menuProductList: IProductInputDataResponse[]
-  handleSave: (menu: MenuProps) => Promise<void>
+  handleSave: (menu: MenuCreateProps) => Promise<void>
+  setMenuProductList: React.Dispatch<
+    React.SetStateAction<IProductInputDataResponse[]>
+  >
   fetchMenuProducts: (input: MenuCategoryProps) => Promise<void>
   handleAddCategoryToMenu: (input: MenuCategoryProps) => Promise<void>
   fetchMenuList: () => Promise<void>
@@ -38,7 +45,6 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     setLoading(true)
     try {
       const response = await menu.list()
-      console.log(response)
       setMenuList(response || [])
     } catch (error) {
       console.log(error)
@@ -65,7 +71,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     [menu, setMenuProductList, setLoading]
   )
 
-  const handleSave = async (input: MenuProps) => {
+  const handleSave = async (input: MenuCreateProps) => {
     try {
       const response = await menu.handle(input)
 
@@ -104,6 +110,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
         loading,
         menuList,
         menuProductList,
+        setMenuProductList,
         fetchMenuProducts,
         handleSave,
         handleAddCategoryToMenu,

@@ -1,35 +1,35 @@
 import Modal from '@/components/Modal/modal/Modal'
 import { AddProductToCategoryProps } from '../types'
-import { TextField } from '@mui/material'
 import AddProductTable from '@/components/Modal/addProductModal/addProductTable'
 import { IProductResponse } from '@/atom/business'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { memo, useCallback, useContext, useEffect, useState } from 'react'
 import { ProductContext } from '@/context/product'
-import { useMapContext } from '@/context/MapaContext'
 import styles from './styles.module.scss'
+import { CategoryProps } from '@/utils/interfaces/category'
 
-export default function AddProductToCategory({
+const AddProductToCategory = memo(function AddProductToCategory({
   day,
   isOpenModel,
-  categoryList,
+  menuProductList,
   closeModal,
   handleProductAddCategory,
 }: AddProductToCategoryProps) {
   const { productList } = useContext(ProductContext)
-  const { menuProductList } = useMapContext()
-
   const [currProductList, setCurrProductList] = useState<IProductResponse[]>()
 
   const handleList = useCallback(() => {
     const list = productList?.filter(
       (product) =>
-        !menuProductList.find(
-          (menuProduct) => menuProduct.product.name === product.name
+        !menuProductList.category?.some(
+          (categoryItem: CategoryProps) =>
+            categoryItem.schedule?.some(
+              (scheduleItem) => scheduleItem.name === product.name
+            )
         )
     )
 
     setCurrProductList(list)
-  }, [productList, menuProductList, setCurrProductList])
+  }, [productList, setCurrProductList, menuProductList])
 
   useEffect(() => {
     handleList()
@@ -39,19 +39,13 @@ export default function AddProductToCategory({
     <Modal open={isOpenModel} onClose={closeModal}>
       <div className={styles.modalContainer}>
         <div className={styles.modalProductContainer}>
-          <TextField
-            id="search-product"
-            variant="outlined"
-            placeholder="Buscar por nome do prato"
-            fullWidth
-          />
-
+          <>Categoria {menuProductList.name}</>
           {currProductList && (
             <div style={{ marginTop: '24px' }}>
               <AddProductTable
                 weekDay={day}
                 productData={currProductList}
-                categoryId={categoryList.categoryId!}
+                category={menuProductList}
                 handleProductAddCategory={handleProductAddCategory}
               />
             </div>
@@ -60,4 +54,6 @@ export default function AddProductToCategory({
       </div>
     </Modal>
   )
-}
+})
+
+export default AddProductToCategory

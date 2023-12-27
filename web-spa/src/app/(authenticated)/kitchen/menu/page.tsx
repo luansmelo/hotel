@@ -2,7 +2,7 @@
 
 import styles from './styles.module.scss'
 import DateTabs, { DATE_TABS } from '@/components/DateTabs'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useCallback } from 'react'
 import { Fade } from '@mui/material'
 import Select from '@/components/select'
 import Dropdown from '@/components/dropDown'
@@ -18,6 +18,7 @@ import { MenuCategoryProps } from '@/utils/interfaces/menu'
 export interface Menu {
   menuId: string
   name: string
+  category: CategoryProps[]
 }
 
 export default function MenuMap() {
@@ -25,14 +26,20 @@ export default function MenuMap() {
   const [openCreateCategory, setOpenCreateCategory] = useState(false)
   const [openAddCategoryToMenu, setOpenAddCategoryToMenu] = useState(false)
   const [currentDateTab, setCurrentDateTab] = useState<DATE_TABS>(
-    DATE_TABS.SEGUNDA
+    DATE_TABS.DOMINGO
   )
   const [selectedCategory, setSelectedCategory] = useState<CategoryProps>(
     {} as CategoryProps
   )
   const [selectedMenu, setSelectedMenu] = useState<Menu>({} as Menu)
-  const { loading, menuList, handleSave, fetchMenuProducts } =
-    useContext(MenuContext)
+  const {
+    loading,
+    menuList,
+    menuProductList,
+    setMenuProductList,
+    handleSave,
+    fetchMenuProducts,
+  } = useContext(MenuContext)
   const { categoryList, handleCreateCategory, handleProductAddCategory } =
     useContext(CategoryContext)
 
@@ -67,9 +74,12 @@ export default function MenuMap() {
     setDropdownAnchorEl(null)
   }
 
-  const handleOpenDropdown = (event: React.MouseEvent<HTMLElement>) => {
-    setDropdownAnchorEl(event.currentTarget)
-  }
+  const handleOpenDropdown = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      setDropdownAnchorEl(event.currentTarget)
+    },
+    []
+  )
 
   const handleCloseDropdown = () => {
     setDropdownAnchorEl(null)
@@ -84,18 +94,21 @@ export default function MenuMap() {
       id: categoryFind?.id ?? '',
       name: categoryFind?.name ?? '',
     })
+    setCurrentDateTab(DATE_TABS.DOMINGO)
 
     setCategory(value)
   }
-
+  const resetModalState = () => {
+    setSelectedCategory({} as CategoryProps)
+    setCategory('')
+    setCurrentDateTab(DATE_TABS.DOMINGO)
+    setMenuProductList([])
+  }
   const handleMenu = (value: string) => {
     const menuFind = menuList.find((menu) => menu.name === value)
 
-    setSelectedMenu({
-      menuId: menuFind?.menuId ?? '',
-      name: menuFind?.name ?? '',
-    })
-
+    setSelectedMenu(menuFind as Menu)
+    resetModalState()
     setMenu(value)
   }
 
@@ -153,27 +166,40 @@ export default function MenuMap() {
         {openAddCategoryToMenu && (
           <AddProductToCategory
             day={DATE_TABS[currentDateTab]}
-            categoryList={selectedCategory}
+            menuProductList={menuProductList}
             isOpenModel={openAddCategoryToMenu}
             closeModal={() => setOpenAddCategoryToMenu(false)}
             handleProductAddCategory={handleProductAddCategory}
           />
         )}
 
-        <div className={styles.DateTabsContainer}>
-          <Select
-            data={categoryList}
-            onClick={handleCategory}
-            value={category}
-          />
-          <DateTabs
-            currentDateTab={currentDateTab}
-            setCurrentDateTab={setCurrentDateTab}
-          />
-        </div>
+        {selectedMenu.menuId && (
+          <Fade in={true} timeout={500}>
+            <div className={styles.DateTabsContainer}>
+              {selectedMenu.category && (
+                <Select
+                  disabled={!selectedMenu.category.length}
+                  data={selectedMenu.category}
+                  onClick={handleCategory}
+                  value={category}
+                />
+              )}
+              {selectedCategory.id && (
+                <DateTabs
+                  disabled={!selectedCategory.id}
+                  currentDateTab={currentDateTab}
+                  setCurrentDateTab={setCurrentDateTab}
+                />
+              )}
+            </div>
+          </Fade>
+        )}
 
         <div>
-          <MenuProductTable removeEye onClickDelete={() => console.log('')} />
+          <MenuProductTable
+            removeEye
+            onClickDelete={() => console.log('remover')}
+          />
         </div>
       </div>
     </Fade>

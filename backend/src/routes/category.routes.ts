@@ -85,14 +85,17 @@ router.delete(
   validate(ProductToCategorySchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductToCategoryInput = ProductToCategorySchema.parse(
-        request.body
-      ) as ProductToCategoryInput;
+      const input: ProductToCategoryInput = ProductToCategorySchema.parse({
+        id: request.query.menu as string,
+        categoryId: request.query.category,
+        productId: request.query.product,
+        day: request.query.day,
+      }) as ProductToCategoryInput;
 
       const controller = makeCategoryController();
       await controller.deleteProduct(input);
 
-      return response.status(200).send({ message: "Produto excluído!" });
+      return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
     }

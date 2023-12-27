@@ -35,10 +35,12 @@ export class CategoryService {
     }
   }
 
-  async delete(id: string) {
+  async removeProduct(input: ProductOnCategory) {
     try {
-      const response = await api.delete(`/input/${id}`)
-      console.log('RESPONSE', response)
+      const response = await api.delete(
+        `/category?id=${input.menuId}&categoryId=${input.categoryId}&productId=${input.productId}&day=${input.weekDay}`
+      )
+
       return response
     } catch (error) {
       console.log(error)

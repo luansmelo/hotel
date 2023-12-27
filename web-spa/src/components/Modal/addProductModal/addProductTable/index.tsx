@@ -6,25 +6,25 @@ import AddButton from '@/components/addButton'
 import { Hypnosis } from 'react-cssfx-loading'
 import { useMapContext } from '@/context/MapaContext'
 import { SearchX } from 'lucide-react'
-import { ProductOnCategory } from '@/utils/interfaces/category'
+import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
 
 interface ITableProductsProps {
   weekDay: string
-  categoryId: string
+  category: CategoryProps
   handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
   productData: IProductResponse[]
 }
 export default function AddProductTable({
   productData,
   weekDay,
-  categoryId,
+  category,
   handleProductAddCategory,
 }: ITableProductsProps) {
   const { isLoading } = useMapContext()
 
   const handleClickAddProduct = (product: IProductResponse) => {
     const data = {
-      categoryId: categoryId || '',
+      categoryId: category.id || '',
       productId: product.id || '',
       weekDay: weekDay || '',
     }

@@ -11,11 +11,17 @@ export interface CategoryContract {
   updated_at: string;
 }
 
+export interface ProductCategoryInput {
+  menuId: string;
+  categoryId: string;
+  productId: string;
+}
+
 export interface ProductToCategoryInput {
   id: string;
   categoryId: string;
   productId: string;
-  weekDay: Weekdays;
+  weekDay: string;
 }
 
 export interface ProductToCategoryContract {

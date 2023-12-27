@@ -1,11 +1,11 @@
 import { InputContract } from '@/atom/business'
 import { API } from '@/services/api'
-import { MenuCategoryProps, MenuProps } from '@/utils/interfaces/menu'
+import { MenuCategoryProps, MenuCreateProps } from '@/utils/interfaces/menu'
 
 const api = API.getInstance()
 
 export class MenuService {
-  async handle(input: MenuProps) {
+  async handle(input: MenuCreateProps) {
     try {
       const response = await api.post('/menu/create', input)
 

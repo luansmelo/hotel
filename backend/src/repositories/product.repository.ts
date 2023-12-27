@@ -45,7 +45,7 @@ export class ProductRepository implements ProductRepositoryContract {
             },
           },
         },
-      }
+      },
     });
     return db;
   }
@@ -83,7 +83,6 @@ export class ProductRepository implements ProductRepositoryContract {
   }
 
   async updatePredefinedProduct(id: string, updatedInfo: UpdatedProductInfo) {
-    console.log(id, updatedInfo);
     await this.db.product.update({
       where: { id },
       data: {
