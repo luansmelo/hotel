@@ -73,18 +73,20 @@ const AddProductToCategory = memo(function AddProductToCategory({
   }
 
   const handleList = useCallback(() => {
-    const list = productList?.filter(
-      (product) =>
-        !menuProductList.category?.some(
-          (categoryItem: CategoryProps) =>
-            categoryItem.schedule?.some(
-              (scheduleItem) => scheduleItem.name === product.name
-            )
-        ) &&
-        !addedProducts.some(
-          (addedProduct) => addedProduct.name === product.name
-        )
-    )
+    const list = productList
+      ?.filter(
+        (product) =>
+          !menuProductList.category?.some(
+            (categoryItem: CategoryProps) =>
+              categoryItem.schedule?.some(
+                (scheduleItem) => scheduleItem.name === product.name
+              )
+          ) &&
+          !addedProducts.some(
+            (addedProduct) => addedProduct.name === product.name
+          )
+      )
+      .filter((product) => product.inputs.length > 0)
 
     setCurrProductList(list || [])
   }, [productList, setCurrProductList, menuProductList, addedProducts])
@@ -106,6 +108,8 @@ const AddProductToCategory = memo(function AddProductToCategory({
   useEffect(() => {
     handleList()
   }, [handleList])
+
+  console.log(currProductList, 'CURRPRODUCTLIST')
 
   return (
     <Modal open={isOpenModel} onClose={closeModal}>

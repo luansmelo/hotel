@@ -21,6 +21,7 @@ export interface Product {
   id?: string
   name: string
   description: string
+  inputs: InputToProductProps[]
 }
 
 export interface ProductListProps {
