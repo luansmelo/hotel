@@ -18,8 +18,9 @@ const AddProductToCategory = memo(function AddProductToCategory({
   menuProductList,
   closeModal,
   handleProductAddCategory,
+  setCurrentDateTab,
 }: AddProductToCategoryProps) {
-  const { productList } = useContext(ProductContext)
+  const { productList, setProductList } = useContext(ProductContext)
   const [currProductList, setCurrProductList] = useState<IProductResponse[]>([])
   const [addedProducts, setAddedProducts] = useState<ProductWeekDay[]>([])
   const [selectedProduct, setSelectedProducts] =
@@ -67,13 +68,9 @@ const AddProductToCategory = memo(function AddProductToCategory({
     setCurrProductList([])
     setAddedProducts([])
     setSelectedProducts(null)
+    setCurrentDateTab(undefined)
+    setProductList([])
   }
-
-  useEffect(() => {
-    if (!isOpenModel) {
-      resetFields()
-    }
-  }, [isOpenModel])
 
   const handleList = useCallback(() => {
     const list = productList?.filter(
@@ -103,6 +100,7 @@ const AddProductToCategory = memo(function AddProductToCategory({
 
     handleProductAddCategory(data)
     closeModal()
+    resetFields()
   }
 
   useEffect(() => {

@@ -43,7 +43,14 @@ export class MenuRepository implements MenuRepositoryContract {
                 categoryProductSchedule: {
                   select: {
                     weekDay: true,
-                    product: true,
+                    product: {
+                      select: {
+                        id: true,
+                        name: true,
+                        description: true,
+                        inputs: true,
+                      },
+                    },
                   },
                   where: {
                     weekDay: input.day,

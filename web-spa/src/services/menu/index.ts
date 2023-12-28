@@ -37,12 +37,10 @@ export class MenuService {
 
   async getMenu(input: MenuCategoryProps) {
     try {
-      console.log('ENTROU AQUI', input)
       const response = await api.get(
         `/menu/select/filter?menu=${input.menuId}&category=${input.categoryId}&day=${input.weekDay}`
       )
 
-      console.log('RETORNO DA API', response)
       return response
     } catch (error) {
       console.log(error)

@@ -160,8 +160,7 @@ export default function MenuMap() {
         {openAddProductToCateogory && (
           <AddProductToCategory
             day={DATE_TABS[currentDateTab!]}
-            menuList={menuList}
-            categoryList={categoryList}
+            setCurrentDateTab={setCurrentDateTab}
             menuProductList={menuProductList}
             isOpenModel={openAddProductToCateogory}
             closeModal={() => setOpenAddProductToCategory(false)}

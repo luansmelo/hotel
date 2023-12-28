@@ -1,7 +1,8 @@
 'use client'
 import { ProductWeekDay } from '@/utils/interfaces/category'
 import styles from './styles.module.scss'
-import { SearchX, Trash2 } from 'lucide-react'
+import { SearchX } from 'lucide-react'
+import Trash from '@/components/atoms/trash'
 interface ITableProductsProps {
   onDelete: (productId: string) => void
   productData: ProductWeekDay[]
@@ -24,7 +25,7 @@ export default function AddProductTable({
               alignItems: 'center',
             }}
           >
-            <SearchX size={80} color="#00A3E0" />
+            <SearchX size={80} color="#F56D15" />
           </div>
         ) : (
           <div className={styles.tbodyContainer}>
@@ -33,12 +34,7 @@ export default function AddProductTable({
                 <tr key={product.productId} className={styles.tr}>
                   <td>{product.name}</td>
                   <td>
-                    <div
-                      onClick={() => onDelete(product.productId)}
-                      className={styles.productActionDelete}
-                    >
-                      <Trash2 size={20} color="#FFF" />
-                    </div>
+                    <Trash onClick={() => onDelete(product.productId)} />
                   </td>
                 </tr>
               ))}

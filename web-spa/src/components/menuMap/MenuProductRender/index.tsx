@@ -8,6 +8,7 @@ import { MenuCategoryProps } from '@/utils/interfaces/menu'
 import { CategoryProps } from '@/utils/interfaces/category'
 import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
 import { Product } from '@/components/product/types'
+import Trash from '@/components/atoms/trash'
 
 export interface Data {
   selectedMenu: Menu
@@ -100,12 +101,9 @@ export default function MenuProductTable({
                               <Eye color="#D96262" size={18} />
                             </div>
                           )}
-                          <div
-                            className={styles.productActionDelete}
+                          <Trash
                             onClick={() => onClickDelete && onClickDelete(item)}
-                          >
-                            <Trash2 color="white" size={18} />
-                          </div>
+                          />
                         </td>
                       </tr>
                     ))

@@ -64,6 +64,10 @@ export class MenuService implements MenuServiceContract {
   async getSelectedMenu(input: MenuProductInput) {
     const menu = await this.repository.getSelectedMenu(input);
 
+    if (!menu) {
+      throw new NotFoundError("Cardápio não encontrado");
+    }
+
     const data = {
       menuId: menu?.id,
       name: menu.name,
@@ -75,13 +79,10 @@ export class MenuService implements MenuServiceContract {
           name: schedule.product.name,
           description: schedule.product.description,
           weekDay: schedule.weekDay,
+          inputs: schedule.product.inputs,
         })),
       })),
     };
-
-    if (!data) {
-      throw new NotFoundError("Cardápio não encontrado");
-    }
 
     return data;
   }

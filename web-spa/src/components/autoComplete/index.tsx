@@ -26,7 +26,7 @@ const AutoComplete: FC<AutoCompleteProps<Item>> = ({
       size="small"
       disablePortal
       id="combo-box-demo"
-      value={''}
+      value={null}
       options={(data || []).map((item) => item.name)}
       sx={{
         '& .MuiAutocomplete-inputRoot': {

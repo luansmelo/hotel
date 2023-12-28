@@ -1,5 +1,7 @@
-import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
-import { MenuCreateProps, MenuProps } from '@/utils/interfaces/menu'
+import { ProductOnCategory } from '@/utils/interfaces/category'
+import { MenuCreateProps } from '@/utils/interfaces/menu'
+import { Dispatch, SetStateAction } from 'react'
+import { DATE_TABS } from '../DateTabs'
 
 export interface MenuMapProps {
   loading: boolean
@@ -11,8 +13,7 @@ export interface MenuMapProps {
 
 export interface AddProductToCategoryProps {
   day: string
-  menuList: MenuProps[]
-  categoryList: CategoryProps[]
+  setCurrentDateTab: Dispatch<SetStateAction<DATE_TABS | undefined>>
   isOpenModel: boolean
   menuProductList: any
   closeModal: () => void
