@@ -12,6 +12,8 @@ import Dropdown from '@/components/dropDown'
 import { Boxes, ChefHat, PencilRuler } from 'lucide-react'
 import MeasurementUnitCreate from '@/components/input/MeasurementUnit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
+import { GroupContext } from '@/context/grupo'
+import GroupCreate from '@/components/input/Group'
 const Input: React.FC<InputListProps> = () => {
   const {
     loading,
@@ -25,6 +27,7 @@ const Input: React.FC<InputListProps> = () => {
   const { handleMeasurementSave, measurementUnitList } = useContext(
     MeasurementUnitContext
   )
+  const { handleGroupSave, groupList } = useContext(GroupContext)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
@@ -35,7 +38,7 @@ const Input: React.FC<InputListProps> = () => {
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState<null | HTMLElement>(
     null
   )
-  console.log('LISTA I', measurementUnitList)
+
   const openEditModal = () => {
     setShowEditModal(true)
     setDropdownAnchorEl(null)
@@ -141,6 +144,17 @@ const Input: React.FC<InputListProps> = () => {
         />
       )}
 
+      {createGroupModal && (
+        <GroupCreate
+          isOpen={createGroupModal}
+          handleCloseModal={() => setCreateGroupModal(false)}
+          handleSave={handleGroupSave}
+          setErrors={setErrors}
+          loading={loading}
+          errors={errors}
+        />
+      )}
+
       {showEditModal && (
         <InputEdit
           loading={loading}
@@ -159,6 +173,7 @@ const Input: React.FC<InputListProps> = () => {
           errors={errors}
           inputList={inputList}
           measurementUnitList={measurementUnitList}
+          groupList={groupList}
           setErrors={setErrors}
           handleSave={handleCreate}
           showModal={showCreateForm}

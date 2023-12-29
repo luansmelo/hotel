@@ -21,7 +21,7 @@ export const Form: React.FC<FormProps> = ({
         '& > :not(style)': {
           maxHeight: '500px',
         },
-        gap: '1rem',
+        gap: '0.75rem',
       }}
       component="form"
       onSubmit={(e) => {

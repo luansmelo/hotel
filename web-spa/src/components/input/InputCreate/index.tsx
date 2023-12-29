@@ -1,17 +1,17 @@
-import { FormHelperText } from '@mui/material'
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
 import { InputProps } from '../types'
 import TextField from '@/components/TextField/TextField'
 import Select from '@/components/select'
+import { isNotEmpty, isNumber, validateField } from '@/utils/validations'
 
 export default function InputCreate({
   loading,
   errors,
   measurementUnitList,
+  groupList,
   showModal,
-  inputList,
   setErrors,
   handleSave,
   handleCloseModal,
@@ -24,28 +24,17 @@ export default function InputCreate({
     group: '',
   })
 
-  console.log('LISTA', measurementUnitList)
-
   const validateForm = () => {
-    const numericUnitPrice = Number(form.unitPrice)
-
     const newErrors = {
-      name: form.name.trim() === '' ? 'Nome é obrigatório' : '',
-      measurementUnit:
-        form.measurementUnit.trim() === ''
-          ? 'Unidade de medida é obrigatória'
-          : '',
-      unitPrice:
-        form.unitPrice.trim() === '' || isNaN(numericUnitPrice)
-          ? 'Preço unitário deve ser um número válido'
-          : '',
-      code:
-        form.code.trim() === ''
-          ? 'Código é obrigatório'
-          : inputList?.some((input) => input.code === form.code)
-          ? 'Código já existe. Escolha outro.'
-          : '',
-      group: form.group.trim() === '' ? 'Grupo é obrigatório' : '',
+      name: validateField('Nome', form.name, isNotEmpty),
+      measurementUnit: validateField(
+        'Unidade de medida',
+        form.measurementUnit,
+        isNotEmpty
+      ),
+      unitPrice: validateField('Preço unitário', form.unitPrice, isNumber),
+      code: validateField('Código', form.code, isNotEmpty),
+      group: validateField('Grupo', form.group, isNotEmpty),
     }
 
     setErrors(newErrors)
@@ -96,9 +85,7 @@ export default function InputCreate({
           name="name"
           value={form.name}
           onChange={handleSetState}
-          error={!!errors.name}
-          helperText={errors.name}
-          height="70px"
+          errors={errors.name}
         />
 
         <Select
@@ -109,19 +96,12 @@ export default function InputCreate({
           onClick={handleSetState}
         />
 
-        {errors.measurementUnit && (
-          <FormHelperText sx={{ color: '#f44336' }}>
-            {errors.measurementUnit}
-          </FormHelperText>
-        )}
-
         <TextField
           label="Preço Unitário"
           name="unitPrice"
           value={form.unitPrice}
           onChange={handleSetState}
-          error={!!errors.unitPrice}
-          helperText={errors.unitPrice}
+          errors={errors.unitPrice}
         />
 
         <TextField
@@ -129,13 +109,12 @@ export default function InputCreate({
           name="code"
           value={form.code}
           onChange={handleSetState}
-          error={!!errors.code}
-          helperText={errors.code}
+          errors={errors.code}
         />
 
         <Select
           width="100%"
-          data={['PADARIA']}
+          data={groupList!}
           onClick={handleSetState}
           name="group"
           value={form.group}
