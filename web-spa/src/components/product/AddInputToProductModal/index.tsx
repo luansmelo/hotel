@@ -139,7 +139,6 @@ export default function AddInputToProductModal({
   const saveProductWithInputs = async () => {
     onClose()
     const inputsOnProductsArray = prepareInputsForProduct()
-    console.log('VALR:', inputsOnProductsArray)
     await handleAddInputsToProduct(inputsOnProductsArray)
     setAddedInputs([])
   }

@@ -16,10 +16,10 @@ export default function Select({
   width,
   errors,
   placeholder,
+  defaultValue,
   onClick,
 }: SelectProps) {
   const hasValue = Boolean(value)
-
   return (
     <div className={styles.Select}>
       <FormControl fullWidth>
@@ -28,6 +28,7 @@ export default function Select({
           displayEmpty
           name={name}
           value={value}
+          defaultValue={defaultValue}
           onChange={onClick}
           inputProps={{ id: `select-${name}` }}
           sx={{
@@ -74,7 +75,7 @@ export default function Select({
           }}
         >
           {!hasValue && (
-            <MenuItem disabled value="">
+            <MenuItem disabled={!hasValue} value="">
               {placeholder}
             </MenuItem>
           )}

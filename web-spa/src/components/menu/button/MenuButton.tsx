@@ -8,6 +8,7 @@ interface MenuButtonProps {
   text: string
   selectedFeature: string
   active: boolean
+  isMinimized?: boolean
   onClick?: (event: MouseEvent<HTMLDivElement>) => void
 }
 
@@ -16,17 +17,23 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   text,
   selectedFeature,
   active,
+  isMinimized,
   onClick,
 }: MenuButtonProps) => {
   const buttonClassName = active
     ? `${styles.mainButton} ${styles.mainButtonActivated}`
     : styles.mainButton
 
+  const containerClassName = isMinimized ? `${styles.minimized}` : ''
+
   return (
     <Link href={`/kitchen/${selectedFeature}`} passHref>
-      <div className={buttonClassName} onClick={onClick}>
-        <Icon size={32} />
-        {text}
+      <div
+        className={`${buttonClassName} ${containerClassName}`}
+        onClick={onClick}
+      >
+        <Icon size={18} />
+        {!isMinimized && <div className={styles.menuButtonText}>{text}</div>}
       </div>
     </Link>
   )

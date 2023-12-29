@@ -111,7 +111,7 @@ export default function ProductEditModal({
       inputs: existingInputs.map((input: Input) => ({
         id: input.id || '',
         name: input.name,
-        grammage: Number(inputState[input.name]?.grammage) || 0,
+        grammage: Number(inputState[input.name]?.grammage) || input.grammage,
         measurementUnit:
           inputState[input.name]?.measurementUnit || input.measurementUnit,
       })),

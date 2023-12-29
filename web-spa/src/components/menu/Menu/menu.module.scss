@@ -1,8 +1,29 @@
 .menuContainer {
   display: flex;
   flex-direction: column;
-  width: 20rem;
-  border-radius: 10px;
+  gap: 1.5rem;
+  width: 200px;
+
+  &.minimized {
+    width: 60px;
+  }
+}
+
+.mainButton {
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  color: white;
+  justify-content: flex-end;
+
+  &.minimized {
+    padding-right: 8px;
+    justify-content: center;
+  }
+}
+
+.mainButton svg {
+  margin-right: 8px;
 }
 
 .main {
@@ -12,15 +33,15 @@
   flex-shrink: 0;
   background: #30333F;
   border-radius: 10px;
-  padding: 24px;
-  gap: 20px;
-
 }
 
 .menuButtonContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+
+  &.minimized {
+    flex: 0;
+  }
 }
 
 .menuButton {
@@ -28,14 +49,15 @@
 }
 
 .menuButtonIcon {
-  /* Adiciona estilo ao ícone */
-  margin-bottom: 8px; /* Espaçamento entre o ícone e o texto */
+  margin-bottom: 8px;
 }
 
 .imageContainer {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  height: 100px;
 }
 
 .imageContainer p {
@@ -61,8 +83,8 @@
   }
 
   .menuButtonContainer {
-    flex-direction: row;
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
   }
 
   .menuButton {
