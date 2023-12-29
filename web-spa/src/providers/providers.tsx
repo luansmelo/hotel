@@ -7,6 +7,7 @@ import { AuthProvider } from '@/context/auth'
 import { ThemeProvider, createTheme } from '@mui/material'
 import { MenuProvider } from '@/context/menu'
 import { CategoryProvider } from '@/context/category'
+import { MeasurementUnitProvider } from '@/context/measurementUnit'
 
 const theme = createTheme({
   palette: {
@@ -22,7 +23,9 @@ export const Providers = ({ children }: { children: React.ReactNode }) => (
         <MenuProvider>
           <CategoryProvider>
             <ProductProvider>
-              <InputProvider>{children}</InputProvider>
+              <InputProvider>
+                <MeasurementUnitProvider>{children}</MeasurementUnitProvider>
+              </InputProvider>
             </ProductProvider>
           </CategoryProvider>
         </MenuProvider>

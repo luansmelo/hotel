@@ -1,6 +1,6 @@
 import { NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
-import { GroupInput } from "../dto/group.dto";
+import { MeasurementUnitInput } from "../dto/measurementUnit.dto";
 import {
   MeasurementUnitRepositoryContract,
   MeasurementUnitServiceContract,
@@ -8,7 +8,7 @@ import {
 
 export class MeasurementUnitService implements MeasurementUnitServiceContract {
   constructor(private readonly repository: MeasurementUnitRepositoryContract) {}
-  async create(input: GroupInput): Promise<void> {
+  async create(input: MeasurementUnitInput): Promise<void> {
     const data = {
       id: uuid(),
       name: input.name,
@@ -19,20 +19,20 @@ export class MeasurementUnitService implements MeasurementUnitServiceContract {
     await this.repository.save(data);
   }
   async getById(id: string): Promise<any> {
-    const group = await this.repository.getById(id);
+    const measurementUnit = await this.repository.getById(id);
 
-    if (!group) {
+    if (!measurementUnit) {
       throw new NotFoundError("Grupo não encontrado");
     }
 
-    return group;
+    return measurementUnit;
   }
   async getAll(): Promise<any> {
     return this.repository.getAll();
   }
   async deleteById(id: string): Promise<void> {
-    const group = await this.getById(id);
+    const measurementUnit = await this.getById(id);
 
-    await this.repository.deleteById(group.id);
+    await this.repository.deleteById(measurementUnit.id);
   }
 }

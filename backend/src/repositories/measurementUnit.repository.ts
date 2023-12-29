@@ -1,21 +1,23 @@
 import { PrismaClient } from "@prisma/client";
-import { GroupContract } from "../dto/group.dto";
-import { GroupRepositoryContract } from "../utils/contracts/group-contract";
+import { MeasurementUnitContract } from "../dto/measurementUnit.dto";
+import { MeasurementUnitRepositoryContract } from "../utils/contracts/measurementUnit-contract";
 
-export class MeasurementUnitRepository implements GroupRepositoryContract {
+export class MeasurementUnitRepository
+  implements MeasurementUnitRepositoryContract
+{
   constructor(private readonly db: PrismaClient) {}
-  async save(input: GroupContract) {
-    await this.db.group.create({
+  async save(input: MeasurementUnitContract) {
+    await this.db.measurementUnit.create({
       data: input,
     });
   }
   async getAll(): Promise<any> {
-    return this.db.group.findMany();
+    return this.db.measurementUnit.findMany();
   }
   async getById(id: string): Promise<any> {
-    return this.db.group.findUnique({ where: { id } });
+    return this.db.measurementUnit.findUnique({ where: { id } });
   }
   async deleteById(id: string): Promise<void> {
-    await this.db.group.delete({ where: { id } });
+    await this.db.measurementUnit.delete({ where: { id } });
   }
 }

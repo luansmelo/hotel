@@ -13,6 +13,7 @@ import { CategoryContext } from '@/context/category'
 import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
 import { CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
+import { Plus, Newspaper, MenuSquare, Soup } from 'lucide-react'
 
 export interface Menu {
   menuId: string
@@ -117,18 +118,25 @@ export default function MenuMap() {
 
           <Dropdown
             actions={[
-              { label: 'Criar Menu', onClick: openCreateMenuModal },
               {
-                label: 'Criar Categoria',
+                label: 'Cadastrar Menu',
+                onClick: openCreateMenuModal,
+                icon: <MenuSquare />,
+              },
+              {
+                label: 'Cadastar Categoria',
                 onClick: openCreateCategoryModal,
+                icon: <Newspaper />,
               },
               {
                 label: 'Adicionar Produto a Categoria',
                 onClick: openAddProductToCategory,
+                icon: <Soup />,
               },
               {
                 label: 'Adicionar Produto à Categoria',
                 onClick: () => console.log('Adicionar Produto à Categoria'),
+                icon: <Plus />,
               },
             ]}
             onClose={handleCloseDropdown}

@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material'
-import { MoreHorizontal } from 'lucide-react'
+import { MoreHorizontal, Trash2, Pencil } from 'lucide-react'
 import Dropdown from '../dropDown'
 import styles from './styles.module.scss'
 import ConfirmDialog from '../dialog'
@@ -53,8 +53,8 @@ const ListItem = ({
           onClose={handleClose}
           actions={[
             ...actions!,
-            { label: 'Editar', onClick: handleEditClick },
-            { label: 'Excluir', onClick: handleDeleteClick },
+            { label: 'Editar', onClick: handleEditClick, icon: <Pencil /> },
+            { label: 'Excluir', onClick: handleDeleteClick, icon: <Trash2 /> },
           ]}
         />
       </div>

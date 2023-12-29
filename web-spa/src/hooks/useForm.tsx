@@ -7,7 +7,9 @@ interface SelectChangeEvent<T = string> {
   }
 }
 
-type FormInputEvent = ChangeEvent<HTMLInputElement> | SelectChangeEvent
+export type FormInputEvent =
+  | ChangeEvent<HTMLInputElement>
+  | SelectChangeEvent<string>
 
 const useForm = <T extends object>(initialState: T) => {
   const [form, setForm] = useState(initialState)
@@ -20,7 +22,7 @@ const useForm = <T extends object>(initialState: T) => {
     }))
   }
 
-  console.log("FORM", form)
+  console.log('FORM', form)
 
   const clear = () => {
     setForm(initialState)

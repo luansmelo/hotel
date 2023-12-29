@@ -3,27 +3,31 @@ import styles from './styles.module.scss'
 import { SelectProps } from './types'
 
 export default function Select({
+  key,
+  name,
   data,
   value,
   disabled,
+  width,
   onClick,
 }: SelectProps) {
   return (
     <div className={styles.Select}>
       <FormControl fullWidth>
         <MSelect
-          key={'select'}
+          key={key}
+          name={name}
           id="demo-simple-select"
           value={value}
           disabled={disabled}
-          onChange={(e) => onClick(e.target.value)}
+          onChange={onClick}
           displayEmpty
           sx={{
-            width: '200px',
+            width: width ? width : '200px',
             '& .MuiSelect-select': {
               backgroundColor: disabled ? '#272a34' : '#1F2128',
               color: disabled ? '#808080' : '#BDBDBD',
-              padding: '12px 16px',
+              padding: '8.5px 14px',
               border: '1px solid #0488A6',
               borderRadius: '4px',
               '&:hover': {
@@ -51,6 +55,7 @@ export default function Select({
                 outline: '1px solid #0488A6',
                 background: '#1F2128',
                 color: '#BDBDBD',
+                padding: '0px',
               },
             },
           }}

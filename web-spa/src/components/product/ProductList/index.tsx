@@ -5,6 +5,7 @@ import ListItem from '@/components/listItem/Index'
 import { Skeleton } from '@mui/material'
 import { ProductListProps, ProductProps } from '../types'
 import Image from 'next/image'
+import { Plus, Eye } from 'lucide-react'
 function ProductList({
   productList,
   loading,
@@ -59,6 +60,7 @@ function ProductList({
                       openAddInputModal()
                       handleSelectProduct(product as ProductProps)
                     },
+                    icon: <Plus />,
                   },
                   {
                     label: 'Visualizar prato',
@@ -66,6 +68,7 @@ function ProductList({
                       handleDetailModal()
                       handleSelectProduct(product as ProductProps)
                     },
+                    icon: <Eye />,
                   },
                 ]}
                 onDelete={() => handleDelete(product.id!)}

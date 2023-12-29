@@ -1,6 +1,7 @@
 interface Action {
   label: string
   onClick: () => void
+  icon?: React.ReactNode
 }
 
 export interface DropdownProps {

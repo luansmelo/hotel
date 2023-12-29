@@ -1,5 +1,6 @@
 import { InputContract } from '@/atom/business'
 import { InputErrors } from '@/context/input'
+import { MeasurementUnitContract } from './MeasurementUnit/types'
 
 export interface InputToProductProps {
   id: string
@@ -36,11 +37,12 @@ export interface InputFormProps {
 
 export interface InputProps {
   loading: boolean
+  showModal: boolean
   errors: Record<string, string | number>
+  inputList?: Input[]
+  measurementUnitList?: MeasurementUnitContract[]
+  input?: Input
   setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
   handleSave: (input: InputContract) => Promise<void>
-  showModal: boolean
   handleCloseModal: () => void
-  inputList?: Input[]
-  input?: Input
 }

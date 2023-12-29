@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, MenuItem, Typography } from '@mui/material'
+import { IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import styles from './styles.module.scss'
 import { DropdownProps } from './types'
 
@@ -17,8 +17,10 @@ const Dropdown: React.FC<DropdownProps> = ({ actions, onClose, anchorEl }) => {
       }}
       open={Boolean(anchorEl)}
       onClose={onClose}
+      autoFocus={false}
       MenuListProps={{
         style: {
+          padding: '4px',
           backgroundColor: '#30333F',
           borderRadius: '4px',
           boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
@@ -29,8 +31,21 @@ const Dropdown: React.FC<DropdownProps> = ({ actions, onClose, anchorEl }) => {
         <MenuItem
           className={styles.menuItem}
           key={index}
+          sx={{
+            background: '#30333F',
+            width: '300px',
+          }}
           onClick={action.onClick}
         >
+          {action.icon && (
+            <IconButton
+              className={styles.menuItemIcon}
+              color="inherit"
+              onClick={action.onClick}
+            >
+              {action.icon}
+            </IconButton>
+          )}
           <Typography className={styles.menuItemText}>
             {action.label}
           </Typography>

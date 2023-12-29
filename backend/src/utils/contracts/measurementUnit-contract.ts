@@ -1,14 +1,17 @@
-import { GroupInput } from "../../dto/group.dto";
+import {
+  MeasurementUnitContract,
+  MeasurementUnitInput,
+} from "../../dto/measurementUnit.dto";
 
 export interface MeasurementUnitRepositoryContract {
-  save(input: GroupInput): Promise<void>;
+  save(input: MeasurementUnitContract): Promise<void>;
   getAll(): Promise<any>;
   getById(id: string): Promise<any>;
   deleteById(id: string): Promise<void>;
 }
 
 export interface MeasurementUnitServiceContract {
-  create(input: GroupInput): Promise<void>;
+  create(input: MeasurementUnitInput): Promise<void>;
   getById(id: string): Promise<any>;
   getAll(): Promise<any>;
   deleteById(id: string): Promise<void>;
