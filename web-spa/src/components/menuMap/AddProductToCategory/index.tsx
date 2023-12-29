@@ -1,6 +1,6 @@
-import Modal from '@/components/Modal/modal/Modal'
+import Modal from '@/components/modal/Modal'
 import { AddProductToCategoryProps } from '../types'
-import AddProductTable from '@/components/Modal/addProductModal/addProductTable'
+import AddProductTable from './addProductModal/addProductTable'
 import { IProductResponse } from '@/atom/business'
 import { ProductContext } from '@/context/product'
 import { CategoryProps, ProductWeekDay } from '@/utils/interfaces/category'
@@ -108,8 +108,6 @@ const AddProductToCategory = memo(function AddProductToCategory({
   useEffect(() => {
     handleList()
   }, [handleList])
-
-  console.log(currProductList, 'CURRPRODUCTLIST')
 
   return (
     <Modal open={isOpenModel} onClose={closeModal}>

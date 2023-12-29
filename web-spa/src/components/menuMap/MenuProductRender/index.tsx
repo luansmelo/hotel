@@ -63,7 +63,7 @@ export default function MenuProductTable({
           <div
             style={{
               width: '100%',
-              height: '350px',
+              height: '300px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -77,7 +77,7 @@ export default function MenuProductTable({
               <div
                 style={{
                   width: '100%',
-                  height: '260px',
+                  height: '300px',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -87,9 +87,24 @@ export default function MenuProductTable({
               </div>
             ) : (
               <>
-                {menuProductList?.category?.map(
-                  (menu: CategoryProps) =>
-                    menu?.schedule?.map((item) => (
+                {menuProductList?.category?.map((menu: CategoryProps) => {
+                  const scheduleItems = menu.schedule || []
+
+                  return scheduleItems.length === 0 ? (
+                    <div
+                      key={menu.id}
+                      style={{
+                        width: '100%',
+                        height: '300px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <SearchX size={80} color="#F56D15" />
+                    </div>
+                  ) : (
+                    scheduleItems.map((item) => (
                       <tr className={styles.tr} key={item.id}>
                         <td>{item.name}</td>
                         <td>
@@ -107,7 +122,8 @@ export default function MenuProductTable({
                         </td>
                       </tr>
                     ))
-                )}
+                  )
+                })}
               </>
             )}
           </tbody>

@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material'
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
-import Modal from '@/components/Modal/modal/Modal'
+import Modal from '@/components/modal/Modal'
 import { Product } from '../types'
 import { FileUp } from 'lucide-react'
 import styles from './styles.module.scss'

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import styles from './styles.module.scss'
 import { DropdownProps } from './types'
@@ -55,4 +55,4 @@ const Dropdown: React.FC<DropdownProps> = ({ actions, onClose, anchorEl }) => {
   )
 }
 
-export default Dropdown
+export default memo(Dropdown)

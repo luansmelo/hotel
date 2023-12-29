@@ -1,6 +1,10 @@
 import { InputContract } from '@/atom/business'
 import { API } from '@/services/api'
-import { MenuCategoryProps, MenuCreateProps } from '@/utils/interfaces/menu'
+import {
+  MenuCategoryProps,
+  MenuCreateProps,
+  MenuToCategoryProps,
+} from '@/utils/interfaces/menu'
 
 const api = API.getInstance()
 
@@ -15,7 +19,7 @@ export class MenuService {
     }
   }
 
-  async addCategoryToMenu(input: MenuCategoryProps) {
+  async addCategoryToMenu(input: MenuToCategoryProps) {
     try {
       const response = await api.post('/menu/add/category', input)
 

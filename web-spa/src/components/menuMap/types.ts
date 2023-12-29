@@ -1,14 +1,16 @@
-import { ProductOnCategory } from '@/utils/interfaces/category'
-import { MenuCreateProps } from '@/utils/interfaces/menu'
+import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
+import { MenuCreateProps, MenuToCategoryProps } from '@/utils/interfaces/menu'
 import { Dispatch, SetStateAction } from 'react'
-import { DATE_TABS } from '../DateTabs'
+import { DATE_TABS } from '../dateTabs'
 
 export interface MenuMapProps {
   loading: boolean
   isOpenModel: boolean
-
+  menuList?: MenuCreateProps[]
+  categoryList?: CategoryProps[]
   handleSave?: (input: MenuCreateProps) => Promise<void>
   handleProductAddCategory?: (input: ProductOnCategory) => Promise<void>
+  handleCategoryToMenu?: (input: MenuToCategoryProps) => Promise<void>
   closeModal: () => void
 }
 

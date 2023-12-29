@@ -1,7 +1,7 @@
 'use client'
 
 import styles from './styles.module.scss'
-import DateTabs, { DATE_TABS } from '@/components/DateTabs'
+import DateTabs, { DATE_TABS } from '@/components/dateTabs'
 import React, { useState, useContext, useEffect, useCallback } from 'react'
 import { Fade } from '@mui/material'
 import Select from '@/components/select'
@@ -15,6 +15,7 @@ import { CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
 import { Plus, Newspaper, MenuSquare, Soup } from 'lucide-react'
 import { FormInputEvent } from '@/hooks/useForm'
+import AddCategoryToMenu from '@/components/menuMap/AddCategoryToMenu'
 
 export interface Menu {
   menuId: string
@@ -24,7 +25,9 @@ export interface Menu {
 
 export default function MenuMap() {
   const [openCreateMenu, setOpenCreateMenu] = useState(false)
+  const [openCategoryToMenu, setOpenCategoryToMenu] = useState(false)
   const [openCreateCategory, setOpenCreateCategory] = useState(false)
+
   const [openAddProductToCateogory, setOpenAddProductToCategory] =
     useState(false)
   const [currentDateTab, setCurrentDateTab] = useState<DATE_TABS | undefined>(
@@ -40,6 +43,7 @@ export default function MenuMap() {
     menuList,
     menuProductList,
     setMenuProductList,
+    handleAddCategoryToMenu,
     handleSave,
     fetchMenuProducts,
   } = useContext(MenuContext)
@@ -54,6 +58,11 @@ export default function MenuMap() {
 
   const openCreateMenuModal = () => {
     setOpenCreateMenu(true)
+    setDropdownAnchorEl(null)
+  }
+
+  const openAddCategoryToMenu = () => {
+    setOpenCategoryToMenu(true)
     setDropdownAnchorEl(null)
   }
 
@@ -108,6 +117,8 @@ export default function MenuMap() {
     setMenuProductList([])
   }, [setMenuProductList])
 
+  console.log(openCategoryToMenu)
+
   return (
     <Fade in={true} timeout={500}>
       <div className={styles.MenuMapContainer}>
@@ -126,24 +137,24 @@ export default function MenuMap() {
           <Dropdown
             actions={[
               {
-                label: 'Cadastrar Menu',
+                label: 'Cadastrar menu',
                 onClick: openCreateMenuModal,
                 icon: <MenuSquare />,
               },
               {
-                label: 'Cadastar Categoria',
+                label: 'Cadastar categoria',
                 onClick: openCreateCategoryModal,
                 icon: <Newspaper />,
               },
               {
-                label: 'Adicionar Produto a Categoria',
-                onClick: openAddProductToCategory,
-                icon: <Soup />,
+                label: 'Adicionar categoria ao menu',
+                onClick: openAddCategoryToMenu,
+                icon: <Plus />,
               },
               {
-                label: 'Adicionar Produto à Categoria',
-                onClick: () => console.log('Adicionar Produto à Categoria'),
-                icon: <Plus />,
+                label: 'Adicionar produto a categoria',
+                onClick: openAddProductToCategory,
+                icon: <Soup />,
               },
             ]}
             onClose={handleCloseDropdown}
@@ -180,6 +191,17 @@ export default function MenuMap() {
             isOpenModel={openAddProductToCateogory}
             closeModal={() => setOpenAddProductToCategory(false)}
             handleProductAddCategory={handleProductAddCategory}
+          />
+        )}
+
+        {openCategoryToMenu && (
+          <AddCategoryToMenu
+            loading={loading}
+            menuList={menuList}
+            categoryList={categoryList}
+            isOpenModel={openCategoryToMenu}
+            closeModal={() => setOpenCategoryToMenu(false)}
+            handleProductAddCategory={handleAddCategoryToMenu}
           />
         )}
 

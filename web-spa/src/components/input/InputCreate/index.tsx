@@ -1,8 +1,8 @@
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
-import Modal from '@/components/Modal/modal/Modal'
+import Modal from '@/components/modal/Modal'
 import { InputProps } from '../types'
-import TextField from '@/components/TextField/TextField'
+import TextField from '@/components/textField/TextField'
 import Select from '@/components/select'
 import { isNotEmpty, isNumber, validateField } from '@/utils/validations'
 

@@ -12,3 +12,8 @@ export interface MenuCategoryProps {
   categoryId: string
   weekDay: string
 }
+
+export interface MenuToCategoryProps {
+  menuId: string
+  categoryId: string
+}

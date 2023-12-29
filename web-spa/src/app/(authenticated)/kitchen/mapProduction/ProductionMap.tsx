@@ -1,12 +1,12 @@
 'use client'
 import SelectBusiness from '@/components/selectBusiness'
 import styles from './styles.module.scss'
-import DateTabs, { DATE_TABS } from '@/components/DateTabs'
+import DateTabs, { DATE_TABS } from '@/components/dateTabs'
 import { useState, useContext } from 'react'
 import { Fade, TextField } from '@mui/material'
 import SelectCategory from '@/components/select'
 import { categoryList, useMapContext } from '@/context/MapaContext'
-import ProductListTable from './MenuProductTable'
+import ProductListTable from './page'
 import { ProductContext } from '@/context/product'
 
 const colorObj: Record<string, string> = {

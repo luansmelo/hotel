@@ -1,10 +1,10 @@
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
-import Modal from '@/components/Modal/modal/Modal'
+import Modal from '@/components/modal/Modal'
 import { Input, InputProps } from '../types'
 import Select from '@/components/select'
 import { isNotEmpty, isNumber, validateField } from '@/utils/validations'
-import TextField from '@/components/TextField/TextField'
+import TextField from '@/components/textField/TextField'
 
 export default function InputEdit({
   loading,

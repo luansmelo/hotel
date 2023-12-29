@@ -1,34 +1,79 @@
-import Modal from '@/components/Modal/modal/Modal'
+import Modal from '@/components/modal/Modal'
 import { MenuMapProps } from '../types'
-import { MenuCategoryProps } from '@/utils/interfaces/menu'
+import { MenuToCategoryProps } from '@/utils/interfaces/menu'
+import { memo, useState } from 'react'
+import AutoComplete from '@/components/autoComplete'
+import { CategoryProps } from '@/utils/interfaces/category'
+import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
 
-export default function AddCategoryToMenu({
+function AddCategoryToMenu({
   isOpenModel,
-
+  menuList,
+  categoryList,
   closeModal,
-  handleProductAddCategory,
+  handleCategoryToMenu,
 }: MenuMapProps) {
+  const [selectedCategory, setSelectedCategory] = useState<CategoryProps>(
+    {} as CategoryProps
+  )
+  const [selectedMenu, setSelectedMenu] = useState<Menu>({} as Menu)
   const handleModalClose = () => {
     closeModal()
   }
 
-  const addCategory = async (input: MenuCategoryProps) => {
+  const addCategory = async (input: MenuToCategoryProps) => {
     try {
-      if (handleProductAddCategory) {
-        await handleProductAddCategory(input)
+      if (handleCategoryToMenu) {
+        await handleCategoryToMenu(input)
       }
     } catch (error) {
       console.log(error)
     } finally {
+      setSelectedCategory({} as CategoryProps)
+      setSelectedMenu({} as Menu)
       handleModalClose()
     }
   }
 
+  const addSelectedMenu = (value: string) => {
+    const selectedMenu = menuList?.find((menu) => menu.name === value)
+    setSelectedMenu(selectedMenu as Menu)
+  }
+
+  const addSelectedCategory = (value: string) => {
+    const selectedCategory = categoryList?.find(
+      (category) => category.name === value
+    )
+    setSelectedCategory(selectedCategory as CategoryProps)
+  }
+
+  console.log(selectedCategory, selectedMenu)
+
   return (
     <Modal open={isOpenModel} onClose={closeModal}>
       <div>
-        <h1>Olá Mundo</h1>
+        <div>
+          <AutoComplete
+            label="Menu"
+            data={menuList!}
+            addSelectedItem={addSelectedMenu}
+          />
+        </div>
+        <div>
+          <AutoComplete
+            label="Categorias"
+            data={categoryList!}
+            addSelectedItem={addSelectedCategory}
+          />
+        </div>
+
+        <div>
+          <p>Lista de produtos:</p>
+          <div>{selectedMenu?.category?.map((category) => category.name)}</div>
+        </div>
       </div>
     </Modal>
   )
 }
+
+export default memo(AddCategoryToMenu)

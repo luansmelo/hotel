@@ -6,6 +6,7 @@ import {
   MenuCategoryProps,
   MenuCreateProps,
   MenuProps,
+  MenuToCategoryProps,
 } from '@/utils/interfaces/menu'
 import { handleToastify } from '@/utils/toastify'
 import React, {
@@ -26,7 +27,7 @@ interface MenuContract {
     React.SetStateAction<IProductInputDataResponse[]>
   >
   fetchMenuProducts: (input: MenuCategoryProps) => Promise<void>
-  handleAddCategoryToMenu: (input: MenuCategoryProps) => Promise<void>
+  handleAddCategoryToMenu: (input: MenuToCategoryProps) => Promise<void>
   fetchMenuList: () => Promise<void>
 }
 export const MenuContext = createContext<MenuContract>({} as MenuContract)
@@ -85,7 +86,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const handleAddCategoryToMenu = async (input: MenuCategoryProps) => {
+  const handleAddCategoryToMenu = async (input: MenuToCategoryProps) => {
     try {
       const response = await menu.addCategoryToMenu(input)
 

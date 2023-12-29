@@ -1,6 +1,5 @@
 'use client'
 
-import { BusinessProvider } from '@/context/BusinessContext'
 import { InputProvider } from '@/context/input'
 import { ProductProvider } from '@/context/product'
 import { AuthProvider } from '@/context/auth'
@@ -20,19 +19,17 @@ const theme = createTheme({
 export const Providers = ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider theme={theme}>
     <AuthProvider>
-      <BusinessProvider>
-        <MenuProvider>
-          <CategoryProvider>
-            <ProductProvider>
-              <InputProvider>
-                <MeasurementUnitProvider>
-                  <GroupProvider>{children}</GroupProvider>
-                </MeasurementUnitProvider>
-              </InputProvider>
-            </ProductProvider>
-          </CategoryProvider>
-        </MenuProvider>
-      </BusinessProvider>
+      <MenuProvider>
+        <CategoryProvider>
+          <ProductProvider>
+            <InputProvider>
+              <MeasurementUnitProvider>
+                <GroupProvider>{children}</GroupProvider>
+              </MeasurementUnitProvider>
+            </InputProvider>
+          </ProductProvider>
+        </CategoryProvider>
+      </MenuProvider>
     </AuthProvider>
   </ThemeProvider>
 )

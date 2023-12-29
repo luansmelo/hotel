@@ -1,9 +1,10 @@
 'use client'
 import { IProductInputResponse, IProductResponse } from '@/atom/business'
 import styles from './styles.module.scss'
-import { Eye, Trash2 } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
-import { useMapContext } from '@/context/MapaContext'
+import { useContext } from 'react'
+import { MenuContext } from '@/context/menu'
 
 interface ITableProductsProps {
   onClickView?: (product?: IProductResponse) => void
@@ -14,13 +15,12 @@ interface ITableProductsProps {
 
 export default function ProductListTable({
   headColor,
-  onClickDelete,
   onClickView,
   removeEye,
 }: ITableProductsProps) {
-  const { isLoading, menuProductList } = useMapContext()
+  const { loading, menuProductList } = useContext(MenuContext)
 
-  if (isLoading) {
+  if (loading) {
     return <div>loading</div>
   }
 
@@ -28,7 +28,7 @@ export default function ProductListTable({
     return (
       <tr className={styles.tr} key={product.name} style={{ width: '100%' }}>
         <td>{product.name}</td>
-        <td>{product.productDescription}</td>
+        <td>{product.description}</td>
         <td>
           {!removeEye && (
             <div
@@ -118,7 +118,7 @@ export default function ProductListTable({
                   <AccordionProductItem
                     id={product.product.id}
                     name={product.product.name}
-                    productDescription={product.product.productDescription}
+                    description={product.product.description}
                   />
                 </AccordionSummary>
                 <AccordionDetails>
