@@ -52,3 +52,9 @@ export interface UpdatedInputInfo {
   grammage: number
   measurementUnit: string
 }
+
+export interface ProductInputProps {
+  id?: string
+  name: string
+  description: string
+}

@@ -5,6 +5,7 @@ import { memo, useState } from 'react'
 import AutoComplete from '@/components/autoComplete'
 import { CategoryProps } from '@/utils/interfaces/category'
 import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
+import AddButton from '@/components/addButton'
 
 function AddCategoryToMenu({
   isOpenModel,
@@ -71,6 +72,8 @@ function AddCategoryToMenu({
           <p>Lista de produtos:</p>
           <div>{selectedMenu?.category?.map((category) => category.name)}</div>
         </div>
+
+        <AddButton text="Adicionar" onClickButton={() => addCategory({})} />
       </div>
     </Modal>
   )

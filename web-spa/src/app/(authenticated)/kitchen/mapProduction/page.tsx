@@ -1,13 +1,14 @@
 'use client'
-import { IProductInputResponse, IProductResponse } from '@/atom/business'
+import { IProductInputResponse } from '@/atom/business'
 import styles from './styles.module.scss'
 import { Eye } from 'lucide-react'
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
 import { useContext } from 'react'
 import { MenuContext } from '@/context/menu'
+import { ProductInputProps } from '@/components/product/types'
 
 interface ITableProductsProps {
-  onClickView?: (product?: IProductResponse) => void
+  onClickView?: (product?: ProductInputProps) => void
   onClickDelete?: () => void
   headColor?: string
   removeEye?: boolean
@@ -24,7 +25,7 @@ export default function ProductListTable({
     return <div>loading</div>
   }
 
-  const AccordionProductItem = (product: IProductResponse) => {
+  const AccordionProductItem = (product: ProductInputProps) => {
     return (
       <tr className={styles.tr} key={product.name} style={{ width: '100%' }}>
         <td>{product.name}</td>

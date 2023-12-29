@@ -1,7 +1,6 @@
 import Modal from '@/components/modal/Modal'
 import { AddProductToCategoryProps } from '../types'
 import AddProductTable from './addProductModal/addProductTable'
-import { IProductResponse } from '@/atom/business'
 import { ProductContext } from '@/context/product'
 import { CategoryProps, ProductWeekDay } from '@/utils/interfaces/category'
 import styles from './styles.module.scss'
@@ -11,6 +10,7 @@ import AddButton from '@/components/addButton'
 import AutoComplete from '@/components/autoComplete'
 import { handleToastify } from '@/utils/toastify'
 import ConfirmDialog from '@/components/dialog'
+import { ProductInputProps } from '@/components/product/types'
 
 const AddProductToCategory = memo(function AddProductToCategory({
   day,
@@ -21,10 +21,12 @@ const AddProductToCategory = memo(function AddProductToCategory({
   setCurrentDateTab,
 }: AddProductToCategoryProps) {
   const { productList, setProductList } = useContext(ProductContext)
-  const [currProductList, setCurrProductList] = useState<IProductResponse[]>([])
+  const [currProductList, setCurrProductList] = useState<ProductInputProps[]>(
+    []
+  )
   const [addedProducts, setAddedProducts] = useState<ProductWeekDay[]>([])
   const [selectedProduct, setSelectedProducts] =
-    useState<IProductResponse | null>(null)
+    useState<ProductInputProps | null>(null)
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
 
   const openDeleteConfirmationDialog = () => {
@@ -37,7 +39,7 @@ const AddProductToCategory = memo(function AddProductToCategory({
 
   const addSelectedProduct = (value: string) => {
     setSelectedProducts(
-      currProductList.find((input) => input.name === value) as IProductResponse
+      currProductList.find((input) => input.name === value) as ProductInputProps
     )
   }
 

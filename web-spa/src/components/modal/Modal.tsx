@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal as MuiModal, Fade, Backdrop } from '@mui/material'
 import styles from './styles.module.scss'
-import TemplateModal from '../templateModal'
 
 interface ModalProps {
   open: boolean
