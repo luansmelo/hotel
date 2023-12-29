@@ -32,7 +32,9 @@ export default function InputCreate({
         form.measurementUnit,
         isNotEmpty
       ),
-      unitPrice: validateField('Preço unitário', form.unitPrice, isNumber),
+      unitPrice:
+        validateField('Preço unitário', form.unitPrice, isNumber) ||
+        validateField('Preço unitário', form.unitPrice, isNotEmpty),
       code: validateField('Código', form.code, isNotEmpty),
       group: validateField('Grupo', form.group, isNotEmpty),
     }
@@ -91,9 +93,11 @@ export default function InputCreate({
         <Select
           width="100%"
           name="measurementUnit"
+          placeholder="unidade de medida"
           data={measurementUnitList!}
           value={form.measurementUnit}
           onClick={handleSetState}
+          errors={errors.measurementUnit}
         />
 
         <TextField
@@ -114,10 +118,12 @@ export default function InputCreate({
 
         <Select
           width="100%"
-          data={groupList!}
-          onClick={handleSetState}
           name="group"
+          placeholder="grupo"
+          data={groupList!}
           value={form.group}
+          onClick={handleSetState}
+          errors={errors.group}
         />
       </Form>
     </Modal>

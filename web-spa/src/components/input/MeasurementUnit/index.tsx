@@ -5,6 +5,7 @@ import TextField from '@/components/TextField/TextField'
 import { MeasurementUnitProps } from './types'
 import Separator from '@/components/separator'
 import styles from './styles.module.scss'
+import { isNotEmpty, validateField } from '@/utils/validations'
 
 export default function MeasurementUnitCreate({
   loading,
@@ -20,7 +21,7 @@ export default function MeasurementUnitCreate({
 
   const validateForm = () => {
     const newErrors = {
-      name: form.name.trim() === '' ? 'Nome é obrigatório' : '',
+      name: validateField('Nome', form.name, isNotEmpty),
     }
 
     setErrors(newErrors)
@@ -65,11 +66,12 @@ export default function MeasurementUnitCreate({
         <Separator />
 
         <TextField
+          height="70px"
           label="Nome"
           name="name"
           onChange={handleSetState}
           value={form.name}
-          height="70px"
+          errors={errors.name}
         />
       </Form>
     </Modal>

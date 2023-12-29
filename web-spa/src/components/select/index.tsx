@@ -1,4 +1,9 @@
-import { FormControl, MenuItem, Select as MSelect } from '@mui/material'
+import {
+  FormControl,
+  MenuItem,
+  Select as MSelect,
+  FormHelperText,
+} from '@mui/material'
 import styles from './styles.module.scss'
 import { SelectProps } from './types'
 
@@ -9,27 +14,30 @@ export default function Select({
   value,
   disabled,
   width,
+  errors,
+  placeholder,
   onClick,
 }: SelectProps) {
+  const hasValue = Boolean(value)
+
   return (
     <div className={styles.Select}>
       <FormControl fullWidth>
         <MSelect
           key={key}
-          name={name}
-          id="demo-simple-select"
-          value={value}
-          disabled={disabled}
-          onChange={onClick}
           displayEmpty
+          name={name}
+          value={value}
+          onChange={onClick}
+          inputProps={{ id: `select-${name}` }}
           sx={{
             width: width ? width : '200px',
             '& .MuiSelect-select': {
               backgroundColor: disabled ? '#272a34' : '#1F2128',
               color: disabled ? '#808080' : '#BDBDBD',
               padding: '8.5px 14px',
-              border: '1px solid #0488A6',
               borderRadius: '4px',
+              outline: 'none',
               '&:hover': {
                 borderColor: '#0488A6',
               },
@@ -48,6 +56,11 @@ export default function Select({
                 color: disabled ? '#808080' : '#fff',
               },
             },
+            '& .MuiInputLabel-outlined': {
+              transform: hasValue
+                ? 'translate(14px, -10px) scale(0.75)'
+                : 'translate(14px, 14px) scale(1)',
+            },
           }}
           MenuProps={{
             PaperProps: {
@@ -60,12 +73,27 @@ export default function Select({
             },
           }}
         >
+          {!hasValue && (
+            <MenuItem disabled value="">
+              {placeholder}
+            </MenuItem>
+          )}
           {data?.map((input: any) => (
             <MenuItem key={input.id} value={input?.name}>
               {input?.name}
             </MenuItem>
           ))}
+          errors={!!errors}
         </MSelect>
+        <FormHelperText
+          sx={{
+            padding: 0,
+            margin: 0,
+            color: '#f44336',
+          }}
+        >
+          {errors}
+        </FormHelperText>
       </FormControl>
     </div>
   )
