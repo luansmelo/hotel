@@ -3,23 +3,37 @@ import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
 import { MenuMapProps } from '../types'
 import TextField from '@/components/TextField/TextField'
+import { isNotEmpty, validateField } from '@/utils/validations'
+import React from 'react'
 
 export default function MenuCreate({
   loading,
   isOpenModel,
-
   closeModal,
   handleSave,
 }: MenuMapProps) {
-  const { form, handleSetState } = useForm({
+  const { form, handleSetState, clear } = useForm({
     name: '',
   })
+  const [errors, setErrors] = React.useState<Partial<Error>>({})
+
+  const validateForm = () => {
+    const newErrors = {
+      name: validateField('Nome', form.name, isNotEmpty),
+    }
+
+    setErrors(newErrors)
+
+    return Object.values(newErrors).every((error) => error === '')
+  }
 
   const handleModalClose = () => {
+    clear()
+    setErrors({})
     closeModal()
   }
 
-  const createInput = async () => {
+  const createMenu = async () => {
     try {
       if (handleSave) await handleSave(form)
     } catch (error) {
@@ -34,11 +48,12 @@ export default function MenuCreate({
       <Form
         submit={async (e) => {
           e.preventDefault()
-
-          await createInput()
+          if (validateForm()) {
+            await createMenu()
+          }
         }}
         loading={loading}
-        text="CRIAR"
+        text="CADASTRAR"
       >
         <TextField
           name="name"
@@ -46,6 +61,7 @@ export default function MenuCreate({
           onChange={handleSetState}
           label="nome"
           height="70px"
+          errors={errors.name!}
         />
       </Form>
     </Modal>

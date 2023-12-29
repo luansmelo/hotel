@@ -1,24 +1,25 @@
-import { TextField } from '@mui/material'
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/Modal/modal/Modal'
 import { MenuMapProps } from '../types'
+import React from 'react'
+import TextField from '@/components/TextField/TextField'
+import { isNotEmpty, validateField } from '@/utils/validations'
 
 export default function CategoryCreate({
   loading,
   isOpenModel,
-  errors,
-  setErrors,
   closeModal,
   handleSave,
 }: MenuMapProps) {
-  const { form, handleSetState } = useForm({
+  const { form, handleSetState, clear } = useForm({
     name: '',
   })
+  const [errors, setErrors] = React.useState<Partial<Error>>({})
 
   const validateForm = () => {
     const newErrors = {
-      name: form.name.trim() === '' ? 'Nome é obrigatório' : '',
+      name: validateField('Nome', form.name, isNotEmpty),
     }
 
     setErrors(newErrors)
@@ -27,8 +28,9 @@ export default function CategoryCreate({
   }
 
   const handleModalClose = () => {
-    closeModal()
+    clear()
     setErrors({})
+    closeModal()
   }
 
   const createCategory = async () => {
@@ -47,42 +49,19 @@ export default function CategoryCreate({
       <Form
         submit={async (e) => {
           e.preventDefault()
-          // if (validateForm()) {
-          await createCategory()
-          // }
+          if (validateForm()) {
+            await createCategory()
+          }
         }}
         loading={loading}
-        errors={errors}
-        text="CRIAR"
+        text="CADASTRAR"
       >
         <TextField
-          fullWidth
-          size="small"
-          id="name"
-          label="Nome"
           name="name"
-          variant="outlined"
-          value={form.name}
           onChange={handleSetState}
-          autoComplete="off"
-          sx={{
-            minHeight: '70px',
-          }}
-          InputProps={{
-            style: {
-              background: '#1F2128',
-              color: '#BDBDBD',
-              outline: 'none',
-              margin: 0,
-            },
-          }}
-          InputLabelProps={{
-            style: {
-              color: '#BDBDBD',
-            },
-          }}
-          error={!!errors.name}
-          helperText={errors.name}
+          value={form.name}
+          label="Nome"
+          errors={errors.name!}
         />
       </Form>
     </Modal>

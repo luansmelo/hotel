@@ -1,4 +1,4 @@
-import { Eye, SearchX, Trash2 } from 'lucide-react'
+import { Eye, SearchX } from 'lucide-react'
 import { Hypnosis } from 'react-cssfx-loading'
 import styles from './styles.module.scss'
 import { useContext, useEffect } from 'react'

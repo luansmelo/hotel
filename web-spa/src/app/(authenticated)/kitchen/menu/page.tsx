@@ -2,7 +2,7 @@
 
 import styles from './styles.module.scss'
 import DateTabs, { DATE_TABS } from '@/components/DateTabs'
-import { useState, useContext, useEffect, useCallback } from 'react'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
 import { Fade } from '@mui/material'
 import Select from '@/components/select'
 import Dropdown from '@/components/dropDown'
@@ -14,6 +14,7 @@ import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
 import { CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
 import { Plus, Newspaper, MenuSquare, Soup } from 'lucide-react'
+import { FormInputEvent } from '@/hooks/useForm'
 
 export interface Menu {
   menuId: string
@@ -77,9 +78,9 @@ export default function MenuMap() {
     setDropdownAnchorEl(null)
   }
 
-  const handleCategory = (value: string) => {
+  const handleCategory = (e: FormInputEvent) => {
     const categoryFind = categoryList.find(
-      (category) => category.name === value
+      (category) => category.name === e.target.value
     )
 
     setSelectedCategory({
@@ -87,7 +88,7 @@ export default function MenuMap() {
       name: categoryFind?.name ?? '',
     })
 
-    setCategory(value)
+    setCategory(e.target.value)
   }
   const resetModalState = () => {
     setSelectedCategory({} as CategoryProps)
@@ -95,12 +96,12 @@ export default function MenuMap() {
 
     setMenuProductList([])
   }
-  const handleMenu = (value: string) => {
-    const menuFind = menuList.find((menu) => menu.name === value)
+  const handleMenu = (e: FormInputEvent) => {
+    const menuFind = menuList.find((menu) => menu.name === e.target.value)
 
     setSelectedMenu(menuFind as Menu)
     resetModalState()
-    setMenu(value)
+    setMenu(e.target.value)
   }
 
   useEffect(() => {
@@ -111,7 +112,13 @@ export default function MenuMap() {
     <Fade in={true} timeout={500}>
       <div className={styles.MenuMapContainer}>
         <div className={styles.buttonsContainer}>
-          <Select data={menuList} onClick={handleMenu} value={menu} />
+          <Select
+            placeholder="Selecione o menu"
+            data={menuList}
+            onClick={handleMenu}
+            value={menu}
+            errors={''}
+          />
           <button className={styles.button} onClick={handleOpenDropdown}>
             +
           </button>
@@ -181,6 +188,8 @@ export default function MenuMap() {
             <div className={styles.DateTabsContainer}>
               {selectedMenu.category && (
                 <Select
+                  errors={''}
+                  placeholder="Selecione a categoria"
                   disabled={!selectedMenu.category.length}
                   data={selectedMenu.category}
                   onClick={handleCategory}
