@@ -159,6 +159,8 @@ const Input: React.FC<InputListProps> = () => {
         <InputEdit
           loading={loading}
           errors={errors}
+          measurementUnitList={measurementUnitList}
+          groupList={groupList}
           showModal={showEditModal}
           setErrors={setErrors}
           handleSave={handleEdit}
