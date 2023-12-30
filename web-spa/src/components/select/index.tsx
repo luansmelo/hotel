@@ -3,7 +3,6 @@ import {
   MenuItem,
   Select as MSelect,
   FormHelperText,
-  InputProps,
 } from '@mui/material'
 import styles from './styles.module.scss'
 import { SelectProps } from './types'
@@ -80,7 +79,7 @@ export default function Select({
               {placeholder}
             </MenuItem>
           )}
-          {data?.map((input: InputProps) => (
+          {data?.map((input) => (
             <MenuItem key={input.id} value={input?.name}>
               {input?.name}
             </MenuItem>

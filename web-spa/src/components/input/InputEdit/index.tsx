@@ -5,22 +5,21 @@ import { Input, InputProps } from '../types'
 import Select from '@/components/select'
 import { isNotEmpty, isNumber, validateField } from '@/utils/validations'
 import TextField from '@/components/textField/TextField'
+import React from 'react'
 
 export default function InputEdit({
   loading,
-  errors,
   groupList,
   measurementUnitList,
   showModal,
-  setErrors,
   handleSave,
   handleCloseModal,
   input,
 }: InputProps) {
   const { form, handleSetState } = useForm(input as Input)
-
+  const [errors, setErrors] = React.useState<Partial<Input>>({})
   const validateForm = () => {
-    const newErrors = {
+    const newErrors: Partial<Record<string, string>> = {
       name: validateField('Nome', form.name, isNotEmpty),
       measurementUnit: validateField(
         'Unidade de medida',
@@ -74,7 +73,6 @@ export default function InputEdit({
           }
         }}
         loading={loading}
-        errors={errors}
         text="ATUALIZAR"
       >
         <TextField
@@ -82,7 +80,7 @@ export default function InputEdit({
           name="name"
           value={form.name}
           onChange={handleSetState}
-          errors={errors.name}
+          errors={errors.name!}
         />
 
         <Select
@@ -92,7 +90,7 @@ export default function InputEdit({
           value={form.measurementUnit}
           onClick={handleSetState}
           data={measurementUnitList!}
-          errors={errors.measurementUnit}
+          errors={errors.measurementUnit!}
         />
 
         <TextField
@@ -100,7 +98,7 @@ export default function InputEdit({
           name="unitPrice"
           value={String(form.unitPrice)}
           onChange={handleSetState}
-          errors={errors.unitPrice}
+          errors={errors.unitPrice!}
         />
 
         <TextField
@@ -108,7 +106,7 @@ export default function InputEdit({
           name="code"
           value={form.code}
           onChange={handleSetState}
-          errors={errors.code}
+          errors={errors.code!}
         />
 
         <Select
@@ -118,7 +116,7 @@ export default function InputEdit({
           value={form.group}
           data={groupList!}
           onClick={handleSetState}
-          errors={errors.group}
+          errors={errors.group!}
         />
       </Form>
     </Modal>

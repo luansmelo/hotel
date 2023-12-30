@@ -1,4 +1,4 @@
-import { Eye, SearchX } from 'lucide-react'
+import { SearchX } from 'lucide-react'
 import { Hypnosis } from 'react-cssfx-loading'
 import styles from './styles.module.scss'
 import { useContext, useEffect } from 'react'
@@ -19,7 +19,7 @@ export interface Data {
 interface ITableProductsProps {
   data: Data
   fetchMenuProducts: (payload: MenuCategoryProps) => Promise<void>
-  menuProductList?: any
+  menuProductList?: Menu
   onClickView?: (product?: IProductInputDataResponse) => void
   onClickDelete?: (product: Product) => void
   removeEye?: boolean
@@ -28,10 +28,8 @@ interface ITableProductsProps {
 export default function MenuProductTable({
   data,
   menuProductList,
-  removeEye,
   fetchMenuProducts,
   onClickDelete,
-  onClickView,
 }: ITableProductsProps) {
   const { loading } = useContext(MenuContext)
 
@@ -42,7 +40,7 @@ export default function MenuProductTable({
       data.selectedCategory
     ) {
       const payload = {
-        menuId: data.selectedMenu.menuId,
+        menuId: data.selectedMenu.menuId || '',
         categoryId: data.selectedCategory.id || '',
         weekDay: data.currentDateTab || '',
       }
@@ -108,14 +106,6 @@ export default function MenuProductTable({
                       <tr className={styles.tr} key={item.id}>
                         <td>{item.name}</td>
                         <td>
-                          {!removeEye && (
-                            <div
-                              className={styles.productActionView}
-                              onClick={() => onClickView && onClickView(item)}
-                            >
-                              <Eye color="#D96262" size={18} />
-                            </div>
-                          )}
                           <Trash
                             onClick={() => onClickDelete && onClickDelete(item)}
                           />

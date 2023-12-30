@@ -11,7 +11,7 @@ import { MenuContext } from '@/context/menu'
 import CategoryCreate from '@/components/category/CategoryCreate'
 import { CategoryContext } from '@/context/category'
 import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
-import { CategoryProps } from '@/utils/interfaces/category'
+import { CategoryInput, CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
 import { Plus, Newspaper, MenuSquare, Soup } from 'lucide-react'
 import { FormInputEvent } from '@/hooks/useForm'
@@ -34,8 +34,8 @@ export default function MenuMap() {
     undefined
   )
 
-  const [selectedCategory, setSelectedCategory] = useState<CategoryProps>(
-    {} as CategoryProps
+  const [selectedCategory, setSelectedCategory] = useState<CategoryInput>(
+    {} as CategoryInput
   )
   const [selectedMenu, setSelectedMenu] = useState<Menu>({} as Menu)
   const {
@@ -100,10 +100,10 @@ export default function MenuMap() {
     setCategory(e.target.value)
   }
   const resetModalState = () => {
-    setSelectedCategory({} as CategoryProps)
+    setSelectedCategory({} as CategoryInput)
     setCategory('')
 
-    setMenuProductList([])
+    setMenuProductList({} as Menu)
   }
   const handleMenu = (e: FormInputEvent) => {
     const menuFind = menuList.find((menu) => menu.name === e.target.value)
@@ -114,10 +114,8 @@ export default function MenuMap() {
   }
 
   useEffect(() => {
-    setMenuProductList([])
+    setMenuProductList({} as Menu)
   }, [setMenuProductList])
-
-  console.log(openCategoryToMenu)
 
   return (
     <Fade in={true} timeout={500}>
@@ -125,7 +123,7 @@ export default function MenuMap() {
         <div className={styles.buttonsContainer}>
           <Select
             placeholder="Selecione o menu"
-            data={menuList}
+            data={menuList!}
             onClick={handleMenu}
             value={menu}
             errors={''}
@@ -176,8 +174,6 @@ export default function MenuMap() {
             <CategoryCreate
               isOpenModel={openCreateCategory}
               loading={loading}
-              errors={{}}
-              setErrors={() => {}}
               closeModal={() => setOpenCreateCategory(false)}
               handleSave={handleCreateCategory}
             />
@@ -208,12 +204,12 @@ export default function MenuMap() {
         {selectedMenu?.menuId && (
           <Fade in={true} timeout={500}>
             <div className={styles.DateTabsContainer}>
-              {selectedMenu.category && (
+              {selectedMenu.category.length && (
                 <Select
                   errors={''}
                   placeholder="Selecione a categoria"
                   disabled={!selectedMenu.category.length}
-                  data={selectedMenu.category}
+                  data={selectedMenu.category as CategoryInput[]}
                   onClick={handleCategory}
                   value={category}
                 />

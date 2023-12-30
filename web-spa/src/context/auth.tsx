@@ -4,14 +4,8 @@ import { createContext, ReactNode, useState } from 'react'
 import { AuthService, UserLogin, UserRegister } from '@/services/auth/auth'
 import { useRouter } from 'next/navigation'
 import cookies from 'js-cookie'
-import { Input } from '@/components/input/types'
-import { InputErrors } from './input'
 import { handleToastify } from '@/utils/toastify'
 
-export interface AuthError {
-  errors: Partial<Input>
-  setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
-}
 interface AuthContextType {
   loading: boolean
   signIn: (input: UserLogin) => Promise<void>

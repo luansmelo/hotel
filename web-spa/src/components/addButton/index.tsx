@@ -1,4 +1,4 @@
-import { LucideIcon, Plus } from 'lucide-react'
+import { LucideIcon } from 'lucide-react'
 import styles from './styles.module.scss'
 import { Ring } from 'react-cssfx-loading'
 
@@ -14,7 +14,6 @@ interface AddButtonProps {
 export default function AddButton({
   text,
   onClickButton,
-  Icon = Plus,
   isButtonDisabled,
   loading,
   colorLoading = '#0488A6',

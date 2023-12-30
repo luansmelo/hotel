@@ -1,7 +1,7 @@
 import { InputContract } from '@/atom/business'
 import {
   InputsOnProducts,
-  Product,
+  ProductInputProps,
   ProductRemoveProps,
   UpdatedProductInfo,
 } from '@/components/product/types'
@@ -10,7 +10,7 @@ import { API } from '@/services/api'
 const api = API.getInstance()
 
 export class ProductService {
-  async handle(input: Product) {
+  async handle(input: ProductInputProps) {
     try {
       const response = await api.post('/product/create', input)
 

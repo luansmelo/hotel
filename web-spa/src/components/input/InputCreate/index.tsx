@@ -1,18 +1,17 @@
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/modal/Modal'
-import { InputProps } from '../types'
+import { Input, InputProps } from '../types'
 import TextField from '@/components/textField/TextField'
 import Select from '@/components/select'
 import { isNotEmpty, isNumber, validateField } from '@/utils/validations'
+import React from 'react'
 
 export default function InputCreate({
   loading,
-  errors,
   measurementUnitList,
   groupList,
   showModal,
-  setErrors,
   handleSave,
   handleCloseModal,
 }: InputProps) {
@@ -24,8 +23,10 @@ export default function InputCreate({
     group: '',
   })
 
+  const [errors, setErrors] = React.useState<Partial<Input>>({})
+
   const validateForm = () => {
-    const newErrors = {
+    const newErrors: Partial<Record<string, string>> = {
       name: validateField('Nome', form.name, isNotEmpty),
       measurementUnit: validateField(
         'Unidade de medida',
@@ -79,7 +80,6 @@ export default function InputCreate({
           }
         }}
         loading={loading}
-        errors={errors}
         text="CRIAR"
       >
         <TextField
@@ -87,7 +87,7 @@ export default function InputCreate({
           name="name"
           value={form.name}
           onChange={handleSetState}
-          errors={errors.name}
+          errors={errors.name!}
         />
 
         <Select
@@ -97,15 +97,15 @@ export default function InputCreate({
           data={measurementUnitList!}
           value={form.measurementUnit}
           onClick={handleSetState}
-          errors={errors.measurementUnit}
+          errors={errors.measurementUnit!}
         />
 
         <TextField
           label="Preço Unitário"
           name="unitPrice"
-          value={form.unitPrice}
+          value={String(form.unitPrice)}
           onChange={handleSetState}
-          errors={errors.unitPrice}
+          errors={errors.unitPrice!}
         />
 
         <TextField
@@ -113,7 +113,7 @@ export default function InputCreate({
           name="code"
           value={form.code}
           onChange={handleSetState}
-          errors={errors.code}
+          errors={errors.code!}
         />
 
         <Select
@@ -123,7 +123,7 @@ export default function InputCreate({
           data={groupList!}
           value={form.group}
           onClick={handleSetState}
-          errors={errors.group}
+          errors={errors.group!}
         />
       </Form>
     </Modal>

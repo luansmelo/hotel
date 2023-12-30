@@ -48,8 +48,6 @@ function AddCategoryToMenu({
     setSelectedCategory(selectedCategory as CategoryProps)
   }
 
-  console.log(selectedCategory, selectedMenu)
-
   return (
     <Modal open={isOpenModel} onClose={closeModal}>
       <div>
@@ -73,7 +71,15 @@ function AddCategoryToMenu({
           <div>{selectedMenu?.category?.map((category) => category.name)}</div>
         </div>
 
-        <AddButton text="Adicionar" onClickButton={() => addCategory({})} />
+        <AddButton
+          text="Adicionar"
+          onClickButton={() =>
+            addCategory({
+              menuId: selectedMenu.menuId,
+              categoryId: selectedCategory.id!,
+            })
+          }
+        />
       </div>
     </Modal>
   )

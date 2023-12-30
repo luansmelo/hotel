@@ -5,7 +5,7 @@ import {
 } from '@mui/material'
 import { FC } from 'react'
 
-export interface AutoCompleteProps<T = any> {
+export interface AutoCompleteProps<T = unknown> {
   label: string
   data?: T[]
   addSelectedItem: (value: string) => void

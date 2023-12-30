@@ -3,9 +3,9 @@
 import {
   InputsOnProducts,
   ProductProps,
-  Product,
   UpdatedProductInfo,
   ProductRemoveProps,
+  ProductInputProps,
 } from '@/components/product/types'
 import { ProductService } from '@/services/product/product'
 import { handleToastify } from '@/utils/toastify'
@@ -21,12 +21,12 @@ import React, {
 } from 'react'
 
 interface ProductContract {
-  productList: Product[]
   loading: boolean
-  productDetail: any
-  setProductList: Dispatch<SetStateAction<Product[]>>
-  setProductDetail: Dispatch<SetStateAction<ProductProps>>
-  handleSave: (input: Product) => Promise<void>
+  productList: ProductProps[]
+  productDetail: ProductProps[]
+  setProductList: Dispatch<SetStateAction<ProductProps[]>>
+  setProductDetail: Dispatch<SetStateAction<ProductProps[]>>
+  handleSave: (input: ProductInputProps) => Promise<void>
   handleEdit: (productId: string, input: UpdatedProductInfo) => Promise<void>
   handleDelete: (id: string) => Promise<void>
   handleProductDetails: (id: string) => Promise<void>
@@ -40,11 +40,9 @@ export const ProductContext = createContext<ProductContract>(
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [productList, setProductList] = useState<Product[]>([])
+  const [productList, setProductList] = useState<ProductProps[]>([])
   const [loading, setLoading] = useState(false)
-  const [productDetail, setProductDetail] = useState<ProductProps>(
-    {} as ProductProps
-  )
+  const [productDetail, setProductDetail] = useState<ProductProps[]>([])
 
   const product = useMemo(() => new ProductService(), [])
 
@@ -67,7 +65,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSave = async (input: Product) => {
+  const handleSave = async (input: ProductInputProps) => {
     try {
       const response = await product.handle(input)
 
@@ -175,7 +173,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
         handleEdit,
         handleProductDetails,
         handleAddInputsToProduct,
-
         handleDeleteInputsToProduct,
       }}
     >

@@ -6,18 +6,19 @@ import { MeasurementUnitProps } from './types'
 import Separator from '@/components/separator'
 import styles from './styles.module.scss'
 import { isNotEmpty, validateField } from '@/utils/validations'
+import React from 'react'
 
 export default function MeasurementUnitCreate({
   loading,
-  errors,
   isOpen,
-  setErrors,
   handleSave,
   handleCloseModal,
 }: MeasurementUnitProps) {
   const { form, handleSetState, clear } = useForm({
     name: '',
   })
+
+  const [errors, setErrors] = React.useState<Partial<Error>>({})
 
   const validateForm = () => {
     const newErrors = {
@@ -58,7 +59,6 @@ export default function MeasurementUnitCreate({
           }
         }}
         loading={loading}
-        errors={errors}
         text="CRIAR"
       >
         <p className={styles.paragraph}>Criar Unidade de Medida</p>
@@ -71,7 +71,7 @@ export default function MeasurementUnitCreate({
           name="name"
           onChange={handleSetState}
           value={form.name}
-          errors={errors.name}
+          errors={errors.name!}
         />
       </Form>
     </Modal>

@@ -12,10 +12,6 @@ import { InputService } from '@/services/input/input'
 import { toast } from 'react-toastify'
 import { Input } from '@/components/input/types'
 
-export interface InputErrors {
-  [key: string]: string
-}
-
 interface InputContextContract {
   inputList: Input[]
   loading: boolean
@@ -24,7 +20,7 @@ interface InputContextContract {
   handleEdit: (input: InputContract) => Promise<void>
   handleDelete: (id: string) => Promise<void>
   errors: Partial<InputContract>
-  setErrors: React.Dispatch<React.SetStateAction<Partial<InputErrors>>>
+  setErrors: React.Dispatch<React.SetStateAction<Partial<Error>>>
 }
 
 export const InputContext = createContext<InputContextContract>(
@@ -36,7 +32,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [inputList, setInputList] = useState<Input[]>([] as Input[])
   const [loading, setLoading] = useState<boolean>(false)
-  const [errors, setErrors] = useState<Partial<InputErrors>>({})
+  const [errors, setErrors] = useState<Partial<Error>>({})
 
   const input = useMemo(() => new InputService(), [])
 
@@ -46,6 +42,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
       const res = await input.list()
       setInputList(res?.data)
     } catch (error) {
+      setInputList([])
       console.log(error)
     } finally {
       setTimeout(() => {
@@ -62,16 +59,10 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
       if (res?.ok) {
         toast.success('Insumo criado com sucesso!')
         await fetchInputList()
-      } else {
-        setErrors({
-          createError: 'Não foi possível criar novo insumo.',
-        })
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error('Não foi possível criar novo insumo.')
-      setErrors({
-        createError: error.message,
-      })
+      setInputList([])
     } finally {
       setLoading(false)
     }
@@ -88,6 +79,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
       }
     } catch (error) {
       console.log('error')
+      setInputList([])
     } finally {
       setLoading(false)
     }
@@ -105,7 +97,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
       }
     } catch (error) {
       console.log(error)
-      handleToastify('Não foi possível excluir o insumo.', 'error')
+      setInputList([])
     } finally {
       setLoading(false)
     }

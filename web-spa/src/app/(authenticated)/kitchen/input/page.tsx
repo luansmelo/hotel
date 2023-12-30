@@ -15,15 +15,8 @@ import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/grupo'
 import GroupCreate from '@/components/input/Group'
 const Input: React.FC<InputListProps> = () => {
-  const {
-    loading,
-    inputList,
-    errors,
-    setErrors,
-    handleDelete,
-    handleEdit,
-    handleCreate,
-  } = useContext(InputContext)
+  const { loading, inputList, handleDelete, handleEdit, handleCreate } =
+    useContext(InputContext)
   const { handleMeasurementSave, measurementUnitList } = useContext(
     MeasurementUnitContext
   )
@@ -135,34 +128,28 @@ const Input: React.FC<InputListProps> = () => {
 
       {createMesaurementModal && (
         <MeasurementUnitCreate
+          loading={loading}
           isOpen={createMesaurementModal}
           handleCloseModal={() => setCreateMeasurementModal(false)}
           handleSave={handleMeasurementSave}
-          setErrors={setErrors}
-          loading={loading}
-          errors={errors}
         />
       )}
 
       {createGroupModal && (
         <GroupCreate
+          loading={loading}
           isOpen={createGroupModal}
           handleCloseModal={() => setCreateGroupModal(false)}
           handleSave={handleGroupSave}
-          setErrors={setErrors}
-          loading={loading}
-          errors={errors}
         />
       )}
 
       {showEditModal && (
         <InputEdit
           loading={loading}
-          errors={errors}
           measurementUnitList={measurementUnitList}
           groupList={groupList}
           showModal={showEditModal}
-          setErrors={setErrors}
           handleSave={handleEdit}
           handleCloseModal={() => setShowEditModal(false)}
           input={selectedInput}
@@ -172,11 +159,9 @@ const Input: React.FC<InputListProps> = () => {
       {showCreateForm && (
         <InputCreate
           loading={loading}
-          errors={errors}
           inputList={inputList}
           measurementUnitList={measurementUnitList}
           groupList={groupList}
-          setErrors={setErrors}
           handleSave={handleCreate}
           showModal={showCreateForm}
           handleCloseModal={() => setShowCreateForm(false)}

@@ -90,8 +90,6 @@ export default function Product() {
         <ProductCreate
           loading={loading}
           showModal={showCreateForm}
-          errors={{}}
-          setErrors={() => {}}
           handleSave={handleSave}
           handleCloseModal={() => setShowCreateForm(false)}
         />

@@ -3,6 +3,8 @@ import { ChangeEvent } from 'react'
 export interface ITextFieldProps {
   name: string
   label: string
+  multiline?: boolean
+  rows?: number
   placeholder?: string
   value: string
   type?: string

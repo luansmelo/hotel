@@ -1,11 +1,10 @@
 'use client'
 
-import { IProductInputDataResponse } from '@/atom/business'
+import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
 import { MenuService } from '@/services/menu'
 import {
   MenuCategoryProps,
   MenuCreateProps,
-  MenuProps,
   MenuToCategoryProps,
 } from '@/utils/interfaces/menu'
 import { handleToastify } from '@/utils/toastify'
@@ -20,12 +19,10 @@ import React, {
 
 interface MenuContract {
   loading: boolean
-  menuList: MenuProps[]
-  menuProductList: IProductInputDataResponse[]
+  menuList: Menu[]
+  menuProductList: Menu
   handleSave: (menu: MenuCreateProps) => Promise<void>
-  setMenuProductList: React.Dispatch<
-    React.SetStateAction<IProductInputDataResponse[]>
-  >
+  setMenuProductList: React.Dispatch<React.SetStateAction<Menu>>
   fetchMenuProducts: (input: MenuCategoryProps) => Promise<void>
   handleAddCategoryToMenu: (input: MenuToCategoryProps) => Promise<void>
   fetchMenuList: () => Promise<void>
@@ -34,11 +31,9 @@ export const MenuContext = createContext<MenuContract>({} as MenuContract)
 export const MenuProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [menuList, setMenuList] = useState<MenuProps[]>([])
+  const [menuList, setMenuList] = useState<Menu[]>([])
   const [loading, setLoading] = useState(false)
-  const [menuProductList, setMenuProductList] = useState<
-    IProductInputDataResponse[]
-  >([])
+  const [menuProductList, setMenuProductList] = useState<Menu>({} as Menu)
 
   const menu = useMemo(() => new MenuService(), [])
 

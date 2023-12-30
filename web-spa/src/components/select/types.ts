@@ -1,5 +1,10 @@
 import { FormInputEvent } from '@/hooks/useForm'
 
+export interface SelectInput {
+  id: string
+  name: string
+}
+
 export interface SelectProps {
   key?: string
   name?: string

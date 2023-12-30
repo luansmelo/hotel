@@ -3,7 +3,7 @@ export interface MenuCreateProps {
 }
 
 export interface MenuProps {
-  menuId: string
+  id: string
   name: string
 }
 

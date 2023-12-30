@@ -71,11 +71,9 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
           createError: 'Não foi possível criar uma unidade de medida.',
         })
       }
-    } catch (error: any) {
-      toast.error('Não foi possível criar uma unidade de medida.')
-      setErrors({
-        createError: error.message,
-      })
+    } catch (error) {
+      setMeasurementList([])
+      console.log(error)
     } finally {
       setLoading(false)
     }
@@ -91,7 +89,8 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
         await fetchMeasurementUnitList()
       }
     } catch (error) {
-      console.log('error')
+      setMeasurementList([])
+      console.log(error)
     } finally {
       setLoading(false)
     }
@@ -109,8 +108,8 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
       }
     } catch (error) {
       console.log(error)
-      handleToastify('Não foi possível excluir a unidade de medida.', 'error')
     } finally {
+      setMeasurementList([])
       setLoading(false)
     }
   }

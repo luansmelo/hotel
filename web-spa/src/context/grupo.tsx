@@ -59,7 +59,7 @@ export const GroupProvider: React.FC<{ children: ReactNode }> = ({
         toast.success('grupo criada com sucesso!')
         await fetchGroupList()
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error('Não foi possível criar um grupo.')
     } finally {
       setLoading(false)

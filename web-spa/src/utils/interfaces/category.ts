@@ -6,6 +6,11 @@ export interface ProductWeekDay {
   weekDay: string
 }
 
+export interface CategoryInput {
+  id: string
+  name: string
+}
+
 export interface CategoryProps {
   id?: string
   name: string

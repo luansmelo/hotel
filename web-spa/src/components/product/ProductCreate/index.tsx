@@ -1,38 +1,35 @@
-import { TextField } from '@mui/material'
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/modal/Modal'
-import { Product } from '../types'
+import { ProductInputProps } from '../types'
 import { FileUp } from 'lucide-react'
 import styles from './styles.module.scss'
+import React from 'react'
+import TextField from '@/components/textField/TextField'
 
 export interface ProductProps {
   loading: boolean
   showModal: boolean
-  errors: Record<string, string | number>
-  setErrors: React.Dispatch<
-    React.SetStateAction<Partial<Record<string, string | number>>>
-  >
-  handleSave: (input: Product) => Promise<void>
+  handleSave: (input: ProductInputProps) => Promise<void>
   handleCloseModal: () => void
 }
 
 export default function ProductCreate({
   loading,
-  errors,
   showModal,
-  setErrors,
   handleSave,
   handleCloseModal,
 }: ProductProps) {
-  const { form, handleSetState } = useForm({
+  const { form, handleSetState, clear } = useForm({
     name: '',
     description: '',
   })
-
+  const [errors, setErrors] = React.useState<Partial<ProductInputProps>>({})
   const validateForm = () => {
-    const newErrors = {
+    const newErrors: Partial<Record<string, string>> = {
       name: form.name.trim() === '' ? 'Nome é obrigatório' : '',
+      description:
+        form.description.trim() === '' ? 'Descricão é obrigatório' : '',
     }
 
     setErrors(newErrors)
@@ -41,6 +38,7 @@ export default function ProductCreate({
   }
 
   const handleModalClose = () => {
+    clear()
     setErrors({})
     handleCloseModal()
   }
@@ -66,7 +64,6 @@ export default function ProductCreate({
           }
         }}
         loading={loading}
-        errors={errors}
         text="CRIAR"
       >
         <div className={styles.productContainer}>
@@ -83,63 +80,24 @@ export default function ProductCreate({
             <p>PNG, JPG (max. 2MB)</p>
           </div>
 
-          <div className={styles.inputContainer}>
-            <TextField
-              fullWidth
-              size="small"
-              id="name"
-              label="Nome"
-              name="name"
-              variant="outlined"
-              value={form.name}
-              onChange={handleSetState}
-              autoComplete="off"
-              sx={{
-                minHeight: '60px',
-              }}
-              InputProps={{
-                style: {
-                  background: '#1F2128',
-                  color: '#BDBDBD',
-                  outline: 'none',
-                  margin: 0,
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  color: '#BDBDBD',
-                },
-              }}
-              error={!!errors?.name}
-              helperText={errors?.name}
-            />
+          <TextField
+            label="Nome"
+            name="name"
+            value={form.name}
+            onChange={handleSetState}
+            errors={errors.name!}
+          />
 
-            <TextField
-              size="small"
-              name="description"
-              label="Modo de Preparo"
-              multiline
-              rows={10}
-              defaultValue="Escreva aqui uma descrição para seu produto..."
-              fullWidth
-              value={form.description}
-              onChange={handleSetState}
-              autoComplete="off"
-              InputProps={{
-                style: {
-                  background: '#1F2128',
-                  color: '#BDBDBD',
-                  outline: 'none',
-                  margin: 0,
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  color: '#BDBDBD',
-                },
-              }}
-            />
-          </div>
+          <TextField
+            label="Modo de Preparo"
+            name="description"
+            multiline
+            rows={10}
+            placeholder="Escreva aqui uma descrição para seu produto..."
+            value={form.description}
+            onChange={handleSetState}
+            errors={errors.description!}
+          />
         </div>
       </Form>
     </Modal>

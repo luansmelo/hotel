@@ -6,18 +6,19 @@ import Separator from '@/components/separator'
 import styles from './styles.module.scss'
 import { isNotEmpty, validateField } from '@/utils/validations'
 import { GroupPropsContract } from './types'
+import React from 'react'
 
 export default function GroupCreate({
   loading,
-  errors,
   isOpen,
-  setErrors,
   handleSave,
   handleCloseModal,
 }: GroupPropsContract) {
   const { form, handleSetState, clear } = useForm({
     name: '',
   })
+
+  const [errors, setErrors] = React.useState<Partial<Error>>({})
 
   const validateForm = () => {
     const newErrors = {
@@ -58,7 +59,6 @@ export default function GroupCreate({
           }
         }}
         loading={loading}
-        errors={errors}
         text="CRIAR"
       >
         <p className={styles.paragraph}>Criar Grupo</p>
@@ -71,7 +71,7 @@ export default function GroupCreate({
           label="Nome"
           name="name"
           onChange={handleSetState}
-          errors={errors.name}
+          errors={errors.name!}
         />
       </Form>
     </Modal>
