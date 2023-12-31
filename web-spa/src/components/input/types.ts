@@ -23,8 +23,9 @@ export interface InputListProps {
   loading: boolean
   inputList: Input[]
   handleDelete: (id: string) => void
-  handleSelectInput: (data: Input) => void
+  handleSelectItem: (data: Input) => void
   openEditModal: () => void
+  children: React.ReactNode
 }
 
 export interface InputFormProps {

@@ -11,10 +11,30 @@
   height: 100%;
 }
 
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .searchAndButtonContainer {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+.DateTabsContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+}
+
+.MenuMapContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .textContainer {
@@ -55,26 +75,4 @@
 
 .inputSearch {
   margin-right: 16px; 
-}
-
-.actionsContainer {
- display: flex;
- gap: 0.5rem;
-}
-
-.productEdit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: #04B2D9;
-
-  cursor: pointer;
-  transition: 0.3s filter ease;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
 }

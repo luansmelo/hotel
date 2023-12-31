@@ -8,6 +8,7 @@ const TextField = ({
   errors,
   name,
   multiline,
+  defaultValue,
   rows,
   onChange,
 }: ITextFieldProps) => {
@@ -21,6 +22,7 @@ const TextField = ({
         name={name}
         multiline={multiline}
         rows={rows}
+        defaultValue={defaultValue}
         variant="outlined"
         value={value}
         onChange={onChange}

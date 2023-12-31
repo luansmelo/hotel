@@ -1,70 +1,37 @@
-import { IconButton } from '@mui/material'
-import { MoreHorizontal, Trash2, Pencil } from 'lucide-react'
-import Dropdown from '../dropDown'
+import { ReactNode } from 'react'
 import styles from './styles.module.scss'
-import ConfirmDialog from '../dialog'
-import { useState } from 'react'
 
-interface ListItemProps {
-  children: React.ReactNode
-  onDelete: () => void
-  onEdit: () => void
-  actions?: { label: string; onClick: () => void }[]
+interface BaseItem {
+  id?: string
+  name: string
+  children?: ReactNode
 }
-const ListItem = ({
+
+interface ListItemProps<T extends BaseItem> {
+  data: T[]
+  visibleFields: Array<keyof T>
+  onSelectItem?: (item: T) => void
+}
+
+const ListItem = <T extends BaseItem>({
+  data,
+  visibleFields,
   children,
-  onDelete,
-  onEdit,
-  actions = [],
-}: ListItemProps) => {
-  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const handleDeleteClick = () => {
-    setIsConfirmDialogOpen(true)
-  }
-
-  const handleEditClick = () => {
-    onEdit()
-    handleClose()
-  }
-  const handleDropdownClose = () => {
-    handleClose()
-    setIsConfirmDialogOpen(false)
-  }
-
+  onSelectItem,
+}: ListItemProps<T> & { children?: ReactNode }) => {
   return (
-    <tr className={styles.tr}>
-      <div className={styles.contentContainer}>{children}</div>
-      <div className={styles.buttonContainer}>
-        <IconButton onClick={handleClick}>
-          <MoreHorizontal color="#04B2D9" />
-        </IconButton>
-        <Dropdown
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          actions={[
-            ...actions!,
-            { label: 'Editar', onClick: handleEditClick, icon: <Pencil /> },
-            { label: 'Excluir', onClick: handleDeleteClick, icon: <Trash2 /> },
-          ]}
-        />
-      </div>
-
-      <ConfirmDialog
-        open={isConfirmDialogOpen}
-        onClose={handleDropdownClose}
-        onConfirm={onDelete}
-      />
-    </tr>
+    <div className={styles.container}>
+      <ul className={styles.ul}>
+        {data?.map((item) => (
+          <li key={item.id} onClick={() => onSelectItem && onSelectItem(item)}>
+            {visibleFields.map((field) => (
+              <div key={field as string}>{String(item[field])}</div>
+            ))}
+            <span>{children}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 

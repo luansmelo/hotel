@@ -23,9 +23,9 @@ import React, {
 interface ProductContract {
   loading: boolean
   productList: ProductProps[]
-  productDetail: ProductProps[]
+  productDetail: ProductProps
   setProductList: Dispatch<SetStateAction<ProductProps[]>>
-  setProductDetail: Dispatch<SetStateAction<ProductProps[]>>
+  setProductDetail: Dispatch<SetStateAction<ProductProps>>
   handleSave: (input: ProductInputProps) => Promise<void>
   handleEdit: (productId: string, input: UpdatedProductInfo) => Promise<void>
   handleDelete: (id: string) => Promise<void>
@@ -42,7 +42,9 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [productList, setProductList] = useState<ProductProps[]>([])
   const [loading, setLoading] = useState(false)
-  const [productDetail, setProductDetail] = useState<ProductProps[]>([])
+  const [productDetail, setProductDetail] = useState<ProductProps>(
+    {} as ProductProps
+  )
 
   const product = useMemo(() => new ProductService(), [])
 

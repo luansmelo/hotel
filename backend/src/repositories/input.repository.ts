@@ -23,7 +23,11 @@ export class InputRepository implements InputRepositoryContract {
   }
 
   async getAll() {
-    const db = await this.db.input.findMany();
+    const db = await this.db.input.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
 
     return db;
   }

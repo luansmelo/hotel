@@ -1,14 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import {
-  Autocomplete,
-  FormControl,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material'
 import AddButton from '@/components/addButton'
-import { SaveIcon, Trash2, PlusCircle } from 'lucide-react'
+import { SaveIcon, PlusCircle } from 'lucide-react'
 import { InputContext } from '@/context/input'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
@@ -18,10 +11,15 @@ import CustomTextArea from '@/components/customTextArea'
 import { Input, InputToProductProps } from '@/components/input/types'
 import ConfirmDialog from '@/components/dialog'
 import { handleToastify } from '@/utils/toastify'
+import Trash from '@/components/atoms/trash'
+import AutoComplete from '@/components/autoComplete'
+import Select from '@/components/select'
+import TextField from '@/components/textField/TextField'
 
 export default function AddInputToProductModal({
   isOpen,
   product,
+  measurementUnitList,
   onClose,
 }: AddInputToProductModalProps) {
   const {
@@ -171,16 +169,12 @@ export default function AddInputToProductModal({
               </div>
             </div>
 
-            <hr />
-
             <div className={styles.containerWrapper}>
-              <p>Modo de Preparo:</p>
               <div className={styles.textAreaContainer}>
                 <CustomTextArea value={productDetail.description} rows={8} />
               </div>
             </div>
 
-            <hr />
             <p>Insumos:</p>
 
             <div
@@ -192,11 +186,9 @@ export default function AddInputToProductModal({
                 gap: '16px',
               }}
             >
-              <Autocomplete
-                size="small"
-                disablePortal
-                id="combo-box-demo"
-                options={
+              <AutoComplete
+                label="Insumo"
+                data={
                   inputList
                     ?.filter((input) => {
                       const isAdded = addedInputs.some(
@@ -208,40 +200,9 @@ export default function AddInputToProductModal({
                       )
                       return !isAdded && !isExisting
                     })
-                    .map((item) => item.name) || []
+                    .map((item) => item) || []
                 }
-                sx={{
-                  '& .MuiAutocomplete-inputRoot': {
-                    height: '40px',
-                    width: '100%',
-                    background: '#272a34',
-                    borderColor: '#0488A6',
-                    color: '#BDBDBD',
-                  },
-                  width: '100%',
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Insumos"
-                    sx={{
-                      color: '#BDBDBD',
-                      '& fieldset': {
-                        borderColor: '#0488A6',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: '#0488A6',
-                      },
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: '#BDBDBD',
-                      },
-                    }}
-                    fullWidth
-                  />
-                )}
-                onChange={(_, value) => addSelectedInput(value || '')}
+                addSelectedItem={addSelectedInput}
               />
 
               <div
@@ -255,8 +216,6 @@ export default function AddInputToProductModal({
               </div>
             </div>
 
-            <hr />
-            <p>Lista adicionados:</p>
             <div className={styles.containerWrapper}>
               <table className={styles.table}>
                 <thead className={styles.thead}>
@@ -272,102 +231,36 @@ export default function AddInputToProductModal({
                         <tr key={input.id} className={styles.tr}>
                           <td>{input.name}</td>
                           <td>
-                            <FormControl size="small" key={input.id} fullWidth>
-                              <Select
-                                key={input.id}
-                                label="Unidade de Medida"
-                                id={`measurementUnit-${input.id}`}
-                                name={'measurementUnit'}
-                                defaultValue={input.measurementUnit}
-                                value={
-                                  inputState[input.name]?.measurementUnit ||
-                                  input.measurementUnit
-                                }
-                                onChange={(event) => {
-                                  const { value } = event.target
-                                  setInputState((prevState) => ({
-                                    ...prevState,
-                                    [input.name]: {
-                                      ...prevState[input.name],
-                                      measurementUnit: value || '0',
-                                    },
-                                  }))
-                                }}
-                                MenuProps={{
-                                  PaperProps: {
-                                    sx: {
-                                      outline: '1px solid #0488A6',
-                                      background: '#1F2128',
-                                      color: '#BDBDBD',
-                                    },
+                            <Select
+                              data={measurementUnitList!}
+                              key={input.id}
+                              name={'measurementUnit'}
+                              defaultValue={input.measurementUnit}
+                              value={
+                                inputState[input.name]?.measurementUnit ||
+                                input.measurementUnit
+                              }
+                              onClick={(event) => {
+                                const { value } = event.target
+                                setInputState((prevState) => ({
+                                  ...prevState,
+                                  [input.name]: {
+                                    ...prevState[input.name],
+                                    measurementUnit: value || '0',
                                   },
-                                }}
-                                sx={{
-                                  color: '#BDBDBD',
-                                  margin: 0,
-                                  '&:before, &:after, &:hover:not(.Mui-disabled):before':
-                                    {
-                                      borderColor: '#0488A6 !important',
-                                    },
-                                  '& .MuiSelect-icon': {
-                                    fill: '#0488A6',
-                                  },
-                                  '& fieldset': {
-                                    borderColor: '#0488A6 !important',
-                                  },
-                                  '&:hover fieldset': {
-                                    borderColor: '#0488A6 !important',
-                                  },
-                                }}
-                              >
-                                {['KG', 'LT', 'CAIXA'].map((option) => (
-                                  <MenuItem
-                                    key={option}
-                                    value={option}
-                                    sx={{
-                                      color: '#BDBDBD',
-                                    }}
-                                  >
-                                    {option}
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
+                                }))
+                              }}
+                              errors={''}
+                            />
                           </td>
                           <td>
                             <TextField
                               key={input.id}
-                              size="small"
-                              id={`Gramatura-${input.id}`}
                               label="Gramatura"
-                              variant="outlined"
                               name={`grammage`}
-                              sx={{
-                                color: '#BDBDBD',
-                                '& fieldset': {
-                                  borderColor: '#0488A6',
-                                },
-                                '&:hover fieldset': {
-                                  borderColor: '#0488A6',
-                                },
-                              }}
-                              InputLabelProps={{
-                                style: {
-                                  color: '#BDBDBD',
-                                },
-                              }}
-                              InputProps={{
-                                inputProps: {
-                                  inputMode: 'numeric',
-                                },
-                                style: {
-                                  color: '#BDBDBD',
-                                },
-                              }}
-                              autoComplete="off"
                               defaultValue={
                                 inputState[input.name]?.grammage ||
-                                input.grammage
+                                input.grammage!
                               }
                               onChange={(event) => {
                                 const { value } = event.target
@@ -384,14 +277,11 @@ export default function AddInputToProductModal({
                             />
                           </td>
                           <td>
-                            <div
-                              className={styles.productActionDelete}
+                            <Trash
                               onClick={() =>
                                 openDeleteConfirmationDialog(input)
                               }
-                            >
-                              <Trash2 color="white" size={18} />
-                            </div>
+                            />
                           </td>
                         </tr>
                       ))

@@ -14,6 +14,8 @@ import MeasurementUnitCreate from '@/components/input/MeasurementUnit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/grupo'
 import GroupCreate from '@/components/input/Group'
+import Trash from '@/components/atoms/trash'
+import ConfirmDialog from '@/components/dialog'
 const Input: React.FC<InputListProps> = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
@@ -31,9 +33,15 @@ const Input: React.FC<InputListProps> = () => {
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState<null | HTMLElement>(
     null
   )
+  const [openDialog, setOpenDialog] = useState(false)
 
   const openEditModal = () => {
     setShowEditModal(true)
+    setDropdownAnchorEl(null)
+  }
+
+  const openDeleteModal = () => {
+    setOpenDialog(true)
     setDropdownAnchorEl(null)
   }
 
@@ -121,9 +129,33 @@ const Input: React.FC<InputListProps> = () => {
           loading={loading}
           inputList={filteredInputList}
           handleDelete={handleDelete}
-          handleSelectInput={handleSelectedInput}
           openEditModal={openEditModal}
-        />
+          handleSelectItem={handleSelectedInput}
+        >
+          <div className={styles.actionsContainer}>
+            <div className={styles.productEdit}>
+              <PencilRuler
+                size={20}
+                color="#FFF"
+                onClick={() => {
+                  handleSelectedInput(selectedInput)
+                  openEditModal()
+                }}
+              />
+            </div>
+            <div>
+              <Trash onClick={openDeleteModal} />
+              <ConfirmDialog
+                open={openDialog}
+                onClose={() => setOpenDialog(false)}
+                onConfirm={() => {
+                  handleDelete(selectedInput?.id)
+                  setOpenDialog(false)
+                }}
+              />
+            </div>
+          </div>
+        </InputList>
       )}
 
       {createMesaurementModal && (

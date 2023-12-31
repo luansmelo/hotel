@@ -7,17 +7,13 @@
   width: 100%;
 }
 
-.tbody {
+.listItem {
   display: flex;
-  flex-direction: column;
-  min-height: 15.78rem;
-  max-height: 15.78rem;
-  border-radius: 0 0 6px 6px; 
+  // flex-direction: column;
+  // min-height: 15.78rem;
+  // max-height: 15.78rem;
+  width: 100%;
+  // border-radius: 0 0 6px 6px; 
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6); 
 }
 
-.pagination {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}

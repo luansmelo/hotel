@@ -98,7 +98,7 @@ export default function ProductListTable({
           </tr>
         </thead>
         <tbody className={styles.tbody}>
-          {menuProductList?.map((product, index) => (
+          {menuProductList?.category?.map((product, index) => (
             <div key={index}>
               <Accordion
                 sx={{
@@ -117,13 +117,13 @@ export default function ProductListTable({
                   }}
                 >
                   <AccordionProductItem
-                    id={product.product.id}
-                    name={product.product.name}
-                    description={product.product.description}
+                    id={'id'}
+                    name={'Deus funcionou'}
+                    description={'xd'}
                   />
                 </AccordionSummary>
                 <AccordionDetails>
-                  {AccordionProductItemDetails(product.productInputs)}
+                  {AccordionProductItemDetails('product.schedule')}
                 </AccordionDetails>
               </Accordion>
             </div>

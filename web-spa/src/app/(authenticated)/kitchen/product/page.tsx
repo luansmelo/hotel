@@ -10,6 +10,8 @@ import { Product, ProductProps } from '@/components/product/types'
 import AddInputToProduct from '@/components/product/AddInputToProductModal'
 import InputProductDetail from '@/components/product/ProductDetail'
 import ProductEdit from '@/components/product/ProductEdit'
+import { MeasurementUnitContext } from '@/context/measurementUnit'
+import { GroupContext } from '@/context/grupo'
 
 export default function Product() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -23,6 +25,8 @@ export default function Product() {
 
   const { loading, productList, handleSave, handleDelete } =
     useContext(ProductContext)
+  const { measurementUnitList } = useContext(MeasurementUnitContext)
+  const { groupList } = useContext(GroupContext)
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -99,6 +103,8 @@ export default function Product() {
         <ProductEdit
           isOpen={showEditModal}
           product={selectedProduct}
+          groupList={groupList}
+          measurementUnitList={measurementUnitList}
           onClose={() => setShowEditModal(false)}
         />
       )}
@@ -106,6 +112,8 @@ export default function Product() {
       {showAddInputModal && (
         <AddInputToProduct
           isOpen={showAddInputModal}
+          measurementUnitList={measurementUnitList}
+          groupList={groupList}
           product={selectedProduct}
           onClose={() => setShowAddInputModal(false)}
         />
@@ -114,6 +122,8 @@ export default function Product() {
       {showDetailModal && (
         <InputProductDetail
           isOpen={showDetailModal}
+          measurementUnitList={measurementUnitList}
+          groupList={groupList}
           onClose={() => setShowDetailModal(false)}
           product={selectedProduct}
         />

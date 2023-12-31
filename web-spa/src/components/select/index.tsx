@@ -27,7 +27,7 @@ export default function Select({
           key={key}
           displayEmpty
           name={name}
-          value={value}
+          value={value ?? ''}
           defaultValue={defaultValue}
           onChange={onClick}
           inputProps={{ id: `select-${name}` }}

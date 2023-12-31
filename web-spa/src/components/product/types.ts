@@ -1,3 +1,5 @@
+import { GroupProps } from '@/utils/interfaces/group'
+import { MeasurementUnitContract } from '../input/MeasurementUnit/types'
 import { InputToProductProps } from '../input/types'
 
 export interface ProductRemoveProps {
@@ -35,6 +37,8 @@ export interface ProductListProps {
 }
 
 export interface AddInputToProductModalProps {
+  measurementUnitList?: MeasurementUnitContract[]
+  groupList?: GroupProps[]
   isOpen: boolean
   product: ProductProps
   onClose: () => void

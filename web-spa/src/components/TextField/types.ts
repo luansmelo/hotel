@@ -5,6 +5,7 @@ export interface ITextFieldProps {
   label: string
   multiline?: boolean
   rows?: number
+  defaultValue?: string
   placeholder?: string
   value: string
   type?: string

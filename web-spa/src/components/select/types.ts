@@ -13,7 +13,7 @@ export interface SelectProps {
   color?: string
   width?: string
   data: any[]
-  value: string
+  value?: string
   defaultValue?: string
   onClick: (e: FormInputEvent) => void
   disabled?: boolean

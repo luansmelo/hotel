@@ -1,41 +1,38 @@
-.tr {
-  padding: 4px 8px 4px 8px;
+.container {
   display: flex;
-  align-items: center;
-  &:nth-child(odd) {
-    background: #272a34;
-  }
+  flex-direction: column; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6); 
+}
 
-  th,
-  td {
+.ul {
+  display: flex;
+  flex-direction: column;  
+  list-style: none;
+
+  
+  li {
+    display: flex;
+    padding: 16px 8px;
     color: #bdbdbd;
     font-size: 14px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0.17px;
-    flex: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    &:nth-child(odd) {
+      background: #272a34;
+    }
+  }
+
+  div {
+    flex: 1;
+  }
+
+  span {
+    position: fixed;
+    right: 46px;
   }
 }
 
-.buttonContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #1F2128;
-  height: 1.75rem;
-  width: 1.75rem;
-  border-radius: 50%;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-
-  &:hover {
-    background-color: #1F2128BB;
-    transform: scale(1.1);
-  }
-}
-.contentContainer {
-  display: flex;
-  width: 100%;
-}
