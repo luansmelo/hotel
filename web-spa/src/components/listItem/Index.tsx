@@ -50,7 +50,9 @@ const ListItem = <T extends { id: string }>({
                 {actions.map((action, index) => (
                   <span
                     key={index}
-                    className={styles.productEdit}
+                    className={`${styles.productEdit} ${
+                      action.actionClass ? styles[action.actionClass] : ''
+                    }`}
                     onClick={() => action.onClick(item)}
                   >
                     {action.icon}

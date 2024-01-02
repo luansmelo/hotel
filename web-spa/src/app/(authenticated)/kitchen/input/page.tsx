@@ -104,6 +104,7 @@ const Input: React.FC<Input> = () => {
         openEditModal()
       },
       icon: <PencilRuler color="#fff" size={20} />,
+      actionClass: 'editar',
     },
     {
       label: 'Excluir',
@@ -112,6 +113,7 @@ const Input: React.FC<Input> = () => {
         handleSelectedInput(item)
       },
       icon: <Trash2 color="#fff" size={20} />,
+      actionClass: 'excluir',
     },
   ]
 

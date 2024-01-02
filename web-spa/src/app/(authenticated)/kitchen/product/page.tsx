@@ -70,28 +70,22 @@ const Product: React.FC<ProductProps> = () => {
 
   const actions: Action<ProductProps>[] = [
     {
-      label: 'Editar',
-      onClick: (item) => {
-        setSelectedProduct(item)
-        openEditModal()
-      },
-      icon: <PencilRuler color="#fff" size={20} />,
-    },
-    {
-      label: 'Excluir',
-      onClick: (item) => {
-        openDeleteModal()
-        handleSelectedProduct(item)
-      },
-      icon: <Trash2 color="#fff" size={20} />,
-    },
-    {
       label: 'Detalhes',
       onClick: (item) => {
         setSelectedProduct(item)
         handleDetailModal()
       },
       icon: <Eye color="#fff" size={20} />,
+      actionClass: 'visualizar',
+    },
+    {
+      label: 'Editar',
+      onClick: (item) => {
+        setSelectedProduct(item)
+        openEditModal()
+      },
+      icon: <PencilRuler color="#fff" size={20} />,
+      actionClass: 'editar',
     },
     {
       label: 'Adicionar insumo',
@@ -100,6 +94,16 @@ const Product: React.FC<ProductProps> = () => {
         openAddInputModal()
       },
       icon: <Plus color="#fff" size={20} />,
+      actionClass: 'adicionar',
+    },
+    {
+      label: 'Excluir',
+      onClick: (item) => {
+        openDeleteModal()
+        handleSelectedProduct(item)
+      },
+      icon: <Trash2 color="#fff" size={20} />,
+      actionClass: 'excluir',
     },
   ]
 

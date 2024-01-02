@@ -29,7 +29,6 @@
   
   li {
     display: flex;
-    // padding: 4px 4px;
     color: #bdbdbd;
     font-size: 14px;
     font-weight: 500;
@@ -68,12 +67,20 @@
     filter: brightness(0.9);
   }
 
-  &:nth-child(1) {
+  &.visualizar {
     background: #04B2D9;
   }
 
-  &:nth-child(2) {
-    background: #F00; 
+  &.editar {
+    background: #FFB81C;
   }
- 
+  
+  &.adicionar {
+    background: #00BF63;
+  }
+  
+  &.excluir {
+    background: #F00;
+
+  }
 }
