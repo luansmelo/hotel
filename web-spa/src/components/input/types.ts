@@ -1,6 +1,7 @@
 import { InputContract } from '@/atom/business'
 import { MeasurementUnitContract } from './MeasurementUnit/types'
 import { GroupProps } from '@/utils/interfaces/group'
+import { Action } from '../listItem/types'
 
 export interface InputToProductProps {
   id: string
@@ -19,13 +20,12 @@ export interface Input {
   grammage?: number
 }
 
-export interface InputListProps {
+export interface InputListProps<T> {
   loading: boolean
-  inputList: Input[]
-  handleDelete: (id: string) => void
-  handleSelectItem: (data: Input) => void
+  itemList: Input[]
+  headers: string[]
+  actions: Action<T>[]
   openEditModal: () => void
-  children: React.ReactNode
 }
 
 export interface InputFormProps {

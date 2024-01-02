@@ -9,14 +9,15 @@ import InputCreate from '@/components/input/InputCreate'
 import InputEdit from '@/components/input/InputEdit'
 import { Input, InputListProps } from '@/components/input/types'
 import Dropdown from '@/components/dropDown'
-import { Boxes, ChefHat, PencilRuler } from 'lucide-react'
+import { Boxes, ChefHat, PencilRuler, Trash2 } from 'lucide-react'
 import MeasurementUnitCreate from '@/components/input/MeasurementUnit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/grupo'
 import GroupCreate from '@/components/input/Group'
-import Trash from '@/components/atoms/trash'
 import ConfirmDialog from '@/components/dialog'
-const Input: React.FC<InputListProps> = () => {
+import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
+import { Action } from '@/components/listItem/types'
+const Input: React.FC<InputListProps<Input>> = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
   const { handleMeasurementSave, measurementUnitList } = useContext(
@@ -88,6 +89,25 @@ const Input: React.FC<InputListProps> = () => {
 
   const hasResults = filteredInputList?.length > 0
 
+  const actions: Action<Input>[] = [
+    {
+      label: 'Editar',
+      onClick: (item) => {
+        setSelectedInput(item)
+        openEditModal()
+      },
+      icon: <PencilRuler color="#fff" size={20} />,
+    },
+    {
+      label: 'Excluir',
+      onClick: (item) => {
+        openDeleteModal()
+        handleSelectedInput(item)
+      },
+      icon: <Trash2 color="#fff" size={20} />,
+    },
+  ]
+
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.searchAndButtonContainer}>
@@ -126,36 +146,12 @@ const Input: React.FC<InputListProps> = () => {
 
       {hasResults && (
         <InputList
-          loading={loading}
-          inputList={filteredInputList}
-          handleDelete={handleDelete}
           openEditModal={openEditModal}
-          handleSelectItem={handleSelectedInput}
-        >
-          <div className={styles.actionsContainer}>
-            <div className={styles.productEdit}>
-              <PencilRuler
-                size={20}
-                color="#FFF"
-                onClick={() => {
-                  handleSelectedInput(selectedInput)
-                  openEditModal()
-                }}
-              />
-            </div>
-            <div>
-              <Trash onClick={openDeleteModal} />
-              <ConfirmDialog
-                open={openDialog}
-                onClose={() => setOpenDialog(false)}
-                onConfirm={() => {
-                  handleDelete(selectedInput?.id)
-                  setOpenDialog(false)
-                }}
-              />
-            </div>
-          </div>
-        </InputList>
+          loading={loading}
+          itemList={filteredInputList}
+          headers={TABLE_HEADERS_INPUT}
+          actions={actions}
+        />
       )}
 
       {createMesaurementModal && (
@@ -199,6 +195,18 @@ const Input: React.FC<InputListProps> = () => {
           handleCloseModal={() => setShowCreateForm(false)}
         />
       )}
+
+      {openDialog && (
+        <ConfirmDialog
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          onConfirm={() => {
+            handleDelete(selectedInput?.id)
+            setOpenDialog(false)
+          }}
+        />
+      )}
+
       <div className={styles.textContainer}>
         <div>
           {!hasResults && !searchTerm && <p>Nenhum insumo cadastrado.</p>}

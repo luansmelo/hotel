@@ -58,6 +58,7 @@ export default function InputCreate({
         throw new Error('O campo de preço unitário deve ser um número válido')
       }
 
+      console.log('form')
       await handleSave({
         ...form,
         unitPrice: numericUnitPrice,

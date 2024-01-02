@@ -13,9 +13,7 @@ export default function Layout({ children }: LayoutProps) {
       <Menu />
 
       <div className={styles.contentAndTopBar}>
-        <div className={styles.topBar}>
-          <Header />
-        </div>
+        <Header />
 
         <div className={styles.content}>{children}</div>
       </div>

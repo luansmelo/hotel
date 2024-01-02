@@ -1,36 +1,73 @@
-import { ReactNode } from 'react'
+import { useState } from 'react'
 import styles from './styles.module.scss'
+import TableHeader from '@/components/atoms/TableHeader'
+import PaginationComponent from '@/components/pagination'
+import SkeletonCell from '@/components/skeleton'
+import { Action } from './types'
 
-interface BaseItem {
-  id?: string
-  name: string
-  children?: ReactNode
+export interface GenericListProps<T extends { id: string }> {
+  loading: boolean
+  itemList?: T[]
+  headers: string[]
+  actions: Action<T>[]
+  dynamicFields: (keyof T)[]
 }
 
-interface ListItemProps<T extends BaseItem> {
-  data: T[]
-  visibleFields: Array<keyof T>
-  onSelectItem?: (item: T) => void
-}
+const ListItem = <T extends { id: string }>({
+  loading,
+  itemList,
+  headers,
+  actions,
+  dynamicFields,
+}: GenericListProps<T>) => {
+  const itemsPerPage = 10
+  const [currentPage, setCurrentPage] = useState(0)
 
-const ListItem = <T extends BaseItem>({
-  data,
-  visibleFields,
-  children,
-  onSelectItem,
-}: ListItemProps<T> & { children?: ReactNode }) => {
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  const offset = currentPage * itemsPerPage
+  const paginatedItems = itemList?.slice(offset, offset + itemsPerPage)
+
   return (
-    <div className={styles.container}>
-      <ul className={styles.ul}>
-        {data?.map((item) => (
-          <li key={item.id} onClick={() => onSelectItem && onSelectItem(item)}>
-            {visibleFields.map((field) => (
-              <div key={field as string}>{String(item[field])}</div>
-            ))}
-            <span>{children}</span>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <TableHeader headers={headers} />
+      {loading ? (
+        <div>
+          {Array.from({ length: itemsPerPage }).map((_, colIndex) => (
+            <SkeletonCell key={colIndex} colIndex={colIndex} height={36} />
+          ))}
+        </div>
+      ) : (
+        <div className={styles.container}>
+          {paginatedItems?.map((item) => (
+            <ul key={item.id} className={styles.ul}>
+              {dynamicFields.map((field) => (
+                <li key={Number(field)}>{String(item[field])}</li>
+              ))}
+              <div>
+                {actions.map((action, index) => (
+                  <span
+                    key={index}
+                    className={styles.productEdit}
+                    onClick={() => action.onClick(item)}
+                  >
+                    {action.icon}
+                  </span>
+                ))}
+              </div>
+            </ul>
+          ))}
+        </div>
+      )}
+      {paginatedItems && (
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={Math.ceil((itemList?.length || 1) / itemsPerPage)}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   )
 }

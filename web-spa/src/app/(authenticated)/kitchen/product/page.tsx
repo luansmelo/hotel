@@ -1,19 +1,22 @@
 'use client'
 import { Fade } from '@mui/material'
-import { ChangeEvent, useContext, useState } from 'react'
+import React, { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import styles from './styles.module.scss'
 import { ProductContext } from '@/context/product'
-import ProductList from '@/components/product/ProductList'
 import ProductCreate from '@/components/product/ProductCreate'
-import { Product, ProductProps } from '@/components/product/types'
+import { ProductProps } from '@/components/product/types'
 import AddInputToProduct from '@/components/product/AddInputToProductModal'
 import InputProductDetail from '@/components/product/ProductDetail'
 import ProductEdit from '@/components/product/ProductEdit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/grupo'
+import ListItem from '@/components/listItem/Index'
+import { Eye, PencilRuler, Plus, Trash2 } from 'lucide-react'
+import { Action } from '@/components/listItem/types'
+import ConfirmDialog from '@/components/dialog'
 
-export default function Product() {
+const Product: React.FC<ProductProps> = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -22,6 +25,7 @@ export default function Product() {
   const [selectedProduct, setSelectedProduct] = useState<ProductProps>(
     {} as ProductProps
   )
+  const [openDialog, setOpenDialog] = useState(false)
 
   const { loading, productList, handleSave, handleDelete } =
     useContext(ProductContext)
@@ -52,6 +56,10 @@ export default function Product() {
     setShowDetailModal(true)
   }
 
+  const openDeleteModal = () => {
+    setOpenDialog(true)
+  }
+
   const filteredProductList = searchTerm
     ? productList?.filter(
         (input) => input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -59,6 +67,41 @@ export default function Product() {
     : productList
 
   const hasResults = filteredProductList?.length > 0
+
+  const actions: Action<ProductProps>[] = [
+    {
+      label: 'Editar',
+      onClick: (item) => {
+        setSelectedProduct(item)
+        openEditModal()
+      },
+      icon: <PencilRuler color="#fff" size={20} />,
+    },
+    {
+      label: 'Excluir',
+      onClick: (item) => {
+        openDeleteModal()
+        handleSelectedProduct(item)
+      },
+      icon: <Trash2 color="#fff" size={20} />,
+    },
+    {
+      label: 'Detalhes',
+      onClick: (item) => {
+        setSelectedProduct(item)
+        handleDetailModal()
+      },
+      icon: <Eye color="#fff" size={20} />,
+    },
+    {
+      label: 'Adicionar insumo',
+      onClick: (item) => {
+        setSelectedProduct(item)
+        openAddInputModal()
+      },
+      icon: <Plus color="#fff" size={20} />,
+    },
+  ]
 
   return (
     <div className={styles.inputWrapper}>
@@ -79,14 +122,12 @@ export default function Product() {
       </div>
 
       <div>
-        <ProductList
+        <ListItem
           loading={loading}
-          productList={filteredProductList}
-          openEditModal={openEditModal}
-          handleSelectProduct={handleSelectedProduct}
-          handleDelete={handleDelete}
-          openAddInputModal={openAddInputModal}
-          handleDetailModal={handleDetailModal}
+          dynamicFields={['name']}
+          headers={['Produtos']}
+          itemList={filteredProductList}
+          actions={actions}
         />
       </div>
 
@@ -121,11 +162,22 @@ export default function Product() {
 
       {showDetailModal && (
         <InputProductDetail
+          product={selectedProduct}
           isOpen={showDetailModal}
           measurementUnitList={measurementUnitList}
           groupList={groupList}
           onClose={() => setShowDetailModal(false)}
-          product={selectedProduct}
+        />
+      )}
+
+      {openDialog && (
+        <ConfirmDialog
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          onConfirm={() => {
+            handleDelete(selectedProduct?.id || '')
+            setOpenDialog(false)
+          }}
         />
       )}
 
@@ -145,3 +197,5 @@ export default function Product() {
     </div>
   )
 }
+
+export default Product
