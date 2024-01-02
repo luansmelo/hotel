@@ -3,22 +3,14 @@
   background: #1F2128;
   padding: 16px 8px;
   border-radius: 12px 12px 0 0;
-
-  td {
-    text-align: left;
-    color: #BDBDBD;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 16px;
-    letter-spacing: 0.17px;
-    flex: 1;
-  }
 }
 
-.text_container {
+.columnHeader {
+  text-align: left;
   color: #BDBDBD;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 16px;
   letter-spacing: 0.17px;
+  flex: 1;
 }

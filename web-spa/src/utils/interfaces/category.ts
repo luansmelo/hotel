@@ -22,3 +22,10 @@ export interface ProductOnCategory {
   categoryId: string
   product: ProductWeekDay[]
 }
+
+export interface RemoveProduct {
+  menuId: string
+  categoryId: string
+  productId: string
+  weekDay: string
+}

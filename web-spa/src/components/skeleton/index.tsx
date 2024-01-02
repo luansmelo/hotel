@@ -10,15 +10,15 @@ interface SkeletonCellProps {
 
 const SkeletonCell: React.FC<SkeletonCellProps> = ({
   colIndex,
-  height = 36,
-  borderRadius = 4,
-  marginBottom = 8,
+  height = 14,
+  borderRadius = 0,
+  marginBottom = 0,
 }) => (
   <Skeleton
     key={colIndex}
     height={height}
     sx={{
-      padding: '4px 8px 4px 8px',
+      padding: '20px 10px',
       '&:nth-child(odd)': {
         background: '#272a34',
       },

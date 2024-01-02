@@ -1,6 +1,10 @@
 import { InputContract } from '@/atom/business'
 import { API } from '@/services/api'
-import { CategoryProps, ProductOnCategory } from '@/utils/interfaces/category'
+import {
+  CategoryProps,
+  ProductOnCategory,
+  RemoveProduct,
+} from '@/utils/interfaces/category'
 
 const api = API.getInstance()
 
@@ -35,10 +39,10 @@ export class CategoryService {
     }
   }
 
-  async removeProduct(input: ProductOnCategory) {
+  async removeProduct(input: RemoveProduct) {
     try {
       const response = await api.delete(
-        `/category?id=${input.menuId}&categoryId=${input.categoryId}&productId=${input.productId}&day=${input.weekDay}`
+        `/category?menu=${input.menuId}&category=${input.categoryId}&product=${input.productId}&day=${input.weekDay}`
       )
 
       return response

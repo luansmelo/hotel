@@ -1,14 +1,17 @@
 import React from 'react'
 import { TableHeaderProps } from './types'
 import styles from './styles.module.scss'
+
 const TableHeader: React.FC<TableHeaderProps> = ({
   headers,
 }: TableHeaderProps) => (
-  <thead className={styles.thead}>
+  <div className={styles.thead}>
     {headers.map((header, index) => (
-      <td key={index}> {header}</td>
+      <div key={index} className={styles.columnHeader}>
+        {header}
+      </div>
     ))}
-  </thead>
+  </div>
 )
 
 export default TableHeader

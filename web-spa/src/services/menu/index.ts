@@ -50,24 +50,4 @@ export class MenuService {
       console.log(error)
     }
   }
-
-  async delete(id: string) {
-    try {
-      const response = await api.delete(`/input/${id}`)
-      console.log('RESPONSE', response)
-      return response
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  async update(input: InputContract) {
-    try {
-      const response = await api.put(`/input/${input.id}`, input)
-
-      return response
-    } catch (error) {
-      console.log(error)
-    }
-  }
 }

@@ -4,6 +4,7 @@ import TableHeader from '@/components/atoms/TableHeader'
 import PaginationComponent from '@/components/pagination'
 import SkeletonCell from '@/components/skeleton'
 import { Action } from './types'
+import { SearchX } from 'lucide-react'
 
 export interface GenericListProps<T extends { id: string }> {
   loading: boolean
@@ -36,31 +37,39 @@ const ListItem = <T extends { id: string }>({
       {loading ? (
         <div>
           {Array.from({ length: itemsPerPage }).map((_, colIndex) => (
-            <SkeletonCell key={colIndex} colIndex={colIndex} height={36} />
+            <SkeletonCell key={colIndex} colIndex={colIndex} />
           ))}
         </div>
       ) : (
         <div className={styles.container}>
-          {paginatedItems?.map((item) => (
-            <ul key={item.id} className={styles.ul}>
-              {dynamicFields.map((field) => (
-                <li key={Number(field)}>{String(item[field])}</li>
+          {paginatedItems?.length === 0 ? (
+            <div className={styles.noData}>
+              <SearchX size={80} color="#F56D15" />
+            </div>
+          ) : (
+            <>
+              {paginatedItems?.map((item) => (
+                <ul key={item.id} className={styles.ul}>
+                  {dynamicFields.map((field) => (
+                    <li key={Number(field)}>{String(item[field])}</li>
+                  ))}
+                  <div className={styles.iconContainer}>
+                    {actions.map((action, index) => (
+                      <span
+                        key={index}
+                        className={`${styles.productEdit} ${
+                          action.actionClass ? styles[action.actionClass] : ''
+                        }`}
+                        onClick={() => action.onClick(item)}
+                      >
+                        {action.icon}
+                      </span>
+                    ))}
+                  </div>
+                </ul>
               ))}
-              <div>
-                {actions.map((action, index) => (
-                  <span
-                    key={index}
-                    className={`${styles.productEdit} ${
-                      action.actionClass ? styles[action.actionClass] : ''
-                    }`}
-                    onClick={() => action.onClick(item)}
-                  >
-                    {action.icon}
-                  </span>
-                ))}
-              </div>
-            </ul>
-          ))}
+            </>
+          )}
         </div>
       )}
       {paginatedItems && (

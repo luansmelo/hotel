@@ -1,5 +1,5 @@
 'use client'
-import { Fade } from '@mui/material'
+
 import React, { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import styles from './styles.module.scss'
@@ -15,6 +15,7 @@ import ListItem from '@/components/listItem/Index'
 import { Eye, PencilRuler, Plus, Trash2 } from 'lucide-react'
 import { Action } from '@/components/listItem/types'
 import ConfirmDialog from '@/components/dialog'
+import { TABLE_HEADERS_PRODUCT } from '@/constants/tableHeader'
 
 const Product: React.FC<ProductProps> = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -31,6 +32,8 @@ const Product: React.FC<ProductProps> = () => {
     useContext(ProductContext)
   const { measurementUnitList } = useContext(MeasurementUnitContext)
   const { groupList } = useContext(GroupContext)
+
+  const dynamicFields: (keyof ProductProps)[] = ['name']
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -65,8 +68,6 @@ const Product: React.FC<ProductProps> = () => {
         (input) => input?.name?.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : productList
-
-  const hasResults = filteredProductList?.length > 0
 
   const actions: Action<ProductProps>[] = [
     {
@@ -128,10 +129,10 @@ const Product: React.FC<ProductProps> = () => {
       <div>
         <ListItem
           loading={loading}
-          dynamicFields={['name']}
-          headers={['Produtos']}
           itemList={filteredProductList}
+          headers={TABLE_HEADERS_PRODUCT}
           actions={actions}
+          dynamicFields={dynamicFields}
         />
       </div>
 
@@ -184,20 +185,6 @@ const Product: React.FC<ProductProps> = () => {
           }}
         />
       )}
-
-      <div className={styles.textContainer}>
-        <div>
-          {!hasResults && !searchTerm && <p>Nenhum produto cadastrado.</p>}
-        </div>
-
-        <div>
-          {!hasResults && searchTerm && (
-            <Fade in={!showCreateForm} timeout={500}>
-              <p>Produto não encontrado</p>
-            </Fade>
-          )}
-        </div>
-      </div>
     </div>
   )
 }

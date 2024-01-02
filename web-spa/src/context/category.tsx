@@ -76,6 +76,7 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
         categoryList,
         handleCreateCategory,
         handleProductAddCategory,
+
         fetchCategoryList,
       }}
     >

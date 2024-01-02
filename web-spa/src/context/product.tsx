@@ -56,9 +56,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     } catch (error) {
       console.log(error)
     } finally {
-      setTimeout(() => {
-        setLoading(false)
-      }, 2000)
+      setLoading(false)
     }
   }
 

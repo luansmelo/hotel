@@ -71,12 +71,13 @@ export class CategoryRepository implements CategoryRepositoryContract {
   }
 
   async deleteProduct(input: ProductToCategoryInput): Promise<void> {
-    await this.db.categoryProductSchedule.delete({
+    console.log(input)
+    await this.db.categoryProductSchedule.deleteMany({
       where: {
-        id: input.id,
+        menuId: input.id,
         categoryId: input.categoryId,
         productId: input.productId,
-        weekDay: Weekdays[input.weekDay],
+        weekDay: input.weekDay,
       },
     });
   }

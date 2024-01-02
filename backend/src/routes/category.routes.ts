@@ -86,14 +86,13 @@ router.get(
 router.delete(
   "/",
   authenticated,
-  validate(ProductToCategorySchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: ProductToCategoryInput = ProductToCategorySchema.parse({
-        id: request.query.menu as string,
-        categoryId: request.query.category,
-        productId: request.query.product,
-        day: request.query.day,
+        menuId: request.query.menu as string,
+        categoryId: request.query.category as string,
+        productId: request.query.product as string,
+        weekDay: request.query.day as string,
       }) as ProductToCategoryInput;
 
       const controller = makeCategoryController();

@@ -1,14 +1,13 @@
-import { SearchX } from 'lucide-react'
-import { Hypnosis } from 'react-cssfx-loading'
+import { Trash2 } from 'lucide-react'
 import styles from './styles.module.scss'
-import { useContext, useEffect } from 'react'
-import { MenuContext } from '@/context/menu'
-import { IProductInputDataResponse } from '@/atom/business'
+import { useEffect, useState } from 'react'
 import { MenuCategoryProps } from '@/utils/interfaces/menu'
-import { CategoryProps } from '@/utils/interfaces/category'
+import { CategoryProps, RemoveProduct } from '@/utils/interfaces/category'
 import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
-import { Product } from '@/components/product/types'
-import Trash from '@/components/atoms/trash'
+import { ProductProps } from '@/components/product/types'
+import ListItem from '@/components/listItem/Index'
+import { Action } from '@/components/listItem/types'
+import ConfirmDialog from '@/components/dialog'
 
 export interface Data {
   selectedMenu: Menu
@@ -17,21 +16,22 @@ export interface Data {
 }
 
 interface ITableProductsProps {
+  loading: boolean
   data: Data
   fetchMenuProducts: (payload: MenuCategoryProps) => Promise<void>
   menuProductList?: Menu
-  onClickView?: (product?: IProductInputDataResponse) => void
-  onClickDelete?: (product: Product) => void
-  removeEye?: boolean
+  onClickDelete: (id: RemoveProduct) => void
 }
 
 export default function MenuProductTable({
   data,
+  loading,
   menuProductList,
   fetchMenuProducts,
   onClickDelete,
 }: ITableProductsProps) {
-  const { loading } = useContext(MenuContext)
+  const [openDialog, setOpenDialog] = useState(false)
+  const [selectedInput, setSelectedInput] = useState<RemoveProduct | null>(null)
 
   useEffect(() => {
     if (
@@ -54,69 +54,68 @@ export default function MenuProductTable({
     data.selectedMenu,
   ])
 
+  const handleOpenDialog = (item: ProductProps) => {
+    setSelectedInput({
+      menuId: data.selectedMenu.menuId,
+      categoryId: data.selectedCategory.id!,
+      productId: item.id,
+      weekDay: data.currentDateTab!,
+    })
+    setOpenDialog(true)
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
+  }
+
+  const actions: Action<ProductProps>[] = [
+    {
+      actionClass: 'excluir',
+      label: 'Excluir',
+      icon: <Trash2 color="#fff" />,
+      onClick: (item) => {
+        handleOpenDialog(item)
+      },
+    },
+  ]
+
   return (
     <>
       <table className={styles.table}>
-        {loading ? (
-          <div
-            style={{
-              width: '100%',
-              height: '300px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Hypnosis color="#00A3E0" />
-          </div>
-        ) : (
-          <tbody className={styles.tbody}>
-            {menuProductList?.category?.length === 0 ? (
-              <div
-                style={{
-                  width: '100%',
-                  height: '300px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <SearchX size={80} color="#D96262" />
-              </div>
-            ) : (
-              <>
-                {menuProductList?.category?.map((menu: CategoryProps) => {
-                  const scheduleItems = menu.schedule || []
+        <tbody className={styles.tbody}>
+          <>
+            {menuProductList?.category?.map((menu: CategoryProps) => {
+              return (
+                <ListItem
+                  key={menu.id}
+                  loading={loading}
+                  actions={actions}
+                  dynamicFields={['name']}
+                  headers={['name']}
+                  itemList={menu.schedule as ProductProps[]}
+                />
+              )
+            })}
+          </>
+        </tbody>
 
-                  return scheduleItems.length === 0 ? (
-                    <div
-                      key={menu.id}
-                      style={{
-                        width: '100%',
-                        height: '300px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <SearchX size={80} color="#F56D15" />
-                    </div>
-                  ) : (
-                    scheduleItems.map((item) => (
-                      <tr className={styles.tr} key={item.id}>
-                        <td>{item.name}</td>
-                        <td>
-                          <Trash
-                            onClick={() => onClickDelete && onClickDelete(item)}
-                          />
-                        </td>
-                      </tr>
-                    ))
-                  )
-                })}
-              </>
-            )}
-          </tbody>
+        {openDialog && (
+          <ConfirmDialog
+            open={openDialog}
+            onClose={() => setOpenDialog(false)}
+            onConfirm={() => {
+              if (selectedInput) {
+                onClickDelete(selectedInput)
+                handleCloseDialog()
+                setSelectedInput(null)
+                fetchMenuProducts({
+                  menuId: data.selectedMenu.menuId,
+                  categoryId: data.selectedCategory.id!,
+                  weekDay: data.currentDateTab!,
+                })
+              }
+            }}
+          />
         )}
       </table>
     </>

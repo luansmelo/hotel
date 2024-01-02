@@ -44,6 +44,7 @@ export default function MenuMap() {
     menuProductList,
     setMenuProductList,
     handleAddCategoryToMenu,
+    handleRemoveProduct,
     handleSave,
     fetchMenuProducts,
   } = useContext(MenuContext)
@@ -201,34 +202,30 @@ export default function MenuMap() {
           />
         )}
 
-        {selectedMenu?.menuId && (
-          <Fade in={true} timeout={500}>
-            <div className={styles.DateTabsContainer}>
-              {selectedMenu.category.length && (
-                <Select
-                  errors={''}
-                  placeholder="Selecione a categoria"
-                  disabled={!selectedMenu.category.length}
-                  data={selectedMenu.category as CategoryInput[]}
-                  onClick={handleCategory}
-                  value={category}
-                />
-              )}
-              {selectedCategory.id && (
-                <DateTabs
-                  disabled={!selectedCategory.id}
-                  currentDateTab={currentDateTab!}
-                  setCurrentDateTab={setCurrentDateTab!}
-                />
-              )}
-            </div>
-          </Fade>
-        )}
+        <Fade in={true} timeout={500}>
+          <div className={styles.DateTabsContainer}>
+            <Select
+              errors={''}
+              placeholder="Selecione a categoria"
+              disabled={!selectedMenu?.menuId}
+              data={selectedMenu.category as CategoryInput[]}
+              onClick={handleCategory}
+              value={category}
+            />
+
+            <DateTabs
+              disabled={!selectedCategory.id}
+              currentDateTab={currentDateTab!}
+              setCurrentDateTab={setCurrentDateTab!}
+            />
+          </div>
+        </Fade>
 
         <div>
           <MenuProductTable
-            removeEye
+            loading={loading}
             fetchMenuProducts={fetchMenuProducts}
+            onClickDelete={handleRemoveProduct}
             {...{
               data: {
                 selectedMenu,
@@ -236,7 +233,6 @@ export default function MenuMap() {
                 currentDateTab: DATE_TABS[currentDateTab!],
               },
               menuProductList,
-              onClickDelete: () => console.log('remover'),
             }}
           />
         </div>

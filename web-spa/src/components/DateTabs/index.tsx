@@ -59,23 +59,13 @@ const DateTabs = memo(
       <div className={styles.DateTabsContainer}>
         <Tabs
           value={currentDateTab !== undefined ? currentDateTab : false}
-          disabled={disabled}
           onChange={handleChange}
-          aria-label="wrapped label tabs example"
           scrollButtons="auto"
           variant="fullWidth"
           sx={{
-            color: disabled
-              ? currentDateTab === DATE_TABS.DOMINGO
-                ? '#036B85'
-                : '#808080'
-              : '#fff',
+            color: disabled ? '#BDBDBD' : '#fff',
             '&.MuiTabs-root': {
-              color: disabled
-                ? currentDateTab === DATE_TABS.DOMINGO
-                  ? '#036B85'
-                  : '#808080'
-                : '#BDBDBD',
+              color: disabled ? '#BDBDBD !important' : '#BDBDBD',
             },
             '& .MuiTabs-flexContainer': {
               background: disabled ? '#272a34' : '#1F2128',
@@ -83,11 +73,7 @@ const DateTabs = memo(
             },
             '& .MuiButtonBase-root.Mui-selected': {
               background: disabled ? '#272a34' : '#036B85',
-              color: disabled
-                ? currentDateTab === DATE_TABS.DOMINGO
-                  ? '#808080'
-                  : '#BDBDBD'
-                : '#BDBDBD',
+              color: disabled ? '#BDBDBD !important' : '#BDBDBD',
             },
             '& .MuiButtonBase-root.Mui-selected:first-child': {
               borderTopLeftRadius: '8px',
@@ -109,17 +95,12 @@ const DateTabs = memo(
               label={date.name}
               disabled={disabled}
               sx={{
-                color: disabled
-                  ? currentDateTab === DATE_TABS.DOMINGO
-                    ? '#036B85'
-                    : '#808080'
-                  : '#BDBDBD',
+                ':disabled': {
+                  color: '#BDBDBD',
+                },
+                color: disabled ? '#BDBDBD' : '#BDBDBD',
                 '&:hover': {
-                  color: disabled
-                    ? currentDateTab === DATE_TABS.DOMINGO
-                      ? '#036B85'
-                      : '#808080'
-                    : '#FFF',
+                  color: disabled ? '#BDBDBD' : '#FFF',
                   background: disabled ? '#A9A9A9' : '#0488A6',
                 },
               }}
