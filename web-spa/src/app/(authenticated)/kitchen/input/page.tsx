@@ -1,13 +1,12 @@
 'use client'
 import { ChangeEvent, useCallback, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
-import InputList from '@/components/input/InputList'
 import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import { InputContext } from '@/context/input'
 import InputCreate from '@/components/input/InputCreate'
 import InputEdit from '@/components/input/InputEdit'
-import { Input, InputListProps } from '@/components/input/types'
+import { Input } from '@/components/input/types'
 import Dropdown from '@/components/dropDown'
 import { Boxes, ChefHat, PencilRuler, Trash2 } from 'lucide-react'
 import MeasurementUnitCreate from '@/components/input/MeasurementUnit'
@@ -17,7 +16,8 @@ import GroupCreate from '@/components/input/Group'
 import ConfirmDialog from '@/components/dialog'
 import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 import { Action } from '@/components/listItem/types'
-const Input: React.FC<InputListProps<Input>> = () => {
+import ListItem from '@/components/listItem/Index'
+const Input: React.FC<Input> = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
   const { handleMeasurementSave, measurementUnitList } = useContext(
@@ -35,6 +35,13 @@ const Input: React.FC<InputListProps<Input>> = () => {
     null
   )
   const [openDialog, setOpenDialog] = useState(false)
+  const dynamicFields: (keyof Input)[] = [
+    'name',
+    'unitPrice',
+    'measurementUnit',
+    'code',
+    'group',
+  ]
 
   const openEditModal = () => {
     setShowEditModal(true)
@@ -145,12 +152,12 @@ const Input: React.FC<InputListProps<Input>> = () => {
       </div>
 
       {hasResults && (
-        <InputList
-          openEditModal={openEditModal}
+        <ListItem
           loading={loading}
           itemList={filteredInputList}
           headers={TABLE_HEADERS_INPUT}
           actions={actions}
+          dynamicFields={dynamicFields}
         />
       )}
 
