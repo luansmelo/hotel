@@ -52,8 +52,10 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     setLoading(true)
     try {
       const res = await product.list()
-      setProductList(res?.data)
+
+      setProductList(res?.data || [])
     } catch (error) {
+      setProductList([])
       console.log(error)
     } finally {
       setLoading(false)

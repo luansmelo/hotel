@@ -20,7 +20,7 @@ const AddProductToCategory = memo(function AddProductToCategory({
   handleProductAddCategory,
   setCurrentDateTab,
 }: AddProductToCategoryProps) {
-  const { productList, setProductList } = useContext(ProductContext)
+  const { productList } = useContext(ProductContext)
   const [currProductList, setCurrProductList] = useState<ProductInputProps[]>(
     []
   )
@@ -71,7 +71,6 @@ const AddProductToCategory = memo(function AddProductToCategory({
     setAddedProducts([])
     setSelectedProducts(null)
     setCurrentDateTab(undefined)
-    setProductList([])
   }
 
   const handleList = useCallback(() => {
