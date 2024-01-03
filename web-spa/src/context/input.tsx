@@ -40,7 +40,7 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
     setLoading(true)
     try {
       const res = await input.list()
-      setInputList(res?.data)
+      setInputList(res?.data || [])
     } catch (error) {
       setInputList([])
       console.log(error)
@@ -56,12 +56,14 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
 
       const res = await input.handle(data)
 
-      if (res?.ok) {
+      if (!res?.ok) {
+        toast.error('Não foi possível criar novo insumo.')
+        setInputList([])
+      } else {
         toast.success('Insumo criado com sucesso!')
         await fetchInputList()
       }
     } catch (error) {
-      toast.error('Não foi possível criar novo insumo.')
       setInputList([])
     } finally {
       setLoading(false)
@@ -94,6 +96,8 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
       if (res.message === 'sucesso') {
         await fetchInputList()
         handleToastify('Insumo excluído com sucesso!', 'success')
+      } else {
+        handleToastify('Não foi possível excluir o insumo.', 'error')
       }
     } catch (error) {
       console.log(error)

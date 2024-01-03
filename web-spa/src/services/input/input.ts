@@ -27,7 +27,6 @@ export class InputService {
   async delete(id: string) {
     try {
       const response = await api.delete(`/input/${id}`)
-      console.log('RESPONSE', response)
       return response
     } catch (error) {
       console.log(error)

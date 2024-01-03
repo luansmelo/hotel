@@ -141,6 +141,8 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       if (res.message === 'sucesso') {
         handleToastify('Input removido do produto com sucesso!', 'success')
         await handleProductDetails(input.productId)
+      } else {
+        handleToastify('Não foi possível remover o input.', 'error')
       }
     } catch (error) {
       console.log('error', error)

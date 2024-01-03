@@ -50,7 +50,7 @@ export class CategoryService implements CategoryServiceContract {
       weekDay: addedProduct.weekDay,
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),
-    }))
+    }));
 
     await this.repository.addProductToCategory(products);
   }
