@@ -9,6 +9,7 @@ export interface AutoCompleteProps<T = unknown> {
   label: string
   disabled?: boolean
   data?: T[]
+  value?: string
   addSelectedItem: (value: string) => void
 }
 
@@ -21,6 +22,7 @@ const AutoComplete: FC<AutoCompleteProps<Item>> = ({
   label,
   data,
   disabled,
+  value,
   addSelectedItem,
 }) => {
   return (
@@ -28,7 +30,7 @@ const AutoComplete: FC<AutoCompleteProps<Item>> = ({
       size="small"
       disablePortal
       id="combo-box-demo"
-      value={null}
+      value={value || null}
       options={(data || []).map((item) => item.name)}
       disabled={disabled}
       sx={{
