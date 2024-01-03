@@ -101,7 +101,7 @@ function AddCategoryToMenu({
   const addSelectedMenu = (value: string) => {
     const selectedMenu = menuList?.find((menu) => menu.name === value)
     setSelectedMenu(selectedMenu as Menu)
-
+    console.log(selectedMenu, 'menu')
     if (selectedMenu) {
       const menuCategoryIds =
         selectedMenu.category?.map((category) => category.id) || []

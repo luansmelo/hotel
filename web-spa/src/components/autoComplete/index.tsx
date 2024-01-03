@@ -31,34 +31,27 @@ const AutoComplete: FC<AutoCompleteProps<Item>> = ({
       disablePortal
       id="combo-box-demo"
       value={value || null}
-      options={(data || []).map((item) => item.name)}
+      options={((Array.isArray(data) && data) || []).map((item) => item.name)}
       disabled={disabled}
       sx={{
         '& .MuiAutocomplete-inputRoot': {
           height: '40px',
           width: '100%',
           background: '#272a34',
-          borderColor: '#0488A6',
           color: '#BDBDBD',
         },
         width: '100%',
         '& .MuiAutocomplete-listbox li:hover': {
           background: '#0488A6',
         },
+        '& .MuiAutocomplete-popupIndicator': {
+          color: '#0488A6',
+        },
       }}
       renderInput={(params) => (
         <TextField
           {...params}
           label={label}
-          sx={{
-            color: '#BDBDBD',
-            '& fieldset': {
-              borderColor: '#0488A6',
-            },
-            '&:hover fieldset': {
-              borderColor: '#0488A6',
-            },
-          }}
           InputLabelProps={{
             style: {
               color: '#BDBDBD',

@@ -79,11 +79,12 @@ export default function Select({
               {placeholder}
             </MenuItem>
           )}
-          {data?.map((input) => (
-            <MenuItem key={input.id} value={input?.name}>
-              {input?.name}
-            </MenuItem>
-          ))}
+          {Array.isArray(data) &&
+            data?.map((input) => (
+              <MenuItem key={input.id} value={input?.name}>
+                {input?.name}
+              </MenuItem>
+            ))}
           errors={!!errors}
         </MSelect>
         <FormHelperText

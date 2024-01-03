@@ -124,7 +124,7 @@ export default function MenuMap() {
         <div className={styles.buttonsContainer}>
           <Select
             placeholder="Selecione o menu"
-            data={menuList!}
+            data={menuList! || []}
             onClick={handleMenu}
             value={menu}
             errors={''}
@@ -208,7 +208,7 @@ export default function MenuMap() {
               errors={''}
               placeholder="Selecione a categoria"
               disabled={!selectedMenu?.menuId}
-              data={selectedMenu.category as CategoryInput[]}
+              data={(selectedMenu?.category as CategoryInput[]) || []}
               onClick={handleCategory}
               value={category}
             />

@@ -54,9 +54,12 @@ const ListItem = <T extends { id: string }>({
           ) : (
             <>
               {paginatedItems?.map((item) => (
-                <ul key={item.id} className={styles.ul}>
+                <ul
+                  key={item.id + Math.random() + 'list-item'}
+                  className={styles.ul}
+                >
                   {dynamicFields.map((field) => (
-                    <li key={Number(field)}>{String(item[field])}</li>
+                    <li key={String(field)}>{String(item[field])}</li>
                   ))}
                   <div className={styles.iconContainer}>
                     {actions.map((action, index) => (
