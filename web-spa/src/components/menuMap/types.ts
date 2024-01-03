@@ -11,7 +11,7 @@ export interface MenuMapProps {
   categoryList?: CategoryProps[]
   handleSave?: (input: MenuCreateProps) => Promise<void>
   handleProductAddCategory?: (input: ProductOnCategory) => Promise<void>
-  handleCategoryToMenu?: (input: MenuToCategoryProps) => Promise<void>
+  handleCategoryToMenu?: (input: MenuToCategoryProps[]) => Promise<void>
   closeModal: () => void
 }
 

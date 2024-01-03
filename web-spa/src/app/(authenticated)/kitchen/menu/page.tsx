@@ -198,7 +198,7 @@ export default function MenuMap() {
             categoryList={categoryList}
             isOpenModel={openCategoryToMenu}
             closeModal={() => setOpenCategoryToMenu(false)}
-            handleProductAddCategory={handleAddCategoryToMenu}
+            handleCategoryToMenu={handleAddCategoryToMenu}
           />
         )}
 

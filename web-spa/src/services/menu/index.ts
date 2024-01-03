@@ -1,4 +1,3 @@
-import { InputContract } from '@/atom/business'
 import { API } from '@/services/api'
 import {
   MenuCategoryProps,
@@ -19,7 +18,7 @@ export class MenuService {
     }
   }
 
-  async addCategoryToMenu(input: MenuToCategoryProps) {
+  async addCategoryToMenu(input: MenuToCategoryProps[]) {
     try {
       const response = await api.post('/menu/add/category', input)
 
@@ -41,6 +40,7 @@ export class MenuService {
 
   async getMenu(input: MenuCategoryProps) {
     try {
+      console.log(input, 'input - menu service')
       const response = await api.get(
         `/menu/select/filter?menu=${input.menuId}&category=${input.categoryId}&day=${input.weekDay}`
       )

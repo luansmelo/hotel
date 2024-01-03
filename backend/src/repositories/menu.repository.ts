@@ -28,7 +28,7 @@ export class MenuRepository implements MenuRepositoryContract {
   }
 
   async getSelectedMenu(input: MenuProductInput): Promise<any | null> {
-    return this.db.menu.findUnique({
+    return this.db.menu.findFirst({
       where: {
         id: input.menuId,
       },
@@ -54,6 +54,8 @@ export class MenuRepository implements MenuRepositoryContract {
                   },
                   where: {
                     weekDay: input.day,
+                    categoryId: input.categoryId,
+                    menuId: input.menuId,
                   },
                 },
               },
@@ -76,15 +78,15 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async addCategoryToMenu(input: AddCategoryToMenuContract): Promise<void> {
-    await this.db.menuCategory.update({
-      where: {
-        id: input.menuId,
-      },
-      data: {
-        menuId: input.menuId,
-        categoryId: input.categoryId,
-      },
+  async addCategoryToMenu(input: AddCategoryToMenuContract[]): Promise<void> {
+    await this.db.menuCategory.createMany({
+      data: input.map((item) => ({
+        id: item.id,
+        menuId: item.menuId,
+        categoryId: item.categoryId,
+        created_at: new Date().toDateString(),
+        updated_at: new Date().toDateString(),
+      })),
     });
   }
 }

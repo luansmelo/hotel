@@ -48,22 +48,20 @@ export class MenuService implements MenuServiceContract {
     }));
   }
 
-  async addCategoryToMenu(input: AddCategoryToMenuInput): Promise<void> {
-    await this.getById(input.menuId);
-
-    const data = {
+  async addCategoryToMenu(input: AddCategoryToMenuInput[]): Promise<void> {
+    const data = input.map((item) => ({
       id: uuid(),
-      ...input,
+      ...item,
       created_at: new Date().toDateString(),
       updated_at: new Date().toDateString(),
-    };
+    }));
 
     return this.repository.addCategoryToMenu(data);
   }
 
   async getSelectedMenu(input: MenuProductInput) {
     const menu = await this.repository.getSelectedMenu(input);
-
+    console.log(menu);
     if (!menu) {
       throw new NotFoundError("Cardápio não encontrado");
     }

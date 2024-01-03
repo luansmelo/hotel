@@ -9,7 +9,6 @@ import {
 } from "../dto/menu.dto";
 import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
-import { Weekdays } from "../utils/enums/weekdays";
 
 const router = Router();
 const slug = "/menu";
@@ -34,12 +33,12 @@ router.post(
 router.post(
   "/add/category",
   authenticated,
-  validate(AddCategoryToMenuSchema),
+  
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddCategoryToMenuInput = AddCategoryToMenuSchema.parse(
+      const input: AddCategoryToMenuInput[] = AddCategoryToMenuSchema.parse(
         request.body
-      ) as AddCategoryToMenuInput;
+      ) as AddCategoryToMenuInput[];
 
       const controller = makeMenuController();
       await controller.addCategoryToMenu(input);

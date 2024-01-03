@@ -54,16 +54,18 @@ export const MenuSchema = zod.object({
   }),
 });
 
-export const AddCategoryToMenuSchema = zod.object({
-  menuId: zod.string({
-    required_error: "O id do menu é obrigatório",
-    invalid_type_error: "O id do menu precisa ser uma string",
-  }),
-  categoryId: zod.string({
-    required_error: "O id da categoria é obrigatório",
-    invalid_type_error: "O id da categoria precisa ser uma string",
-  }),
-});
+export const AddCategoryToMenuSchema = zod.array(
+  zod.object({
+    menuId: zod.string({
+      required_error: "O id do menu é obrigatório",
+      invalid_type_error: "O id do menu precisa ser uma string",
+    }),
+    categoryId: zod.string({
+      required_error: "O id da categoria é obrigatório",
+      invalid_type_error: "O id da categoria precisa ser uma string",
+    }),
+  })
+);
 
 export const MenuProductSchema = zod.object({
   menuId: zod.string({

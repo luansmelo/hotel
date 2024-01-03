@@ -20,7 +20,7 @@ export class MenuController {
     return this.service.getById(id);
   }
 
-  async addCategoryToMenu(input: AddCategoryToMenuInput) {
+  async addCategoryToMenu(input: AddCategoryToMenuInput[]) {
     return this.service.addCategoryToMenu(input);
   }
 

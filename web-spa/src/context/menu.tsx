@@ -26,7 +26,7 @@ interface MenuContract {
   handleSave: (menu: MenuCreateProps) => Promise<void>
   setMenuProductList: React.Dispatch<React.SetStateAction<Menu>>
   fetchMenuProducts: (input: MenuCategoryProps) => Promise<void>
-  handleAddCategoryToMenu: (input: MenuToCategoryProps) => Promise<void>
+  handleAddCategoryToMenu: (input: MenuToCategoryProps[]) => Promise<void>
   handleRemoveProduct: (input: RemoveProduct) => Promise<void>
   fetchMenuList: () => Promise<void>
 }
@@ -85,7 +85,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const handleAddCategoryToMenu = async (input: MenuToCategoryProps) => {
+  const handleAddCategoryToMenu = async (input: MenuToCategoryProps[]) => {
     try {
       const response = await menu.addCategoryToMenu(input)
 
@@ -95,7 +95,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     } catch (error) {
       console.log(error)
     } finally {
-      fetchMenuList()
+      setLoading(false)
     }
   }
 
@@ -107,12 +107,9 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
       }
     } catch (error) {
       console.log(error)
+      setMenuProductList({} as Menu)
     } finally {
-      fetchMenuProducts({
-        menuId: input.menuId,
-        categoryId: input.categoryId,
-        weekDay: input.weekDay,
-      })
+      setLoading(false)
     }
   }
 
