@@ -3,7 +3,6 @@ import {
   ProductToCategoryInput,
   CategoryContract,
   ProductToCategoryContract,
-  ProductCategoryInput,
   ProductCategoryContract,
 } from "../dto/category.dto";
 import { Weekdays } from "../utils/enums/weekdays";
@@ -71,7 +70,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
   }
 
   async deleteProduct(input: ProductToCategoryInput): Promise<void> {
-    console.log(input)
+    console.log(input);
     await this.db.categoryProductSchedule.deleteMany({
       where: {
         menuId: input.id,

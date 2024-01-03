@@ -29,19 +29,31 @@ const Dropdown: React.FC<DropdownProps> = ({ actions, onClose, anchorEl }) => {
     >
       {actions.map((action, index) => (
         <MenuItem
-          className={styles.menuItem}
+          className={`${styles.menuItem} ${
+            action.disabled ? styles.disabledItem : ''
+          }`}
           key={index}
           sx={{
             background: '#30333F',
             width: '300px',
           }}
-          onClick={action.onClick}
+          onClick={() => {
+            if (!action.disabled) {
+              action.onClick()
+            }
+          }}
         >
           {action.icon && (
             <IconButton
-              className={styles.menuItemIcon}
+              className={`${styles.menuItemIcon} ${
+                action.disabled ? styles.disabledItemIcon : ''
+              }`}
               color="inherit"
-              onClick={action.onClick}
+              onClick={() => {
+                if (!action.disabled) {
+                  action.onClick()
+                }
+              }}
             >
               {action.icon}
             </IconButton>

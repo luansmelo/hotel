@@ -5,6 +5,13 @@
     background-color: #0488A6;
   }
 
+  &.disabledItem {
+    background-color: #616161;
+    color: #757575;
+    pointer-events: none;
+    cursor: not-allowed; 
+  }
+
   .menuItemText {
     text-align: left;
     color: #BDBDBD;
@@ -12,5 +19,13 @@
 
   .menuItemIcon {
     color: #BDBDBD;
+  }
+
+  &.disabledItemIcon {
+    color: #757575;
+  }
+
+  &:hover.disabledItem {
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.8);
   }
 }

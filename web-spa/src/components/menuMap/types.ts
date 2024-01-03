@@ -9,6 +9,7 @@ export interface MenuMapProps {
   isOpenModel: boolean
   menuList?: MenuCreateProps[]
   categoryList?: CategoryProps[]
+  setCurrentDateTab?: Dispatch<SetStateAction<DATE_TABS | undefined>>
   handleSave?: (input: MenuCreateProps) => Promise<void>
   handleProductAddCategory?: (input: ProductOnCategory) => Promise<void>
   handleCategoryToMenu?: (input: MenuToCategoryProps[]) => Promise<void>
@@ -17,9 +18,9 @@ export interface MenuMapProps {
 
 export interface AddProductToCategoryProps {
   day: string
-  setCurrentDateTab: Dispatch<SetStateAction<DATE_TABS | undefined>>
   isOpenModel: boolean
   menuProductList: Menu
+  setCurrentDateTab: Dispatch<SetStateAction<DATE_TABS | undefined>>
   closeModal: () => void
 
   handleProductAddCategory: (input: ProductOnCategory) => Promise<void>

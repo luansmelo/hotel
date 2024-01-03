@@ -1,6 +1,7 @@
 interface Action {
   label: string
   onClick: () => void
+  disabled?: boolean
   icon?: React.ReactNode
 }
 

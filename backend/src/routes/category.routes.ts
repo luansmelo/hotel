@@ -9,7 +9,6 @@ import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
 import {
   CategorySchema,
-  ProductCategorySchema,
   ProductToCategorySchema,
 } from "../validation/category.validation";
 
@@ -56,7 +55,7 @@ router.post(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: ProductCategoryInput = request.body;
-      console.log("INPUT", input, "controller");
+
       const controller = makeCategoryController();
       await controller.addProductToCategory(input);
 
@@ -89,7 +88,7 @@ router.delete(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: ProductToCategoryInput = ProductToCategorySchema.parse({
-        menuId: request.query.menu as string,
+        id: request.query.menu as string,
         categoryId: request.query.category as string,
         productId: request.query.product as string,
         weekDay: request.query.day as string,

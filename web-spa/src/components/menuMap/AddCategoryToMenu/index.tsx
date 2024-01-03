@@ -26,6 +26,7 @@ const AddCategoryToMenu = ({
   menuList,
   categoryList,
   closeModal,
+  setCurrentDateTab,
   handleCategoryToMenu,
 }: MenuMapProps) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryProps>(
@@ -43,7 +44,13 @@ const AddCategoryToMenu = ({
     setSelectedCategory({} as CategoryProps)
     setSelectedMenu({} as Menu)
     setAvailableCategories([])
-  }, [setSelectedCategory, setSelectedMenu, setAvailableCategories])
+    setCurrentDateTab!(undefined)
+  }, [
+    setSelectedCategory,
+    setSelectedMenu,
+    setAvailableCategories,
+    setCurrentDateTab,
+  ])
 
   useEffect(() => {
     if (isOpenModel) {

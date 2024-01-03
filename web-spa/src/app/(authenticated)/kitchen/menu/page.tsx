@@ -108,7 +108,7 @@ export default function MenuMap() {
   }
   const handleMenu = (e: FormInputEvent) => {
     const menuFind = menuList.find((menu) => menu.name === e.target.value)
-
+    setCurrentDateTab(undefined)
     setSelectedMenu(menuFind as Menu)
     resetModalState()
     setMenu(e.target.value)
@@ -154,6 +154,11 @@ export default function MenuMap() {
                 label: 'Adicionar produto a categoria',
                 onClick: openAddProductToCategory,
                 icon: <Soup />,
+                disabled: !(
+                  selectedMenu?.menuId &&
+                  currentDateTab &&
+                  selectedCategory.id
+                ),
               },
             ]}
             onClose={handleCloseDropdown}
@@ -197,6 +202,7 @@ export default function MenuMap() {
             menuList={menuList}
             categoryList={categoryList}
             isOpenModel={openCategoryToMenu}
+            setCurrentDateTab={setCurrentDateTab}
             closeModal={() => setOpenCategoryToMenu(false)}
             handleCategoryToMenu={handleAddCategoryToMenu}
           />
