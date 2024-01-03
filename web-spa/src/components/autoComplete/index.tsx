@@ -7,6 +7,7 @@ import { FC } from 'react'
 
 export interface AutoCompleteProps<T = unknown> {
   label: string
+  disabled?: boolean
   data?: T[]
   addSelectedItem: (value: string) => void
 }
@@ -19,6 +20,7 @@ export interface Item {
 const AutoComplete: FC<AutoCompleteProps<Item>> = ({
   label,
   data,
+  disabled,
   addSelectedItem,
 }) => {
   return (
@@ -28,6 +30,7 @@ const AutoComplete: FC<AutoCompleteProps<Item>> = ({
       id="combo-box-demo"
       value={null}
       options={(data || []).map((item) => item.name)}
+      disabled={disabled}
       sx={{
         '& .MuiAutocomplete-inputRoot': {
           height: '40px',

@@ -10,6 +10,7 @@ export interface GenericListProps<T extends { id: string }> {
   loading: boolean
   itemList?: T[]
   headers: string[]
+  height?: number
   actions: Action<T>[]
   dynamicFields: (keyof T)[]
 }
@@ -20,6 +21,7 @@ const ListItem = <T extends { id: string }>({
   headers,
   actions,
   dynamicFields,
+  height = 400,
 }: GenericListProps<T>) => {
   const itemsPerPage = 10
   const [currentPage, setCurrentPage] = useState(0)
@@ -41,7 +43,10 @@ const ListItem = <T extends { id: string }>({
           ))}
         </div>
       ) : (
-        <div className={styles.container}>
+        <div
+          className={styles.container}
+          style={{ minHeight: height, maxHeight: height }}
+        >
           {paginatedItems?.length === 0 ? (
             <div className={styles.noData}>
               <SearchX size={80} color="#F56D15" />

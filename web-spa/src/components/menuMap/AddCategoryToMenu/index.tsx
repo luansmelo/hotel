@@ -1,11 +1,15 @@
 import Modal from '@/components/modal/Modal'
 import { MenuMapProps } from '../types'
-import { MenuToCategoryProps } from '@/utils/interfaces/menu'
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import AutoComplete from '@/components/autoComplete'
 import { CategoryProps } from '@/utils/interfaces/category'
 import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
-import AddButton from '@/components/addButton'
+import ListItem from '@/components/listItem/Index'
+import { Action } from '@/components/listItem/types'
+import { Trash2 } from 'lucide-react'
+
+import { handleToastify } from '@/utils/toastify'
+import styles from './styles.module.scss'
 
 function AddCategoryToMenu({
   isOpenModel,
@@ -18,11 +22,28 @@ function AddCategoryToMenu({
     {} as CategoryProps
   )
   const [selectedMenu, setSelectedMenu] = useState<Menu>({} as Menu)
+  const [selectedItems, setSelectedItems] = useState([])
+  const [availableCategories, setAvailableCategories] = useState<
+    CategoryProps[]
+  >([])
+
+  useEffect(() => {
+    if (isOpenModel) {
+      clearFields()
+    }
+  }, [isOpenModel])
+
   const handleModalClose = () => {
     closeModal()
   }
 
-  const addCategory = async (input: MenuToCategoryProps) => {
+  const clearFields = () => {
+    setSelectedCategory({} as CategoryProps)
+    setSelectedMenu({} as Menu)
+    setAvailableCategories([])
+  }
+
+  const addCategory = async () => {
     try {
       if (handleCategoryToMenu) {
         await handleCategoryToMenu(input)
@@ -30,15 +51,54 @@ function AddCategoryToMenu({
     } catch (error) {
       console.log(error)
     } finally {
-      setSelectedCategory({} as CategoryProps)
-      setSelectedMenu({} as Menu)
+      clearFields()
       handleModalClose()
+    }
+  }
+
+  const addItemToList = () => {
+    // Lógica para adicionar à lista
+    if (selectedMenu && selectedCategory) {
+      // Verifique se a categoria já está na lista
+      const categoryExists = selectedItems.some(
+        (item) => item.categoryId === selectedCategory.id
+      )
+
+      if (categoryExists) {
+        handleToastify('Categoria já adicionada ao menu', 'warning')
+        return
+      }
+
+      const newItem = {
+        menuId: selectedMenu.menuId,
+        categoryId: selectedCategory.id,
+        name: selectedMenu.name,
+        categoryName: selectedCategory.name,
+      }
+
+      setSelectedItems([...selectedItems, newItem])
+      setSelectedCategory({} as CategoryProps)
+    } else {
+      handleToastify('Selecione um item', 'warning')
     }
   }
 
   const addSelectedMenu = (value: string) => {
     const selectedMenu = menuList?.find((menu) => menu.name === value)
     setSelectedMenu(selectedMenu as Menu)
+
+    if (selectedMenu) {
+      const menuCategoryIds =
+        selectedMenu.category?.map((category) => category.id) || []
+      const menuCategories =
+        categoryList?.filter(
+          (category) =>
+            !menuCategoryIds.includes(category.id) &&
+            !selectedItems.some((item) => item.categoryId === category.id)
+        ) || []
+
+      setAvailableCategories(menuCategories)
+    }
   }
 
   const addSelectedCategory = (value: string) => {
@@ -48,38 +108,49 @@ function AddCategoryToMenu({
     setSelectedCategory(selectedCategory as CategoryProps)
   }
 
+  const actions: Action<Menu>[] = [
+    {
+      actionClass: 'excluir',
+      label: 'Excluir',
+      icon: <Trash2 color="#FFF" size={20} />,
+      onClick: (item) => {},
+    },
+  ]
+
   return (
     <Modal open={isOpenModel} onClose={closeModal}>
-      <div>
-        <div>
+      <div className={styles.containerWrapper}>
+        <div className={styles.container}>
           <AutoComplete
             label="Menu"
-            data={menuList!}
+            data={menuList}
             addSelectedItem={addSelectedMenu}
           />
-        </div>
-        <div>
+
           <AutoComplete
+            disabled={!selectedMenu?.menuId}
             label="Categorias"
-            data={categoryList!}
+            data={availableCategories!}
             addSelectedItem={addSelectedCategory}
           />
-        </div>
 
-        <div>
-          <p>Lista de produtos:</p>
-          <div>{selectedMenu?.category?.map((category) => category.name)}</div>
-        </div>
+          <button
+            className={styles.button}
+            onClick={addItemToList}
+            disabled={!selectedMenu?.menuId || !selectedCategory?.id}
+          >
+            Adicionar à Lista
+          </button>
 
-        <AddButton
-          text="Adicionar"
-          onClickButton={() =>
-            addCategory({
-              menuId: selectedMenu.menuId,
-              categoryId: selectedCategory.id!,
-            })
-          }
-        />
+          <ListItem
+            height={300}
+            loading={false}
+            actions={actions}
+            headers={['Menu', 'Categoria']}
+            dynamicFields={['name', 'categoryName']}
+            itemList={selectedItems}
+          />
+        </div>
       </div>
     </Modal>
   )

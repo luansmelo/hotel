@@ -6,6 +6,37 @@
 }
 
 .custom-select .MuiMenu-list {
-  background-color: #272a34; /* Cor desejada de fundo */
-  /* Outros estilos... */
+  background-color: #272a34; 
+}
+
+.container {
+  width: 600px;
+  padding: 8px 16px;
+  & > * {
+    margin-bottom: 10px;  // Adicione margem inferior para criar espaçamento entre os itens
+  }
+} 
+
+.containerWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  width: 100%;
+  background-color: #04B2D9;
+  color: #FFFFFF;
+  outline: 0;
+  border: 0px;
+  height: 40px;
+  border-radius: 8px;
+  &:hover {
+    background-color: darken(#04B2D9, 10%);
+  }
+
+  &:disabled {
+    background-color: #BDBDBD;
+    cursor: not-allowed;
+  }
+
 }
