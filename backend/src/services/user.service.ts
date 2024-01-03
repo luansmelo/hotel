@@ -38,6 +38,7 @@ export class UserService implements UserServiceContract {
         id: userCreated.id,
         name: userCreated.name,
         email: userCreated.email,
+        role: userCreated.role,
       },
       access_token: JwtUtils.generateToken(data.id),
     };
@@ -57,6 +58,7 @@ export class UserService implements UserServiceContract {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
       access_token: JwtUtils.generateToken(user.id),
     };

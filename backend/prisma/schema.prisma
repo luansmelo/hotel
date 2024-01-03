@@ -1,130 +1,136 @@
-  // This is your Prisma schema file,
-  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-  generator client {
-    provider = "prisma-client-js"
-  }
+generator client {
+  provider = "prisma-client-js"
+}
 
-  datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
-  }
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
 
-  model User {
-    id         String @id @default(uuid())
-    name       String
-    email      String @unique
-    password   String
-    created_at String
-    updated_at String
+model User {
+  id         String @id @default(uuid())
+  name       String
+  email      String @unique
+  password   String
+  role       Role   @default(USER)
+  created_at String
+  updated_at String
 
-    @@map("user")
-  }
+  @@map("user")
+}
 
-  model Product {
-    id                      String                    @id @default(uuid())
-    name                    String                    @unique
-    description             String                    @db.VarChar(1000)
-    inputs                  InputsOnProducts[]
-    categoryProductSchedule CategoryProductSchedule[]
-    created_at              String
-    updated_at              String
+model Product {
+  id                      String                    @id @default(uuid())
+  name                    String                    @unique
+  description             String                    @db.VarChar(1000)
+  inputs                  InputsOnProducts[]
+  categoryProductSchedule CategoryProductSchedule[]
+  created_at              String
+  updated_at              String
 
-    @@map("product")
-  }
+  @@map("product")
+}
 
-  model InputsOnProducts {
-    id              String  @id @default(uuid())
-    productId       String
-    inputId         String
-    name            String
-    measurementUnit String
-    grammage        Float
-    input           Input   @relation(fields: [inputId], references: [id])
-    product         Product @relation(fields: [productId], references: [id])
-    created_at      String
-    updated_at      String
+model InputsOnProducts {
+  id              String  @id @default(uuid())
+  productId       String
+  inputId         String
+  name            String
+  measurementUnit String
+  grammage        Float
+  input           Input   @relation(fields: [inputId], references: [id])
+  product         Product @relation(fields: [productId], references: [id])
+  created_at      String
+  updated_at      String
 
-    @@map("inputsOnProducts")
-  }
+  @@map("inputsOnProducts")
+}
 
-  model Input {
-    id              String             @id @default(uuid())
-    name            String
-    code            String             @unique
-    unitPrice       Float
-    group           String
-    measurementUnit String
-    products        InputsOnProducts[]
-    created_at      String
-    updated_at      String
+model Input {
+  id              String             @id @default(uuid())
+  name            String
+  code            String             @unique
+  unitPrice       Float
+  group           String
+  measurementUnit String
+  products        InputsOnProducts[]
+  created_at      String
+  updated_at      String
 
-    @@map("input")
-  }
+  @@map("input")
+}
 
-  model Menu {
-    id                      String                    @id @default(uuid())
-    name                    String
-    created_at              String
-    updated_at              String
-    menuCategory            MenuCategory[]
-    categoryProductSchedule CategoryProductSchedule[]
+model Menu {
+  id                      String                    @id @default(uuid())
+  name                    String
+  created_at              String
+  updated_at              String
+  menuCategory            MenuCategory[]
+  categoryProductSchedule CategoryProductSchedule[]
 
-    @@map("menu")
-  }
+  @@map("menu")
+}
 
-  model MenuCategory {
-    id         String   @id @default(uuid())
-    menuId     String
-    categoryId String
-    menu       Menu     @relation(fields: [menuId], references: [id])
-    category   Category @relation(fields: [categoryId], references: [id])
-    created_at String
-    updated_at String
+model MenuCategory {
+  id         String   @id @default(uuid())
+  menuId     String
+  categoryId String
+  menu       Menu     @relation(fields: [menuId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+  created_at String
+  updated_at String
 
-    @@map("menuCategory")
-  }
+  @@map("menuCategory")
+}
 
-  model CategoryProductSchedule {
-    id         String   @id @default(uuid())
-    menuId     String
-    categoryId String
-    productId  String
-    weekDay    String
-    menu       Menu     @relation(fields: [menuId], references: [id])
-    category   Category @relation(fields: [categoryId], references: [id])
-    product    Product  @relation(fields: [productId], references: [id])
-    created_at String
-    updated_at String
+model CategoryProductSchedule {
+  id         String   @id @default(uuid())
+  menuId     String
+  categoryId String
+  productId  String
+  weekDay    String
+  menu       Menu     @relation(fields: [menuId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+  created_at String
+  updated_at String
 
-    @@map("categoryProductSchedule")
-  }
+  @@map("categoryProductSchedule")
+}
 
-  model Category {
-    id                      String                    @id @default(uuid())
-    name                    String
-    categoryProductSchedule CategoryProductSchedule[]
-    menus                   MenuCategory[]
-    created_at              String
-    updated_at              String
+model Category {
+  id                      String                    @id @default(uuid())
+  name                    String
+  categoryProductSchedule CategoryProductSchedule[]
+  menus                   MenuCategory[]
+  created_at              String
+  updated_at              String
 
-    @@map("category")
-  }
+  @@map("category")
+}
 
-  model Group {
-    id         String @id @default(uuid())
-    name       String @unique
-    created_at String
-    updated_at String
+model Group {
+  id         String @id @default(uuid())
+  name       String @unique
+  created_at String
+  updated_at String
 
-    @@map("group")
-  }
+  @@map("group")
+}
 
-  model MeasurementUnit {
-    id         String @id @default(uuid())
-    name       String @unique
-    created_at String
-    updated_at String
+model MeasurementUnit {
+  id         String @id @default(uuid())
+  name       String @unique
+  created_at String
+  updated_at String
 
-    @@map("measurementUnit")
-  }
+  @@map("measurementUnit")
+}
+
+enum Role {
+  USER
+  ADMIN
+}

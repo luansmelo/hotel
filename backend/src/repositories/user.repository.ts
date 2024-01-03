@@ -1,4 +1,4 @@
-import { UserData } from "../dto/user.dto";
+import { UserData, UserDataContract } from "../dto/user.dto";
 import { UserRepositoryContract } from "../utils/contracts/user-contract";
 import { PrismaClient } from "@prisma/client";
 
@@ -9,7 +9,7 @@ export class UserRepository implements UserRepositoryContract {
       data: input,
     });
   }
-  async getByEmail(email: string): Promise<UserData> {
+  async getByEmail(email: string): Promise<UserDataContract> {
     const db = await this.db.user.findUnique({ where: { email } });
 
     return db;

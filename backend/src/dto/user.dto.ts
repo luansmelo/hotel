@@ -7,6 +7,14 @@ export interface UserData {
   updated_at: string;
 }
 
+export interface UserDataContract {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
 export interface UserContractInput {
   name: string;
   email: string;

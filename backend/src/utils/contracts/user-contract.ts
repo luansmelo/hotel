@@ -1,8 +1,13 @@
-import { UserContractInput, UserData, UserLoginInput } from "../../dto/user.dto";
+import {
+  UserContractInput,
+  UserData,
+  UserDataContract,
+  UserLoginInput,
+} from "../../dto/user.dto";
 
 export interface UserRepositoryContract {
-  save(input: UserData): Promise<UserData>;
-  getByEmail(email: string): Promise<UserData>;
+  save(input: UserData): Promise<UserDataContract>;
+  getByEmail(email: string): Promise<UserDataContract>;
 }
 
 export interface UserServiceContract {
