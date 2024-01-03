@@ -40,11 +40,7 @@ export default function InputProductDetailModal({
   const calculateTotalCost = () => {
     return productDetail?.inputs
       ?.reduce((totalCost: number, input: any) => {
-        const {
-          input: { unitPrice },
-        } = input
-
-        const validUnitPrice = Number(unitPrice)
+        const validUnitPrice = Number(input.unitPrice)
         return isNaN(validUnitPrice) ? totalCost : totalCost + validUnitPrice
       }, 0)
       .toFixed(2)
@@ -101,8 +97,8 @@ export default function InputProductDetailModal({
                               <td>
                                 {input.grammage} {input.measurementUnit}
                               </td>
-                              <td>{input.input.unitPrice}</td>
-                              <td>{input.input.unitPrice}</td>
+                              <td>{input.unitPrice}</td>
+                              <td>{input.unitPrice}</td>
                             </tr>
                           ))}
                         </tbody>

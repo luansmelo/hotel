@@ -26,18 +26,18 @@ export class ProductRepository implements ProductRepositoryContract {
     return db;
   }
 
-  async getAll(): Promise<ProductContract[] | null> {
+  async getAll() {
     const db = await this.db.product.findMany({
       include: {
         inputs: {
           select: {
             id: true,
-            name: true,
             measurementUnit: true,
             grammage: true,
             input: {
               select: {
                 id: true,
+                name: true,
                 code: true,
                 unitPrice: true,
                 group: true,
@@ -57,12 +57,12 @@ export class ProductRepository implements ProductRepositoryContract {
         inputs: {
           select: {
             id: true,
-            name: true,
             measurementUnit: true,
             grammage: true,
             input: {
               select: {
                 id: true,
+                name: true,
                 code: true,
                 unitPrice: true,
                 group: true,
@@ -111,7 +111,6 @@ export class ProductRepository implements ProductRepositoryContract {
     const data = input.input.map((inputItem) => ({
       productId: input.productId,
       inputId: inputItem.id as string,
-      name: inputItem.name,
       measurementUnit: inputItem.measurementUnit,
       grammage: inputItem.grammage,
       created_at: input.created_at,

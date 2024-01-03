@@ -38,7 +38,6 @@ model InputsOnProducts {
   id              String  @id @default(uuid())
   productId       String
   inputId         String
-  name            String
   measurementUnit String
   grammage        Float
   input           Input   @relation(fields: [inputId], references: [id])

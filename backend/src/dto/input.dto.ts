@@ -11,7 +11,6 @@ export interface InputContract {
 
 export interface Input {
   id: string;
-  name: string;
   measurementUnit: string;
   grammage: number;
 }

@@ -4,8 +4,8 @@ import {
 } from "../utils/contracts/products-contract";
 import {
   AddInputToProduct,
-  AddInputToProductData,
   ProductInput,
+  ProductInputRemove,
   UpdatedProductInfo,
 } from "../dto/product.dto";
 import { NotFoundError, UnauthorizedError } from "../errors/httpErrors";
@@ -47,13 +47,45 @@ export class ProductService implements ProductServiceContract {
   }
 
   async getAll(): Promise<any> {
-    return this.repository.getAll();
+    const predefinedProducts = await this.repository.getAll();
+
+    const processedProducts = predefinedProducts.map((predefinedProduct) => ({
+      id: predefinedProduct.id,
+      name: predefinedProduct.name,
+      description: predefinedProduct.description,
+      inputs: predefinedProduct.inputs.map((input) => ({
+        id: input.input.id,
+        grammage: input.grammage,
+        measurementUnit: input.measurementUnit,
+        ...input.input,
+      })),
+    }));
+
+    return processedProducts;
   }
 
   async getPredefinedProduct(id: string) {
     await this.getById(id);
 
-    return this.repository.getPredefinedProduct(id);
+    const predefinedProduct = await this.repository.getPredefinedProduct(id);
+
+    if (!predefinedProduct) {
+      throw new NotFoundError("Produto não encontrado");
+    }
+
+    const processedProduct = {
+      id: predefinedProduct.id,
+      name: predefinedProduct.name,
+      description: predefinedProduct.description,
+      inputs: predefinedProduct.inputs.map((input) => ({
+        id: input.input.id,
+        grammage: input.grammage,
+        measurementUnit: input.measurementUnit,
+        ...input.input,
+      })),
+    };
+
+    return processedProduct;
   }
 
   async deleteById(id: string): Promise<void> {
@@ -67,7 +99,7 @@ export class ProductService implements ProductServiceContract {
 
     const inputIdsToAdd = input.input.map((i) => i.id);
     const inputOnProduct = product.inputs.some((productInput) =>
-      inputIdsToAdd.includes(productInput.input.id)
+      inputIdsToAdd.includes(productInput.id)
     );
 
     if (inputOnProduct) {
@@ -93,7 +125,7 @@ export class ProductService implements ProductServiceContract {
     return this.repository.updatePredefinedProduct(id, updatedInfo);
   }
 
-  async removeInputFromProduct(input: AddInputToProductData): Promise<void> {
+  async removeInputFromProduct(input: ProductInputRemove): Promise<void> {
     await this.getById(input.productId);
 
     return this.repository.removeInputFromProduct(input);
