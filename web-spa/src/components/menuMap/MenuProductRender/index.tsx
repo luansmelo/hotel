@@ -19,7 +19,7 @@ interface ITableProductsProps {
   loading: boolean
   data: Data
   fetchMenuProducts: (payload: MenuCategoryProps) => Promise<void>
-  menuProductList?: Menu
+  menuProductList?: MenuCategoryProps
   onClickDelete: (id: RemoveProduct) => void
 }
 
@@ -34,19 +34,13 @@ export default function MenuProductTable({
   const [selectedInput, setSelectedInput] = useState<RemoveProduct | null>(null)
 
   useEffect(() => {
-    if (
-      data.currentDateTab !== undefined &&
-      data.selectedMenu &&
-      data.selectedCategory
-    ) {
-      const payload = {
-        menuId: data.selectedMenu.menuId || '',
-        categoryId: data.selectedCategory.id || '',
-        weekDay: data.currentDateTab || '',
-      }
-
-      fetchMenuProducts(payload)
+    const payload = {
+      menuId: data.selectedMenu.menuId || '',
+      categoryId: data.selectedCategory.id || '',
+      weekDay: data.currentDateTab || '',
     }
+
+    fetchMenuProducts(payload)
   }, [
     fetchMenuProducts,
     data.currentDateTab,

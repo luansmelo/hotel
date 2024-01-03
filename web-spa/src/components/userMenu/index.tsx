@@ -21,9 +21,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ children, name }) => {
   return (
     <div>
       <Tooltip title="Clique aqui!">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+        <IconButton onClick={handleOpenUserMenu} sx={{ p: 2 }}>
           <Avatar
-            sx={{ width: 44, height: 44 }}
+            sx={{ width: 28, height: 28 }}
             alt="Remy Sharp"
             src="/broken-image.jpg"
           >

@@ -10,10 +10,10 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <main className={styles.main}>
-      <Menu />
+      <Header />
 
       <div className={styles.contentAndTopBar}>
-        <Header />
+        <Menu />
 
         <div className={styles.content}>{children}</div>
       </div>

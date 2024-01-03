@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 200px;
-
+  width: 260px;
+  // min-width: 260px;
   &.minimized {
-    width: 60px;
+    width: 90px;
   }
 }
 
@@ -31,8 +31,9 @@
   flex-direction: column;
   height: 100%;
   flex-shrink: 0;
-  background: #30333F;
-  border-radius: 10px;
+  background: #1F2128;
+  border-right: 1px solid #636168;
+  // border-radius: 10px;
 }
 
 .menuButtonContainer {

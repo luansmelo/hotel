@@ -9,7 +9,6 @@ import {
   ChevronRightCircle,
   ChevronLeftCircle,
 } from 'lucide-react'
-import Image from 'next/image'
 import styles from './menu.module.scss'
 import MenuButton from '../button/MenuButton'
 import { useState } from 'react'
@@ -36,19 +35,7 @@ const Menu: React.FC = () => {
               <ChevronLeftCircle size={18} />
             )}
           </div>
-          {!isMinimized && (
-            <div className={styles.imageContainer}>
-              <Image
-                src={'/chef-hat.png'}
-                alt="Logo"
-                width={80}
-                height={80}
-                quality={100}
-                layout="intrinsic"
-              />
-            </div>
-          )}
-          <Separator />
+
           <div className={styles.menuButtonContainer}>
             <MenuButton
               Icon={Home}

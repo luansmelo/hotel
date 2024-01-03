@@ -16,6 +16,7 @@ import MenuProductTable from '@/components/menuMap/MenuProductRender'
 import { Plus, Newspaper, MenuSquare, Soup } from 'lucide-react'
 import { FormInputEvent } from '@/hooks/useForm'
 import AddCategoryToMenu from '@/components/menuMap/AddCategoryToMenu'
+import { MenuCategoryProps } from '@/utils/interfaces/menu'
 
 export interface Menu {
   menuId: string
@@ -104,7 +105,7 @@ export default function MenuMap() {
     setSelectedCategory({} as CategoryInput)
     setCategory('')
 
-    setMenuProductList({} as Menu)
+    setMenuProductList({} as MenuCategoryProps)
   }
   const handleMenu = (e: FormInputEvent) => {
     const menuFind = menuList.find((menu) => menu.name === e.target.value)
@@ -115,9 +116,14 @@ export default function MenuMap() {
   }
 
   useEffect(() => {
-    setMenuProductList({} as Menu)
+    setMenuProductList({} as MenuCategoryProps)
   }, [setMenuProductList])
-
+  console.log(
+    !(selectedMenu?.menuId && currentDateTab && selectedCategory.id),
+    selectedMenu?.menuId,
+    currentDateTab,
+    selectedCategory.id
+  )
   return (
     <Fade in={true} timeout={500}>
       <div className={styles.MenuMapContainer}>
@@ -156,7 +162,7 @@ export default function MenuMap() {
                 icon: <Soup />,
                 disabled: !(
                   selectedMenu?.menuId &&
-                  currentDateTab &&
+                  currentDateTab !== undefined &&
                   selectedCategory.id
                 ),
               },

@@ -1,15 +1,17 @@
 .main {
   margin: 0;
   padding: 0;
-  padding: 0.8rem;
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  gap: 1.25rem;
+}
+
+.mainWrapper {
+  display: flex;
 }
 
 .contentAndTopBar {
   display: flex;
-  flex-direction: column;
   flex: 1;
 }
 
@@ -17,14 +19,14 @@
   background-color: #30333F;
   padding: 1.25rem;
   margin-bottom: 1.25rem;
-  border-radius: 10px;
 }
+
 
 .content {
   width: 100%;
   background-color: #30333F;
   padding: 1.5rem;
-  border-radius: 0.625rem;
+  /* border-radius: 0.625rem; */
   flex: 1;
   overflow: auto;
 }

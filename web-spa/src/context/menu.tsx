@@ -22,9 +22,9 @@ import React, {
 interface MenuContract {
   loading: boolean
   menuList: Menu[]
-  menuProductList: Menu
+  menuProductList: MenuCategoryProps
   handleSave: (menu: MenuCreateProps) => Promise<void>
-  setMenuProductList: React.Dispatch<React.SetStateAction<Menu>>
+  setMenuProductList: React.Dispatch<React.SetStateAction<MenuCategoryProps>>
   fetchMenuProducts: (input: MenuCategoryProps) => Promise<void>
   handleAddCategoryToMenu: (input: MenuToCategoryProps[]) => Promise<void>
   handleRemoveProduct: (input: RemoveProduct) => Promise<void>
@@ -36,7 +36,9 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [menuList, setMenuList] = useState<Menu[]>([])
   const [loading, setLoading] = useState(false)
-  const [menuProductList, setMenuProductList] = useState<Menu>({} as Menu)
+  const [menuProductList, setMenuProductList] = useState<MenuCategoryProps>(
+    {} as MenuCategoryProps
+  )
 
   const category = useMemo(() => new CategoryService(), [])
   const menu = useMemo(() => new MenuService(), [])
@@ -107,8 +109,13 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
       }
     } catch (error) {
       console.log(error)
-      setMenuProductList({} as Menu)
+      setMenuProductList({} as MenuCategoryProps)
     } finally {
+      setMenuProductList({
+        categoryId: input.categoryId!,
+        menuId: input.menuId,
+        weekDay: input.weekDay,
+      })
       setLoading(false)
     }
   }
