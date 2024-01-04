@@ -17,7 +17,7 @@ import ConfirmDialog from '@/components/dialog'
 import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 import { Action } from '@/components/listItem/types'
 import ListItem from '@/components/listItem/Index'
-const Input: React.FC<Input> = () => {
+const Input: React.FC = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
   const { handleMeasurementSave, measurementUnitList } = useContext(
