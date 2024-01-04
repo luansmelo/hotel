@@ -90,7 +90,7 @@ export class ProductRepository implements ProductRepositoryContract {
         description: updatedInfo.description,
         inputs: {
           updateMany: updatedInfo.inputs.map((input) => ({
-            where: { id: input.id },
+            where: { inputId: input.id },
             data: {
               grammage: input.grammage,
               measurementUnit: input.measurementUnit,

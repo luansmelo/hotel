@@ -4,7 +4,7 @@ import { memo, useCallback, useEffect, useState } from 'react'
 import AutoComplete from '@/components/autoComplete'
 import { CategoryProps } from '@/utils/interfaces/category'
 import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
-import ListItem from '@/components/listItem/Index'
+import ListItem, { FieldDefinition } from '@/components/listItem/Index'
 import { Action } from '@/components/listItem/types'
 import { Trash2 } from 'lucide-react'
 
@@ -39,6 +39,12 @@ const AddCategoryToMenu = ({
   >([])
   const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null)
   const [openDialog, setOpenDialog] = useState(false)
+
+  const dynamicFields: FieldDefinition<SelectedItem>[] = [
+    { key: 'name', render: (item) => <span>{item.name}</span> },
+
+    { key: 'categoryName', render: (item) => <span>{item.categoryName}</span> },
+  ]
 
   const clearFields = useCallback(() => {
     setSelectedCategory({} as CategoryProps)
@@ -184,7 +190,7 @@ const AddCategoryToMenu = ({
           loading={false}
           actions={actions}
           headers={['Menu', 'Categoria']}
-          dynamicFields={['name', 'categoryName']}
+          dynamicFields={dynamicFields}
           itemList={selectedItems}
         />
         <AddButton

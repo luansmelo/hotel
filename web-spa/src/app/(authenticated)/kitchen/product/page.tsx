@@ -11,7 +11,7 @@ import InputProductDetail from '@/components/product/ProductDetail'
 import ProductEdit from '@/components/product/ProductEdit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/grupo'
-import ListItem from '@/components/listItem/Index'
+import ListItem, { FieldDefinition } from '@/components/listItem/Index'
 import { Eye, PencilRuler, Plus, Trash2 } from 'lucide-react'
 import { Action } from '@/components/listItem/types'
 import ConfirmDialog from '@/components/dialog'
@@ -33,7 +33,12 @@ const Product: React.FC<ProductProps> = () => {
   const { measurementUnitList } = useContext(MeasurementUnitContext)
   const { groupList } = useContext(GroupContext)
 
-  const dynamicFields: (keyof ProductProps)[] = ['name']
+  const dynamicFields: FieldDefinition<ProductProps>[] = [
+    {
+      key: 'name',
+      render: (item) => <span>{item.name}</span>,
+    },
+  ]
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)

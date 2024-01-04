@@ -121,7 +121,6 @@ export class ProductService implements ProductServiceContract {
     updatedInfo: UpdatedProductInfo
   ): Promise<void> {
     await this.getById(id);
-
     return this.repository.updatePredefinedProduct(id, updatedInfo);
   }
 

@@ -8,15 +8,15 @@ import InputCreate from '@/components/input/InputCreate'
 import InputEdit from '@/components/input/InputEdit'
 import { Input } from '@/components/input/types'
 import Dropdown from '@/components/dropDown'
-import { Boxes, ChefHat, PencilRuler, Trash2 } from 'lucide-react'
 import MeasurementUnitCreate from '@/components/input/MeasurementUnit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/grupo'
 import GroupCreate from '@/components/input/Group'
 import ConfirmDialog from '@/components/dialog'
-import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 import { Action } from '@/components/listItem/types'
-import ListItem from '@/components/listItem/Index'
+import ListItem, { FieldDefinition } from '@/components/listItem/Index'
+import { Boxes, ChefHat, PencilRuler, Trash2 } from 'lucide-react'
+import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 const Input: React.FC = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
@@ -35,12 +35,16 @@ const Input: React.FC = () => {
     null
   )
   const [openDialog, setOpenDialog] = useState(false)
-  const dynamicFields: (keyof Input)[] = [
-    'name',
-    'unitPrice',
-    'measurementUnit',
-    'code',
-    'group',
+
+  const dynamicFields: FieldDefinition<Input>[] = [
+    { key: 'name', render: (item) => <span>{item.name}</span> },
+    { key: 'unitPrice', render: (item) => <span>{item.unitPrice}</span> },
+    {
+      key: 'measurementUnit',
+      render: (item) => <span>{item.measurementUnit}</span>,
+    },
+    { key: 'code', render: (item) => <span>{item.code}</span> },
+    { key: 'group', render: (item) => <span>{item.group}</span> },
   ]
 
   const openEditModal = () => {

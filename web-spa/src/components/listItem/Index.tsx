@@ -5,14 +5,17 @@ import PaginationComponent from '@/components/pagination'
 import SkeletonCell from '@/components/skeleton'
 import { Action } from './types'
 import { SearchX } from 'lucide-react'
-
+export interface FieldDefinition<T> {
+  key: keyof T
+  render: (item: T) => React.ReactNode
+}
 export interface GenericListProps<T extends { id: string }> {
   loading: boolean
   itemList?: T[]
   headers: string[]
   height?: number
   actions: Action<T>[]
-  dynamicFields: (keyof T)[]
+  dynamicFields: FieldDefinition<T>[]
 }
 
 const ListItem = <T extends { id: string }>({
@@ -58,8 +61,8 @@ const ListItem = <T extends { id: string }>({
                   key={item.id + Math.random() + 'list-item'}
                   className={styles.ul}
                 >
-                  {dynamicFields.map((field) => (
-                    <li key={String(field)}>{String(item[field])}</li>
+                  {dynamicFields.map((fieldDef) => (
+                    <li key={String(fieldDef.key)}>{fieldDef.render(item)}</li>
                   ))}
                   <div className={styles.iconContainer}>
                     {actions.map((action, index) => (
