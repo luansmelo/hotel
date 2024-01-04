@@ -69,8 +69,6 @@ const Product: React.FC<ProductProps> = () => {
       )
     : productList
 
-  console.log(productList, 'FILTERED')
-
   const actions: Action<ProductProps>[] = [
     {
       label: 'Detalhes',

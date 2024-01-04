@@ -12,7 +12,6 @@ import {
 import styles from './menu.module.scss'
 import MenuButton from '../button/MenuButton'
 import { useState } from 'react'
-import Separator from '@/components/separator'
 import { Fade } from '@mui/material'
 
 const Menu: React.FC = () => {
@@ -47,7 +46,7 @@ const Menu: React.FC = () => {
             />
             <MenuButton
               Icon={PanelTop}
-              text="Menu"
+              text="Mapa de menu"
               selectedFeature="menu"
               active={activeButton === 'menu'}
               onClick={() => setActiveButton('menu')}
@@ -55,15 +54,15 @@ const Menu: React.FC = () => {
             />
             <MenuButton
               Icon={Microwave}
-              text="Mapa de Produção"
-              selectedFeature="mapa-de-producao"
-              active={activeButton === 'mapa-de-menu'}
-              onClick={() => setActiveButton('mapa-de-menu')}
+              text="Mapa de produção"
+              selectedFeature="mapProduction"
+              active={activeButton === 'mapProduction'}
+              onClick={() => setActiveButton('mapProduction')}
               isMinimized={isMinimized}
             />
             <MenuButton
               Icon={Soup}
-              text="Ficha Técnica"
+              text="Ficha técnica"
               selectedFeature="product"
               active={activeButton === 'product'}
               onClick={() => setActiveButton('product')}

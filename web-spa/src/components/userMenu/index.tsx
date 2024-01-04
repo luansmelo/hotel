@@ -23,7 +23,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ children, name }) => {
       <Tooltip title="Clique aqui!">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 2 }}>
           <Avatar sx={{ width: 28, height: 28 }} alt="Remy Sharp">
-            {name.charAt(0).toUpperCase()}
+            {name?.charAt(0).toUpperCase()}
           </Avatar>
         </IconButton>
       </Tooltip>

@@ -5,8 +5,6 @@ import { AuthContext } from '@/context/auth'
 import UserMenu from '@/components/userMenu'
 import styles from './styles.module.scss'
 import cookies from 'js-cookie'
-import Image from 'next/image'
-import Logo from '../../../../public/chef-hat.png'
 export default function Header() {
   const settings = ['Documentação', 'Sair']
   const { signOut } = useContext(AuthContext)
@@ -20,18 +18,8 @@ export default function Header() {
 
   return (
     <div className={styles.main}>
-      {/* <div className={styles.img}>
-        <Image
-          src={Logo}
-          alt="Logo"
-          width={48}
-          height={48}
-          quality={1}
-          placeholder="blur"
-        />
-      </div> */}
       <div className={styles.perfilContainer}>
-        <UserMenu name={parsedUser?.name || 'R'}>
+        <UserMenu name={parsedUser?.name || ''}>
           {settings.map((setting) => (
             <MenuItem
               key={setting}

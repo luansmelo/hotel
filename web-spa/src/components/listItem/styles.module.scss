@@ -27,7 +27,7 @@
   list-style: none;
   padding: 8px 10px;
   
-  &:nth-child(odd) {
+  &:nth-of-type(odd) {
     background: #272a34;
   }
   

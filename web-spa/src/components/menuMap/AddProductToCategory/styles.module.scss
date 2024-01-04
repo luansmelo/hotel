@@ -45,7 +45,7 @@
   overflow-y: auto;
   width: 100%;
 
-  tr:nth-child(2n + 1) {
+  tr:nth-of-type(2n + 1) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     background: rgba(252, 205, 205, 0.37);
   }

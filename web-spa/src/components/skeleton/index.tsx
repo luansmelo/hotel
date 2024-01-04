@@ -19,7 +19,7 @@ const SkeletonCell: React.FC<SkeletonCellProps> = ({
     height={height}
     sx={{
       padding: '20px 10px',
-      '&:nth-child(odd)': {
+      '&:nth-of-type(odd)': {
         background: '#272a34',
       },
       backgroundColor: '#30333F',

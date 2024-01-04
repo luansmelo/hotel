@@ -1,135 +1,127 @@
 'use client'
-import { IProductInputResponse } from '@/atom/business'
-import styles from './styles.module.scss'
-import { Eye } from 'lucide-react'
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material'
-import { useContext } from 'react'
-import { MenuContext } from '@/context/menu'
-import { ProductInputProps } from '@/components/product/types'
 
-interface ITableProductsProps {
-  onClickView?: (product?: ProductInputProps) => void
-  onClickDelete?: () => void
-  headColor?: string
-  removeEye?: boolean
+import styles from './styles.module.scss'
+import DateTabs, { DATE_TABS } from '@/components/dateTabs'
+import { useState, useContext, useEffect } from 'react'
+import { Fade } from '@mui/material'
+import Select from '@/components/select'
+import { MenuContext } from '@/context/menu'
+import { CategoryContext } from '@/context/category'
+import { CategoryInput, CategoryProps } from '@/utils/interfaces/category'
+import MenuProductTable from '@/components/menuMap/MenuProductRender'
+import { FormInputEvent } from '@/hooks/useForm'
+import { MenuCategoryProps } from '@/utils/interfaces/menu'
+
+export interface Menu {
+  menuId: string
+  name: string
+  category: CategoryProps[]
 }
 
-export default function ProductListTable({
-  headColor,
-  onClickView,
-  removeEye,
-}: ITableProductsProps) {
-  const { loading, menuProductList } = useContext(MenuContext)
+export default function MapProduction() {
+  const [currentDateTab, setCurrentDateTab] = useState<DATE_TABS | undefined>(
+    undefined
+  )
+  const [peopleNumber, setPeopleNumber] = useState(1)
 
-  if (loading) {
-    return <div>loading</div>
-  }
+  const [selectedCategory, setSelectedCategory] = useState<CategoryInput>(
+    {} as CategoryInput
+  )
+  const [selectedMenu, setSelectedMenu] = useState<Menu>({} as Menu)
+  const {
+    loading,
+    menuList,
+    menuProductList,
+    setMenuProductList,
+    handleRemoveProduct,
+    fetchMenuProducts,
+  } = useContext(MenuContext)
+  const { categoryList } = useContext(CategoryContext)
 
-  const AccordionProductItem = (product: ProductInputProps) => {
-    return (
-      <tr className={styles.tr} key={product.name} style={{ width: '100%' }}>
-        <td>{product.name}</td>
-        <td>{product.description}</td>
-        <td>
-          {!removeEye && (
-            <div
-              className={styles.productActionView}
-              onClick={() => onClickView && onClickView(product)}
-            >
-              <Eye color="#D96262" size={18} />
-            </div>
-          )}
-        </td>
-      </tr>
+  const [menu, setMenu] = useState<string>('')
+  const [category, setCategory] = useState<string>('')
+
+  const handleCategory = (e: FormInputEvent) => {
+    const categoryFind = categoryList.find(
+      (category) => category.name === e.target.value
     )
+
+    setSelectedCategory({
+      id: categoryFind?.id ?? '',
+      name: categoryFind?.name ?? '',
+    })
+
+    setCategory(e.target.value)
+  }
+  const resetModalState = () => {
+    setSelectedCategory({} as CategoryInput)
+    setCategory('')
+
+    setMenuProductList({} as MenuCategoryProps)
+  }
+  const handleMenu = (e: FormInputEvent) => {
+    const menuFind = menuList.find((menu) => menu.name === e.target.value)
+    setCurrentDateTab(undefined)
+    setSelectedMenu(menuFind as Menu)
+    resetModalState()
+    setMenu(e.target.value)
   }
 
-  const AccordionProductItemDetails = (inputList: IProductInputResponse[]) => {
-    return (
-      <div style={{ width: '100%' }}>
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <thead className={styles.thead2} style={{ width: '100%' }}>
-            <tr
-              style={{
-                background: '#F8BDBD',
-                color: '#ffffff',
-                width: '100%',
-              }}
-            >
-              <td style={{ color: headColor ? '#ffffff' : '#000' }}>Código</td>
-              <td style={{ color: headColor ? '#ffffff' : '#000' }}>Nome</td>
-              <td style={{ color: headColor ? '#ffffff' : '#000' }}>
-                Preço Unitário
-              </td>
-              <td style={{ color: headColor ? '#ffffff' : '#000' }}>Grupo</td>
-              <td style={{ color: headColor ? '#ffffff' : '#000' }}>
-                Unidade Medida
-              </td>
-            </tr>
-          </thead>
-          <div>
-            {inputList?.map((input) => (
-              <div key={input.inputId}>{input.productInputName}</div>
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
+  useEffect(() => {
+    setMenuProductList({} as MenuCategoryProps)
+  }, [setMenuProductList])
+  console.log(
+    !(selectedMenu?.menuId && currentDateTab && selectedCategory.id),
+    selectedMenu?.menuId,
+    currentDateTab,
+    selectedCategory.id
+  )
   return (
-    <>
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr
-            style={{
-              background: headColor,
-              color: headColor ? '#ffffff' : '#000',
-            }}
-          >
-            <td style={{ color: headColor ? '#ffffff' : '#000' }}>Nome</td>
-            <td style={{ color: headColor ? '#ffffff' : '#000' }}>Custo</td>
-          </tr>
-        </thead>
-        <tbody className={styles.tbody}>
-          {menuProductList?.category?.map((product, index) => (
-            <div key={index}>
-              <Accordion
-                sx={{
-                  '& .MuiAccordionSummary-root': {
-                    padding: 'unset',
-                  },
-                }}
-              >
-                <AccordionSummary
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                  sx={{
-                    '& .MuiAccordionSummary-content ': {
-                      margin: 'unset',
-                    },
-                  }}
-                >
-                  <AccordionProductItem
-                    id={'id'}
-                    name={'Deus funcionou'}
-                    description={'xd'}
-                  />
-                </AccordionSummary>
-                <AccordionDetails>
-                  {AccordionProductItemDetails('product.schedule')}
-                </AccordionDetails>
-              </Accordion>
-            </div>
-          ))}
-        </tbody>
-      </table>
-    </>
+    <Fade in={true} timeout={500}>
+      <div className={styles.MenuMapContainer}>
+        <div className={styles.buttonsContainer}>
+          <Select
+            placeholder="Selecione o menu"
+            data={menuList! || []}
+            onClick={handleMenu}
+            value={menu}
+            errors={''}
+          />
+        </div>
+
+        <Fade in={true} timeout={500}>
+          <div className={styles.DateTabsContainer}>
+            <Select
+              errors={''}
+              placeholder="Selecione a categoria"
+              disabled={!selectedMenu?.menuId}
+              data={(selectedMenu?.category as CategoryInput[]) || []}
+              onClick={handleCategory}
+              value={category}
+            />
+
+            <DateTabs
+              disabled={!selectedCategory.id}
+              currentDateTab={currentDateTab!}
+              setCurrentDateTab={setCurrentDateTab!}
+            />
+          </div>
+        </Fade>
+
+        <MenuProductTable
+          loading={loading}
+          fetchMenuProducts={fetchMenuProducts}
+          onClickDelete={handleRemoveProduct}
+          {...{
+            data: {
+              selectedMenu,
+              selectedCategory,
+              currentDateTab: DATE_TABS[currentDateTab!],
+            },
+            menuProductList,
+          }}
+        />
+      </div>
+    </Fade>
   )
 }

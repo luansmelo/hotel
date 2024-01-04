@@ -1,7 +1,9 @@
 export default function Kitchen() {
   return (
     <div>
-      <p>Seja bem vindo a cozinha</p>
+      <h3 style={{ textAlign: 'center', color: '#BDBDBD' }}>
+        Seja bem vindo a cozinha
+      </h3>
     </div>
   )
 }

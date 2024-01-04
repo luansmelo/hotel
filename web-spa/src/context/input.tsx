@@ -58,12 +58,12 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
 
       if (!res?.ok) {
         toast.error('Não foi possível criar novo insumo.')
-        setInputList([])
       } else {
         toast.success('Insumo criado com sucesso!')
         await fetchInputList()
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error)
       setInputList([])
     } finally {
       setLoading(false)

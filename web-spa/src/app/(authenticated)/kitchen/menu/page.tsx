@@ -118,12 +118,7 @@ export default function MenuMap() {
   useEffect(() => {
     setMenuProductList({} as MenuCategoryProps)
   }, [setMenuProductList])
-  console.log(
-    !(selectedMenu?.menuId && currentDateTab && selectedCategory.id),
-    selectedMenu?.menuId,
-    currentDateTab,
-    selectedCategory.id
-  )
+
   return (
     <Fade in={true} timeout={500}>
       <div className={styles.MenuMapContainer}>
