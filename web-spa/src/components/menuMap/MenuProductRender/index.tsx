@@ -1,6 +1,5 @@
 import { Trash2 } from 'lucide-react'
-import styles from './styles.module.scss'
-import { useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 import { MenuCategoryProps } from '@/utils/interfaces/menu'
 import { CategoryProps, RemoveProduct } from '@/utils/interfaces/category'
 import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
@@ -18,35 +17,18 @@ export interface Data {
 interface ITableProductsProps {
   loading: boolean
   data: Data
-  fetchMenuProducts: (payload: MenuCategoryProps) => Promise<void>
   menuProductList?: MenuCategoryProps
   onClickDelete: (id: RemoveProduct) => void
 }
 
-export default function MenuProductTable({
+function MenuProductTable({
   data,
   loading,
   menuProductList,
-  fetchMenuProducts,
   onClickDelete,
 }: ITableProductsProps) {
   const [openDialog, setOpenDialog] = useState(false)
   const [selectedInput, setSelectedInput] = useState<RemoveProduct | null>(null)
-
-  useEffect(() => {
-    const payload = {
-      menuId: data.selectedMenu.menuId || '',
-      categoryId: data.selectedCategory.id || '',
-      weekDay: data.currentDateTab || '',
-    }
-
-    fetchMenuProducts(payload)
-  }, [
-    fetchMenuProducts,
-    data.currentDateTab,
-    data.selectedCategory,
-    data.selectedMenu,
-  ])
 
   const handleOpenDialog = (item: ProductProps) => {
     setSelectedInput({
@@ -75,43 +57,36 @@ export default function MenuProductTable({
 
   return (
     <>
-      <table className={styles.table}>
-        <tbody className={styles.tbody}>
-          <>
-            {menuProductList?.category?.map((menu: CategoryProps) => {
-              return (
-                <ListItem
-                  key={menu.id}
-                  loading={loading}
-                  actions={actions}
-                  dynamicFields={['name']}
-                  headers={['name']}
-                  itemList={menu.schedule as ProductProps[]}
-                />
-              )
-            })}
-          </>
-        </tbody>
+      <ListItem
+        loading={loading}
+        actions={actions}
+        dynamicFields={[
+          {
+            key: 'name',
+            render: (item) => <span>{item.name}</span>,
+          },
+        ]}
+        headers={['name']}
+        itemList={
+          (menuProductList?.category?.flatMap(
+            (menu: CategoryProps) => (menu.schedule ?? []) as ProductProps[]
+          ) ?? []) as ProductProps[]
+        }
+      />
 
-        {openDialog && (
-          <ConfirmDialog
-            open={openDialog}
-            onClose={() => setOpenDialog(false)}
-            onConfirm={() => {
-              if (selectedInput) {
-                onClickDelete(selectedInput)
-                handleCloseDialog()
-                setSelectedInput(null)
-                fetchMenuProducts({
-                  menuId: data.selectedMenu.menuId,
-                  categoryId: data.selectedCategory.id!,
-                  weekDay: data.currentDateTab!,
-                })
-              }
-            }}
-          />
-        )}
-      </table>
+      {openDialog && (
+        <ConfirmDialog
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          onConfirm={() => {
+            onClickDelete(selectedInput!)
+            setSelectedInput(null)
+            handleCloseDialog()
+          }}
+        />
+      )}
     </>
   )
 }
+
+export default memo(MenuProductTable)

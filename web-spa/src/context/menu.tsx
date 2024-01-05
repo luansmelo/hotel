@@ -67,10 +67,10 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
       } finally {
         setTimeout(() => {
           setLoading(false)
-        }, 500)
+        }, 1000)
       }
     },
-    [menu, setMenuProductList, setLoading]
+    [menu, setMenuProductList]
   )
 
   const handleSave = async (input: MenuCreateProps) => {
@@ -89,6 +89,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
 
   const handleAddCategoryToMenu = async (input: MenuToCategoryProps[]) => {
     try {
+      setLoading(true)
       const response = await menu.addCategoryToMenu(input)
 
       if (response?.ok) {
@@ -102,6 +103,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
   }
 
   const handleRemoveProduct = async (input: RemoveProduct) => {
+    setLoading(true)
     try {
       const response = await category.removeProduct(input)
       if (response?.message === 'sucesso') {
@@ -111,12 +113,15 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
       console.log(error)
       setMenuProductList({} as MenuCategoryProps)
     } finally {
-      setMenuProductList({
-        categoryId: input.categoryId!,
-        menuId: input.menuId,
-        weekDay: input.weekDay,
-      })
-      setLoading(false)
+      try {
+        await fetchMenuProducts({
+          categoryId: input.categoryId!,
+          menuId: input.menuId,
+          weekDay: input.weekDay,
+        })
+      } finally {
+        setLoading(false)
+      }
     }
   }
 

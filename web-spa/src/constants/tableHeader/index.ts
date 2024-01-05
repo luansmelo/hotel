@@ -20,3 +20,5 @@ export const TABLE_HEADERS_INPUT_DETAILS = [
 ]
 
 export const TABLE_HEADERS_PRODUCT = ['Nome']
+
+export const TABLE_HEADER_GENERIC = ['Nome']

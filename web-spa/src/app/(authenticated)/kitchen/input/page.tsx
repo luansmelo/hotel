@@ -10,12 +10,11 @@ import { Input } from '@/components/input/types'
 import Dropdown from '@/components/dropDown'
 import MeasurementUnitCreate from '@/components/input/MeasurementUnit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
-import { GroupContext } from '@/context/grupo'
-import GroupCreate from '@/components/input/Group'
+import { GroupContext } from '@/context/group'
 import ConfirmDialog from '@/components/dialog'
 import { Action } from '@/components/listItem/types'
 import ListItem, { FieldDefinition } from '@/components/listItem/Index'
-import { Boxes, ChefHat, PencilRuler, Trash2 } from 'lucide-react'
+import { ChefHat, PencilRuler, Trash2 } from 'lucide-react'
 import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 const Input: React.FC = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
@@ -23,12 +22,11 @@ const Input: React.FC = () => {
   const { handleMeasurementSave, measurementUnitList } = useContext(
     MeasurementUnitContext
   )
-  const { handleGroupSave, groupList } = useContext(GroupContext)
+  const { groupList } = useContext(GroupContext)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [createMesaurementModal, setCreateMeasurementModal] = useState(false)
-  const [createGroupModal, setCreateGroupModal] = useState(false)
   const [selectedInput, setSelectedInput] = useState<Input>({} as Input)
   const [showEditModal, setShowEditModal] = useState(false)
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState<null | HTMLElement>(
@@ -64,11 +62,6 @@ const Input: React.FC = () => {
 
   const openCreateUnitMeasurement = () => {
     setCreateMeasurementModal(true)
-    setDropdownAnchorEl(null)
-  }
-
-  const openCreateGroup = () => {
-    setCreateGroupModal(true)
     setDropdownAnchorEl(null)
   }
 
@@ -146,11 +139,6 @@ const Input: React.FC = () => {
               onClick: openCreateUnitMeasurement,
               icon: <PencilRuler />,
             },
-            {
-              label: 'Cadastrar Grupo',
-              onClick: openCreateGroup,
-              icon: <Boxes />,
-            },
           ]}
           onClose={handleCloseDropdown}
           anchorEl={dropdownAnchorEl}
@@ -173,15 +161,6 @@ const Input: React.FC = () => {
           isOpen={createMesaurementModal}
           handleCloseModal={() => setCreateMeasurementModal(false)}
           handleSave={handleMeasurementSave}
-        />
-      )}
-
-      {createGroupModal && (
-        <GroupCreate
-          loading={loading}
-          isOpen={createGroupModal}
-          handleCloseModal={() => setCreateGroupModal(false)}
-          handleSave={handleGroupSave}
         />
       )}
 

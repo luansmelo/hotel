@@ -7,7 +7,7 @@ import { ThemeProvider, createTheme } from '@mui/material'
 import { MenuProvider } from '@/context/menu'
 import { CategoryProvider } from '@/context/category'
 import { MeasurementUnitProvider } from '@/context/measurementUnit'
-import { GroupProvider } from '@/context/grupo'
+import { GroupProvider } from '@/context/group'
 
 const theme = createTheme({
   palette: {

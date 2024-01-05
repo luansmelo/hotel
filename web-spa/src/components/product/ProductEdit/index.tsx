@@ -14,6 +14,7 @@ import { TABLE_HEADERS_INPUT_DETAILS } from '@/constants/tableHeader'
 import ConfirmDialog from '@/components/dialog'
 import TextField from '@/components/textField/TextField'
 import Select from '@/components/select'
+import ListItem from '@/components/listItem/Index'
 
 export default function ProductEditModal({
   isOpen,
@@ -193,9 +194,69 @@ export default function ProductEditModal({
             <div className={styles.containerWrapper}>
               {/* <p>Lista de insumos</p> */}
               <table className={styles.table}>
-                <TableHeader headers={TABLE_HEADERS_INPUT_DETAILS} />
+                {/* <TableHeader headers={TABLE_HEADERS_INPUT_DETAILS} /> */}
+                <ListItem
+                  loading={false}
+                  height={200}
+                  actions={[]}
+                  headers={TABLE_HEADERS_INPUT_DETAILS}
+                  itemList={productDetail?.inputs}
+                  dynamicFields={[
+                    {
+                      key: 'name',
+                      render: (item) => item.name,
+                    },
+                    {
+                      key: 'grammage',
+                      // render: (item) => item.grammage,
+                      children: (item) => (
+                        <>
+                          <Select
+                            name={'measurementUnit'}
+                            data={measurementUnitList!}
+                            width="200px"
+                            value={item.measurementUnit}
+                            errors={''}
+                            onClick={(event) => {
+                              const { value } = event.target
+                              setInputState((prevState) => ({
+                                ...prevState,
+                                [item.name]: {
+                                  ...prevState[item.name],
+                                  measurementUnit: value || '0',
+                                },
+                              }))
+                            }}
+                          />
 
-                <div className={styles.tbodyContainer}>
+                          <TextField
+                            key={item.id}
+                            label="Gramatura"
+                            name={`grammage`}
+                            value={
+                              inputState[item.name]?.grammage ||
+                              String(item.grammage) ||
+                              '0'
+                            }
+                            onChange={(event) => {
+                              const { value } = event.target
+
+                              setInputState((prevState) => ({
+                                ...prevState,
+                                [item.name]: {
+                                  ...prevState[item.name],
+                                  grammage: value,
+                                },
+                              }))
+                            }}
+                            errors={''}
+                          />
+                        </>
+                      ),
+                    },
+                  ]}
+                />
+                {/* <div className={styles.tbodyContainer}>
                   <tbody className={styles.tbody}>
                     {productDetail?.inputs?.map((input) => (
                       <tr key={input.id} className={styles.tr}>
@@ -254,7 +315,7 @@ export default function ProductEditModal({
                       </tr>
                     ))}
                   </tbody>
-                </div>
+                </div> */}
               </table>
             </div>
 

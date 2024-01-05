@@ -8,6 +8,7 @@ import {
   Upload,
   ChevronRightCircle,
   ChevronLeftCircle,
+  Boxes,
 } from 'lucide-react'
 import styles from './menu.module.scss'
 import MenuButton from '../button/MenuButton'
@@ -74,6 +75,14 @@ const Menu: React.FC = () => {
               selectedFeature="input"
               active={activeButton === 'input'}
               onClick={() => setActiveButton('input')}
+              isMinimized={isMinimized}
+            />
+            <MenuButton
+              Icon={Boxes}
+              text="Grupo"
+              selectedFeature="group"
+              active={activeButton === 'group'}
+              onClick={() => setActiveButton('group')}
               isMinimized={isMinimized}
             />
             <MenuButton

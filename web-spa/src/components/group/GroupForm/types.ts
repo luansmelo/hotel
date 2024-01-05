@@ -1,4 +1,4 @@
-import { GroupProps } from '@/utils/interfaces/group'
+import { GroupForm, GroupProps } from '@/utils/interfaces/group'
 
 export interface Error {
   [key: string]: string
@@ -12,6 +12,7 @@ export interface InputFormProps {
 }
 
 export interface GroupPropsContract {
+  group?: GroupForm
   isOpen: boolean
   loading: boolean
   handleSave: (input: GroupProps) => Promise<void>

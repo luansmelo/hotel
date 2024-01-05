@@ -109,7 +109,6 @@ export default function MenuMap() {
   }
   const handleMenu = (e: FormInputEvent) => {
     const menuFind = menuList.find((menu) => menu.name === e.target.value)
-    setCurrentDateTab(undefined)
     setSelectedMenu(menuFind as Menu)
     resetModalState()
     setMenu(e.target.value)
@@ -118,6 +117,21 @@ export default function MenuMap() {
   useEffect(() => {
     setMenuProductList({} as MenuCategoryProps)
   }, [setMenuProductList])
+
+  useEffect(() => {
+    if (
+      selectedMenu.menuId &&
+      selectedCategory.id &&
+      DATE_TABS[currentDateTab!] !== undefined
+    ) {
+      const payload = {
+        menuId: selectedMenu.menuId || '',
+        categoryId: selectedCategory.id || '',
+        weekDay: DATE_TABS[currentDateTab!] || '',
+      }
+      fetchMenuProducts(payload)
+    }
+  }, [fetchMenuProducts, currentDateTab, selectedCategory, selectedMenu])
 
   return (
     <Fade in={true} timeout={500}>
@@ -231,7 +245,6 @@ export default function MenuMap() {
         <div>
           <MenuProductTable
             loading={loading}
-            fetchMenuProducts={fetchMenuProducts}
             onClickDelete={handleRemoveProduct}
             {...{
               data: {

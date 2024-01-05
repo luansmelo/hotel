@@ -9,7 +9,7 @@ import React, {
 import { handleToastify } from '@/utils/toastify'
 import { toast } from 'react-toastify'
 import { Error } from '@/components/input/MeasurementUnit/types'
-import { GroupProps } from '@/utils/interfaces/group'
+import { GroupForm, GroupProps } from '@/utils/interfaces/group'
 import { GroupService } from '@/services/group'
 
 interface GroupContextContract {
@@ -17,7 +17,7 @@ interface GroupContextContract {
   groupList: GroupProps[]
   errors: Partial<GroupProps>
   setGroupList: React.Dispatch<React.SetStateAction<GroupProps[]>>
-  handleGroupSave: (input: GroupProps) => Promise<void>
+  handleGroupSave: (input: GroupForm) => Promise<void>
   handleEdit: (input: GroupProps) => Promise<void>
   handleDelete: (id: string) => Promise<void>
   setErrors: React.Dispatch<React.SetStateAction<Partial<Error>>>
@@ -49,7 +49,7 @@ export const GroupProvider: React.FC<{ children: ReactNode }> = ({
       }, 2000)
     }
   }
-  const handleGroupSave = async (data: GroupProps) => {
+  const handleGroupSave = async (data: GroupForm) => {
     try {
       setLoading(true)
 
@@ -71,13 +71,17 @@ export const GroupProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(true)
 
       const res = await group.update(data)
-      if (res.message === 'sucesso') {
+
+      console.log(res, 'res')
+      if (res) {
         handleToastify('grupo atualizada com sucesso!', 'success')
-        await fetchGroupList()
+      } else {
+        handleToastify('Não foi possível atualizar o grupo.', 'error')
       }
     } catch (error) {
       console.log('error')
     } finally {
+      await fetchGroupList()
       setLoading(false)
     }
   }
@@ -88,7 +92,7 @@ export const GroupProvider: React.FC<{ children: ReactNode }> = ({
 
       const res = await group.delete(id)
 
-      if (res.message === 'sucesso') {
+      if (res) {
         await fetchGroupList()
         handleToastify('grupo excluída com sucesso!', 'success')
       }

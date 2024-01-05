@@ -28,9 +28,14 @@ export class GroupService implements GroupServiceContract {
   async getAll(): Promise<any> {
     return this.repository.getAll();
   }
-  async deleteById(id: string): Promise<void> {
+  async deleteById(id: string): Promise<GroupInput> {
     const group = await this.getById(id);
 
-    await this.repository.deleteById(group.id);
+    return this.repository.deleteById(group.id);
+  }
+
+  async updateById(id: string, input: GroupInput): Promise<GroupInput> {
+    await this.getById(id);
+    return this.repository.updateById(id, input);
   }
 }

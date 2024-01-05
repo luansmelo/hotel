@@ -7,8 +7,9 @@ import styles from './styles.module.scss'
 import { isNotEmpty, validateField } from '@/utils/validations'
 import { GroupPropsContract } from './types'
 import React from 'react'
+import { GroupForm, GroupProps } from '@/utils/interfaces/group'
 
-export default function GroupCreate({
+export default function GroupForm({
   loading,
   isOpen,
   handleSave,
@@ -40,7 +41,7 @@ export default function GroupCreate({
     try {
       await handleSave({
         name: form.name.toUpperCase(),
-      })
+      } as GroupProps)
     } catch (error) {
       console.log(error)
     } finally {

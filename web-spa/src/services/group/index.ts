@@ -1,10 +1,10 @@
 import { API } from '@/services/api'
-import { GroupProps } from '@/utils/interfaces/group'
+import { GroupForm, GroupProps } from '@/utils/interfaces/group'
 
 const api = API.getInstance()
 
 export class GroupService {
-  async handle(input: GroupProps) {
+  async handle(input: GroupForm) {
     try {
       const response = await api.post('/group/create', input)
 
