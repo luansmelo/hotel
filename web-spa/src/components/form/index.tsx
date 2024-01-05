@@ -1,6 +1,6 @@
 import { Save } from 'lucide-react'
 import styles from './styles.module.scss'
-import AddButton from '@/components/addButton'
+import AddButton from '@/components/button'
 import { Box } from '@mui/material'
 import { FormProps } from './types'
 

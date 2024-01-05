@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import AddButton from '@/components/addButton'
+import AddButton from '@/components/button'
 import { SaveIcon, PlusCircle } from 'lucide-react'
 import { InputContext } from '@/context/input'
 import { ProductContext } from '@/context/product'

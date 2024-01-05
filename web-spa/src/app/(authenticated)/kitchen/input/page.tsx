@@ -8,7 +8,6 @@ import InputCreate from '@/components/input/InputCreate'
 import InputEdit from '@/components/input/InputEdit'
 import { Input } from '@/components/input/types'
 import Dropdown from '@/components/dropDown'
-import MeasurementUnitCreate from '@/components/input/MeasurementUnit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/group'
 import ConfirmDialog from '@/components/dialog'
@@ -19,14 +18,11 @@ import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
 const Input: React.FC = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
-  const { handleMeasurementSave, measurementUnitList } = useContext(
-    MeasurementUnitContext
-  )
+  const { measurementUnitList } = useContext(MeasurementUnitContext)
   const { groupList } = useContext(GroupContext)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [showCreateForm, setShowCreateForm] = useState(false)
-  const [createMesaurementModal, setCreateMeasurementModal] = useState(false)
   const [selectedInput, setSelectedInput] = useState<Input>({} as Input)
   const [showEditModal, setShowEditModal] = useState(false)
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState<null | HTMLElement>(
@@ -57,11 +53,6 @@ const Input: React.FC = () => {
 
   const openCreateInput = () => {
     setShowCreateForm(true)
-    setDropdownAnchorEl(null)
-  }
-
-  const openCreateUnitMeasurement = () => {
-    setCreateMeasurementModal(true)
     setDropdownAnchorEl(null)
   }
 
@@ -134,11 +125,6 @@ const Input: React.FC = () => {
               onClick: openCreateInput,
               icon: <ChefHat />,
             },
-            {
-              label: 'Cadastrar Unidade de Medida',
-              onClick: openCreateUnitMeasurement,
-              icon: <PencilRuler />,
-            },
           ]}
           onClose={handleCloseDropdown}
           anchorEl={dropdownAnchorEl}
@@ -152,15 +138,6 @@ const Input: React.FC = () => {
           headers={TABLE_HEADERS_INPUT}
           actions={actions}
           dynamicFields={dynamicFields}
-        />
-      )}
-
-      {createMesaurementModal && (
-        <MeasurementUnitCreate
-          loading={loading}
-          isOpen={createMesaurementModal}
-          handleCloseModal={() => setCreateMeasurementModal(false)}
-          handleSave={handleMeasurementSave}
         />
       )}
 

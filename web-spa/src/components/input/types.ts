@@ -1,7 +1,7 @@
 import { InputContract } from '@/atom/business'
-import { MeasurementUnitContract } from './MeasurementUnit/types'
 import { GroupProps } from '@/utils/interfaces/group'
 import { Action } from '../listItem/types'
+import { MeasurementProps } from '../measurementUnit/MeasurementForm/types'
 
 export interface InputToProductProps {
   id: string
@@ -41,7 +41,7 @@ export interface InputProps {
   showModal: boolean
   inputList?: Input[]
   groupList?: GroupProps[]
-  measurementUnitList?: MeasurementUnitContract[]
+  measurementUnitList?: MeasurementProps[]
   input?: Input
   handleSave: (input: InputContract) => Promise<void>
   handleCloseModal: () => void

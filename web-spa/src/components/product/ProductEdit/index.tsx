@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
-import AddButton from '@/components/addButton'
+import AddButton from '@/components/button'
 import { FileUp, SaveIcon, Trash2 } from 'lucide-react'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'

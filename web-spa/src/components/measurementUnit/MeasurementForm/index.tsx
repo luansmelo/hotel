@@ -2,18 +2,18 @@ import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/modal/Modal'
 import TextField from '@/components/textField/TextField'
-import { MeasurementUnitProps } from './types'
 import Separator from '@/components/separator'
 import styles from './styles.module.scss'
 import { isNotEmpty, validateField } from '@/utils/validations'
 import React from 'react'
+import { MeasurementProps, MeasurementUnitContract } from './types'
 
-export default function MeasurementUnitCreate({
+export default function MeasurementForm({
   loading,
   isOpen,
   handleSave,
   handleCloseModal,
-}: MeasurementUnitProps) {
+}: MeasurementUnitContract) {
   const { form, handleSetState, clear } = useForm({
     name: '',
   })
@@ -36,11 +36,11 @@ export default function MeasurementUnitCreate({
     handleCloseModal()
   }
 
-  const createInput = async () => {
+  const createMeasurement = async () => {
     try {
       await handleSave({
         name: form.name.toUpperCase(),
-      })
+      } as MeasurementProps)
     } catch (error) {
       console.log(error)
     } finally {
@@ -55,22 +55,22 @@ export default function MeasurementUnitCreate({
         submit={async (e) => {
           e.preventDefault()
           if (validateForm()) {
-            await createInput()
+            await createMeasurement()
           }
         }}
         loading={loading}
         text="CRIAR"
       >
-        <p className={styles.paragraph}>Criar Unidade de Medida</p>
+        <p className={styles.paragraph}>Unidade de medida</p>
 
         <Separator />
 
         <TextField
           height="70px"
+          value={form.name}
           label="Nome"
           name="name"
           onChange={handleSetState}
-          value={form.name}
           errors={errors.name!}
         />
       </Form>

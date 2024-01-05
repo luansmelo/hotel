@@ -8,24 +8,16 @@ import React, {
 } from 'react'
 import { handleToastify } from '@/utils/toastify'
 import { toast } from 'react-toastify'
-import {
-  Error,
-  MeasurementUnitContract,
-  MeasurementUnitProps,
-} from '@/components/input/MeasurementUnit/types'
 import { MeasurementUnitService } from '@/services/measurementUnit'
+import { MeasurementProps } from '@/components/measurementUnit/MeasurementForm/types'
 
 interface MeasurementUnitContextContract {
   loading: boolean
-  measurementUnitList: MeasurementUnitContract[]
-  errors: Partial<MeasurementUnitProps>
-  setMeasurementList: React.Dispatch<
-    React.SetStateAction<MeasurementUnitContract[]>
-  >
-  handleMeasurementSave: (input: MeasurementUnitContract) => Promise<void>
-  handleEdit: (input: MeasurementUnitContract) => Promise<void>
+  measurementUnitList: MeasurementProps[]
+  setMeasurementList: React.Dispatch<React.SetStateAction<MeasurementProps[]>>
+  handleMeasurementSave: (input: MeasurementProps) => Promise<void>
+  handleEdit: (input: MeasurementProps) => Promise<void>
   handleDelete: (id: string) => Promise<void>
-  setErrors: React.Dispatch<React.SetStateAction<Partial<Error>>>
 }
 
 export const MeasurementUnitContext =
@@ -37,10 +29,9 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [measurementUnitList, setMeasurementList] = useState<
-    MeasurementUnitContract[]
-  >([] as MeasurementUnitContract[])
+    MeasurementProps[]
+  >([] as MeasurementProps[])
   const [loading, setLoading] = useState<boolean>(false)
-  const [errors, setErrors] = useState<Partial<Error>>({})
 
   const measurementUnit = useMemo(() => new MeasurementUnitService(), [])
 
@@ -57,7 +48,7 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
       }, 2000)
     }
   }
-  const handleMeasurementSave = async (data: MeasurementUnitContract) => {
+  const handleMeasurementSave = async (data: MeasurementProps) => {
     try {
       setLoading(true)
 
@@ -67,9 +58,7 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
         toast.success('Unidade de medida criada com sucesso!')
         await fetchMeasurementUnitList()
       } else {
-        setErrors({
-          createError: 'Não foi possível criar uma unidade de medida.',
-        })
+        toast.error('Não foi possível criar uma unidade de medida.')
       }
     } catch (error) {
       setMeasurementList([])
@@ -79,7 +68,7 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const handleEdit = async (data: MeasurementUnitContract) => {
+  const handleEdit = async (data: MeasurementProps) => {
     try {
       setLoading(true)
 
@@ -124,9 +113,7 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         measurementUnitList,
         loading,
-        errors,
         setMeasurementList,
-        setErrors,
         handleEdit,
         handleMeasurementSave,
         handleDelete,

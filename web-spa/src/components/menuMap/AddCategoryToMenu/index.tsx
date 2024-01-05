@@ -11,7 +11,7 @@ import { Trash2 } from 'lucide-react'
 import { handleToastify } from '@/utils/toastify'
 import styles from './styles.module.scss'
 import ConfirmDialog from '@/components/dialog'
-import AddButton from '@/components/addButton'
+import AddButton from '@/components/button'
 import { MenuToCategoryProps } from '@/utils/interfaces/menu'
 
 export interface SelectedItem {

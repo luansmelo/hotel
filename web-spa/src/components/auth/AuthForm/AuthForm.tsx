@@ -1,7 +1,7 @@
 import { AuthFormProps } from './types'
 import Link from 'next/link'
 import styles from './styles.module.scss'
-import AddButton from '@/components/addButton'
+import AddButton from '@/components/button'
 export const AuthForm: React.FC<AuthFormProps> = ({
   children,
   loading,

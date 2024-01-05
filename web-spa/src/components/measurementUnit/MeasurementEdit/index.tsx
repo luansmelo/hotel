@@ -1,28 +1,23 @@
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/modal/Modal'
-import TextField from '@/components/textField/TextField'
-import Separator from '@/components/separator'
-import styles from './styles.module.scss'
 import { isNotEmpty, validateField } from '@/utils/validations'
-import { GroupPropsContract } from './types'
+import TextField from '@/components/textField/TextField'
 import React from 'react'
-import { GroupProps } from '@/utils/interfaces/group'
+import { GroupPropsContract } from '../GroupForm/types'
+import { GroupForm, GroupProps } from '@/utils/interfaces/group'
 
-export default function GroupForm({
+export default function GroupEdit({
+  group,
   loading,
   isOpen,
   handleSave,
   handleCloseModal,
 }: GroupPropsContract) {
-  const { form, handleSetState, clear } = useForm({
-    name: '',
-  })
-
-  const [errors, setErrors] = React.useState<Partial<Error>>({})
-
+  const { form, handleSetState } = useForm(group as GroupProps)
+  const [errors, setErrors] = React.useState<Partial<GroupForm>>({})
   const validateForm = () => {
-    const newErrors = {
+    const newErrors: Partial<Record<string, string>> = {
       name: validateField('Nome', form.name, isNotEmpty),
     }
 
@@ -32,14 +27,14 @@ export default function GroupForm({
   }
 
   const handleModalClose = () => {
-    clear()
     setErrors({})
     handleCloseModal()
   }
 
-  const createInput = async () => {
+  const handleUpdate = async () => {
     try {
       await handleSave({
+        id: form.id,
         name: form.name.toUpperCase(),
       } as GroupProps)
     } catch (error) {
@@ -56,21 +51,16 @@ export default function GroupForm({
         submit={async (e) => {
           e.preventDefault()
           if (validateForm()) {
-            await createInput()
+            await handleUpdate()
           }
         }}
         loading={loading}
-        text="CRIAR"
+        text="ATUALIZAR"
       >
-        <p className={styles.paragraph}>Criar Grupo</p>
-
-        <Separator />
-
         <TextField
-          height="70px"
-          value={form.name}
           label="Nome"
           name="name"
+          value={form.name}
           onChange={handleSetState}
           errors={errors.name!}
         />

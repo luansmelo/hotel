@@ -5,10 +5,10 @@ import {
   Microwave,
   PanelTop,
   Soup,
-  Upload,
   ChevronRightCircle,
   ChevronLeftCircle,
   Boxes,
+  PencilRuler,
 } from 'lucide-react'
 import styles from './menu.module.scss'
 import MenuButton from '../button/MenuButton'
@@ -71,7 +71,7 @@ const Menu: React.FC = () => {
             />
             <MenuButton
               Icon={Apple}
-              text="Insumos"
+              text="Insumo"
               selectedFeature="input"
               active={activeButton === 'input'}
               onClick={() => setActiveButton('input')}
@@ -86,13 +86,21 @@ const Menu: React.FC = () => {
               isMinimized={isMinimized}
             />
             <MenuButton
+              Icon={PencilRuler}
+              text="Unidade de medida"
+              selectedFeature="measurementUnit"
+              active={activeButton === 'measurementUnit'}
+              onClick={() => setActiveButton('measurementUnit')}
+              isMinimized={isMinimized}
+            />
+            {/* <MenuButton
               Icon={Upload}
               text="Upload"
               selectedFeature="upload"
               active={activeButton === 'upload'}
               onClick={() => setActiveButton('upload')}
               isMinimized={isMinimized}
-            />
+            /> */}
           </div>
         </div>
       </div>
