@@ -1,10 +1,10 @@
-import { MeasurementUnitContract } from '@/components/input/MeasurementUnit/types'
+import { MeasurementProps } from '@/components/measurementUnit/MeasurementForm/types'
 import { API } from '@/services/api'
 
 const api = API.getInstance()
 
 export class MeasurementUnitService {
-  async handle(input: MeasurementUnitContract) {
+  async handle(input: MeasurementProps) {
     try {
       const response = await api.post('/measurementUnit/create', input)
 
@@ -27,14 +27,14 @@ export class MeasurementUnitService {
   async delete(id: string) {
     try {
       const response = await api.delete(`/measurementUnit/${id}`)
-      console.log('RESPONSE', response)
+
       return response
     } catch (error) {
       console.log(error)
     }
   }
 
-  async update(input: MeasurementUnitContract) {
+  async update(input: MeasurementProps) {
     try {
       const response = await api.put(`/measurementUnit/${input.id}`, input)
 

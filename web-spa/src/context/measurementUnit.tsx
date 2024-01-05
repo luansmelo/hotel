@@ -42,6 +42,7 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
       setMeasurementList(res)
     } catch (error) {
       console.log(error)
+      setMeasurementList([])
     } finally {
       setTimeout(() => {
         setLoading(false)
@@ -56,14 +57,13 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
 
       if (res?.ok) {
         toast.success('Unidade de medida criada com sucesso!')
-        await fetchMeasurementUnitList()
       } else {
         toast.error('Não foi possível criar uma unidade de medida.')
       }
     } catch (error) {
-      setMeasurementList([])
       console.log(error)
     } finally {
+      await fetchMeasurementUnitList()
       setLoading(false)
     }
   }
@@ -73,14 +73,19 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(true)
 
       const res = await measurementUnit.update(data)
-      if (res.message === 'sucesso') {
+
+      if (res) {
         handleToastify('Unidade de medida atualizada com sucesso!', 'success')
-        await fetchMeasurementUnitList()
+      } else {
+        handleToastify(
+          'Não foi possível atualizar a unidade de medida.',
+          'error'
+        )
       }
     } catch (error) {
-      setMeasurementList([])
       console.log(error)
     } finally {
+      await fetchMeasurementUnitList()
       setLoading(false)
     }
   }
@@ -90,15 +95,16 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(true)
 
       const res = await measurementUnit.delete(id)
-
-      if (res.message === 'sucesso') {
-        await fetchMeasurementUnitList()
+      console.log('motivo do erro', res)
+      if (res) {
         handleToastify('Unidade de medida excluída com sucesso!', 'success')
+      } else {
+        handleToastify('Não foi possível excluir a unidade de medida.', 'error')
       }
     } catch (error) {
       console.log(error)
     } finally {
-      setMeasurementList([])
+      await fetchMeasurementUnitList()
       setLoading(false)
     }
   }

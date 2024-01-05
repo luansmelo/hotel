@@ -1,6 +1,9 @@
 import { NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
-import { MeasurementUnitInput } from "../dto/measurementUnit.dto";
+import {
+  MeasurementUnitContract,
+  MeasurementUnitInput,
+} from "../dto/measurementUnit.dto";
 import {
   MeasurementUnitRepositoryContract,
   MeasurementUnitServiceContract,
@@ -30,9 +33,15 @@ export class MeasurementUnitService implements MeasurementUnitServiceContract {
   async getAll(): Promise<any> {
     return this.repository.getAll();
   }
-  async deleteById(id: string): Promise<void> {
+  async deleteById(id: string): Promise<MeasurementUnitContract> {
     const measurementUnit = await this.getById(id);
 
-    await this.repository.deleteById(measurementUnit.id);
+    return this.repository.deleteById(measurementUnit.id);
+  }
+
+  async updateById(id: string, input: MeasurementUnitInput) {
+    const measurementUnit = await this.getById(id);
+
+    return this.repository.updateById(measurementUnit.id, input);
   }
 }

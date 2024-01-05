@@ -17,7 +17,14 @@ export class MeasurementUnitRepository
   async getById(id: string): Promise<any> {
     return this.db.measurementUnit.findUnique({ where: { id } });
   }
-  async deleteById(id: string): Promise<void> {
-    await this.db.measurementUnit.delete({ where: { id } });
+  async deleteById(id: string): Promise<MeasurementUnitContract> {
+    return this.db.measurementUnit.delete({ where: { id } });
+  }
+
+  async updateById(id: string, input: MeasurementUnitContract) {
+    return this.db.measurementUnit.update({
+      where: { id },
+      data: input,
+    });
   }
 }

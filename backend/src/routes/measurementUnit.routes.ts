@@ -58,4 +58,37 @@ router.get(
   }
 );
 
+router.delete(
+  "/:id",
+  authenticated,
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const controller = makeMeasurementUnitController();
+      const result = await controller.deleteById(id);
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.put(
+  "/:id",
+  authenticated,
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const input: MeasurementUnitInput = MeasurementUnitSchema.parse(
+        request.body
+      ) as MeasurementUnitInput;
+      const controller = makeMeasurementUnitController();
+      const result = await controller.updateById(id, input);
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { router, slug };
