@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, useCallback, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
@@ -7,14 +7,14 @@ import { InputContext } from '@/context/input'
 import InputCreate from '@/components/input/InputCreate'
 import InputEdit from '@/components/input/InputEdit'
 import { Input } from '@/components/input/types'
-import Dropdown from '@/components/dropDown'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/group'
 import ConfirmDialog from '@/components/dialog'
 import { Action } from '@/components/listItem/types'
 import ListItem, { FieldDefinition } from '@/components/listItem/Index'
-import { ChefHat, PencilRuler, Trash2 } from 'lucide-react'
+import { PencilRuler, Trash2 } from 'lucide-react'
 import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
+import Button from '@/components/button'
 const Input: React.FC = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
@@ -25,9 +25,7 @@ const Input: React.FC = () => {
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [selectedInput, setSelectedInput] = useState<Input>({} as Input)
   const [showEditModal, setShowEditModal] = useState(false)
-  const [dropdownAnchorEl, setDropdownAnchorEl] = useState<null | HTMLElement>(
-    null
-  )
+
   const [openDialog, setOpenDialog] = useState(false)
 
   const dynamicFields: FieldDefinition<Input>[] = [
@@ -43,17 +41,14 @@ const Input: React.FC = () => {
 
   const openEditModal = () => {
     setShowEditModal(true)
-    setDropdownAnchorEl(null)
   }
 
   const openDeleteModal = () => {
     setOpenDialog(true)
-    setDropdownAnchorEl(null)
   }
 
   const openCreateInput = () => {
     setShowCreateForm(true)
-    setDropdownAnchorEl(null)
   }
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,18 +57,6 @@ const Input: React.FC = () => {
 
   const handleSelectedInput = (input: Input) => {
     setSelectedInput(input)
-    setDropdownAnchorEl(null)
-  }
-
-  const handleOpenDropdown = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      setDropdownAnchorEl(event.currentTarget)
-    },
-    []
-  )
-
-  const handleCloseDropdown = () => {
-    setDropdownAnchorEl(null)
   }
 
   const filteredInputList = searchTerm
@@ -114,20 +97,13 @@ const Input: React.FC = () => {
           disabled={showCreateForm}
         />
 
-        <button className={styles.button} onClick={handleOpenDropdown}>
-          +
-        </button>
-
-        <Dropdown
-          actions={[
-            {
-              label: 'Cadastrar Insumo',
-              onClick: openCreateInput,
-              icon: <ChefHat />,
-            },
-          ]}
-          onClose={handleCloseDropdown}
-          anchorEl={dropdownAnchorEl}
+        <Button
+          text="Cadastrar"
+          height={50}
+          width={380}
+          loading={loading}
+          disabled={!openCreateInput}
+          onSubmit={openCreateInput}
         />
       </div>
 

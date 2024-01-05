@@ -1,7 +1,6 @@
 'use client'
 import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
-import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import ConfirmDialog from '@/components/dialog'
 import { Action } from '@/components/listItem/types'
@@ -68,8 +67,6 @@ export default function MeasurementUnit() {
         }))
     : measurementUnitList
 
-  const hasResults = filteredMeasurementUnit?.length > 0
-
   const actions: Action<MeasurementProps>[] = [
     {
       label: 'Editar',
@@ -110,15 +107,13 @@ export default function MeasurementUnit() {
         />
       </div>
 
-      {hasResults && (
-        <ListItem
-          loading={loading}
-          itemList={filteredMeasurementUnit!}
-          headers={TABLE_HEADER_GENERIC}
-          actions={actions}
-          dynamicFields={dynamicFields}
-        />
-      )}
+      <ListItem
+        loading={loading}
+        itemList={filteredMeasurementUnit!}
+        headers={TABLE_HEADER_GENERIC}
+        actions={actions}
+        dynamicFields={dynamicFields}
+      />
 
       {createMeasurementModal && (
         <MeasurementForm
@@ -149,20 +144,6 @@ export default function MeasurementUnit() {
           }}
         />
       )}
-
-      <div className={styles.textContainer}>
-        <div>
-          {!hasResults && !searchTerm && <p>Nenhum grupo cadastrado.</p>}
-        </div>
-
-        <div>
-          {!hasResults && searchTerm && (
-            <Fade in={!openCreateMeasurementUnit} timeout={500}>
-              <p>grupo não encontrado</p>
-            </Fade>
-          )}
-        </div>
-      </div>
     </div>
   )
 }

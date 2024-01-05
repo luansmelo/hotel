@@ -1,7 +1,6 @@
 'use client'
 import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
-import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import { GroupContext } from '@/context/group'
 import GroupForm from '@/components/group/GroupForm'
@@ -12,6 +11,7 @@ import { PencilRuler, Trash2 } from 'lucide-react'
 import { TABLE_HEADER_GENERIC } from '@/constants/tableHeader'
 import { GroupProps } from '@/utils/interfaces/group'
 import GroupEdit from '@/components/group/GroupEdit'
+import Button from '@/components/button'
 
 export default function Group() {
   const { loading, groupList, handleGroupSave, handleDelete, handleEdit } =
@@ -63,8 +63,6 @@ export default function Group() {
         }))
     : groupList
 
-  const hasResults = filteredGroupList?.length > 0
-
   const actions: Action<GroupProps>[] = [
     {
       label: 'Editar',
@@ -95,20 +93,23 @@ export default function Group() {
           disabled={!openCreateGroup}
         />
 
-        <button className={styles.button} onClick={openCreateGroup}>
-          +
-        </button>
+        <Button
+          text="Cadastrar"
+          height={50}
+          width={380}
+          loading={loading}
+          disabled={!openCreateGroup}
+          onSubmit={openCreateGroup}
+        />
       </div>
 
-      {hasResults && (
-        <ListItem
-          loading={loading}
-          itemList={filteredGroupList!}
-          headers={TABLE_HEADER_GENERIC}
-          actions={actions}
-          dynamicFields={dynamicFields}
-        />
-      )}
+      <ListItem
+        loading={loading}
+        itemList={filteredGroupList!}
+        headers={TABLE_HEADER_GENERIC}
+        actions={actions}
+        dynamicFields={dynamicFields}
+      />
 
       {createGroupModal && (
         <GroupForm
@@ -139,20 +140,6 @@ export default function Group() {
           }}
         />
       )}
-
-      <div className={styles.textContainer}>
-        <div>
-          {!hasResults && !searchTerm && <p>Nenhum grupo cadastrado.</p>}
-        </div>
-
-        <div>
-          {!hasResults && searchTerm && (
-            <Fade in={!openCreateGroup} timeout={500}>
-              <p>grupo não encontrado</p>
-            </Fade>
-          )}
-        </div>
-      </div>
     </div>
   )
 }

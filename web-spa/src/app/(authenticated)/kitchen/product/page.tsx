@@ -131,15 +131,13 @@ const Product: React.FC<ProductProps> = () => {
         </button>
       </div>
 
-      <div>
-        <ListItem
-          loading={loading}
-          itemList={filteredProductList}
-          headers={TABLE_HEADERS_PRODUCT}
-          actions={actions}
-          dynamicFields={dynamicFields}
-        />
-      </div>
+      <ListItem
+        loading={loading}
+        itemList={filteredProductList}
+        headers={TABLE_HEADERS_PRODUCT}
+        actions={actions}
+        dynamicFields={dynamicFields}
+      />
 
       {showCreateForm && (
         <ProductCreate
