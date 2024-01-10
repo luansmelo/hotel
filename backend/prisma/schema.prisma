@@ -49,15 +49,17 @@ model InputsOnProducts {
 }
 
 model Input {
-  id              String             @id @default(uuid())
-  name            String
-  code            String             @unique
-  unitPrice       Float
-  group           String
-  measurementUnit String
-  products        InputsOnProducts[]
-  created_at      String
-  updated_at      String
+  id                String             @id @default(uuid())
+  name              String
+  code              String             @unique
+  unitPrice         Float
+  group             Group              @relation(fields: [groupId], references: [id])
+  measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id])
+  products          InputsOnProducts[]
+  created_at        String
+  updated_at        String
+  groupId           String
+  measurementUnitId String
 
   @@map("input")
 }
@@ -112,19 +114,21 @@ model Category {
 }
 
 model Group {
-  id         String @id @default(uuid())
-  name       String @unique
+  id         String  @id @default(uuid())
+  name       String  @unique
   created_at String
   updated_at String
+  input      Input[]
 
   @@map("group")
 }
 
 model MeasurementUnit {
-  id         String @id @default(uuid())
-  name       String @unique
+  id         String  @id @default(uuid())
+  name       String  @unique
   created_at String
   updated_at String
+  input      Input[]
 
   @@map("measurementUnit")
 }

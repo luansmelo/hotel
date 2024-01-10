@@ -11,12 +11,10 @@ const slug = "/input";
 router.post(
   "/create",
   authenticated,
-  validate(InputSchema),
+
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: InputRegister = InputSchema.parse(
-        request.body
-      ) as InputRegister;
+      const input = request.body;
 
       const controller = makeInputController();
 
@@ -47,17 +45,15 @@ router.get(
 router.put(
   "/:id",
   authenticated,
-  validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const input: InputRegister = InputSchema.parse(
-        request.body
-      ) as InputRegister;
+      const input: InputRegister = request.body;
+
       const controller = makeInputController();
 
       await controller.updateById(id, input);
-      console.log("chegou aqui");
+
       return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);

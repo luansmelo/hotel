@@ -63,8 +63,8 @@ router.delete(
     try {
       const id = request.params.id;
       const controller = makeGroupController();
-      const result = await controller.deleteById(id);
-      return response.status(200).send(result);
+      await controller.deleteById(id);
+      return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
     }
@@ -72,18 +72,19 @@ router.delete(
 );
 
 router.put(
-  '/:id', authenticated,
+  "/:id",
+  authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const id = request.params.id
-      const input = request.body
-      const controller = makeGroupController()
-      const result = await controller.updateById(id, input)
-      return response.status(200).send(result)
+      const id = request.params.id;
+      const input = request.body;
+      const controller = makeGroupController();
+      const result = await controller.updateById(id, input);
+      return response.status(200).send(result);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 export { router, slug };

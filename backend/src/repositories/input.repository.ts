@@ -27,6 +27,18 @@ export class InputRepository implements InputRepositoryContract {
       orderBy: {
         name: "asc",
       },
+      include: {
+        measurementUnit: {
+          select: {
+            name: true,
+          },
+        },
+        group: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return db;

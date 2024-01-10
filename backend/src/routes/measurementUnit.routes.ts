@@ -65,8 +65,8 @@ router.delete(
     try {
       const id = request.params.id;
       const controller = makeMeasurementUnitController();
-      const result = await controller.deleteById(id);
-      return response.status(200).send(result);
+      await controller.deleteById(id);
+      return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
     }

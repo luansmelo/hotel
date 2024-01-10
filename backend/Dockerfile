@@ -1,10 +1,19 @@
 FROM node:18-alpine
 
+# Create app directory
+WORKDIR /app
 
+# Bundle files
 COPY . .
 
-RUN npm ci
+#Update npm 
+RUN npm install -g npm@latest
 
-EXPOSE 3003
+# Install dependencies
+RUN npm install
 
-CMD ["npm", "run", "dev"]
+# Expose port 3000
+EXPOSE 3000
+
+# Start app
+CMD source migrate-and-start.sh

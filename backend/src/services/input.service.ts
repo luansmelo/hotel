@@ -27,7 +27,20 @@ export class InputService implements InputServiceContract {
   }
 
   async getAll() {
-    return this.repository.getAll();
+    const input = await this.repository.getAll();
+
+    const data = input.map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        unitPrice: item.unitPrice,
+        measurementUnit: item.measurementUnit.name,
+        code: item.code,
+        group: item.group.name,
+      };
+    });
+
+    return data;
   }
 
   async getById(id: string) {
