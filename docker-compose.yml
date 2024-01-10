@@ -12,7 +12,7 @@ services:
       MYSQL_DATABASE: hotel
     ports:
       - "3306:3306"
-      
+
   spa:
     build:
       context: ./web-spa
@@ -30,3 +30,5 @@ services:
       - "3003:3003"
     depends_on:
       - db
+    environment:
+      DATABASE_URL: "mysql://root:docker@db:3306/hotel"
