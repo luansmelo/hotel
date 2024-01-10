@@ -25,6 +25,13 @@ export default function InputCreate({
 
   const [errors, setErrors] = React.useState<Partial<Input>>({})
 
+  const selectedMeasurementUnit = measurementUnitList?.find(
+    (measurementUnit) => measurementUnit.name === form.measurementUnit
+  )?.id
+
+  const selectedGroup = groupList?.find((group) => group.name === form.group)
+    ?.id
+
   const validateForm = () => {
     const newErrors: Partial<Record<string, string>> = {
       name: validateField('Nome', form.name, isNotEmpty),
@@ -58,9 +65,11 @@ export default function InputCreate({
         throw new Error('O campo de preço unitário deve ser um número válido')
       }
 
-      console.log('form')
       await handleSave({
-        ...form,
+        name: form.name,
+        code: form.code,
+        groupId: selectedGroup!,
+        measurementUnitId: selectedMeasurementUnit!,
         unitPrice: numericUnitPrice,
       })
     } catch (error) {

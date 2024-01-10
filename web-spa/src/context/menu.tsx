@@ -98,6 +98,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({
     } catch (error) {
       console.log(error)
     } finally {
+      fetchMenuList()
       setLoading(false)
     }
   }

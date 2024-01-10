@@ -5,8 +5,8 @@ import { ProductContext } from '@/context/product'
 import { CategoryProps, ProductWeekDay } from '@/utils/interfaces/category'
 import styles from './styles.module.scss'
 import { memo, useCallback, useContext, useEffect, useState } from 'react'
-import { PlusCircle, SaveIcon } from 'lucide-react'
-import AddButton from '@/components/button'
+import { PlusCircle } from 'lucide-react'
+import Button from '@/components/button'
 import AutoComplete from '@/components/autoComplete'
 import { handleToastify } from '@/utils/toastify'
 import ConfirmDialog from '@/components/dialog'
@@ -112,7 +112,7 @@ const AddProductToCategory = memo(function AddProductToCategory({
 
   return (
     <Modal open={isOpenModel} onClose={closeModal}>
-      <div className={styles.modalContainer}>
+      <div className={styles.containerWrapper}>
         <div>
           <p>Menu: {menuProductList.name}</p>
         </div>
@@ -153,11 +153,11 @@ const AddProductToCategory = memo(function AddProductToCategory({
           onClose={closeDeleteConfirmationDialog}
           onConfirm={() => handleRemoveProduct(addedProducts[0].productId)}
         />
-        <AddButton
-          text="SALVAR"
-          Icon={SaveIcon}
-          onClickButton={handleClickAddProduct}
-          isButtonDisabled={!addedProducts.length}
+
+        <Button
+          text="Adicionar"
+          onSubmit={handleClickAddProduct}
+          disabled={!addedProducts.length}
         />
       </div>
     </Modal>

@@ -8,7 +8,6 @@ import React, {
 } from 'react'
 import { handleToastify } from '@/utils/toastify'
 import { toast } from 'react-toastify'
-import { Error } from '@/components/input/MeasurementUnit/types'
 import { GroupForm, GroupProps } from '@/utils/interfaces/group'
 import { GroupService } from '@/services/group'
 
@@ -92,12 +91,13 @@ export const GroupProvider: React.FC<{ children: ReactNode }> = ({
 
       const res = await group.delete(id)
 
-      if (res) {
-        await fetchGroupList()
+      if (res?.message === 'sucesso') {
         handleToastify('grupo excluída com sucesso!', 'success')
+        await fetchGroupList()
+      } else {
+        handleToastify('Não foi possível excluir o grupo.', 'error')
       }
     } catch (error) {
-      console.log(error)
       handleToastify('Não foi possível excluir a grupo.', 'error')
     } finally {
       setLoading(false)

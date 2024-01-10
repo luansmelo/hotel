@@ -4,16 +4,16 @@ import Modal from '@/components/modal/Modal'
 import { isNotEmpty, validateField } from '@/utils/validations'
 import TextField from '@/components/textField/TextField'
 import React from 'react'
-import { GroupPropsContract } from '../GroupForm/types'
 import { GroupForm, GroupProps } from '@/utils/interfaces/group'
+import { MeasurementUnitContract } from '../MeasurementForm/types'
 
-export default function GroupEdit({
+export default function MeasurementUnitEdit({
   group,
   loading,
   isOpen,
   handleSave,
   handleCloseModal,
-}: GroupPropsContract) {
+}: MeasurementUnitContract) {
   const { form, handleSetState } = useForm(group as GroupProps)
   const [errors, setErrors] = React.useState<Partial<GroupForm>>({})
   const validateForm = () => {

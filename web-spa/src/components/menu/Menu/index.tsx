@@ -46,38 +46,6 @@ const Menu: React.FC = () => {
               isMinimized={isMinimized}
             />
             <MenuButton
-              Icon={PanelTop}
-              text="Mapa de menu"
-              selectedFeature="menu"
-              active={activeButton === 'menu'}
-              onClick={() => setActiveButton('menu')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={Microwave}
-              text="Mapa de produção"
-              selectedFeature="mapProduction"
-              active={activeButton === 'mapProduction'}
-              onClick={() => setActiveButton('mapProduction')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={Soup}
-              text="Ficha técnica"
-              selectedFeature="product"
-              active={activeButton === 'product'}
-              onClick={() => setActiveButton('product')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={Apple}
-              text="Insumo"
-              selectedFeature="input"
-              active={activeButton === 'input'}
-              onClick={() => setActiveButton('input')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
               Icon={Boxes}
               text="Grupo"
               selectedFeature="group"
@@ -93,6 +61,48 @@ const Menu: React.FC = () => {
               onClick={() => setActiveButton('measurementUnit')}
               isMinimized={isMinimized}
             />
+            <MenuButton
+              Icon={Apple}
+              text="Insumo"
+              selectedFeature="input"
+              active={activeButton === 'input'}
+              onClick={() => setActiveButton('input')}
+              isMinimized={isMinimized}
+            />
+
+            <MenuButton
+              Icon={Soup}
+              text="Ficha técnica"
+              selectedFeature="product"
+              active={activeButton === 'product'}
+              onClick={() => setActiveButton('product')}
+              isMinimized={isMinimized}
+            />
+            <MenuButton
+              Icon={PencilRuler}
+              text="Categoria"
+              selectedFeature="measurementUnit"
+              active={activeButton === 'measurementUnit'}
+              onClick={() => setActiveButton('measurementUnit')}
+              isMinimized={isMinimized}
+            />
+            <MenuButton
+              Icon={PanelTop}
+              text="Mapa de menu"
+              selectedFeature="menu"
+              active={activeButton === 'menu'}
+              onClick={() => setActiveButton('menu')}
+              isMinimized={isMinimized}
+            />
+            <MenuButton
+              Icon={Microwave}
+              text="Mapa de produção"
+              selectedFeature="mapProduction"
+              active={activeButton === 'mapProduction'}
+              onClick={() => setActiveButton('mapProduction')}
+              isMinimized={isMinimized}
+            />
+
             {/* <MenuButton
               Icon={Upload}
               text="Upload"

@@ -5,6 +5,7 @@ const TextField = ({
   label,
   value,
   height,
+  width,
   errors,
   name,
   multiline,
@@ -29,6 +30,7 @@ const TextField = ({
         autoComplete="off"
         sx={{
           minHeight: `${height}px` || 'auto',
+          width: `${width}px` || 'auto',
         }}
         InputProps={{
           style: {

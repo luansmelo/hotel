@@ -1,20 +1,19 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
-import AddButton from '@/components/button'
-import { FileUp, SaveIcon, Trash2 } from 'lucide-react'
+import Button from '@/components/button'
+import { FileUp, Trash2 } from 'lucide-react'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
 import { AddInputToProductModalProps } from '../types'
 import Modal from '@/components/modal/Modal'
 import CustomTextArea from '@/components/customTextArea'
 import { Input, InputToProductProps } from '@/components/input/types'
-import TableHeader from '@/components/atoms/TableHeader'
 import useForm from '@/hooks/useForm'
-import { TABLE_HEADERS_INPUT_DETAILS } from '@/constants/tableHeader'
 import ConfirmDialog from '@/components/dialog'
 import TextField from '@/components/textField/TextField'
 import Select from '@/components/select'
-import ListItem from '@/components/listItem/Index'
+import TableHeader from '@/components/atoms/TableHeader'
+import { TABLE_HEADERS_INPUT_DETAILS } from '@/constants/tableHeader'
 
 export default function ProductEditModal({
   isOpen,
@@ -192,71 +191,10 @@ export default function ProductEditModal({
             </div>
 
             <div className={styles.containerWrapper}>
-              {/* <p>Lista de insumos</p> */}
               <table className={styles.table}>
-                {/* <TableHeader headers={TABLE_HEADERS_INPUT_DETAILS} /> */}
-                <ListItem
-                  loading={false}
-                  height={200}
-                  actions={[]}
-                  headers={TABLE_HEADERS_INPUT_DETAILS}
-                  itemList={productDetail?.inputs}
-                  dynamicFields={[
-                    {
-                      key: 'name',
-                      render: (item) => item.name,
-                    },
-                    {
-                      key: 'grammage',
-                      // render: (item) => item.grammage,
-                      children: (item) => (
-                        <>
-                          <Select
-                            name={'measurementUnit'}
-                            data={measurementUnitList!}
-                            width="200px"
-                            value={item.measurementUnit}
-                            errors={''}
-                            onClick={(event) => {
-                              const { value } = event.target
-                              setInputState((prevState) => ({
-                                ...prevState,
-                                [item.name]: {
-                                  ...prevState[item.name],
-                                  measurementUnit: value || '0',
-                                },
-                              }))
-                            }}
-                          />
+                <TableHeader headers={TABLE_HEADERS_INPUT_DETAILS} />
 
-                          <TextField
-                            key={item.id}
-                            label="Gramatura"
-                            name={`grammage`}
-                            value={
-                              inputState[item.name]?.grammage ||
-                              String(item.grammage) ||
-                              '0'
-                            }
-                            onChange={(event) => {
-                              const { value } = event.target
-
-                              setInputState((prevState) => ({
-                                ...prevState,
-                                [item.name]: {
-                                  ...prevState[item.name],
-                                  grammage: value,
-                                },
-                              }))
-                            }}
-                            errors={''}
-                          />
-                        </>
-                      ),
-                    },
-                  ]}
-                />
-                {/* <div className={styles.tbodyContainer}>
+                <div className={styles.tbodyContainer}>
                   <tbody className={styles.tbody}>
                     {productDetail?.inputs?.map((input) => (
                       <tr key={input.id} className={styles.tr}>
@@ -267,6 +205,7 @@ export default function ProductEditModal({
                             name={'measurementUnit'}
                             data={measurementUnitList!}
                             width="200px"
+                            placeholder={input.measurementUnit}
                             value={inputState[input.name]?.measurementUnit}
                             onClick={(event) => {
                               const { value } = event.target
@@ -286,11 +225,9 @@ export default function ProductEditModal({
                             key={input.id}
                             label="Gramatura"
                             name={`grammage`}
-                            value={
-                              inputState[input.name]?.grammage ||
-                              String(input.grammage) ||
-                              '0'
-                            }
+                            width={200}
+                            value={inputState[input.name]?.grammage}
+                            defaultValue={String(input.grammage)}
                             onChange={(event) => {
                               const { value } = event.target
 
@@ -315,15 +252,14 @@ export default function ProductEditModal({
                       </tr>
                     ))}
                   </tbody>
-                </div> */}
+                </div>
               </table>
             </div>
 
-            <AddButton
+            <Button
               text="SALVAR"
-              Icon={SaveIcon}
-              onClickButton={saveProductWithInputs}
-              isButtonDisabled={!isFormChanged() || loading}
+              onSubmit={saveProductWithInputs}
+              disabled={!isFormChanged() || loading}
             />
           </div>
         )}

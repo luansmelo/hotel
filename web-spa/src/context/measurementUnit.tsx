@@ -95,16 +95,16 @@ export const MeasurementUnitProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(true)
 
       const res = await measurementUnit.delete(id)
-      console.log('motivo do erro', res)
-      if (res) {
+      console.log(res, 'res')
+      if (res?.message === 'sucesso') {
         handleToastify('Unidade de medida excluída com sucesso!', 'success')
+        await fetchMeasurementUnitList()
       } else {
         handleToastify('Não foi possível excluir a unidade de medida.', 'error')
       }
     } catch (error) {
       console.log(error)
     } finally {
-      await fetchMeasurementUnitList()
       setLoading(false)
     }
   }

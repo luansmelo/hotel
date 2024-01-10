@@ -7,9 +7,10 @@ export interface ITextFieldProps {
   rows?: number
   defaultValue?: string
   placeholder?: string
-  value: string
+  value?: string
   type?: string
   height?: string
+  width?: string | number
   errors: string | number
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }

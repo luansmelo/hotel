@@ -1,18 +1,15 @@
-.modalContainer {
-  width: 800px;
-  padding: 16px;
+.containerWrapper {
   display: flex;
   flex-direction: column;
-  gap: 0.80rem;
+  gap: 1rem;
+  width: 600px;
+  padding: 8px 16px;
 
   p {
-    text-align: left;
     color: #BDBDBD;
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 1.125rem;
+    font-weight: 500px;
     line-height: 24px;
-    letter-spacing: 0.17px;
-
   }
 }
 
@@ -63,13 +60,6 @@
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.17px;
-  }
-
-  .tdButton {
-    button {
-      height: 32px;
-      margin: 4px;
-    }
   }
 
   td:last-child {

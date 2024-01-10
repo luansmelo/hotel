@@ -32,7 +32,7 @@ export default function Select({
           onChange={onClick}
           inputProps={{ id: `select-${name}` }}
           sx={{
-            width: width ? width : '200px',
+            width: width ? width : 'auto',
             '& .MuiSelect-select': {
               backgroundColor: disabled ? '#272a34' : '#1F2128',
               color: disabled ? '#808080' : '#BDBDBD',

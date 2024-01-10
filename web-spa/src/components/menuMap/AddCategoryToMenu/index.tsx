@@ -11,7 +11,7 @@ import { Trash2 } from 'lucide-react'
 import { handleToastify } from '@/utils/toastify'
 import styles from './styles.module.scss'
 import ConfirmDialog from '@/components/dialog'
-import AddButton from '@/components/button'
+import Button from '@/components/button'
 import { MenuToCategoryProps } from '@/utils/interfaces/menu'
 
 export interface SelectedItem {
@@ -22,6 +22,7 @@ export interface SelectedItem {
 }
 
 const AddCategoryToMenu = ({
+  loading,
   isOpenModel,
   menuList,
   categoryList,
@@ -193,10 +194,11 @@ const AddCategoryToMenu = ({
           dynamicFields={dynamicFields}
           itemList={selectedItems}
         />
-        <AddButton
-          text="SALVAR"
-          onClickButton={() => addCategory(normalizeData(selectedItems))}
-          isButtonDisabled={!selectedItems.length}
+        <Button
+          loading={loading}
+          text="Salvar"
+          onSubmit={() => addCategory(normalizeData(selectedItems))}
+          disabled={!selectedItems.length}
         />
       </div>
 

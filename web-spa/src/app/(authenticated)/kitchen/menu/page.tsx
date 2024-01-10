@@ -104,8 +104,6 @@ export default function MenuMap() {
   const resetModalState = () => {
     setSelectedCategory({} as CategoryInput)
     setCategory('')
-
-    setMenuProductList({} as MenuCategoryProps)
   }
   const handleMenu = (e: FormInputEvent) => {
     const menuFind = menuList.find((menu) => menu.name === e.target.value)
@@ -143,6 +141,7 @@ export default function MenuMap() {
             onClick={handleMenu}
             value={menu}
             errors={''}
+            width="200px"
           />
           <button className={styles.button} onClick={handleOpenDropdown}>
             +
@@ -232,6 +231,7 @@ export default function MenuMap() {
               data={(selectedMenu?.category as CategoryInput[]) || []}
               onClick={handleCategory}
               value={category}
+              width="200px"
             />
 
             <DateTabs

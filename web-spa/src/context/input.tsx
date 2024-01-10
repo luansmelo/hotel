@@ -62,9 +62,8 @@ export const InputProvider: React.FC<{ children: ReactNode }> = ({
         toast.success('Insumo criado com sucesso!')
         await fetchInputList()
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log(error)
-      setInputList([])
     } finally {
       setLoading(false)
     }

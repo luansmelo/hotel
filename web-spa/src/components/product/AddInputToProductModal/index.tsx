@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import AddButton from '@/components/button'
-import { SaveIcon, PlusCircle } from 'lucide-react'
+import Button from '@/components/button'
+import { PlusCircle } from 'lucide-react'
 import { InputContext } from '@/context/input'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
@@ -195,8 +195,7 @@ export default function AddInputToProductModal({
                         (addedInput) => addedInput.name === input.name
                       )
                       const isExisting = productDetail?.inputs?.some(
-                        (existingInput: Input) =>
-                          existingInput.name === input.name
+                        (existingInput) => existingInput.name === input.name
                       )
                       return !isAdded && !isExisting
                     })
@@ -260,7 +259,7 @@ export default function AddInputToProductModal({
                               name={`grammage`}
                               defaultValue={
                                 inputState[input.name]?.grammage ||
-                                input.grammage!
+                                String(input.grammage)!
                               }
                               onChange={(event) => {
                                 const { value } = event.target
@@ -274,6 +273,7 @@ export default function AddInputToProductModal({
                                   },
                                 }))
                               }}
+                              errors={''}
                             />
                           </td>
                           <td>
@@ -295,11 +295,11 @@ export default function AddInputToProductModal({
               </table>
             </div>
 
-            <AddButton
+            <Button
+              loading={loading}
               text="SALVAR"
-              Icon={SaveIcon}
-              onClickButton={saveProductWithInputs}
-              isButtonDisabled={!isGrammageValid}
+              onSubmit={saveProductWithInputs}
+              disabled={!isGrammageValid}
             />
           </div>
         )}

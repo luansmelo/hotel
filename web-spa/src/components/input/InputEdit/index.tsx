@@ -21,16 +21,11 @@ export default function InputEdit({
   const validateForm = () => {
     const newErrors: Partial<Record<string, string>> = {
       name: validateField('Nome', form.name, isNotEmpty),
-      measurementUnit: validateField(
-        'Unidade de medida',
-        form.measurementUnit,
-        isNotEmpty
-      ),
+
       unitPrice:
         validateField('Preço unitário', String(form.unitPrice), isNumber) ||
         validateField('Preço unitário', String(form.unitPrice), isNotEmpty),
       code: validateField('Código', form.code, isNotEmpty),
-      group: validateField('Grupo', form.group, isNotEmpty),
     }
 
     setErrors(newErrors)
@@ -38,10 +33,19 @@ export default function InputEdit({
     return Object.values(newErrors).every((error) => error === '')
   }
 
+  console.log('FORM', form)
+
   const handleModalClose = () => {
     setErrors({})
     handleCloseModal()
   }
+
+  const selectedMeasurementUnit = measurementUnitList?.find(
+    (measurementUnit) => measurementUnit.name === form.measurementUnit
+  )?.id
+
+  const selectedGroup = groupList?.find((group) => group.name === form.group)
+    ?.id
 
   const handleUpdate = async () => {
     try {
@@ -52,8 +56,12 @@ export default function InputEdit({
       }
 
       await handleSave({
-        ...form,
+        id: form.id,
+        code: form.code,
+        name: form.name,
         unitPrice: numericUnitPrice,
+        measurementUnitId: selectedMeasurementUnit!,
+        groupId: selectedGroup!,
       })
     } catch (error) {
       console.log(error)

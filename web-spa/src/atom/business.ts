@@ -55,9 +55,9 @@ export interface InputContract {
   id?: string
   name: string
   unitPrice: number
-  measurementUnit: string
+  measurementUnitId: string
   code: string
-  group: string
+  groupId: string
 }
 
 export interface IProductProps {

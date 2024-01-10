@@ -46,6 +46,13 @@ export default function InputProductDetailModal({
       .toFixed(2)
   }
 
+  const calculateTotalGrams = () => {
+    return productDetail?.inputs?.reduce((totalGrams: number, input: any) => {
+      const validGrams = Number(input.grammage)
+      return isNaN(validGrams) ? totalGrams : totalGrams + validGrams
+    }, 0)
+  }
+
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <div className={styles.modalProductContainer}>
@@ -121,8 +128,9 @@ export default function InputProductDetailModal({
                 {calculateTotalCost()}
               </p>
               <p>
-                Custo Porção:
-                <span className={styles.currency}>R$</span> 0.00
+                Volume do prato:
+                <span className={styles.currency}></span>{' '}
+                {calculateTotalGrams()} KG
               </p>
             </div>
           </div>

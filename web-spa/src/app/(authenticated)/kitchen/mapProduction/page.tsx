@@ -11,6 +11,7 @@ import { CategoryInput, CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
 import { FormInputEvent } from '@/hooks/useForm'
 import { MenuCategoryProps } from '@/utils/interfaces/menu'
+import TextField from '@/components/textField/TextField'
 
 export interface Menu {
   menuId: string
@@ -22,7 +23,7 @@ export default function MapProduction() {
   const [currentDateTab, setCurrentDateTab] = useState<DATE_TABS | undefined>(
     undefined
   )
-  const [peopleNumber, setPeopleNumber] = useState(1)
+  const [peopleNumber, setPeopleNumber] = useState('')
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryInput>(
     {} as CategoryInput
@@ -34,7 +35,6 @@ export default function MapProduction() {
     menuProductList,
     setMenuProductList,
     handleRemoveProduct,
-    fetchMenuProducts,
   } = useContext(MenuContext)
   const { categoryList } = useContext(CategoryContext)
 
@@ -86,6 +86,15 @@ export default function MapProduction() {
             onClick={handleMenu}
             value={menu}
             errors={''}
+            width="200px"
+          />
+
+          <TextField
+            value={String(peopleNumber)}
+            errors={''}
+            name="people"
+            label="quantidade"
+            onChange={(e) => setPeopleNumber(e.target.value)}
           />
         </div>
 
@@ -98,6 +107,7 @@ export default function MapProduction() {
               data={(selectedMenu?.category as CategoryInput[]) || []}
               onClick={handleCategory}
               value={category}
+              width="200px"
             />
 
             <DateTabs
@@ -110,7 +120,6 @@ export default function MapProduction() {
 
         <MenuProductTable
           loading={loading}
-          fetchMenuProducts={fetchMenuProducts}
           onClickDelete={handleRemoveProduct}
           {...{
             data: {
