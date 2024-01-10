@@ -16,6 +16,6 @@ app.use(errorHandler);
 
 app.listen(env.port, () => {
   console.log(
-    `Servidor rodando em ${process.env.API_URL}:${env.port}${env.api_version}`
+    `Servidor rodando em ${env.API_URL}:${env.port}${env.api_version}`
   );
 });
