@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu } from '@/app/(authenticated)/kitchen/menu/page'
+import { Menu } from '@/app/(authenticated)/kitchen/menu/map/page'
 import { CategoryService } from '@/services/category'
 import { MenuService } from '@/services/menu'
 import { RemoveProduct } from '@/utils/interfaces/category'

@@ -1,3 +1,4 @@
+'use client'
 import { useContext, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import Button from '@/components/button'

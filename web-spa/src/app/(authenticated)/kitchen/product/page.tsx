@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ChangeEvent, useContext, useState } from 'react'
+import React, { ChangeEvent, useCallback, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import styles from './styles.module.scss'
 import { ProductContext } from '@/context/product'
@@ -11,60 +11,74 @@ import InputProductDetail from '@/components/product/ProductDetail'
 import ProductEdit from '@/components/product/ProductEdit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/group'
-import ListItem, { FieldDefinition } from '@/components/listItem/Index'
-import { Eye, PencilRuler, Plus, Trash2 } from 'lucide-react'
-import { Action } from '@/components/listItem/types'
+
 import ConfirmDialog from '@/components/dialog'
-import { TABLE_HEADERS_PRODUCT } from '@/constants/tableHeader'
+
+import ProductList from '@/components/product/ProductList'
+import { Eye, MoreVertical, PencilRuler, Plus, Trash2 } from 'lucide-react'
+import { TableItem } from '@/components/Item/TableRoot'
+import { DropDown } from '@/components/dropDown/'
 
 const Product: React.FC<ProductProps> = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [showCreateForm, setShowCreateForm] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showDetailModal, setShowDetailModal] = useState(false)
-  const [showAddInputModal, setShowAddInputModal] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<ProductProps>(
+  const [openModal, setOpenModal] = useState<
+    'create' | 'edit' | 'addInput' | 'detail' | 'delete' | null
+  >(null)
+  const [selectedProduct, setOnProductSelect] = useState<ProductProps>(
     {} as ProductProps
   )
   const [openDialog, setOpenDialog] = useState(false)
+
+  const [anchorEl, setDropdownAnchorEl] = useState<{
+    [key: string]: HTMLElement | null
+  }>({})
+
+  const handleOpenDropdown = useCallback(
+    (event: React.MouseEvent<HTMLElement>, productId: string) => {
+      setDropdownAnchorEl((prevAnchors) => ({
+        ...prevAnchors,
+        [productId]: event.currentTarget,
+      }))
+    },
+    []
+  )
+
+  const handleCloseDropdown = (productId: string) => {
+    setDropdownAnchorEl((prevAnchors) => ({
+      ...prevAnchors,
+      [productId]: null,
+    }))
+  }
 
   const { loading, productList, handleSave, handleDelete } =
     useContext(ProductContext)
   const { measurementUnitList } = useContext(MeasurementUnitContext)
   const { groupList } = useContext(GroupContext)
 
-  const dynamicFields: FieldDefinition<ProductProps>[] = [
-    {
-      key: 'name',
-      render: (item) => <span>{item.name}</span>,
-    },
-  ]
-
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
-
-  const openEditModal = () => {
-    setShowEditModal(true)
+  const handleCreateClick = () => {
+    setOpenModal('create')
   }
 
-  const openAddInputModal = () => {
-    setShowAddInputModal(true)
+  const handleEditClick = (product: ProductProps) => {
+    setOpenModal('edit')
+    setOnProductSelect(product)
   }
 
-  const handleButtonClick = () => {
-    setShowCreateForm(true)
+  const handleAddInputClick = (product: ProductProps) => {
+    setOpenModal('addInput')
+    setOnProductSelect(product)
   }
 
-  const handleSelectedProduct = (product: ProductProps) => {
-    setSelectedProduct(product)
+  const handleDetailClick = (product: ProductProps) => {
+    setOpenModal('detail')
+    setOnProductSelect(product)
   }
 
-  const handleDetailModal = () => {
-    setShowDetailModal(true)
-  }
-
-  const openDeleteModal = () => {
+  const handleDeleteClick = (product: ProductProps) => {
+    setOnProductSelect(product)
     setOpenDialog(true)
   }
 
@@ -74,107 +88,110 @@ const Product: React.FC<ProductProps> = () => {
       )
     : productList
 
-  const actions: Action<ProductProps>[] = [
-    {
-      label: 'Detalhes',
-      onClick: (item) => {
-        setSelectedProduct(item)
-        handleDetailModal()
-      },
-      icon: <Eye color="#fff" size={20} />,
-      actionClass: 'visualizar',
-    },
-    {
-      label: 'Editar',
-      onClick: (item) => {
-        setSelectedProduct(item)
-        openEditModal()
-      },
-      icon: <PencilRuler color="#fff" size={20} />,
-      actionClass: 'editar',
-    },
-    {
-      label: 'Adicionar insumo',
-      onClick: (item) => {
-        setSelectedProduct(item)
-        openAddInputModal()
-      },
-      icon: <Plus color="#fff" size={20} />,
-      actionClass: 'adicionar',
-    },
-    {
-      label: 'Excluir',
-      onClick: (item) => {
-        openDeleteModal()
-        handleSelectedProduct(item)
-      },
-      icon: <Trash2 color="#fff" size={20} />,
-      actionClass: 'excluir',
-    },
-  ]
-
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.searchAndButtonContainer}>
         <InputSearch
           search={'produto'}
           onChange={handleSearchChange}
-          disabled={showCreateForm}
+          disabled={Boolean(openModal)}
         />
 
         <button
           className={styles.button}
-          onClick={handleButtonClick}
+          onClick={handleCreateClick}
           disabled={loading}
         >
           CADASTRAR
         </button>
       </div>
 
-      <ListItem
-        loading={loading}
-        itemList={filteredProductList}
-        headers={TABLE_HEADERS_PRODUCT}
-        actions={actions}
-        dynamicFields={dynamicFields}
-      />
+      <ProductList itemList={filteredProductList} loading={loading}>
+        {(product: TableItem) => (
+          <DropDown.Trigger
+            key={product.id}
+            icon={<MoreVertical color="#04B2D9" size={16} />}
+            onClick={(e) => handleOpenDropdown(e, product.id)}
+          >
+            <DropDown.Menu
+              anchorEl={anchorEl[product.id]}
+              onClose={() => handleCloseDropdown(product.id)}
+            >
+              <DropDown.Actions>
+                <DropDown.Item
+                  icon={<Eye color="white" size={20} />}
+                  label="visualizar"
+                  onClick={() => {
+                    handleDetailClick(product as ProductProps)
+                    handleCloseDropdown(product.id)
+                  }}
+                />
+                <DropDown.Item
+                  icon={<PencilRuler color="white" size={20} />}
+                  label="editar"
+                  onClick={() => {
+                    handleEditClick(product as ProductProps)
+                    handleCloseDropdown(product.id)
+                  }}
+                />
+                <DropDown.Item
+                  icon={<Plus color="white" size={20} />}
+                  label="inserir insumo"
+                  onClick={() => {
+                    handleAddInputClick(product as ProductProps)
+                    handleCloseDropdown(product.id)
+                  }}
+                />
+                <DropDown.Item
+                  icon={<Trash2 color="white" size={20} />}
+                  label="remover"
+                  onClick={() => {
+                    handleDeleteClick(product as ProductProps)
+                    handleCloseDropdown(product.id)
+                  }}
+                />
+              </DropDown.Actions>
+            </DropDown.Menu>
+          </DropDown.Trigger>
+        )}
+      </ProductList>
 
-      {showCreateForm && (
+      {openModal === 'create' && (
         <ProductCreate
           loading={loading}
-          showModal={showCreateForm}
+          showModal={Boolean(openModal)}
           handleSave={handleSave}
-          handleCloseModal={() => setShowCreateForm(false)}
+          handleCloseModal={() => setOpenModal(null)}
         />
       )}
 
-      {showEditModal && (
+      {openModal === 'edit' && (
         <ProductEdit
-          isOpen={showEditModal}
+          isOpen={Boolean(openModal)}
           product={selectedProduct}
           groupList={groupList}
           measurementUnitList={measurementUnitList}
-          onClose={() => setShowEditModal(false)}
+          onClose={() => setOpenModal(null)}
         />
       )}
 
-      {showAddInputModal && (
+      {openModal === 'addInput' && (
         <AddInputToProduct
-          isOpen={showAddInputModal}
+          isOpen={Boolean(openModal)}
           measurementUnitList={measurementUnitList}
           groupList={groupList}
           product={selectedProduct}
-          onClose={() => setShowAddInputModal(false)}
+          onClose={() => setOpenModal(null)}
         />
       )}
 
-      {showDetailModal && (
+      {openModal === 'detail' && (
         <InputProductDetail
           product={selectedProduct}
-          isOpen={showDetailModal}
+          isOpen={Boolean(openModal)}
           measurementUnitList={measurementUnitList}
           groupList={groupList}
-          onClose={() => setShowDetailModal(false)}
+          onClose={() => setOpenModal(null)}
         />
       )}
 

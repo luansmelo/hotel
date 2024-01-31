@@ -1,5 +1,3 @@
-'use client'
-
 import {
   InputsOnProducts,
   ProductProps,
@@ -41,7 +39,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [productList, setProductList] = useState<ProductProps[]>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [productDetail, setProductDetail] = useState<ProductProps>(
     {} as ProductProps
   )
@@ -49,7 +47,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
   const product = useMemo(() => new ProductService(), [])
 
   const fetchProductList = async () => {
-    setLoading(true)
     try {
       const res = await product.list()
 

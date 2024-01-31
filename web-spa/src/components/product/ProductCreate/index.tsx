@@ -1,3 +1,4 @@
+'use client'
 import { Form } from '@/components/form'
 import useForm from '@/hooks/useForm'
 import Modal from '@/components/modal/Modal'

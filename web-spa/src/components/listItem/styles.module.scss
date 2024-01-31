@@ -20,7 +20,13 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6); 
 }
 
+.thead {
+  width: 100%;
+}
 
+.table {
+  width: 100%;
+}
 
 .ul {
   display: flex;
@@ -44,13 +50,6 @@
     flex: 1;
   
   }
-
-  div {
-    gap: 0.5rem;
-    display: flex;
-    position: absolute;
-    right: 44px;
-  }
 }
 
 .actionsContainer {
@@ -68,24 +67,4 @@
   cursor: pointer;
   transition: 0.3s filter ease;
 
-  &:hover {
-    filter: brightness(0.9);
-  }
-
-  &.visualizar {
-    background: #04B2D9;
-  }
-
-  &.editar {
-    background: #FFB81C;
-  }
-  
-  &.adicionar {
-    background: #00BF63;
-  }
-  
-  &.excluir {
-    background: #F56D15;
-
-  }
 }

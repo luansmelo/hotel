@@ -1,12 +1,14 @@
 .inputWrapper {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .inputContainer {
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .searchAndButtonContainer {
@@ -31,9 +33,9 @@
   background-color: #04B2D9;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  // height: 26px;
-  width: 300px;
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
   outline: 0;
   cursor: pointer;
   transition: background-color 1s ease, transform 0.3s ease;
@@ -51,6 +53,28 @@
 }
 
 .inputSearch {
-  // flex-grow: 1;
-  margin-right: 16px; // Adiciona margem à direita para separar o input do botão
+  margin-right: 16px; 
+}
+
+.actionsContainer {
+ display: flex;
+ gap: 0.5rem;
+ flex: 1;
+}
+
+.productEdit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #04B2D9;
+
+  cursor: pointer;
+  transition: 0.3s filter ease;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 }

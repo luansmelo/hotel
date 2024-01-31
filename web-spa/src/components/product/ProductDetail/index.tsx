@@ -1,3 +1,4 @@
+'use client'
 import { useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { ProductContext } from '@/context/product'

@@ -8,12 +8,11 @@ import Select from '@/components/select'
 import Dropdown from '@/components/dropDown'
 import MenuCreate from '@/components/menuMap/MenuCreate'
 import { MenuContext } from '@/context/menu'
-import CategoryCreate from '@/components/category/CategoryCreate'
 import { CategoryContext } from '@/context/category'
 import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
 import { CategoryInput, CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
-import { Plus, Newspaper, MenuSquare, Soup } from 'lucide-react'
+import { Plus, MenuSquare, Soup } from 'lucide-react'
 import { FormInputEvent } from '@/hooks/useForm'
 import AddCategoryToMenu from '@/components/menuMap/AddCategoryToMenu'
 import { MenuCategoryProps } from '@/utils/interfaces/menu'
@@ -27,7 +26,6 @@ export interface Menu {
 export default function MenuMap() {
   const [openCreateMenu, setOpenCreateMenu] = useState(false)
   const [openCategoryToMenu, setOpenCategoryToMenu] = useState(false)
-  const [openCreateCategory, setOpenCreateCategory] = useState(false)
 
   const [openAddProductToCateogory, setOpenAddProductToCategory] =
     useState(false)
@@ -49,8 +47,7 @@ export default function MenuMap() {
     handleSave,
     fetchMenuProducts,
   } = useContext(MenuContext)
-  const { categoryList, handleCreateCategory, handleProductAddCategory } =
-    useContext(CategoryContext)
+  const { categoryList, handleProductAddCategory } = useContext(CategoryContext)
 
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState<null | HTMLElement>(
     null
@@ -65,11 +62,6 @@ export default function MenuMap() {
 
   const openAddCategoryToMenu = () => {
     setOpenCategoryToMenu(true)
-    setDropdownAnchorEl(null)
-  }
-
-  const openCreateCategoryModal = () => {
-    setOpenCreateCategory(true)
     setDropdownAnchorEl(null)
   }
 
@@ -155,11 +147,6 @@ export default function MenuMap() {
                 icon: <MenuSquare />,
               },
               {
-                label: 'Cadastar categoria',
-                onClick: openCreateCategoryModal,
-                icon: <Newspaper />,
-              },
-              {
                 label: 'Adicionar categoria ao menu',
                 onClick: openAddCategoryToMenu,
                 icon: <Plus />,
@@ -187,15 +174,6 @@ export default function MenuMap() {
               isOpenModel={openCreateMenu}
               handleSave={handleSave}
               closeModal={() => setOpenCreateMenu(false)}
-            />
-          )}
-
-          {openCreateCategory && (
-            <CategoryCreate
-              isOpenModel={openCreateCategory}
-              loading={loading}
-              closeModal={() => setOpenCreateCategory(false)}
-              handleSave={handleCreateCategory}
             />
           )}
         </div>

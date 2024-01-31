@@ -1,31 +1,32 @@
-import { useState } from 'react'
-import styles from './styles.module.scss'
+import React, { Fragment, useState } from 'react'
 import TableHeader from '@/components/atoms/TableHeader'
 import PaginationComponent from '@/components/pagination'
 import SkeletonCell from '@/components/skeleton'
-import { Action } from './types'
-import { SearchX } from 'lucide-react'
+import ListItemElement from './ListItemElement'
+import NoData from './NoData'
+
 export interface FieldDefinition<T> {
   key: keyof T
   render: (item: T) => React.ReactNode
 }
-export interface GenericListProps<T extends { id: string }> {
+
+interface ListItemContainerProps<T> {
   loading: boolean
   itemList?: T[]
   headers: string[]
   height?: number
-  actions: Action<T>[]
+  actions?: React.ReactNode
   dynamicFields: FieldDefinition<T>[]
 }
 
-const ListItem = <T extends { id: string }>({
+const ListItemContainer = <T extends { id: string }>({
   loading,
   itemList,
   headers,
   actions,
   dynamicFields,
   height = 400,
-}: GenericListProps<T>) => {
+}: ListItemContainerProps<T>) => {
   const itemsPerPage = 10
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -45,43 +46,19 @@ const ListItem = <T extends { id: string }>({
             <SkeletonCell key={colIndex} colIndex={colIndex} />
           ))}
         </div>
+      ) : paginatedItems?.length === 0 ? (
+        // <NoData height={height} />
+        <p>Xd</p>
       ) : (
-        <div
-          className={styles.container}
-          style={{ minHeight: height, maxHeight: height }}
-        >
-          {paginatedItems?.length === 0 ? (
-            <div className={styles.noData}>
-              <SearchX size={80} color="#F56D15" />
-            </div>
-          ) : (
-            <>
-              {paginatedItems?.map((item) => (
-                <ul
-                  key={item.id + Math.random() + 'list-item'}
-                  className={styles.ul}
-                >
-                  {dynamicFields.map((fieldDef) => (
-                    <li key={String(fieldDef.key)}>{fieldDef.render(item)}</li>
-                  ))}
-                  <div className={styles.iconContainer}>
-                    {actions.map((action, index) => (
-                      <span
-                        key={index}
-                        className={`${styles.productEdit} ${
-                          action.actionClass ? styles[action.actionClass] : ''
-                        }`}
-                        onClick={() => action.onClick(item)}
-                      >
-                        {action.icon}
-                      </span>
-                    ))}
-                  </div>
-                </ul>
+        <Fragment>
+          {paginatedItems?.map((item) => (
+            <ListItemElement key={item.id} item={item} actions={actions}>
+              {dynamicFields.map((fieldDef) => (
+                <span key={String(fieldDef.key)}>{fieldDef.render(item)}</span>
               ))}
-            </>
-          )}
-        </div>
+            </ListItemElement>
+          ))}
+        </Fragment>
       )}
       {paginatedItems && (
         <PaginationComponent
@@ -94,4 +71,4 @@ const ListItem = <T extends { id: string }>({
   )
 }
 
-export default ListItem
+export default ListItemContainer

@@ -1,4 +1,5 @@
 'use client'
+import React, { useState } from 'react'
 import {
   Apple,
   Home,
@@ -12,15 +13,46 @@ import {
 } from 'lucide-react'
 import styles from './menu.module.scss'
 import MenuButton from '../button/MenuButton'
-import { useState } from 'react'
+import SubMenu from './SubMenu'
 import { Fade } from '@mui/material'
 
 const Menu: React.FC = () => {
   const [activeButton, setActiveButton] = useState('')
+  const [activeSubMenuButton, setActiveSubMenuButton] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
-  const toggleMinimize = () => {
-    setIsMinimized(!isMinimized)
+  const [showSubMenu, setShowSubMenu] = useState(false)
+  const [menuButtonCoordinates, setMenuButtonCoordinates] = useState({
+    x: 0,
+    y: 0,
+  })
+
+  const toggleSubMenu = (event: React.MouseEvent) => {
+    setMenuButtonCoordinates({
+      x: event.clientX,
+      y: event.clientY,
+    })
+    setShowSubMenu(!showSubMenu)
   }
+
+  const toggleMinimize = () => setIsMinimized(!isMinimized)
+
+  const handleSubMenuClick = (feature: string) =>
+    setActiveSubMenuButton(feature)
+
+  const menuButtons = [
+    { Icon: Home, text: 'Inicio', feature: '/' },
+    { Icon: Boxes, text: 'Grupo', feature: 'group' },
+    {
+      Icon: PencilRuler,
+      text: 'Unidade de medida',
+      feature: 'measurementUnit',
+    },
+    { Icon: Apple, text: 'Insumo', feature: 'input' },
+    { Icon: Soup, text: 'Ficha técnica', feature: 'product' },
+    { Icon: PencilRuler, text: 'Categoria', feature: 'category' },
+    { Icon: PanelTop, text: 'Menu', feature: 'menu' },
+    { Icon: Microwave, text: 'Mapa de produção', feature: 'mapProduction' },
+  ]
 
   return (
     <Fade in={true} timeout={500} unmountOnExit>
@@ -37,80 +69,27 @@ const Menu: React.FC = () => {
           </div>
 
           <div className={styles.menuButtonContainer}>
-            <MenuButton
-              Icon={Home}
-              text="Inicio"
-              selectedFeature="/"
-              active={activeButton === 'home'}
-              onClick={() => setActiveButton('home')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={Boxes}
-              text="Grupo"
-              selectedFeature="group"
-              active={activeButton === 'group'}
-              onClick={() => setActiveButton('group')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={PencilRuler}
-              text="Unidade de medida"
-              selectedFeature="measurementUnit"
-              active={activeButton === 'measurementUnit'}
-              onClick={() => setActiveButton('measurementUnit')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={Apple}
-              text="Insumo"
-              selectedFeature="input"
-              active={activeButton === 'input'}
-              onClick={() => setActiveButton('input')}
-              isMinimized={isMinimized}
-            />
-
-            <MenuButton
-              Icon={Soup}
-              text="Ficha técnica"
-              selectedFeature="product"
-              active={activeButton === 'product'}
-              onClick={() => setActiveButton('product')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={PencilRuler}
-              text="Categoria"
-              selectedFeature="measurementUnit"
-              active={activeButton === 'measurementUnit'}
-              onClick={() => setActiveButton('measurementUnit')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={PanelTop}
-              text="Mapa de menu"
-              selectedFeature="menu"
-              active={activeButton === 'menu'}
-              onClick={() => setActiveButton('menu')}
-              isMinimized={isMinimized}
-            />
-            <MenuButton
-              Icon={Microwave}
-              text="Mapa de produção"
-              selectedFeature="mapProduction"
-              active={activeButton === 'mapProduction'}
-              onClick={() => setActiveButton('mapProduction')}
-              isMinimized={isMinimized}
-            />
-
-            {/* <MenuButton
-              Icon={Upload}
-              text="Upload"
-              selectedFeature="upload"
-              active={activeButton === 'upload'}
-              onClick={() => setActiveButton('upload')}
-              isMinimized={isMinimized}
-            /> */}
+            {menuButtons.map(({ Icon, text, feature }) => (
+              <MenuButton
+                key={feature}
+                Icon={Icon}
+                text={text}
+                selectedFeature={feature}
+                active={activeButton === feature}
+                onClick={(event) => {
+                  setActiveButton(feature)
+                  if (feature === 'menu') toggleSubMenu(event)
+                }}
+                isMinimized={isMinimized}
+              />
+            ))}
+            {showSubMenu && (
+              <SubMenu
+                activeSubMenuButton={activeSubMenuButton}
+                handleSubMenuClick={handleSubMenuClick}
+                coordinates={menuButtonCoordinates}
+              />
+            )}
           </div>
         </div>
       </div>

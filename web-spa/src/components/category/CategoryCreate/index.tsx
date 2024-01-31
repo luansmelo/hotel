@@ -6,7 +6,7 @@ import React from 'react'
 import TextField from '@/components/textField/TextField'
 import { isNotEmpty, validateField } from '@/utils/validations'
 
-export default function CategoryCreate({
+export default function CategoryForm({
   loading,
   isOpenModel,
   closeModal,
