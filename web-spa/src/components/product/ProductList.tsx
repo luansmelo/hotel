@@ -9,7 +9,7 @@ import Backdrop from '@mui/material/Backdrop'
 
 import { PRODUCT_COLUMNS } from '@/constants/tableHeader'
 import { Hypnosis } from 'react-cssfx-loading'
-import { TableItem } from '../Item/TableRoot'
+import { TableItem } from '../table/types'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: '#BDBDBD',

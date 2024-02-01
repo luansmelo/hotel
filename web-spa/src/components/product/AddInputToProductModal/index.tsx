@@ -14,7 +14,7 @@ import ConfirmDialog from '@/components/dialog'
 import { handleToastify } from '@/utils/toastify'
 import AutoComplete from '@/components/autoComplete'
 import InputTableManipulation from '../ProductEdit/InputTableEdit'
-import { TableItem } from '@/components/Item/TableRoot'
+import { TableItem } from '@/components/table/types'
 import useGrammageValidation from '@/hooks/useGrammageValidation'
 
 const AddInputToProductModal: React.FC<AddInputToProductModalProps> = ({

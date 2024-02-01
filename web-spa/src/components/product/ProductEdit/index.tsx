@@ -13,7 +13,7 @@ import useForm from '@/hooks/useForm'
 import ConfirmDialog from '@/components/dialog'
 import TextField from '@/components/textField/TextField'
 import InputTableEdit from './InputTableEdit'
-import { TableItem } from '@/components/Item/TableRoot'
+import { TableItem } from '@/components/table/types'
 
 export default function ProductEditModal({
   isOpen,
