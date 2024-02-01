@@ -2,17 +2,15 @@
 
 import styles from './styles.module.scss'
 import DateTabs, { DATE_TABS } from '@/components/dateTabs'
-import React, { useState, useContext, useEffect, useCallback } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Fade } from '@mui/material'
 import Select from '@/components/select'
-import Dropdown from '@/components/dropDown'
 import MenuCreate from '@/components/menuMap/MenuCreate'
 import { MenuContext } from '@/context/menu'
 import { CategoryContext } from '@/context/category'
 import AddProductToCategory from '@/components/menuMap/AddProductToCategory'
 import { CategoryInput, CategoryProps } from '@/utils/interfaces/category'
 import MenuProductTable from '@/components/menuMap/MenuProductRender'
-import { Plus, MenuSquare, Soup } from 'lucide-react'
 import { FormInputEvent } from '@/hooks/useForm'
 import AddCategoryToMenu from '@/components/menuMap/AddCategoryToMenu'
 import { MenuCategoryProps } from '@/utils/interfaces/menu'
@@ -70,17 +68,6 @@ export default function MenuMap() {
     setDropdownAnchorEl(null)
   }
 
-  const handleOpenDropdown = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      setDropdownAnchorEl(event.currentTarget)
-    },
-    []
-  )
-
-  const handleCloseDropdown = () => {
-    setDropdownAnchorEl(null)
-  }
-
   const handleCategory = (e: FormInputEvent) => {
     const categoryFind = categoryList.find(
       (category) => category.name === e.target.value
@@ -135,11 +122,11 @@ export default function MenuMap() {
             errors={''}
             width="200px"
           />
-          <button className={styles.button} onClick={handleOpenDropdown}>
+          {/* <button className={styles.button} onClick={handleOpenDropdown}>
             +
-          </button>
+          </button> */}
 
-          <Dropdown
+          {/* <Dropdown
             actions={[
               {
                 label: 'Cadastrar menu',
@@ -164,7 +151,7 @@ export default function MenuMap() {
             ]}
             onClose={handleCloseDropdown}
             anchorEl={dropdownAnchorEl}
-          />
+          /> */}
         </div>
 
         <div>

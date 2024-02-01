@@ -1,11 +1,13 @@
 import { UserController } from "../../controllers/user.controller";
-import prisma from "../../database";
 import { UserRepository } from "../../repositories/user.repository";
 import { UserService } from "../../services/user.service";
+import { EmailValidatorAdapter } from "../email-validator-adapter";
+import prisma from "../../database";
 
 export function makeUserController(): UserController {
+  const emailValidator = new EmailValidatorAdapter();
   const repository = new UserRepository(prisma);
-  const service = new UserService(repository);
+  const service = new UserService(repository, emailValidator);
   const controller = new UserController(service);
   return controller;
 }

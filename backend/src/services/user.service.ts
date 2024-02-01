@@ -5,17 +5,29 @@ import {
 import bcrypt from "bcrypt";
 import { UserLoginInput, UserContractInput } from "../dto/user.dto";
 import {
+  BadRequestError,
   ConflictError,
   NotFoundError,
   UnauthorizedError,
 } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
 import JwtUtils from "../utils/jwtUtils";
+import { EmailValidator } from "../utils/email-validator-adapter";
 
 export class UserService implements UserServiceContract {
-  constructor(private readonly repository: UserRepositoryContract) {}
+  constructor(
+    private readonly repository: UserRepositoryContract,
+    private readonly emailValidator: EmailValidator
+  ) {}
 
   async signup(input: UserContractInput) {
+    
+    const isValid = this.emailValidator.isValid(input.email);
+
+    if (!isValid) {
+      throw new BadRequestError("invalid email");
+    }
+
     const user = await this.repository.getByEmail(input.email);
 
     if (user) throw new ConflictError("user already exists");
