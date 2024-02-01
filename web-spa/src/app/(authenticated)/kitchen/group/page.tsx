@@ -5,13 +5,14 @@ import styles from './styles.module.scss'
 import { GroupContext } from '@/context/group'
 import GroupForm from '@/components/group/GroupForm'
 import ConfirmDialog from '@/components/dialog'
-import { Action } from '@/components/listItem/types'
-import ListItem, { FieldDefinition } from '@/components/listItem/Index'
-import { PencilRuler, Trash2 } from 'lucide-react'
-import { TABLE_HEADER_GENERIC } from '@/constants/tableHeader'
+import { MoreVertical, PencilRuler, Trash2 } from 'lucide-react'
 import { GroupProps } from '@/utils/interfaces/group'
 import GroupEdit from '@/components/group/GroupEdit'
 import Button from '@/components/button'
+import GroupTable from '@/components/group/CategoryTable'
+import { DropDown } from '@/components/dropDown'
+import { TableItem } from '@/components/table/types'
+import useDropdown from '@/hooks/useDropdown'
 
 export default function Group() {
   const { loading, groupList, handleGroupSave, handleDelete, handleEdit } =
@@ -19,36 +20,30 @@ export default function Group() {
 
   const [searchTerm, setSearchTerm] = useState('')
 
-  const [createGroupModal, setCreateGroupModal] = useState(false)
   const [selectedGroup, setSelectedGroup] = useState<GroupProps>(
     {} as GroupProps
   )
-  const [showEditModal, setShowEditModal] = useState(false)
+  const [openModal, setOpenModal] = useState<'create' | 'edit' | null>(null)
 
   const [openDialog, setOpenDialog] = useState(false)
+  const [dropdownState, dropdownActions] = useDropdown()
 
-  const dynamicFields: FieldDefinition<GroupProps>[] = [
-    { key: 'name', render: (item) => <span>{item.name!}</span> },
-  ]
-
-  const openEditModal = () => {
-    setShowEditModal(true)
+  const handleEditClick = (input: GroupProps) => {
+    setOpenModal('edit')
+    setSelectedGroup(input)
   }
 
-  const openDeleteModal = () => {
+  const handleDeleteClick = (input: GroupProps) => {
+    setSelectedGroup(input)
     setOpenDialog(true)
   }
 
-  const openCreateGroup = () => {
-    setCreateGroupModal(true)
+  const handleCreateClick = () => {
+    setOpenModal('create')
   }
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
-  }
-
-  const handleSelectedGroup = (input: GroupProps) => {
-    setSelectedGroup(input)
   }
 
   const filteredGroupList = searchTerm
@@ -63,34 +58,13 @@ export default function Group() {
         }))
     : groupList
 
-  const actions: Action<GroupProps>[] = [
-    {
-      label: 'Editar',
-      onClick: (item) => {
-        handleSelectedGroup(item)
-        openEditModal()
-      },
-      icon: <PencilRuler color="#fff" size={20} />,
-      actionClass: 'editar',
-    },
-    {
-      label: 'Excluir',
-      onClick: (item) => {
-        openDeleteModal()
-        handleSelectedGroup(item)
-      },
-      icon: <Trash2 color="#fff" size={20} />,
-      actionClass: 'excluir',
-    },
-  ]
-
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.searchAndButtonContainer}>
         <InputSearch
           search={'grupo'}
           onChange={handleSearchChange}
-          disabled={!openCreateGroup}
+          disabled={Boolean(openModal)}
         />
 
         <Button
@@ -98,35 +72,61 @@ export default function Group() {
           height={50}
           width={380}
           loading={loading}
-          disabled={!openCreateGroup}
-          onSubmit={openCreateGroup}
+          disabled={Boolean(openModal)}
+          onSubmit={handleCreateClick}
         />
       </div>
 
-      <ListItem
-        loading={loading}
-        itemList={filteredGroupList!}
-        headers={TABLE_HEADER_GENERIC}
-        actions={actions}
-        dynamicFields={dynamicFields}
-      />
+      <GroupTable itemList={filteredGroupList} loading={loading}>
+        {(group: TableItem) => (
+          <DropDown.Trigger
+            key={group.id}
+            icon={<MoreVertical color="#04B2D9" size={16} />}
+            onClick={(e) => dropdownActions.handleOpenDropdown(e, group.id)}
+          >
+            <DropDown.Menu
+              anchorEl={dropdownState[group.id]}
+              onClose={() => dropdownActions.handleCloseDropdown(group.id)}
+            >
+              <DropDown.Actions>
+                <DropDown.Item
+                  icon={<PencilRuler color="white" size={20} />}
+                  label="editar"
+                  onClick={() => {
+                    handleEditClick(group as GroupProps)
+                    dropdownActions.handleCloseDropdown(group.id)
+                  }}
+                />
+                <DropDown.Item
+                  icon={<Trash2 color="white" size={20} />}
+                  label="remover"
+                  onClick={() => {
+                    handleDeleteClick(group as GroupProps)
+                    dropdownActions.handleCloseDropdown(group.id)
+                  }}
+                />
+              </DropDown.Actions>
+            </DropDown.Menu>
+          </DropDown.Trigger>
+        )}
+      </GroupTable>
 
-      {createGroupModal && (
+      {openModal === 'create' && (
         <GroupForm
           loading={loading}
-          isOpen={createGroupModal}
-          handleCloseModal={() => setCreateGroupModal(false)}
+          isOpen={Boolean(openModal)}
+          handleCloseModal={() => setOpenModal(null)}
           handleSave={handleGroupSave}
         />
       )}
 
-      {showEditModal && (
+      {openModal === 'edit' && (
         <GroupEdit
           loading={loading}
           group={selectedGroup}
-          isOpen={showEditModal}
+          isOpen={Boolean(openModal)}
           handleSave={handleEdit}
-          handleCloseModal={() => setShowEditModal(false)}
+          handleCloseModal={() => setOpenModal(null)}
         />
       )}
 
