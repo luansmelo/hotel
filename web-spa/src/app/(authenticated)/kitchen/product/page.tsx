@@ -14,7 +14,7 @@ import { GroupContext } from '@/context/group'
 import ConfirmDialog from '@/components/dialog'
 import ProductTable from '@/components/product/ProductList'
 import { Eye, MoreVertical, PencilRuler, Plus, Trash2 } from 'lucide-react'
-import { TableItem } from '@/components/Item/TableRoot'
+import { TableItem } from '@/components/table/types'
 import { DropDown } from '@/components/dropDown/'
 
 const Product: React.FC<ProductProps> = () => {

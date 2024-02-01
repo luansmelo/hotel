@@ -1,7 +1,6 @@
 'use client'
-import { ChangeEvent, useContext, useState } from 'react'
+import { ChangeEvent, useCallback, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
-import { Fade } from '@mui/material'
 import styles from './styles.module.scss'
 import { InputContext } from '@/context/input'
 import InputCreate from '@/components/input/InputCreate'
@@ -10,11 +9,11 @@ import { Input } from '@/components/input/types'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/group'
 import ConfirmDialog from '@/components/dialog'
-import { Action } from '@/components/listItem/types'
-import ListItem, { FieldDefinition } from '@/components/listItem/Index'
-import { PencilRuler, Trash2 } from 'lucide-react'
-import { TABLE_HEADERS_INPUT } from '@/constants/tableHeader'
+import { MoreVertical, PencilRuler, Trash2 } from 'lucide-react'
 import Button from '@/components/button'
+import InputTable from '@/components/input/InputTable'
+import { TableItem } from '@/components/table/types'
+import { DropDown } from '@/components/dropDown'
 const Input: React.FC = () => {
   const { loading, inputList, handleDelete, handleEdit, handleCreate } =
     useContext(InputContext)
@@ -22,41 +21,48 @@ const Input: React.FC = () => {
   const { groupList } = useContext(GroupContext)
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [showCreateForm, setShowCreateForm] = useState(false)
+  const [openModal, setOpenModal] = useState<'create' | 'edit' | null>(null)
   const [selectedInput, setSelectedInput] = useState<Input>({} as Input)
-  const [showEditModal, setShowEditModal] = useState(false)
 
   const [openDialog, setOpenDialog] = useState(false)
 
-  const dynamicFields: FieldDefinition<Input>[] = [
-    { key: 'name', render: (item) => <span>{item.name}</span> },
-    { key: 'unitPrice', render: (item) => <span>{item.unitPrice}</span> },
-    {
-      key: 'measurementUnit',
-      render: (item) => <span>{item.measurementUnit}</span>,
-    },
-    { key: 'code', render: (item) => <span>{item.code}</span> },
-    { key: 'group', render: (item) => <span>{item.group}</span> },
-  ]
+  const [anchorEl, setDropdownAnchorEl] = useState<{
+    [key: string]: HTMLElement | null
+  }>({})
 
-  const openEditModal = () => {
-    setShowEditModal(true)
+  const handleOpenDropdown = useCallback(
+    (event: React.MouseEvent<HTMLElement>, inputId: string) => {
+      setDropdownAnchorEl((prevAnchors) => ({
+        ...prevAnchors,
+        [inputId]: event.currentTarget,
+      }))
+    },
+    []
+  )
+
+  const handleCloseDropdown = (inputId: string) => {
+    setDropdownAnchorEl((prevAnchors) => ({
+      ...prevAnchors,
+      [inputId]: null,
+    }))
   }
 
-  const openDeleteModal = () => {
+  const handleEditClick = (input: Input) => {
+    setOpenModal('edit')
+    setSelectedInput(input)
+  }
+
+  const handleDeleteClick = (input: Input) => {
+    setSelectedInput(input)
     setOpenDialog(true)
   }
 
   const openCreateInput = () => {
-    setShowCreateForm(true)
+    setOpenModal('create')
   }
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
-  }
-
-  const handleSelectedInput = (input: Input) => {
-    setSelectedInput(input)
   }
 
   const filteredInputList = searchTerm
@@ -67,34 +73,13 @@ const Input: React.FC = () => {
 
   const hasResults = filteredInputList?.length > 0
 
-  const actions: Action<Input>[] = [
-    {
-      label: 'Editar',
-      onClick: (item) => {
-        setSelectedInput(item)
-        openEditModal()
-      },
-      icon: <PencilRuler color="#fff" size={20} />,
-      actionClass: 'editar',
-    },
-    {
-      label: 'Excluir',
-      onClick: (item) => {
-        openDeleteModal()
-        handleSelectedInput(item)
-      },
-      icon: <Trash2 color="#fff" size={20} />,
-      actionClass: 'excluir',
-    },
-  ]
-
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.searchAndButtonContainer}>
         <InputSearch
           search={'insumo'}
           onChange={handleSearchChange}
-          disabled={showCreateForm}
+          disabled={Boolean(openModal)}
         />
 
         <Button
@@ -108,36 +93,62 @@ const Input: React.FC = () => {
       </div>
 
       {hasResults && (
-        <ListItem
-          loading={loading}
-          itemList={filteredInputList}
-          headers={TABLE_HEADERS_INPUT}
-          actions={[]}
-          dynamicFields={dynamicFields}
-        />
+        <InputTable loading={loading} itemList={filteredInputList}>
+          {(input: TableItem) => (
+            <DropDown.Trigger
+              key={input.id}
+              icon={<MoreVertical color="#04B2D9" size={16} />}
+              onClick={(e) => handleOpenDropdown(e, input.id)}
+            >
+              <DropDown.Menu
+                anchorEl={anchorEl[input.id]}
+                onClose={() => handleCloseDropdown(input.id)}
+              >
+                <DropDown.Actions>
+                  <DropDown.Item
+                    icon={<PencilRuler color="white" size={20} />}
+                    label="editar"
+                    onClick={() => {
+                      handleEditClick(input as Input)
+                      handleCloseDropdown(input.id)
+                    }}
+                  />
+                  <DropDown.Item
+                    icon={<Trash2 color="white" size={20} />}
+                    label="remover"
+                    onClick={() => {
+                      handleDeleteClick(input as Input)
+                      handleCloseDropdown(input.id)
+                    }}
+                  />
+                </DropDown.Actions>
+              </DropDown.Menu>
+            </DropDown.Trigger>
+          )}
+        </InputTable>
       )}
 
-      {showEditModal && (
+      {openModal === 'edit' && (
         <InputEdit
           loading={loading}
           measurementUnitList={measurementUnitList}
           groupList={groupList}
-          showModal={showEditModal}
+          showModal={Boolean(openModal)}
           handleSave={handleEdit}
-          handleCloseModal={() => setShowEditModal(false)}
+          handleCloseModal={() => setOpenModal(null)}
           input={selectedInput}
         />
       )}
 
-      {showCreateForm && (
+      {openModal === 'create' && (
         <InputCreate
           loading={loading}
           inputList={inputList}
           measurementUnitList={measurementUnitList}
           groupList={groupList}
           handleSave={handleCreate}
-          showModal={showCreateForm}
-          handleCloseModal={() => setShowCreateForm(false)}
+          showModal={Boolean(openModal)}
+          handleCloseModal={() => setOpenModal(null)}
         />
       )}
 
@@ -151,20 +162,6 @@ const Input: React.FC = () => {
           }}
         />
       )}
-
-      <div className={styles.textContainer}>
-        <div>
-          {!hasResults && !searchTerm && <p>Nenhum insumo cadastrado.</p>}
-        </div>
-
-        <div>
-          {!hasResults && searchTerm && (
-            <Fade in={!showCreateForm} timeout={500}>
-              <p>Insumo não encontrado</p>
-            </Fade>
-          )}
-        </div>
-      </div>
     </div>
   )
 }

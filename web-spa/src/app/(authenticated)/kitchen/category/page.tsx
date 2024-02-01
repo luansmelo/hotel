@@ -1,52 +1,46 @@
 'use client'
-import { ChangeEvent, useCallback, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import InputSearch from '@/components/atoms/search'
 import styles from './styles.module.scss'
-import { Action } from '@/components/listItem/types'
-import ListItem, { FieldDefinition } from '@/components/listItem/Index'
-import { PencilRuler, Trash2 } from 'lucide-react'
-import { TABLE_HEADER_GENERIC } from '@/constants/tableHeader'
+import { MoreVertical, PencilRuler, Trash2 } from 'lucide-react'
 import Button from '@/components/button'
 import { CategoryContext } from '@/context/category'
-import { CategoryInput } from '@/utils/interfaces/category'
+import { CategoryInput, CategoryProps } from '@/utils/interfaces/category'
 import CategoryForm from '@/components/category/CategoryCreate'
-import DropDown from '@/components/dropDown'
+import CategoryTable from '@/components/category/CategoryTable'
+import useDropdown from '@/hooks/useDropdown'
+import { DropDown } from '@/components/dropDown'
+import { TableItem } from '@/components/table/types'
+import ConfirmDialog from '@/components/dialog'
 
 export default function Category() {
   const { loading, categoryList, handleCreateCategory } =
     useContext(CategoryContext)
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [createGroupModal, setCreateGroupModal] = useState(false)
-  const [selectedGroup, setSelectedGroup] = useState<CategoryInput>(
+  const [openModal, setOpenModal] = useState<'create' | 'edit' | null>(null)
+  const [openDialog, setOpenDialog] = useState(false)
+  const [selectedCategory, setSelectedGroup] = useState<CategoryInput>(
     {} as CategoryInput
   )
-
-  const [dropdownAnchorEl, setDropdownAnchorEl] = useState<HTMLElement | null>(
-    null
-  )
-
-  const handleOpenDropdown = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      setDropdownAnchorEl(event.currentTarget)
-    },
-    []
-  )
-
-  const handleCloseDropdown = () => {
-    setDropdownAnchorEl(null)
-  }
-
-  const dynamicFields: FieldDefinition<CategoryInput>[] = [
-    { key: 'name', render: (item) => <span>{item.name!}</span> },
-  ]
+  const [dropdownState, dropdownActions] = useDropdown()
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
 
-  const handleSelectedGroup = (input: CategoryInput) => {
+  const handleEditClick = (input: Input) => {
+    setOpenModal('edit')
     setSelectedGroup(input)
+  }
+
+  const handleDeleteClick = (input: Input) => {
+    setSelectedGroup(input)
+    setOpenDialog(true)
+  }
+
+  const openCreateInput = () => {
+    setOpenModal('create')
   }
 
   const filteredGroupList = searchTerm
@@ -61,33 +55,13 @@ export default function Category() {
         }))
     : categoryList
 
-  const actions: Action<CategoryInput>[] = [
-    {
-      label: 'Editar',
-      onClick: (item) => {
-        handleSelectedGroup(item)
-      },
-      icon: <PencilRuler color="#fff" size={20} />,
-      actionClass: 'editar',
-    },
-    {
-      label: 'Excluir',
-      onClick: (item) => {
-        // openDeleteModal()
-        handleSelectedGroup(item)
-      },
-      icon: <Trash2 color="#fff" size={20} />,
-      actionClass: 'excluir',
-    },
-  ]
-
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.searchAndButtonContainer}>
         <InputSearch
           search={'grupo'}
           onChange={handleSearchChange}
-          disabled={!createGroupModal}
+          disabled={Boolean(openModal)}
         />
 
         <Button
@@ -95,38 +69,64 @@ export default function Category() {
           height={50}
           width={380}
           loading={loading}
-          disabled={!createGroupModal}
-          onClick={true}
+          disabled={Boolean(openModal)}
+          onSubmit={openCreateInput}
         />
       </div>
 
-      <ListItem
-        loading={loading}
-        itemList={filteredGroupList! as CategoryInput[]}
-        headers={TABLE_HEADER_GENERIC}
-        actions={
-          <>
-            <button className={styles.button} onClick={handleOpenDropdown}>
-              &#8230;
-            </button>
-            <DropDown
-              actions={actions}
-              onClose={handleCloseDropdown}
-              anchorEl={dropdownAnchorEl}
-            />
-          </>
-        }
-        dynamicFields={dynamicFields}
-      />
+      <CategoryTable itemList={filteredGroupList} loading={loading}>
+        {(category: TableItem) => (
+          <DropDown.Trigger
+            key={category.id}
+            icon={<MoreVertical color="#04B2D9" size={16} />}
+            onClick={(e) => dropdownActions.handleOpenDropdown(e, category.id)}
+          >
+            <DropDown.Menu
+              anchorEl={dropdownState[category.id]}
+              onClose={() => dropdownActions.handleCloseDropdown(category.id)}
+            >
+              <DropDown.Actions>
+                <DropDown.Item
+                  icon={<PencilRuler color="white" size={20} />}
+                  label="editar"
+                  onClick={() => {
+                    handleEditClick(category as CategoryProps)
+                    dropdownActions.handleCloseDropdown(category.id)
+                  }}
+                />
+                <DropDown.Item
+                  icon={<Trash2 color="white" size={20} />}
+                  label="remover"
+                  onClick={() => {
+                    handleDeleteClick(category)
+                    dropdownActions.handleCloseDropdown(category.id)
+                  }}
+                />
+              </DropDown.Actions>
+            </DropDown.Menu>
+          </DropDown.Trigger>
+        )}
+      </CategoryTable>
 
-      {createGroupModal && (
+      {openModal === 'create' && (
         <CategoryForm
           loading={loading}
-          isOpenModel={createGroupModal}
-          closeModal={() => setCreateGroupModal(false)}
+          isOpenModel={Boolean(openModal)}
+          closeModal={() => setOpenModal(null)}
           handleSave={handleCreateCategory}
         />
       )}
+
+      {/* {openDialog && (
+        <ConfirmDialog
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          onConfirm={() => {
+            handleDelete(selectedCategory?.id)
+            setOpenDialog(false)
+          }}
+        />
+      )} */}
     </div>
   )
 }

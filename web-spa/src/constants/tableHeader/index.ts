@@ -1,9 +1,24 @@
-export const TABLE_HEADERS_INPUT = [
-  'Nome',
-  'Preço Unitário',
-  'Unidade de Medida',
-  'Código',
-  'Grupo',
+export const INPUT_COLUMNS = [
+  {
+    id: 'nome',
+    label: 'Nome',
+  },
+  {
+    id: 'preço unitário',
+    label: 'Preço Unitário',
+  },
+  {
+    id: 'unidade de medida',
+    label: 'Unidade de Medida',
+  },
+  {
+    id: 'código',
+    label: 'Código',
+  },
+  {
+    id: 'grupo',
+    label: 'Grupo',
+  },
 ]
 
 export const INPUT_MANIPULATION_COLUMNS = [
@@ -53,4 +68,9 @@ export const PRODUCT_COLUMNS = [
   },
 ]
 
-export const TABLE_HEADER_GENERIC = ['Nome']
+export const CATEGORY_COLUMNS = [
+  {
+    id: 'nome',
+    label: 'Nome',
+  },
+]

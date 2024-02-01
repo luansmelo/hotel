@@ -5,11 +5,11 @@ import Paper from '@mui/material/Paper'
 import TableCell from '@mui/material/TableCell'
 import { Table, TableBody, TableHead, TableRow } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { INPUT_COLUMNS } from '@/constants/tableHeader'
+import { CATEGORY_COLUMNS } from '@/constants/tableHeader'
 
 import TablePagination from '@mui/material/TablePagination'
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   color: '#BDBDBD',
   padding: '12px 8px', // Adjust the padding for table header cells
   borderBottom: 'none !important', // Remove the bottom border in the header cells
@@ -20,7 +20,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }))
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   // background: '#30333F',
   border: 'none',
   '&:nth-of-type(odd)': {
@@ -37,15 +37,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-interface InputListProps {
+interface CategoryListProps {
   loading: boolean
   itemList: TableItem[]
   itemsPerPage?: number
-  children: (input: TableItem) => ReactNode
+  children: (category: TableItem) => ReactNode
 }
 
-const InputTable: React.FC<InputListProps> = ({
-  loading,
+const CategoryTable: React.FC<CategoryListProps> = ({
   itemList,
   itemsPerPage = 10,
   children,
@@ -74,7 +73,7 @@ const InputTable: React.FC<InputListProps> = ({
         >
           <TableHead>
             <TableRow>
-              {INPUT_COLUMNS.map((column) => (
+              {CATEGORY_COLUMNS.map((column) => (
                 <StyledTableCell key={column.id} sx={{ background: '#1F2128' }}>
                   {column.label}
                 </StyledTableCell>
@@ -92,10 +91,6 @@ const InputTable: React.FC<InputListProps> = ({
               ?.map((row) => (
                 <StyledTableRow key={row.id}>
                   <StyledTableCell>{row.name}</StyledTableCell>
-                  <StyledTableCell>{row.unitPrice}</StyledTableCell>
-                  <StyledTableCell>{row.measurementUnit}</StyledTableCell>
-                  <StyledTableCell>{row.code}</StyledTableCell>
-                  <StyledTableCell>{row.group}</StyledTableCell>
                   <StyledTableCell align="right">
                     {children(row)}
                   </StyledTableCell>
@@ -122,4 +117,4 @@ const InputTable: React.FC<InputListProps> = ({
   )
 }
 
-export default InputTable
+export default CategoryTable
