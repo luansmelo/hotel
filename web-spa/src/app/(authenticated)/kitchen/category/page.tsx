@@ -11,7 +11,6 @@ import CategoryTable from '@/components/category/CategoryTable'
 import useDropdown from '@/hooks/useDropdown'
 import { DropDown } from '@/components/dropDown'
 import { TableItem } from '@/components/table/types'
-import ConfirmDialog from '@/components/dialog'
 
 export default function Category() {
   const { loading, categoryList, handleCreateCategory } =
@@ -29,12 +28,12 @@ export default function Category() {
     setSearchTerm(event.target.value)
   }
 
-  const handleEditClick = (input: Input) => {
+  const handleEditClick = (input: CategoryInput) => {
     setOpenModal('edit')
     setSelectedGroup(input)
   }
 
-  const handleDeleteClick = (input: Input) => {
+  const handleDeleteClick = (input: CategoryInput) => {
     setSelectedGroup(input)
     setOpenDialog(true)
   }
