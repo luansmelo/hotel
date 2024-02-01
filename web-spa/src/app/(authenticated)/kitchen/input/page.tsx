@@ -112,7 +112,7 @@ const Input: React.FC = () => {
           loading={loading}
           itemList={filteredInputList}
           headers={TABLE_HEADERS_INPUT}
-          actions={actions}
+          actions={[]}
           dynamicFields={dynamicFields}
         />
       )}

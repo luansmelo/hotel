@@ -1,8 +1,8 @@
 'use client'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import Button from '@/components/button'
-import { PlusCircle } from 'lucide-react'
+import { PlusCircle, Trash2 } from 'lucide-react'
 import { InputContext } from '@/context/input'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
@@ -12,17 +12,17 @@ import CustomTextArea from '@/components/customTextArea'
 import { Input, InputToProductProps } from '@/components/input/types'
 import ConfirmDialog from '@/components/dialog'
 import { handleToastify } from '@/utils/toastify'
-import Trash from '@/components/atoms/trash'
 import AutoComplete from '@/components/autoComplete'
-import Select from '@/components/select'
-import TextField from '@/components/textField/TextField'
+import InputTableManipulation from '../ProductEdit/InputTableEdit'
+import { TableItem } from '@/components/Item/TableRoot'
+import useGrammageValidation from '@/hooks/useGrammageValidation'
 
-export default function AddInputToProductModal({
+const AddInputToProductModal: React.FC<AddInputToProductModalProps> = ({
   isOpen,
   product,
   measurementUnitList,
   onClose,
-}: AddInputToProductModalProps) {
+}) => {
   const {
     loading,
     productDetail,
@@ -43,8 +43,10 @@ export default function AddInputToProductModal({
   const [inputToRemove, setInputToRemove] = useState<Input | null>(null)
   const [addedInputs, setAddedInputs] = useState<Input[]>([])
   const [selectedInput, setSelectedInput] = useState<Input>()
-  const [isGrammageValid, setIsGrammageValid] = useState(true)
-  const fetchProductDetails = async () => {
+
+  const { isGrammageValid, validateGrammage } = useGrammageValidation()
+
+  const fetchDetails = async () => {
     try {
       await handleProductDetails(product.id)
     } catch (error) {
@@ -53,7 +55,7 @@ export default function AddInputToProductModal({
   }
 
   useEffect(() => {
-    fetchProductDetails()
+    fetchDetails()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -61,15 +63,11 @@ export default function AddInputToProductModal({
     setInputToRemove(input)
     setIsConfirmDialogOpen(true)
   }
+
   const closeDeleteConfirmationDialog = () => {
     setIsConfirmDialogOpen(false)
     setInputToRemove(null)
   }
-
-  const validateGrammage = useCallback((value: string) => {
-    const isValid = Number(value) > 0 && !isNaN(Number(value))
-    setIsGrammageValid(isValid)
-  }, [])
 
   const addSelectedInput = (value: string) => {
     setSelectedInput(inputList.find((input) => input.name === value))
@@ -78,6 +76,7 @@ export default function AddInputToProductModal({
   const handleClose = () => {
     onClose()
   }
+
   const addInputToSelectedList = (input: Input) => {
     if (!addedInputs.some((currentInput) => currentInput.name === input.name)) {
       const newInput = {
@@ -100,7 +99,6 @@ export default function AddInputToProductModal({
         ...prevAddedInputs,
         newInput as Input,
       ])
-
       handleToastify('Insumo adicionado com sucesso!', 'success')
     } else {
       handleToastify('Produto não pode ser adicionado!', 'error')
@@ -216,85 +214,21 @@ export default function AddInputToProductModal({
               </div>
             </div>
 
-            <div className={styles.containerWrapper}>
-              <table className={styles.table}>
-                <thead className={styles.thead}>
-                  <td>Nome</td>
-                  <td>Unidade de Medida</td>
-                  <td>Gramatura</td>
-                </thead>
-
-                <div className={styles.tbodyContainer}>
-                  <tbody className={styles.tbody}>
-                    {addedInputs.length ? (
-                      [...addedInputs].map((input: Input) => (
-                        <tr key={input.id} className={styles.tr}>
-                          <td>{input.name}</td>
-                          <td>
-                            <Select
-                              data={measurementUnitList!}
-                              key={input.id}
-                              name={'measurementUnit'}
-                              defaultValue={input.measurementUnit}
-                              value={
-                                inputState[input.name]?.measurementUnit ||
-                                input.measurementUnit
-                              }
-                              onClick={(event) => {
-                                const { value } = event.target
-                                setInputState((prevState) => ({
-                                  ...prevState,
-                                  [input.name]: {
-                                    ...prevState[input.name],
-                                    measurementUnit: value || '0',
-                                  },
-                                }))
-                              }}
-                              errors={''}
-                            />
-                          </td>
-                          <td>
-                            <TextField
-                              key={input.id}
-                              label="Gramatura"
-                              name={`grammage`}
-                              defaultValue={
-                                inputState[input.name]?.grammage ||
-                                String(input.grammage)!
-                              }
-                              onChange={(event) => {
-                                const { value } = event.target
-
-                                validateGrammage(value as string)
-                                setInputState((prevState) => ({
-                                  ...prevState,
-                                  [input.name]: {
-                                    ...prevState[input.name],
-                                    grammage: value,
-                                  },
-                                }))
-                              }}
-                              errors={''}
-                            />
-                          </td>
-                          <td>
-                            <Trash
-                              onClick={() =>
-                                openDeleteConfirmationDialog(input)
-                              }
-                            />
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <div className={styles.paragraphContainer}>
-                        <p>Nenhum insumo adicionado</p>
-                      </div>
-                    )}
-                  </tbody>
+            <InputTableManipulation
+              inputState={inputState}
+              setInputState={setInputState}
+              itemList={addedInputs}
+              measurementUnitList={measurementUnitList!}
+            >
+              {(input: TableItem) => (
+                <div
+                  className={styles.productActionDelete}
+                  onClick={() => openDeleteConfirmationDialog(input as Input)}
+                >
+                  <Trash2 color="white" size={18} />
                 </div>
-              </table>
-            </div>
+              )}
+            </InputTableManipulation>
 
             <Button
               loading={loading}
@@ -316,3 +250,5 @@ export default function AddInputToProductModal({
     </Modal>
   )
 }
+
+export default AddInputToProductModal

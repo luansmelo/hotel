@@ -12,15 +12,7 @@ const DropDownTrigger: React.FC<DropDownTriggerProps> = ({
   children,
   icon,
 }) => (
-  <Box
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      '&:hover, &:focus': {
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-      },
-    }}
-  >
+  <Box>
     <IconButton
       size="small"
       onClick={onClick}

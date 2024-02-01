@@ -11,10 +11,8 @@ import InputProductDetail from '@/components/product/ProductDetail'
 import ProductEdit from '@/components/product/ProductEdit'
 import { MeasurementUnitContext } from '@/context/measurementUnit'
 import { GroupContext } from '@/context/group'
-
 import ConfirmDialog from '@/components/dialog'
-
-import ProductList from '@/components/product/ProductList'
+import ProductTable from '@/components/product/ProductList'
 import { Eye, MoreVertical, PencilRuler, Plus, Trash2 } from 'lucide-react'
 import { TableItem } from '@/components/Item/TableRoot'
 import { DropDown } from '@/components/dropDown/'
@@ -106,7 +104,7 @@ const Product: React.FC<ProductProps> = () => {
         </button>
       </div>
 
-      <ProductList itemList={filteredProductList} loading={loading}>
+      <ProductTable itemList={filteredProductList}>
         {(product: TableItem) => (
           <DropDown.Trigger
             key={product.id}
@@ -154,7 +152,7 @@ const Product: React.FC<ProductProps> = () => {
             </DropDown.Menu>
           </DropDown.Trigger>
         )}
-      </ProductList>
+      </ProductTable>
 
       {openModal === 'create' && (
         <ProductCreate

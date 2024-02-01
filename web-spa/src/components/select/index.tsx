@@ -31,6 +31,7 @@ export default function Select({
           defaultValue={defaultValue}
           onChange={onClick}
           inputProps={{ id: `select-${name}` }}
+          fullWidth
           sx={{
             width: width ? width : 'auto',
             '& .MuiSelect-select': {

@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import styles from './styles.module.scss'
 import { ProductContext } from '@/context/product'
 import { Hypnosis } from 'react-cssfx-loading'
@@ -7,10 +7,24 @@ import { AddInputToProductModalProps } from '../types'
 import Modal from '@/components/modal/Modal'
 import CustomTextArea from '@/components/customTextArea'
 import Image from 'next/image'
-import TableHeader from '@/components/atoms/TableHeader'
-import { TABLE_HEADERS_PRODUCT_DETAILS } from '@/constants/tableHeader'
-import { Fade } from '@mui/material'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+
+interface ConversionTable {
+  [unit: string]: {
+    [targetUnit: string]: number
+  }
+}
+
+const conversionTable: ConversionTable = {
+  KG: {
+    GRAMAS: 1000,
+  },
+  LITRO: {
+    MILILITRO: 1000,
+  },
+  // Adicione mais conversões conforme necessário
+}
+
+import InputTableDetail from './InputTableDetail'
 
 export default function InputProductDetailModal({
   isOpen,
@@ -19,7 +33,6 @@ export default function InputProductDetailModal({
 }: AddInputToProductModalProps) {
   const { loading, productDetail, handleProductDetails } =
     useContext(ProductContext)
-  const [showInputDetails, setShowInputDetails] = useState(false)
 
   const fetchProductDetails = async () => {
     try {
@@ -38,11 +51,31 @@ export default function InputProductDetailModal({
     onClose()
   }
 
+  const convertUnit = (
+    value: number,
+    fromUnit: string,
+    toUnit: string
+  ): number => {
+    if (conversionTable[fromUnit] && conversionTable[fromUnit][toUnit]) {
+      return value * conversionTable[fromUnit][toUnit]
+    } else {
+      console.error(`Conversão de ${fromUnit} para ${toUnit} não suportada.`)
+      return value
+    }
+  }
+
   const calculateTotalCost = () => {
     return productDetail?.inputs
       ?.reduce((totalCost: number, input: any) => {
         const validUnitPrice = Number(input.unitPrice)
-        return isNaN(validUnitPrice) ? totalCost : totalCost + validUnitPrice
+        const convertedUnitPrice = convertUnit(
+          validUnitPrice,
+          input.unit,
+          'GRAMAS'
+        )
+        return isNaN(convertedUnitPrice)
+          ? totalCost
+          : totalCost + convertedUnitPrice
       }, 0)
       .toFixed(2)
   }
@@ -72,50 +105,20 @@ export default function InputProductDetailModal({
                 <Image
                   src="https://bakeandcakegourmet.com.br/uploads/site/receitas/strogonoff-de-frango-6xp9zh2o.jpg"
                   alt={product.name}
-                  width={290}
-                  height={235}
+                  width={260}
+                  height={200}
                   className={styles.image}
                 />
               </div>
               <div className={styles.textAreaContainer}>
-                <CustomTextArea value={productDetail.description} rows={12} />
+                <CustomTextArea value={productDetail.description} rows={10} />
               </div>
             </div>
             <hr />
-            <div className={styles.inputList}>
-              <p onClick={() => setShowInputDetails(!showInputDetails)}>
-                Visualizar Lista de Insumos{' '}
-                {showInputDetails ? (
-                  <ChevronDown color="#F56D15" />
-                ) : (
-                  <ChevronUp color="#F56D15" />
-                )}
-              </p>
-              <Fade in={showInputDetails}>
-                <div>
-                  <div className={styles.containerWrapper}>
-                    <table className={styles.table}>
-                      <TableHeader headers={TABLE_HEADERS_PRODUCT_DETAILS} />
-
-                      <div className={styles.tbodyContainer}>
-                        <tbody className={styles.tbody}>
-                          {productDetail?.inputs?.map((input: any) => (
-                            <tr key={input.id} className={styles.tr}>
-                              <td>{input.name}</td>
-                              <td>
-                                {input.grammage} {input.measurementUnit}
-                              </td>
-                              <td>{input.unitPrice}</td>
-                              <td>{input.unitPrice}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </div>
-                    </table>
-                  </div>
-                </div>
-              </Fade>
-            </div>
+            <InputTableDetail
+              itemList={productDetail?.inputs}
+              itemsPerPage={5}
+            />
             <hr />
             <div>
               <p>

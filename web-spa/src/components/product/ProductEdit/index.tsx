@@ -12,9 +12,8 @@ import { Input, InputToProductProps } from '@/components/input/types'
 import useForm from '@/hooks/useForm'
 import ConfirmDialog from '@/components/dialog'
 import TextField from '@/components/textField/TextField'
-import Select from '@/components/select'
-import TableHeader from '@/components/atoms/TableHeader'
-import { TABLE_HEADERS_INPUT_DETAILS } from '@/constants/tableHeader'
+import InputTableEdit from './InputTableEdit'
+import { TableItem } from '@/components/Item/TableRoot'
 
 export default function ProductEditModal({
   isOpen,
@@ -191,71 +190,23 @@ export default function ProductEditModal({
               </div>
             </div>
 
-            <div className={styles.containerWrapper}>
-              <table className={styles.table}>
-                <TableHeader headers={TABLE_HEADERS_INPUT_DETAILS} />
-
-                <div className={styles.tbodyContainer}>
-                  <tbody className={styles.tbody}>
-                    {productDetail?.inputs?.map((input) => (
-                      <tr key={input.id} className={styles.tr}>
-                        <td>{input.name}</td>
-                        <td>
-                          <Select
-                            key={input.id}
-                            name={'measurementUnit'}
-                            data={measurementUnitList!}
-                            width="200px"
-                            placeholder={input.measurementUnit}
-                            value={inputState[input.name]?.measurementUnit}
-                            onClick={(event) => {
-                              const { value } = event.target
-                              setInputState((prevState) => ({
-                                ...prevState,
-                                [input.name]: {
-                                  ...prevState[input.name],
-                                  measurementUnit: value || '0',
-                                },
-                              }))
-                            }}
-                            errors={''}
-                          />
-                        </td>
-                        <td>
-                          <TextField
-                            key={input.id}
-                            label="Gramatura"
-                            name={`grammage`}
-                            width={200}
-                            value={inputState[input.name]?.grammage}
-                            defaultValue={String(input.grammage)}
-                            onChange={(event) => {
-                              const { value } = event.target
-
-                              setInputState((prevState) => ({
-                                ...prevState,
-                                [input.name]: {
-                                  ...prevState[input.name],
-                                  grammage: value,
-                                },
-                              }))
-                            }}
-                            errors={''}
-                          />
-                        </td>
-
-                        <div
-                          className={styles.productActionDelete}
-                          onClick={() => openDeleteConfirmationDialog(input)}
-                        >
-                          <Trash2 color="white" size={18} />
-                        </div>
-                      </tr>
-                    ))}
-                  </tbody>
+            <InputTableEdit
+              itemList={productDetail.inputs}
+              measurementUnitList={measurementUnitList!}
+              inputState={inputState}
+              setInputState={setInputState}
+            >
+              {(input: TableItem) => (
+                <div
+                  className={styles.productActionDelete}
+                  onClick={() =>
+                    openDeleteConfirmationDialog(input as InputToProductProps)
+                  }
+                >
+                  <Trash2 color="white" size={18} />
                 </div>
-              </table>
-            </div>
+              )}
+            </InputTableEdit>
 
             <Button
               text="SALVAR"

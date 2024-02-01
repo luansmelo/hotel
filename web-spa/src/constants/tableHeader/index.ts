@@ -6,11 +6,34 @@ export const TABLE_HEADERS_INPUT = [
   'Grupo',
 ]
 
-export const TABLE_HEADERS_PRODUCT_DETAILS = [
-  'Descrição',
-  'Quantidade',
-  'Custo Médio',
-  'Ultima Compra',
+export const INPUT_MANIPULATION_COLUMNS = [
+  {
+    id: 'nome',
+    label: 'Nome',
+  },
+  {
+    id: 'unidade de medida',
+    label: 'Unidade de Medida',
+  },
+  {
+    id: 'quantidade',
+    label: 'Quantidade',
+  },
+]
+
+export const PRODUCT_DETAILS_COLUMNS = [
+  {
+    id: 'descrição',
+    label: 'Descrição',
+  },
+  {
+    id: 'quantidade',
+    label: 'Quantidade',
+  },
+  {
+    id: 'custo médio',
+    label: 'Custo Médio',
+  },
 ]
 
 export const TABLE_HEADERS_INPUT_DETAILS = [
@@ -19,6 +42,15 @@ export const TABLE_HEADERS_INPUT_DETAILS = [
   'Gramatura',
 ]
 
-export const TABLE_HEADERS_PRODUCT = ['Nome']
+export const PRODUCT_COLUMNS = [
+  {
+    id: 'nome',
+    label: 'Nome',
+  },
+  {
+    id: 'descrição',
+    label: 'Descrição',
+  },
+]
 
 export const TABLE_HEADER_GENERIC = ['Nome']

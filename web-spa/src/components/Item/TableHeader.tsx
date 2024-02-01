@@ -1,21 +1,13 @@
 'use client'
+import { ReactNode } from 'react'
 import styles from './styles.module.scss'
 
 interface TableHeaderProps {
-  visibleProperties: string[]
+  children: ReactNode
 }
 
-const TableHeader: React.FC<TableHeaderProps> = ({ visibleProperties }) => (
-  <thead className={styles.tableHeader}>
-    <tr>
-      {visibleProperties.map((property) => (
-        <th key={property} className={styles.tableColumnHeader}>
-          {property}
-        </th>
-      ))}
-      <th></th>
-    </tr>
-  </thead>
+const TableHeader: React.FC<TableHeaderProps> = ({ children }) => (
+  <thead className={styles.tableHeader}>{children}</thead>
 )
 
 export default TableHeader
