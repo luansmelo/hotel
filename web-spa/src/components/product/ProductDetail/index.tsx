@@ -21,7 +21,6 @@ const conversionTable: ConversionTable = {
   LITRO: {
     MILILITRO: 1000,
   },
-  // Adicione mais conversões conforme necessário
 }
 
 import InputTableDetail from './InputTableDetail'
@@ -118,16 +117,12 @@ export default function InputProductDetailModal({
             <InputTableDetail
               itemList={productDetail?.inputs}
               itemsPerPage={5}
+              convertUnit={convertUnit}
             />
             <hr />
             <div>
               <p>
                 Total Custo:
-                <span className={styles.currency}>R$</span>{' '}
-                {calculateTotalCost()}
-              </p>
-              <p>
-                Preço Sugerido:
                 <span className={styles.currency}>R$</span>{' '}
                 {calculateTotalCost()}
               </p>

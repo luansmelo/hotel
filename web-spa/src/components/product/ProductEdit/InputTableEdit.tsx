@@ -6,10 +6,7 @@ import Paper from '@mui/material/Paper'
 import TableCell from '@mui/material/TableCell'
 import { Table, TableBody, TableHead, TableRow } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import {
-  INPUT_MANIPULATION_COLUMNS,
-  PRODUCT_DETAILS_COLUMNS,
-} from '@/constants/tableHeader'
+import { INPUT_MANIPULATION_COLUMNS } from '@/constants/tableHeader'
 
 import TablePagination from '@mui/material/TablePagination'
 import Select from '@/components/select'

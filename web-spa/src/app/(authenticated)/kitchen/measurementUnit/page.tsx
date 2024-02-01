@@ -111,7 +111,7 @@ export default function MeasurementUnit() {
         loading={loading}
         itemList={filteredMeasurementUnit!}
         headers={TABLE_HEADER_GENERIC}
-        actions={actions}
+        actions={[]}
         dynamicFields={dynamicFields}
       />
 

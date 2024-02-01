@@ -40,6 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 interface InputListProps {
   itemList: TableItem[]
   itemsPerPage?: number
+  convertUnit: (value: number, fromUnit: string, toUnit: string) => number
 }
 
 const InputTableDetail: React.FC<InputListProps> = ({
@@ -93,8 +94,10 @@ const InputTableDetail: React.FC<InputListProps> = ({
                 ?.map((row) => (
                   <StyledTableRow key={row.id}>
                     <StyledTableCell>{row.name}</StyledTableCell>
+                    <StyledTableCell>
+                      {row.grammage} {row.measurementUnit}
+                    </StyledTableCell>
                     <StyledTableCell>{row.unitPrice}</StyledTableCell>
-                    <StyledTableCell>{row.grammage}</StyledTableCell>
                   </StyledTableRow>
                 ))
             )}
