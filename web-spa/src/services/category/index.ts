@@ -1,4 +1,3 @@
-import { InputContract } from '@/atom/business'
 import { API } from '@/services/api'
 import {
   CategoryProps,
@@ -29,6 +28,16 @@ export class CategoryService {
     }
   }
 
+  async delete(id: string) {
+    try {
+      const response = await api.delete('/category/' + id)
+
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   async addProduct(input: ProductOnCategory) {
     try {
       const response = await api.post('/category/add/product', input)
@@ -51,9 +60,9 @@ export class CategoryService {
     }
   }
 
-  async update(input: InputContract) {
+  async update(input: CategoryProps) {
     try {
-      const response = await api.put(`/input/${input.id}`, input)
+      const response = await api.put(`/category/${input.id}`, input)
 
       return response
     } catch (error) {

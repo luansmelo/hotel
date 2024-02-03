@@ -11,7 +11,7 @@ import { PRODUCT_COLUMNS } from '@/constants/tableHeader'
 import { Hypnosis } from 'react-cssfx-loading'
 import { TableItem } from '../table/types'
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   color: '#BDBDBD',
   padding: '12px 8px',
   borderBottom: 'none !important',
@@ -21,7 +21,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }))
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   '&:nth-of-type(odd)': {
     backgroundColor: '#272a34',
   },

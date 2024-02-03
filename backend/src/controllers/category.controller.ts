@@ -27,4 +27,12 @@ export class CategoryController {
   async getById(id: string) {
     return this.service.getById(id);
   }
+
+  async deleteById(id: string) {
+    return this.service.deleteById(id);
+  }
+
+  async updateById(id: string, input: CategoryInput) {
+    return this.service.updateById(id, input);
+  }
 }

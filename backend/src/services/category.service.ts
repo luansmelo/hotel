@@ -12,6 +12,7 @@ import { uuid } from "uuidv4";
 
 export class CategoryService implements CategoryServiceContract {
   constructor(private readonly repository: CategoryRepositoryContract) {}
+
   async create(input: CategoryInput): Promise<void> {
     const data = {
       id: uuid(),
@@ -59,5 +60,11 @@ export class CategoryService implements CategoryServiceContract {
     await this.getById(input.categoryId);
 
     await this.repository.deleteProduct(input);
+  }
+
+  async updateById(id: string, input: CategoryInput): Promise<void> {
+    await this.getById(id);
+
+    await this.repository.updateById(id, input);
   }
 }

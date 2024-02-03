@@ -9,6 +9,8 @@ interface CategoryContract {
   loading: boolean
   categoryList: CategoryProps[]
   handleCreateCategory: (input: CategoryProps) => Promise<void>
+  handleDelete: (input: string) => Promise<void>
+  handleUpdate: (input: CategoryProps) => Promise<void>
   handleProductAddCategory: (input: ProductOnCategory) => Promise<void>
   fetchCategoryList: () => Promise<void>
 }
@@ -19,12 +21,11 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [categoryList, setCategoryList] = useState<CategoryProps[]>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const category = new CategoryService()
 
   const fetchCategoryList = async () => {
-    setLoading(true)
     try {
       const response = await category.list()
       console.log(response)
@@ -46,7 +47,38 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
     } catch (error) {
       console.log(error)
     } finally {
+      setLoading(false)
       fetchCategoryList()
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await category.delete(id)
+
+      if (response?.message === 'sucesso') {
+        handleToastify('Categoria removida com sucesso!', 'success')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+      fetchCategoryList()
+    }
+  }
+
+  const handleUpdate = async (input: CategoryProps) => {
+    try {
+      const response = await category.update(input)
+
+      if (response?.message === 'sucesso') {
+        handleToastify('Categoria atualizada com sucesso!', 'success')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      fetchCategoryList()
+      setLoading(false)
     }
   }
 
@@ -75,6 +107,8 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
         loading,
         categoryList,
         handleCreateCategory,
+        handleDelete,
+        handleUpdate,
         handleProductAddCategory,
 
         fetchCategoryList,

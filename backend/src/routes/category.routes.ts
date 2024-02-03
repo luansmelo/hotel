@@ -83,6 +83,23 @@ router.get(
 );
 
 router.delete(
+  "/:id",
+  authenticated,
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+
+      const controller = makeCategoryController();
+      await controller.deleteById(id);
+
+      return response.status(200).send({ message: "sucesso" });
+    } catch (error) {
+      next();
+    }
+  }
+);
+
+router.delete(
   "/",
   authenticated,
   async (request: Request, response: Response, next: NextFunction) => {
@@ -97,6 +114,22 @@ router.delete(
       const controller = makeCategoryController();
       await controller.deleteProduct(input);
 
+      return response.status(200).send({ message: "sucesso" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.put(
+  "/:id",
+  authenticated,
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+      const input = request.body;
+      const controller = makeCategoryController();
+      await controller.updateById(id, input);
       return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);

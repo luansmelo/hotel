@@ -12,10 +12,16 @@ import useDropdown from '@/hooks/useDropdown'
 import { DropDown } from '@/components/dropDown'
 import { TableItem } from '@/components/table/types'
 import ConfirmDialog from '@/components/dialog'
+import CategoryEditForm from '@/components/category/CategoryEdit'
 
 export default function Category() {
-  const { loading, categoryList, handleCreateCategory } =
-    useContext(CategoryContext)
+  const {
+    loading,
+    categoryList,
+    handleCreateCategory,
+    handleUpdate,
+    handleDelete,
+  } = useContext(CategoryContext)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [openModal, setOpenModal] = useState<'create' | 'edit' | null>(null)
@@ -118,12 +124,22 @@ export default function Category() {
         />
       )}
 
+      {openModal === 'edit' && (
+        <CategoryEditForm
+          loading={loading}
+          category={selectedCategory}
+          closeModal={() => setOpenModal(null)}
+          handleSave={handleUpdate}
+          isOpenModel={Boolean(openModal)}
+        />
+      )}
+
       {openDialog && (
         <ConfirmDialog
           open={openDialog}
           onClose={() => setOpenDialog(false)}
           onConfirm={() => {
-            alert(selectedCategory?.id)
+            handleDelete(selectedCategory?.id)
             setOpenDialog(false)
           }}
         />
