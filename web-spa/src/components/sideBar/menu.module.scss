@@ -32,8 +32,50 @@
   height: 100%;
   flex-shrink: 0;
   background: #1F2128;
-  // border-right: 1px solid #636168;
-  // border-radius: 10px;
+  padding: 8px 0px;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.text {
+  font-family: sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 200px;
+  text-align: center;
+  color: white;
+}
+
+.logoutContent {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+}
+
+.logout {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  flex-shrink: 0;
+  gap: 8px;
+  width: 100%;
+}
+
+.logout:hover {
+  transition: 0.5s background ease;
+  background: #0488A6;
+}
+
+.button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 .menuButtonContainer {

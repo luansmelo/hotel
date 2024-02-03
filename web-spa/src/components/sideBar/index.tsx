@@ -13,31 +13,31 @@ import {
 } from 'lucide-react'
 import styles from './menu.module.scss'
 import MenuButton from './MenuButton'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Divider, Fade } from '@mui/material'
-import Link from 'next/link'
+import { AuthContext } from '@/context/auth'
 
-export interface LogoutProps {
-  onClick: () => void
-}
+const LogoutButton: React.FC = () => {
+  const { signOut } = useContext(AuthContext)
 
-const LogoutButton: React.FC<LogoutProps> = ({ onClick }) => {
   return (
-    <Link href="/kitchen" className={styles.mainButton}>
-      <LogOut size={20} color="white" />
-      <p className={styles.menuButtonText}>Sair</p>
-    </Link>
+    <div>
+      <div className={styles.logoutContent}>
+        <div onClick={signOut} className={styles.logout}>
+          <LogOut size={20} color="white" />
+          <div className={styles.text}>Sair</div>
+        </div>
+      </div>
+    </div>
   )
 }
 
 const SideBar: React.FC = () => {
   const [activeButton, setActiveButton] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
+
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized)
-  }
-  const handleLogoutClick = () => {
-    console.log('Sair clicado')
   }
 
   return (
@@ -46,15 +46,17 @@ const SideBar: React.FC = () => {
         className={`${styles.menuContainer} ${isMinimized && styles.minimized}`}
       >
         <div className={styles.main}>
-          <div onClick={toggleMinimize} className={styles.mainButton}>
-            {isMinimized ? (
-              <ChevronRightCircle size={18} />
-            ) : (
-              <ChevronLeftCircle size={18} />
-            )}
+          <div className={styles.mainButton}>
+            <button onClick={toggleMinimize} className={styles.button}>
+              {isMinimized ? (
+                <ChevronRightCircle size={20} />
+              ) : (
+                <ChevronLeftCircle size={20} />
+              )}
+            </button>
           </div>
           <Divider color="#636168" />
-          <div className={styles.menuButtonContainer}>
+          <div className={styles.content}>
             <MenuButton
               Icon={Home}
               text="Inicio"
@@ -121,10 +123,8 @@ const SideBar: React.FC = () => {
               isMinimized={isMinimized}
             />
           </div>
-
-          <div>
-            <LogoutButton onClick={handleLogoutClick} />
-          </div>
+          <Divider color="#636168" />
+          <LogoutButton />
         </div>
       </div>
     </Fade>

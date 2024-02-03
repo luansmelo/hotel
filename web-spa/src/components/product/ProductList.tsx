@@ -62,6 +62,8 @@ const ProductTable: React.FC<InputListProps> = ({
     setPage(newPage)
   }
 
+  const tableContainerHeight = Math.min(itemsPerPage * 48 + 56, 440)
+
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -71,7 +73,12 @@ const ProductTable: React.FC<InputListProps> = ({
 
   return (
     <Paper
-      sx={{ width: '100%', overflow: 'hidden', background: 'transparent' }}
+      sx={{
+        width: '100%',
+        overflow: 'hidden',
+        background: 'transparent',
+        minHeight: '300px',
+      }}
     >
       {loading && (
         <Backdrop
@@ -92,7 +99,13 @@ const ProductTable: React.FC<InputListProps> = ({
       {!loading && (
         <TableContainer
           component={Paper}
-          sx={{ background: '#30333F', maxHeight: 440 }}
+          sx={{
+            background: '#30333F',
+            maxHeight: tableContainerHeight,
+            width: '100%',
+            overflowX: 'auto',
+            minHeight: tableContainerHeight,
+          }}
         >
           <Table
             stickyHeader
