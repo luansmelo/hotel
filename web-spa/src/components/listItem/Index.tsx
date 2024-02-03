@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react'
-import TableHeader from '@/components/atoms/TableHeader'
 import SkeletonCell from '@/components/skeleton'
 import ListItemElement from './ListItemElement'
 
@@ -37,7 +36,6 @@ const ListItemContainer = <T extends { id: string }>({
 
   return (
     <div>
-      <TableHeader headers={headers} />
       {loading ? (
         <div>
           {Array.from({ length: itemsPerPage }).map((_, colIndex) => (
