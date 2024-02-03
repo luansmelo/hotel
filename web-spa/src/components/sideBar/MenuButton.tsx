@@ -32,7 +32,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({
         className={`${buttonClassName} ${containerClassName}`}
         onClick={onClick}
       >
-        <Icon size={18} />
+        <Icon
+          size={18}
+          color={active ? 'white' : '#04B2D9'}
+          fill={active ? 'white' : 'none'}
+        />
         {!isMinimized && <div className={styles.menuButtonText}>{text}</div>}
       </div>
     </Link>

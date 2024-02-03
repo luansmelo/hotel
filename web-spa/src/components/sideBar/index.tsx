@@ -9,17 +9,35 @@ import {
   ChevronLeftCircle,
   Boxes,
   PencilRuler,
+  LogOut,
 } from 'lucide-react'
 import styles from './menu.module.scss'
-import MenuButton from '../button/MenuButton'
+import MenuButton from './MenuButton'
 import { useState } from 'react'
-import { Fade } from '@mui/material'
+import { Divider, Fade } from '@mui/material'
+import Link from 'next/link'
+
+export interface LogoutProps {
+  onClick: () => void
+}
+
+const LogoutButton: React.FC<LogoutProps> = ({ onClick }) => {
+  return (
+    <Link href="/kitchen" className={styles.mainButton}>
+      <LogOut size={20} color="white" />
+      <p className={styles.menuButtonText}>Sair</p>
+    </Link>
+  )
+}
 
 const SideBar: React.FC = () => {
   const [activeButton, setActiveButton] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized)
+  }
+  const handleLogoutClick = () => {
+    console.log('Sair clicado')
   }
 
   return (
@@ -35,7 +53,7 @@ const SideBar: React.FC = () => {
               <ChevronLeftCircle size={18} />
             )}
           </div>
-
+          <Divider color="#636168" />
           <div className={styles.menuButtonContainer}>
             <MenuButton
               Icon={Home}
@@ -102,6 +120,10 @@ const SideBar: React.FC = () => {
               onClick={() => setActiveButton('mapProduction')}
               isMinimized={isMinimized}
             />
+          </div>
+
+          <div>
+            <LogoutButton onClick={handleLogoutClick} />
           </div>
         </div>
       </div>

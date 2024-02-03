@@ -1,7 +1,7 @@
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import Header from '@/components/atoms/MenuHeader/Header'
 import styles from '@/app/page.module.css'
-import SideBar from '@/components/sideBar/Menu'
+import SideBar from '@/components/sideBar'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -10,8 +10,6 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <main className={styles.main}>
-      <Header />
-
       <div className={styles.contentAndTopBar}>
         <SideBar />
 
