@@ -27,6 +27,6 @@
   background-color: #30333F;
   padding: 1.5rem;
   /* border-radius: 0.625rem; */
-  flex: 1;
-  overflow: auto;
+  /* flex: 1; */
+  /* overflow: auto; */
 }

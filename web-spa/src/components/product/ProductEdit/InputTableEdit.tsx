@@ -1,6 +1,6 @@
 'use client'
 import React, { ReactNode } from 'react'
-import { TableItem } from '@/components/Item/TableRoot'
+import { TableItem } from '@/components/table/types'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import TableCell from '@mui/material/TableCell'
@@ -11,8 +11,9 @@ import { INPUT_MANIPULATION_COLUMNS } from '@/constants/tableHeader'
 import TablePagination from '@mui/material/TablePagination'
 import Select from '@/components/select'
 import TextField from '@/components/textField/TextField'
+import { InputState } from '../types'
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   color: '#BDBDBD',
   padding: '8px 8px', // Adjust the padding for table header cells
   borderBottom: 'none !important', // Remove the bottom border in the header cells
@@ -23,7 +24,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }))
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   // background: '#30333F',
   padding: '8px 8px',
   border: 'none',
@@ -42,8 +43,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 interface InputListProps {
-  inputState: any
-  setInputState: any
+  inputState: InputState
+  setInputState: React.Dispatch<React.SetStateAction<InputState>>
   measurementUnitList: TableItem[]
   itemList: TableItem[]
   children: (input: TableItem) => ReactNode
@@ -82,7 +83,10 @@ const InputTableManipulation: React.FC<InputListProps> = ({
           <TableHead>
             <TableRow>
               {INPUT_MANIPULATION_COLUMNS.map((column) => (
-                <StyledTableCell key={column.id} sx={{ background: '#1F2128' }}>
+                <StyledTableCell
+                  key={column.id}
+                  sx={{ background: '#1F2128', minWidth: column.minWidth }}
+                >
                   {column.label}
                 </StyledTableCell>
               ))}
@@ -112,7 +116,7 @@ const InputTableManipulation: React.FC<InputListProps> = ({
                         key={row.id}
                         name={'measurementUnit'}
                         data={measurementUnitList!}
-                        width="200px"
+                        width="240px"
                         placeholder={row.measurementUnit}
                         value={inputState[row.name]?.measurementUnit}
                         onClick={(event) => {
@@ -131,9 +135,9 @@ const InputTableManipulation: React.FC<InputListProps> = ({
                     <StyledTableCell>
                       <TextField
                         key={row.id}
-                        label="Gramatura"
+                        label="Quantidade"
                         name={`grammage`}
-                        width={200}
+                        width={240}
                         value={inputState[row.name]?.grammage}
                         defaultValue={String(row.grammage)}
                         onChange={(event) => {

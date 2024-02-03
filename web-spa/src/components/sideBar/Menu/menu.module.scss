@@ -77,35 +77,6 @@
   background-color: #636168;
 }
 
-.subMenu {
-  background-color: #2B2D33; /* Altere a cor de fundo conforme necessário */
-  padding: 10px; /* Adicione algum espaçamento interno ao submenu */
-  border-radius: 5px; /* Adicione bordas arredondadas ao submenu */
-}
-
-.subMenuButton {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0488A6;
-    color: #fff;
-  }
-}
-
-.subMenuButtonIcon {
-  margin-right: 8px;
-  color: #fff;
-}
-
-.subMenuButtonLabel {
-  color: #BDBDBD;
-  font-size: 14px;
-}
-
 /* Oculta a logo em telas menores e exibe apenas os botões */
 @media screen and (max-width: 768px) {
   .imageContainer {

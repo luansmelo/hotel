@@ -1,7 +1,7 @@
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import Header from '@/components/atoms/MenuHeader/Header'
 import styles from '@/app/page.module.css'
-import Menu from '@/components/menu/Menu'
+import SideBar from '@/components/sideBar/Menu'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
       <Header />
 
       <div className={styles.contentAndTopBar}>
-        <Menu />
+        <SideBar />
 
         <div className={styles.content}>{children}</div>
       </div>

@@ -1,4 +1,4 @@
-export const apiurl = 'http://localhost:3003/v1'
+export const apiurl = 'http://104.234.200.24:3003/v1'
 
 import cookies from 'js-cookie'
 

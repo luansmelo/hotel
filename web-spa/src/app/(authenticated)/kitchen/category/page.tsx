@@ -5,12 +5,13 @@ import styles from './styles.module.scss'
 import { MoreVertical, PencilRuler, Trash2 } from 'lucide-react'
 import Button from '@/components/button'
 import { CategoryContext } from '@/context/category'
-import { CategoryInput, CategoryProps } from '@/utils/interfaces/category'
+import { CategoryInput } from '@/utils/interfaces/category'
 import CategoryForm from '@/components/category/CategoryCreate'
 import CategoryTable from '@/components/category/CategoryTable'
 import useDropdown from '@/hooks/useDropdown'
 import { DropDown } from '@/components/dropDown'
 import { TableItem } from '@/components/table/types'
+import ConfirmDialog from '@/components/dialog'
 
 export default function Category() {
   const { loading, categoryList, handleCreateCategory } =
@@ -19,10 +20,11 @@ export default function Category() {
   const [searchTerm, setSearchTerm] = useState('')
   const [openModal, setOpenModal] = useState<'create' | 'edit' | null>(null)
   const [openDialog, setOpenDialog] = useState(false)
+  const [dropdownState, dropdownActions] = useDropdown()
+
   const [selectedCategory, setSelectedGroup] = useState<CategoryInput>(
     {} as CategoryInput
   )
-  const [dropdownState, dropdownActions] = useDropdown()
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -52,7 +54,7 @@ export default function Category() {
           ...category,
           id: category.id || '',
         }))
-    : categoryList
+    : (categoryList as CategoryInput[])
 
   return (
     <div className={styles.inputWrapper}>
@@ -89,7 +91,7 @@ export default function Category() {
                   icon={<PencilRuler color="white" size={20} />}
                   label="editar"
                   onClick={() => {
-                    handleEditClick(category as CategoryProps)
+                    handleEditClick(category as CategoryInput)
                     dropdownActions.handleCloseDropdown(category.id)
                   }}
                 />
@@ -97,7 +99,7 @@ export default function Category() {
                   icon={<Trash2 color="white" size={20} />}
                   label="remover"
                   onClick={() => {
-                    handleDeleteClick(category)
+                    handleDeleteClick(category as CategoryInput)
                     dropdownActions.handleCloseDropdown(category.id)
                   }}
                 />
@@ -116,16 +118,16 @@ export default function Category() {
         />
       )}
 
-      {/* {openDialog && (
+      {openDialog && (
         <ConfirmDialog
           open={openDialog}
           onClose={() => setOpenDialog(false)}
           onConfirm={() => {
-            handleDelete(selectedCategory?.id)
+            alert(selectedCategory?.id)
             setOpenDialog(false)
           }}
         />
-      )} */}
+      )}
     </div>
   )
 }

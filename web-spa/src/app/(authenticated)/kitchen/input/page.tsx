@@ -71,8 +71,6 @@ const Input: React.FC = () => {
       )
     : inputList
 
-  const hasResults = filteredInputList?.length > 0
-
   return (
     <div className={styles.inputWrapper}>
       <div className={styles.searchAndButtonContainer}>
@@ -92,41 +90,39 @@ const Input: React.FC = () => {
         />
       </div>
 
-      {hasResults && (
-        <InputTable loading={loading} itemList={filteredInputList}>
-          {(input: TableItem) => (
-            <DropDown.Trigger
-              key={input.id}
-              icon={<MoreVertical color="#04B2D9" size={16} />}
-              onClick={(e) => handleOpenDropdown(e, input.id)}
+      <InputTable loading={loading} itemList={filteredInputList}>
+        {(input: TableItem) => (
+          <DropDown.Trigger
+            key={input.id}
+            icon={<MoreVertical color="#04B2D9" size={16} />}
+            onClick={(e) => handleOpenDropdown(e, input.id)}
+          >
+            <DropDown.Menu
+              anchorEl={anchorEl[input.id]}
+              onClose={() => handleCloseDropdown(input.id)}
             >
-              <DropDown.Menu
-                anchorEl={anchorEl[input.id]}
-                onClose={() => handleCloseDropdown(input.id)}
-              >
-                <DropDown.Actions>
-                  <DropDown.Item
-                    icon={<PencilRuler color="white" size={20} />}
-                    label="editar"
-                    onClick={() => {
-                      handleEditClick(input as Input)
-                      handleCloseDropdown(input.id)
-                    }}
-                  />
-                  <DropDown.Item
-                    icon={<Trash2 color="white" size={20} />}
-                    label="remover"
-                    onClick={() => {
-                      handleDeleteClick(input as Input)
-                      handleCloseDropdown(input.id)
-                    }}
-                  />
-                </DropDown.Actions>
-              </DropDown.Menu>
-            </DropDown.Trigger>
-          )}
-        </InputTable>
-      )}
+              <DropDown.Actions>
+                <DropDown.Item
+                  icon={<PencilRuler color="white" size={20} />}
+                  label="editar"
+                  onClick={() => {
+                    handleEditClick(input as Input)
+                    handleCloseDropdown(input.id)
+                  }}
+                />
+                <DropDown.Item
+                  icon={<Trash2 color="white" size={20} />}
+                  label="remover"
+                  onClick={() => {
+                    handleDeleteClick(input as Input)
+                    handleCloseDropdown(input.id)
+                  }}
+                />
+              </DropDown.Actions>
+            </DropDown.Menu>
+          </DropDown.Trigger>
+        )}
+      </InputTable>
 
       {openModal === 'edit' && (
         <InputEdit

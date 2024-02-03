@@ -25,14 +25,17 @@ export const INPUT_MANIPULATION_COLUMNS = [
   {
     id: 'nome',
     label: 'Nome',
+    minWidth: '240px',
   },
   {
     id: 'unidade de medida',
     label: 'Unidade de Medida',
+    minWidth: '250px',
   },
   {
     id: 'quantidade',
     label: 'Quantidade',
+    minWidth: '250px',
   },
 ]
 

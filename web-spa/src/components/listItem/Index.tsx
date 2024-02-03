@@ -1,9 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import TableHeader from '@/components/atoms/TableHeader'
-import PaginationComponent from '@/components/pagination'
 import SkeletonCell from '@/components/skeleton'
 import ListItemElement from './ListItemElement'
-import NoData from './NoData'
 
 export interface FieldDefinition<T> {
   key: keyof T
@@ -59,13 +57,6 @@ const ListItemContainer = <T extends { id: string }>({
             </ListItemElement>
           ))}
         </Fragment>
-      )}
-      {paginatedItems && (
-        <PaginationComponent
-          currentPage={currentPage}
-          totalPages={Math.ceil((itemList?.length || 1) / itemsPerPage)}
-          onPageChange={handlePageChange}
-        />
       )}
     </div>
   )

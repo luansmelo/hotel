@@ -1,6 +1,13 @@
 import { GroupProps } from '@/utils/interfaces/group'
-import { MeasurementUnitContract } from '../input/MeasurementUnit/types'
+import { MeasurementUnitContract } from '../measurementUnit/MeasurementForm/types'
 import { InputToProductProps } from '../input/types'
+
+export interface InputState {
+  [inputName: string]: {
+    grammage: string
+    measurementUnit: string
+  }
+}
 
 export interface ProductRemoveProps {
   productId: string

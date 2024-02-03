@@ -14,6 +14,7 @@ import MenuProductTable from '@/components/menuMap/MenuProductRender'
 import { FormInputEvent } from '@/hooks/useForm'
 import AddCategoryToMenu from '@/components/menuMap/AddCategoryToMenu'
 import { MenuCategoryProps } from '@/utils/interfaces/menu'
+import ProductTable from '@/components/product/ProductList'
 
 export interface Menu {
   menuId: string
