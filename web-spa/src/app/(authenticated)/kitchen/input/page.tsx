@@ -1,6 +1,6 @@
 'use client'
 import { ChangeEvent, useCallback, useContext, useState } from 'react'
-import InputSearch from '@/components/atoms/search'
+import InputSearch from '@/components/search'
 import styles from './styles.module.scss'
 import { InputContext } from '@/context/input'
 import InputCreate from '@/components/input/InputCreate'

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ChangeEvent, useCallback, useContext, useState } from 'react'
-import InputSearch from '@/components/atoms/search'
+import InputSearch from '@/components/search'
 import styles from './styles.module.scss'
 import { ProductContext } from '@/context/product'
 import ProductCreate from '@/components/product/ProductCreate'
@@ -176,7 +176,7 @@ const Product: React.FC<ProductProps> = () => {
       {openModal === 'addInput' && (
         <AddInputToProduct
           isOpen={Boolean(openModal)}
-          measurementUnitList={measurementUnitList}
+          measurementUnitList={measurementUnitList!}
           groupList={groupList}
           product={selectedProduct}
           onClose={() => setOpenModal(null)}
@@ -187,7 +187,7 @@ const Product: React.FC<ProductProps> = () => {
         <InputProductDetail
           product={selectedProduct}
           isOpen={Boolean(openModal)}
-          measurementUnitList={measurementUnitList}
+          measurementUnitList={measurementUnitList!}
           groupList={groupList}
           onClose={() => setOpenModal(null)}
         />

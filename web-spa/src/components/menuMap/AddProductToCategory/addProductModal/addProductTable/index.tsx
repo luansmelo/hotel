@@ -2,7 +2,7 @@
 import { ProductWeekDay } from '@/utils/interfaces/category'
 import styles from './styles.module.scss'
 import { SearchX } from 'lucide-react'
-import Trash from '@/components/atoms/trash'
+import { Trash2 } from 'lucide-react'
 interface ITableProductsProps {
   onDelete: (productId: string) => void
   productData: ProductWeekDay[]
@@ -34,7 +34,7 @@ export default function AddProductTable({
                 <tr key={product.productId} className={styles.tr}>
                   <td>{product.name}</td>
                   <td>
-                    <Trash onClick={() => onDelete(product.productId)} />
+                    <Trash2 onClick={() => onDelete(product.productId)} />
                   </td>
                 </tr>
               ))}

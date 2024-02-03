@@ -1,6 +1,6 @@
 'use client'
 import { ChangeEvent, useContext, useState } from 'react'
-import InputSearch from '@/components/atoms/search'
+import InputSearch from '@/components/search'
 import styles from './styles.module.scss'
 import { GroupContext } from '@/context/group'
 import GroupForm from '@/components/group/GroupForm'

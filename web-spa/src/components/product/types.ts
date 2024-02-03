@@ -1,5 +1,5 @@
 import { GroupProps } from '@/utils/interfaces/group'
-import { MeasurementUnitContract } from '../measurementUnit/MeasurementForm/types'
+import { MeasurementProps, MeasurementUnitContract } from '../measurementUnit/MeasurementForm/types'
 import { InputToProductProps } from '../input/types'
 
 export interface InputState {
@@ -44,7 +44,7 @@ export interface ProductListProps {
 }
 
 export interface AddInputToProductModalProps {
-  measurementUnitList?: MeasurementUnitContract[]
+  measurementUnitList?: MeasurementProps[]
   groupList?: GroupProps[]
   isOpen: boolean
   product: ProductProps

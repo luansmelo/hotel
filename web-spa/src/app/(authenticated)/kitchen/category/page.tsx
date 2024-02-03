@@ -1,6 +1,6 @@
 'use client'
 import { ChangeEvent, useContext, useState } from 'react'
-import InputSearch from '@/components/atoms/search'
+import InputSearch from '@/components/search'
 import styles from './styles.module.scss'
 import { MoreVertical, PencilRuler, Trash2 } from 'lucide-react'
 import Button from '@/components/button'
