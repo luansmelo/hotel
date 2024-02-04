@@ -31,6 +31,7 @@ router.post(
 router.get(
   "/",
   authenticated,
+  allowed([Role.Admin, Role.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeInputController();
@@ -46,6 +47,7 @@ router.get(
 router.put(
   "/:id",
   authenticated,
+  allowed([Role.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -65,6 +67,7 @@ router.put(
 router.delete(
   "/:id",
   authenticated,
+  allowed([Role.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
