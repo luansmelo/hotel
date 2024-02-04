@@ -13,9 +13,12 @@ router.post(
   "/create",
   authenticated,
   allowed([Role.Admin]),
+  validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input = request.body;
+      const input: InputRegister = InputSchema.parse(
+        request.body
+      ) as InputRegister;
 
       const controller = makeInputController();
 
@@ -48,10 +51,13 @@ router.put(
   "/:id",
   authenticated,
   allowed([Role.Admin]),
+  validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const input: InputRegister = request.body;
+      const input: InputRegister = InputSchema.parse(
+        request.body
+      ) as InputRegister;
 
       const controller = makeInputController();
 
