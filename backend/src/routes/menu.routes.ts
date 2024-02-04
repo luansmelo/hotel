@@ -9,6 +9,7 @@ import {
 } from "../dto/menu.dto";
 import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
+import { Role, allowed } from "../middleware/allowed";
 
 const router = Router();
 const slug = "/menu";
@@ -16,6 +17,7 @@ const slug = "/menu";
 router.post(
   "/create",
   authenticated,
+  allowed([Role.Admin]),
   validate(MenuSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -33,7 +35,7 @@ router.post(
 router.post(
   "/add/category",
   authenticated,
-  
+  allowed([Role.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: AddCategoryToMenuInput[] = AddCategoryToMenuSchema.parse(
@@ -53,6 +55,7 @@ router.post(
 router.get(
   "/select/filter",
   authenticated,
+  allowed([Role.Admin, Role.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: MenuProductInput = {
@@ -74,6 +77,7 @@ router.get(
 router.get(
   "/:id",
   authenticated,
+  allowed([Role.Admin, Role.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -90,6 +94,7 @@ router.get(
 router.get(
   "/",
   authenticated,
+  allowed([Role.Admin, Role.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: string = request.query.day as string;
