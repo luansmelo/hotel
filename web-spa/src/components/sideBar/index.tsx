@@ -10,11 +10,22 @@ import {
   Boxes,
   PencilRuler,
   LogOut,
+  ChevronUp,
+  ChevronDown,
 } from 'lucide-react'
 import styles from './menu.module.scss'
 import MenuButton from './MenuButton'
 import { useContext, useState } from 'react'
-import { Divider, Fade } from '@mui/material'
+import {
+  Collapse,
+  Divider,
+  Fade,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
 import { AuthContext } from '@/context/auth'
 
 const LogoutButton: React.FC = () => {
@@ -34,10 +45,15 @@ const LogoutButton: React.FC = () => {
 
 const SideBar: React.FC = () => {
   const [activeButton, setActiveButton] = useState('')
+  const [isCollapse, setIsCollapse] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized)
+  }
+
+  const handleCollapse = () => {
+    setIsCollapse(!isCollapse)
   }
 
   return (
@@ -106,14 +122,59 @@ const SideBar: React.FC = () => {
               onClick={() => setActiveButton('category')}
               isMinimized={isMinimized}
             />
-            <MenuButton
-              Icon={PanelTop}
-              text="Menu"
-              selectedFeature="menu"
-              active={activeButton === 'menu'}
-              onClick={() => setActiveButton('menu')}
-              isMinimized={isMinimized}
-            />
+            <ListItem disablePadding onClick={handleCollapse}>
+              <ListItemButton
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontFamily: 'Pattaya',
+                }}
+              >
+                <ListItemIcon style={{ minWidth: 'unset' }}>
+                  <PanelTop color="#04B2D9" size={20} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Menu"
+                  style={{
+                    color: 'white',
+                    fontSize: '18px',
+
+                    fontStyle: 'normal',
+                    fontWeight: 400,
+                    lineHeight: '20px',
+                  }}
+                />
+                {isCollapse ? (
+                  <ChevronUp color="white" />
+                ) : (
+                  <ChevronDown color="white" />
+                )}
+              </ListItemButton>
+            </ListItem>
+            <Collapse in={isCollapse} timeout="auto" unmountOnExit>
+              <List
+                className="ml-2"
+                sx={{
+                  background: '#272a34',
+                }}
+              >
+                {['detalhes', 'mapa'].map((text) => (
+                  <ListItem key={text}>
+                    <ListItemButton
+                      style={{
+                        height: '20px',
+                        marginLeft: 10,
+                        color: '#BDBDBD',
+                      }}
+                    >
+                      <ListItemText primary={text} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </Collapse>
+
             <MenuButton
               Icon={Microwave}
               text="Mapa de produção"
