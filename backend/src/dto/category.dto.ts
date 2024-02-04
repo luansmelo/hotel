@@ -14,7 +14,7 @@ export interface CategoryContract {
 
 export interface SendProductToAddToCategory {
   productId: string;
-  weekDay: string;
+  weekDay: string[];
 }
 
 export interface ProductCategoryInput {

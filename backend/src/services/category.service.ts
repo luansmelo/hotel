@@ -43,15 +43,17 @@ export class CategoryService implements CategoryServiceContract {
   async addProductToCategory(input: ProductCategoryInput): Promise<void> {
     await this.getById(input.categoryId);
 
-    const products = input.product.map((addedProduct) => ({
-      id: uuid(),
-      menuId: input.menuId,
-      categoryId: input.categoryId,
-      productId: addedProduct.productId,
-      weekDay: addedProduct.weekDay,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
-    }));
+    const products = input.product.flatMap(({ productId, weekDay }) => {
+      return weekDay.map((day) => ({
+        id: uuid(),
+        menuId: input.menuId,
+        categoryId: input.categoryId,
+        productId,
+        weekDay: day,
+        created_at: new Date().toDateString(),
+        updated_at: new Date().toDateString(),
+      }));
+    });
 
     await this.repository.addProductToCategory(products);
   }
