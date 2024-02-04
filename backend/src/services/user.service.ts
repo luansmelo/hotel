@@ -13,6 +13,7 @@ import {
 import { uuid } from "uuidv4";
 import JwtUtils from "../utils/jwtUtils";
 import { EmailValidator } from "../utils/email-validator-adapter";
+import { Role } from "../middleware/allowed";
 
 export class UserService implements UserServiceContract {
   constructor(
@@ -21,7 +22,6 @@ export class UserService implements UserServiceContract {
   ) {}
 
   async signup(input: UserContractInput) {
-    
     const isValid = this.emailValidator.isValid(input.email);
 
     if (!isValid) {
@@ -52,7 +52,7 @@ export class UserService implements UserServiceContract {
         email: userCreated.email,
         role: userCreated.role,
       },
-      access_token: JwtUtils.generateToken(data.id),
+      access_token: JwtUtils.generateToken(data.id, Role.User),
     };
   }
 
@@ -72,7 +72,7 @@ export class UserService implements UserServiceContract {
         email: user.email,
         role: user.role,
       },
-      access_token: JwtUtils.generateToken(user.id),
+      access_token: JwtUtils.generateToken(user.id, user.role),
     };
   }
 }

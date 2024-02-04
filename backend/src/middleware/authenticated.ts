@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import authConfig from "../config/env";
 import "dotenv/config";
+import { UserDataContract } from "../dto/user.dto";
 
 export function authenticated(
   request: Request,
@@ -18,7 +19,8 @@ export function authenticated(
   const [, token] = authToken.split(" ");
 
   try {
-    verify(token, secret);
+    const decodedToken = verify(token, secret) as UserDataContract;
+    request['user'] = decodedToken;
     return next();
   } catch (error) {
     return response.status(401).json({ message: "Token invalid" });

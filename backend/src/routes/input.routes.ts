@@ -4,6 +4,7 @@ import { makeInputController } from "../utils/factories/makeInputController";
 import { validate } from "../middleware/validate";
 import { InputSchema } from "../validation/input.validation";
 import { authenticated } from "../middleware/authenticated";
+import { Role, allowed } from "../middleware/allowed";
 
 const router = Router();
 const slug = "/input";
@@ -11,7 +12,7 @@ const slug = "/input";
 router.post(
   "/create",
   authenticated,
-
+  allowed([Role.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input = request.body;

@@ -2,10 +2,13 @@ import jwt from "jsonwebtoken";
 import env from "../config/env";
 
 class JwtUtils {
-  static generateToken(id: string): string {
-    return jwt.sign({}, env.jwt.secret, {
-      subject: id,
-    });
+  static generateToken(id: string, role: string): string {
+    const tokenPayload = {
+      sub: id,
+      role: role,
+    };
+
+    return jwt.sign(tokenPayload, env.jwt.secret, {});
   }
 }
 
