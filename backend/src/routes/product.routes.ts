@@ -11,6 +11,7 @@ import {
   ProductInputRemove,
 } from "../dto/product.dto";
 import { authenticated } from "../middleware/authenticated";
+import { Role, allowed } from "../middleware/allowed";
 
 const router = Router();
 const slug = "/product";
@@ -18,6 +19,7 @@ const slug = "/product";
 router.post(
   "/create",
   authenticated,
+  allowed([Role.Admin]),
   validate(ProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -37,6 +39,7 @@ router.post(
 router.get(
   "/",
   authenticated,
+  allowed([Role.Admin, Role.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeProductController();
@@ -52,6 +55,7 @@ router.get(
 router.get(
   "/details/:id",
   authenticated,
+  allowed([Role.Admin, Role.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -68,6 +72,7 @@ router.get(
 router.get(
   ":id",
   authenticated,
+  allowed([Role.Admin, Role.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -84,6 +89,7 @@ router.get(
 router.delete(
   "/:id",
   authenticated,
+  allowed([Role.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -99,6 +105,7 @@ router.delete(
 router.post(
   "/add/input/",
   authenticated,
+  allowed([Role.Admin]),
   validate(AddInputToProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -119,7 +126,7 @@ router.post(
 router.delete(
   "/:productId/input/:inputId",
   authenticated,
-
+  allowed([Role.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: ProductInputRemove = {
@@ -137,15 +144,20 @@ router.delete(
   }
 );
 
-router.put("/:id", authenticated, async (request, response, next) => {
-  try {
-    const id = request.params.id;
-    const controller = makeProductController();
-    await controller.updatePredefinedProduct(id, request.body);
-    return response.status(200).send({ message: "sucesso" });
-  } catch (error) {
-    next(error);
+router.put(
+  "/:id",
+  authenticated,
+  allowed([Role.Admin]),
+  async (request, response, next) => {
+    try {
+      const id = request.params.id;
+      const controller = makeProductController();
+      await controller.updatePredefinedProduct(id, request.body);
+      return response.status(200).send({ message: "sucesso" });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 export { router, slug };
