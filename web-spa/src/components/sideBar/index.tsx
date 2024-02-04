@@ -108,7 +108,7 @@ const SideBar: React.FC = () => {
             />
             <MenuButton
               Icon={PanelTop}
-              text="Mapa de menu"
+              text="Menu"
               selectedFeature="menu"
               active={activeButton === 'menu'}
               onClick={() => setActiveButton('menu')}

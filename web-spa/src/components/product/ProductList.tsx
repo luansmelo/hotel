@@ -77,7 +77,7 @@ const ProductTable: React.FC<InputListProps> = ({
         width: '100%',
         overflow: 'hidden',
         background: 'transparent',
-        minHeight: '300px',
+        minHeight: '440px',
       }}
     >
       {loading && (
@@ -117,15 +117,12 @@ const ProductTable: React.FC<InputListProps> = ({
                 {PRODUCT_COLUMNS.map((column) => (
                   <StyledTableCell
                     key={column.id}
-                    sx={{ background: '#1F2128' }}
+                    align={column.align}
+                    sx={{ background: '#1F2128', minWidth: column.width }}
                   >
                     {column.label}
                   </StyledTableCell>
                 ))}
-                <StyledTableCell
-                  sx={{ background: '#1F2128' }}
-                  align="right"
-                ></StyledTableCell>
               </TableRow>
             </TableHead>
 
@@ -133,7 +130,12 @@ const ProductTable: React.FC<InputListProps> = ({
               {itemList.length === 0 ? (
                 <StyledTableRow>
                   <StyledTableCell colSpan={PRODUCT_COLUMNS.length + 1}>
-                    <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        height: '100%',
+                      }}
+                    >
                       Nenhum item para exibir.
                     </div>
                   </StyledTableCell>
@@ -161,10 +163,12 @@ const ProductTable: React.FC<InputListProps> = ({
           sx={{
             background: '#1F2128',
             color: '#BDBDBD',
+            position: 'sticky',
+            bottom: 0,
           }}
           rowsPerPageOptions={[5, 10, 20]}
           component="div"
-          count={itemList?.length}
+          count={itemList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

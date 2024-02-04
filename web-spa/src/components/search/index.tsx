@@ -15,7 +15,7 @@ export default function InputSearch({
 }: InputSearchProps) {
   return (
     <div className={styles.inputCointainer}>
-      <Search size={24} color="#BDBDBD" />
+      <Search size={20} color="#BDBDBD" />
       <input
         placeholder={`Buscar ${search}`}
         onChange={onChange}

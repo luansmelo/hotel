@@ -100,7 +100,7 @@ const Product: React.FC<ProductProps> = () => {
           onClick={handleCreateClick}
           disabled={loading}
         >
-          CADASTRAR
+          Inserir
         </button>
       </div>
 

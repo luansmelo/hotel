@@ -60,14 +60,31 @@ export const TABLE_HEADERS_INPUT_DETAILS = [
   'Gramatura',
 ]
 
-export const PRODUCT_COLUMNS = [
+export interface Type {
+  id: string
+  label: string
+  width: string
+  align: 'center' | 'left' | 'right' | 'inherit' | 'justify' | undefined
+}
+
+export const PRODUCT_COLUMNS: Type[] = [
   {
     id: 'nome',
     label: 'Nome',
+    width: '20%',
+    align: 'left',
   },
   {
     id: 'descrição',
     label: 'Descrição',
+    width: '60%',
+    align: 'left',
+  },
+  {
+    id: 'actions',
+    label: '',
+    width: '20%',
+    align: 'right',
   },
 ]
 

@@ -80,7 +80,7 @@ export default function MeasurementUnit() {
         />
       </div>
 
-      <MeasurementTable itemList={filteredMeasurementUnit} loading={loading}>
+      <MeasurementTable itemList={filteredMeasurementUnit!} loading={loading}>
         {(group: TableItem) => (
           <DropDown.Trigger
             key={group.id}
