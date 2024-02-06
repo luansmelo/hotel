@@ -1,17 +1,13 @@
 import { Request as ExpressRequest, Response, NextFunction } from "express";
-
-export enum Role {
-  User = "USER",
-  Admin = "ADMIN",
-}
+import { ROLE } from "../config/constants";
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {
-    role: Role;
+    role: ROLE;
   };
 }
 
-export function allowed(roles: Role[]) {
+export function allowed(roles: ROLE[]) {
   return (
     request: AuthenticatedRequest,
     response: Response,

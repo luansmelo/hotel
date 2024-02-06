@@ -4,7 +4,8 @@ import { authenticated } from "../middleware/authenticated";
 import { makeMeasurementUnitController } from "../utils/factories/makeMeasurementUnitController";
 import { MeasurementUnitInput } from "../dto/measurementUnit.dto";
 import { MeasurementUnitSchema } from "../validation/measurementUnit.validation";
-import { Role, allowed } from "../middleware/allowed";
+import { allowed } from "../middleware/allowed";
+import { ROLE } from "../config/constants";
 
 const router = Router();
 const slug = "/measurementUnit";
@@ -12,7 +13,7 @@ const slug = "/measurementUnit";
 router.post(
   "/create",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   validate(MeasurementUnitSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -32,7 +33,7 @@ router.post(
 router.get(
   "/:id",
   authenticated,
-  allowed([Role.Admin, Role.User]),
+  allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -49,7 +50,7 @@ router.get(
 router.get(
   "/",
   authenticated,
-  allowed([Role.Admin, Role.User]),
+  allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeMeasurementUnitController();
@@ -65,7 +66,7 @@ router.get(
 router.delete(
   "/:id",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -81,7 +82,7 @@ router.delete(
 router.put(
   "/:id",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;

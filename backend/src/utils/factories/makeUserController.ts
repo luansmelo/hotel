@@ -2,7 +2,7 @@ import { UserController } from "../../controllers/user.controller";
 import { UserRepository } from "../../repositories/user.repository";
 import { UserService } from "../../services/user.service";
 import { EmailValidatorAdapter } from "../email-validator-adapter";
-import prisma from "../../database";
+import prisma from "../../config/prisma";
 
 export function makeUserController(): UserController {
   const emailValidator = new EmailValidatorAdapter();

@@ -4,7 +4,8 @@ import { makeInputController } from "../utils/factories/makeInputController";
 import { validate } from "../middleware/validate";
 import { InputSchema } from "../validation/input.validation";
 import { authenticated } from "../middleware/authenticated";
-import { Role, allowed } from "../middleware/allowed";
+import { allowed } from "../middleware/allowed";
+import { ROLE } from "../config/constants";
 
 const router = Router();
 const slug = "/input";
@@ -12,7 +13,7 @@ const slug = "/input";
 router.post(
   "/create",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -34,7 +35,7 @@ router.post(
 router.get(
   "/",
   authenticated,
-  allowed([Role.Admin, Role.User]),
+  allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeInputController();
@@ -50,7 +51,7 @@ router.get(
 router.put(
   "/:id",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -73,7 +74,7 @@ router.put(
 router.delete(
   "/:id",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;

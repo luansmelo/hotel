@@ -1,5 +1,5 @@
 import { InputController } from "../../controllers/input.controller";
-import prisma from "../../database";
+import prisma from "../../config/prisma";
 import { InputRepository } from "../../repositories/input.repository";
 import { InputService } from "../../services/input.service";
 

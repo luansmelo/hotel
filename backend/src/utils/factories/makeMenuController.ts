@@ -1,5 +1,5 @@
 import { MenuController } from "../../controllers/menu.controller";
-import prisma from "../../database";
+import prisma from "../../config/prisma";
 import { MenuRepository } from "../../repositories/menu.repository";
 import { MenuService } from "../../services/menu.service";
 

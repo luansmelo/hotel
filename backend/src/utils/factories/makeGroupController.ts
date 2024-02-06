@@ -1,5 +1,5 @@
 import { GroupController } from "../../controllers/group.controller";
-import prisma from "../../database";
+import prisma from "../../config/prisma";
 import { GroupRepository } from "../../repositories/group.repository";
 import { GroupService } from "../../services/group.service";
 

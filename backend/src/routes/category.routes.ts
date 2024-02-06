@@ -11,7 +11,8 @@ import {
   CategorySchema,
   ProductToCategorySchema,
 } from "../validation/category.validation";
-import { Role, allowed } from "../middleware/allowed";
+import { allowed } from "../middleware/allowed";
+import { ROLE } from "../config/constants";
 
 const router = Router();
 const slug = "/category";
@@ -19,7 +20,7 @@ const slug = "/category";
 router.post(
   "/create",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   validate(CategorySchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -39,7 +40,7 @@ router.post(
 router.get(
   "/",
   authenticated,
-  allowed([Role.Admin, Role.User]),
+  allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeCategoryController();
@@ -54,7 +55,7 @@ router.get(
 router.post(
   "/add/product",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: ProductCategoryInput = request.body;
@@ -72,7 +73,7 @@ router.post(
 router.get(
   "/:id",
   authenticated,
-  allowed([Role.Admin, Role.User]),
+  allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -89,7 +90,7 @@ router.get(
 router.delete(
   "/:id",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
@@ -107,7 +108,7 @@ router.delete(
 router.delete(
   "/",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: ProductToCategoryInput = ProductToCategorySchema.parse({
@@ -130,7 +131,7 @@ router.delete(
 router.put(
   "/:id",
   authenticated,
-  allowed([Role.Admin]),
+  allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;

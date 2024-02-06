@@ -13,7 +13,7 @@ import {
 import { uuid } from "uuidv4";
 import JwtUtils from "../utils/jwtUtils";
 import { EmailValidator } from "../utils/email-validator-adapter";
-import { Role } from "../middleware/allowed";
+import { ROLE } from "../config/constants";
 
 export class UserService implements UserServiceContract {
   constructor(
@@ -52,7 +52,7 @@ export class UserService implements UserServiceContract {
         email: userCreated.email,
         role: userCreated.role,
       },
-      access_token: JwtUtils.generateToken(data.id, Role.User),
+      access_token: JwtUtils.generateToken(data.id, ROLE.User),
     };
   }
 
