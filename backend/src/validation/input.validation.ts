@@ -30,8 +30,10 @@ export const InputSchema = zod.object({
     required_error: "O id da unidade de medida do item é obrigatório",
     invalid_type_error: "A unidade de medida do item deve ser uma string",
   }),
-  groupId: zod.string({
-    required_error: "O id do grupo do item é obrigatório",
-    invalid_type_error: "O grupo do item deve ser uma string",
-  }),
+  group: zod.array(
+    zod.string({
+      required_error: "O id do grupo do item é obrigatório",
+      invalid_type_error: "O grupo do item deve ser uma string",
+    })
+  ),
 });

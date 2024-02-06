@@ -1,13 +1,25 @@
 import { InputRepositoryContract } from "../utils/contracts/input-contract";
-import { InputContract } from "../dto/input.dto";
+import { InputContract, InputRegister } from "../dto/input.dto";
 import { PrismaClient } from "@prisma/client";
+import { uuid } from "uuidv4";
 
 export class InputRepository implements InputRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
+
   async save(input: InputContract) {
-    return this.db.input.create({
-      data: input,
+    const db = await this.db.input.create({
+      data: {
+        ...input,
+        group: {
+          create: input.group.map((groupId) => ({
+            id: uuid(),
+            groupId,
+          })),
+        },
+      },
     });
+
+    return db;
   }
 
   async getById(id: string) {
@@ -35,7 +47,12 @@ export class InputRepository implements InputRepositoryContract {
         },
         group: {
           select: {
-            name: true,
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
       },
@@ -44,10 +61,33 @@ export class InputRepository implements InputRepositoryContract {
     return db;
   }
 
-  async updateById(id: string, input: InputContract) {
+  async updateById(id: string, input: InputRegister) {
+    const newGroups = input.group || [];
+
     await this.db.input.update({
       where: { id },
-      data: input,
+      data: {
+        name: input.name,
+        code: input.code,
+        measurementUnitId: input.measurementUnitId,
+        unitPrice: input.unitPrice,
+        group: {
+          deleteMany: {
+            inputId: id,
+          },
+          createMany: {
+            data: newGroups.map((groupId) => ({
+              groupId,
+            })),
+          },
+          updateMany: newGroups.map((groupId) => ({
+            where: { inputId: id },
+            data: {
+              groupId,
+            },
+          })),
+        },
+      },
     });
   }
 

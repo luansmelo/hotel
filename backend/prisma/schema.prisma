@@ -11,13 +11,14 @@ datasource db {
 }
 
 model User {
-  id         String @id @default(uuid())
-  name       String
-  email      String @unique
-  password   String
-  role       Role   @default(USER)
-  created_at String
-  updated_at String
+  id           String  @id @default(uuid())
+  name         String
+  email        String  @unique
+  password     String
+  role         Role    @default(USER)
+  isAuthorized Boolean @default(false)
+  created_at   String
+  updated_at   String
 
   @@map("user")
 }
@@ -28,8 +29,8 @@ model Product {
   description             String                    @db.VarChar(1000)
   inputs                  InputsOnProducts[]
   categoryProductSchedule CategoryProductSchedule[]
-  created_at              String
-  updated_at              String
+  created_at String
+  updated_at String
 
   @@map("product")
 }
@@ -53,15 +54,24 @@ model Input {
   name              String
   code              String             @unique
   unitPrice         Float
-  group             Group              @relation(fields: [groupId], references: [id])
   measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id])
+  group             GroupsOnInputs[]
   products          InputsOnProducts[]
   created_at        String
   updated_at        String
-  groupId           String
   measurementUnitId String
 
   @@map("input")
+}
+
+model GroupsOnInputs {
+  id      String @id @default(uuid())
+  input   Input  @relation(fields: [inputId], references: [id])
+  inputId String
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  @@map("groupsOnInputs")
 }
 
 model Menu {
@@ -114,11 +124,11 @@ model Category {
 }
 
 model Group {
-  id         String  @id @default(uuid())
-  name       String  @unique
+  id         String           @id @default(uuid())
+  name       String           @unique
+  input      GroupsOnInputs[]
   created_at String
   updated_at String
-  input      Input[]
 
   @@map("group")
 }

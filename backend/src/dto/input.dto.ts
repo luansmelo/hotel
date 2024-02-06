@@ -4,7 +4,7 @@ export interface InputContract {
   code: string;
   unitPrice: number;
   measurementUnitId: string;
-  groupId: string;
+  group: string[];
   created_at: string;
   updated_at: string;
 }
@@ -19,6 +19,6 @@ export interface InputRegister {
   name: string;
   code: string;
   unitPrice: number;
-  groupId: string;
+  group: any[];
   measurementUnitId: string;
 }

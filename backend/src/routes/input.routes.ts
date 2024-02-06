@@ -19,7 +19,7 @@ router.post(
       const input: InputRegister = InputSchema.parse(
         request.body
       ) as InputRegister;
-
+      console.log(input);
       const controller = makeInputController();
 
       const result = await controller.create(input);
