@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -29,10 +26,24 @@ model Product {
   description             String                    @db.VarChar(1000)
   inputs                  InputsOnProducts[]
   categoryProductSchedule CategoryProductSchedule[]
-  created_at String
-  updated_at String
+  productMedia            ProductMedia?
+  created_at              String
+  updated_at              String
 
   @@map("product")
+}
+
+model ProductMedia {
+  id           String  @id @default(uuid())
+  location     String
+  originalName String
+  mimeType     String
+  productId    String  @unique
+  product      Product @relation(fields: [productId], references: [id])
+  created_at   String
+  updated_at   String
+
+  @@map("product_media")
 }
 
 model InputsOnProducts {
