@@ -2,12 +2,7 @@ import {
   MenuRepositoryContract,
   MenuServiceContract,
 } from "../utils/contracts/menu-contract";
-import {
-  AddCategoryToMenuInput,
-  MenuInput,
-  MenuProductContract,
-  MenuProductInput,
-} from "../dto/menu.dto";
+import { MenuInput, MenuProductInput } from "../dto/menu.dto";
 import { NotFoundError } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
 
@@ -41,45 +36,38 @@ export class MenuService implements MenuServiceContract {
     return menus?.map((list) => ({
       menuId: list.id,
       name: list.name,
-      category: list.menuCategory.map((category) => ({
+      category: list.categoryProductSchedule.map((category) => ({
         id: category.category.id,
         name: category.category.name,
       })),
     }));
   }
 
-  async addCategoryToMenu(input: AddCategoryToMenuInput[]): Promise<void> {
-    const data = input.map((item) => ({
-      id: uuid(),
-      ...item,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
-    }));
-
-    return this.repository.addCategoryToMenu(data);
-  }
-
   async getSelectedMenu(input: MenuProductInput) {
     const menu = await this.repository.getSelectedMenu(input);
-    console.log(menu);
+
     if (!menu) {
       throw new NotFoundError("Cardápio não encontrado");
     }
 
     const data = {
       menuId: menu?.id,
-      name: menu.name,
-      category: menu.menuCategory.map((category) => ({
-        id: category.category.id,
-        name: category.category.name,
-        schedule: category.category.categoryProductSchedule.map((schedule) => ({
-          id: schedule.product.id,
-          name: schedule.product.name,
-          description: schedule.product.description,
-          weekDay: schedule.weekDay,
-          inputs: schedule.product.inputs,
-        })),
-      })),
+      name: menu?.name,
+      categories: (menu?.categoryProductSchedule || []).map(
+        (categoryProductSchedule) => ({
+          id: categoryProductSchedule.category.id,
+          name: categoryProductSchedule.category.name,
+          products: (
+            categoryProductSchedule.category.CategoryProductSchedule || []
+          ).map((schedule) => ({
+            id: schedule.product.id,
+            name: schedule.product.name,
+            description: schedule.product.description,
+            weekDay: schedule.weekDay,
+            inputs: schedule.product.inputs,
+          })),
+        })
+      ),
     };
 
     return data;

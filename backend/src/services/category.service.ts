@@ -32,14 +32,17 @@ export class CategoryService implements CategoryServiceContract {
 
     return category;
   }
+
   async getAll(): Promise<any> {
     return this.repository.getAll();
   }
+
   async deleteById(id: string): Promise<void> {
     const category = await this.getById(id);
 
     await this.repository.deleteById(category.id);
   }
+
   async addProductToCategory(input: ProductCategoryInput): Promise<void> {
     await this.getById(input.categoryId);
 

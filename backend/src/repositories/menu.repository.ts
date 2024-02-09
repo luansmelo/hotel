@@ -1,13 +1,10 @@
-import {
-  AddCategoryToMenuContract,
-  MenuContract,
-  MenuProductInput,
-} from "../dto/menu.dto";
+import { MenuContract, MenuProductInput } from "../dto/menu.dto";
 import { MenuRepositoryContract } from "../utils/contracts/menu-contract";
 import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository implements MenuRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
+
   async save(input: MenuContract): Promise<void> {
     await this.db.menu.create({
       data: input,
@@ -18,9 +15,6 @@ export class MenuRepository implements MenuRepositoryContract {
     const db = await this.db.menu.findUnique({
       where: {
         id,
-      },
-      include: {
-        menuCategory: true,
       },
     });
 
@@ -33,14 +27,15 @@ export class MenuRepository implements MenuRepositoryContract {
         id: input.menuId,
       },
       include: {
-        menuCategory: {
+        categoryProductSchedule: {
           where: {
             categoryId: input.categoryId,
+            weekDay: input.day,
           },
           include: {
             category: {
               include: {
-                categoryProductSchedule: {
+                CategoryProductSchedule: {
                   select: {
                     weekDay: true,
                     product: {
@@ -69,24 +64,12 @@ export class MenuRepository implements MenuRepositoryContract {
   async getList(): Promise<any> {
     return this.db.menu.findMany({
       include: {
-        menuCategory: {
+        categoryProductSchedule: {
           include: {
             category: true,
           },
         },
       },
-    });
-  }
-
-  async addCategoryToMenu(input: AddCategoryToMenuContract[]): Promise<void> {
-    await this.db.menuCategory.createMany({
-      data: input.map((item) => ({
-        id: item.id,
-        menuId: item.menuId,
-        categoryId: item.categoryId,
-        created_at: new Date().toDateString(),
-        updated_at: new Date().toDateString(),
-      })),
     });
   }
 }

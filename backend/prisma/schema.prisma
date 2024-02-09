@@ -25,10 +25,10 @@ model Product {
   name                    String                    @unique
   description             String                    @db.VarChar(1000)
   inputs                  InputsOnProducts[]
-  categoryProductSchedule CategoryProductSchedule[]
   productMedia            ProductMedia?
   created_at              String
   updated_at              String
+  categoryProductSchedule CategoryProductSchedule[]
 
   @@map("product")
 }
@@ -66,7 +66,6 @@ model Input {
   code              String             @unique
   unitPrice         Float
   measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id])
-  group             GroupsOnInputs[]
   products          InputsOnProducts[]
   created_at        String
   updated_at        String
@@ -75,37 +74,16 @@ model Input {
   @@map("input")
 }
 
-model GroupsOnInputs {
-  id      String @id @default(uuid())
-  input   Input  @relation(fields: [inputId], references: [id])
-  inputId String
-  group   Group  @relation(fields: [groupId], references: [id])
-  groupId String
-
-  @@map("groupsOnInputs")
-}
-
 model Menu {
   id                      String                    @id @default(uuid())
   name                    String
   created_at              String
   updated_at              String
-  menuCategory            MenuCategory[]
   categoryProductSchedule CategoryProductSchedule[]
+  Category                Category?                 @relation(fields: [categoryId], references: [id])
+  categoryId              String?
 
   @@map("menu")
-}
-
-model MenuCategory {
-  id         String   @id @default(uuid())
-  menuId     String
-  categoryId String
-  menu       Menu     @relation(fields: [menuId], references: [id])
-  category   Category @relation(fields: [categoryId], references: [id])
-  created_at String
-  updated_at String
-
-  @@map("menuCategory")
 }
 
 model CategoryProductSchedule {
@@ -126,22 +104,12 @@ model CategoryProductSchedule {
 model Category {
   id                      String                    @id @default(uuid())
   name                    String
-  categoryProductSchedule CategoryProductSchedule[]
-  menus                   MenuCategory[]
+  menus                   Menu[]
   created_at              String
   updated_at              String
+  CategoryProductSchedule CategoryProductSchedule[]
 
   @@map("category")
-}
-
-model Group {
-  id         String           @id @default(uuid())
-  name       String           @unique
-  input      GroupsOnInputs[]
-  created_at String
-  updated_at String
-
-  @@map("group")
 }
 
 model MeasurementUnit {
