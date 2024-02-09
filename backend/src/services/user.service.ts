@@ -47,6 +47,7 @@ export class UserService implements UserServiceContract {
       name: userCreated.name,
       email: userCreated.email,
       role: userCreated.role,
+      isAuthorized: userCreated.isAuthorized,
     };
   }
 
@@ -64,6 +65,7 @@ export class UserService implements UserServiceContract {
       name: user.name,
       email: user.email,
       role: user.role,
+      isAuthorized: user.isAuthorized,
       access_token: JwtUtils.generateToken(user.id, user.role),
     };
   }

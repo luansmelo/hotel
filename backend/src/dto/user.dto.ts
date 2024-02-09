@@ -13,6 +13,7 @@ export interface UserDataContract {
   email: string;
   password: string;
   role: string;
+  isAuthorized: boolean
 }
 
 export interface UseDataResponse {
@@ -20,6 +21,7 @@ export interface UseDataResponse {
   name: string;
   email: string;
   role: string;
+  isAuthorized: boolean
 }
 
 export interface UserContractInput {
