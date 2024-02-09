@@ -2,7 +2,6 @@ import {
   UserRepositoryContract,
   UserServiceContract,
 } from "../utils/contracts/user-contract";
-import bcrypt from "bcrypt";
 import { UserLoginInput, UserContractInput } from "../dto/user.dto";
 import {
   BadRequestError,
@@ -13,7 +12,7 @@ import {
 import { uuid } from "uuidv4";
 import JwtUtils from "../utils/jwtUtils";
 import { EmailValidator } from "../utils/email-validator-adapter";
-import { ROLE } from "../config/constants";
+import bcrypt from "bcrypt";
 
 export class UserService implements UserServiceContract {
   constructor(
@@ -24,13 +23,11 @@ export class UserService implements UserServiceContract {
   async signup(input: UserContractInput) {
     const isValid = this.emailValidator.isValid(input.email);
 
-    if (!isValid) {
-      throw new BadRequestError("invalid email");
-    }
+    if (!isValid) throw new BadRequestError("email inválido");
 
     const user = await this.repository.getByEmail(input.email);
 
-    if (user) throw new ConflictError("user already exists");
+    if (user) throw new ConflictError("usuário já cadastrado");
 
     const hashedPassword = await bcrypt.hash(input.password, 10);
 
@@ -46,13 +43,10 @@ export class UserService implements UserServiceContract {
     const userCreated = await this.repository.save(data);
 
     return {
-      user: {
-        id: userCreated.id,
-        name: userCreated.name,
-        email: userCreated.email,
-        role: userCreated.role,
-      },
-      access_token: JwtUtils.generateToken(data.id, ROLE.User),
+      id: userCreated.id,
+      name: userCreated.name,
+      email: userCreated.email,
+      role: userCreated.role,
     };
   }
 
@@ -66,12 +60,10 @@ export class UserService implements UserServiceContract {
     if (!isValid) throw new UnauthorizedError("crendênciais inválidas");
 
     return {
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
       access_token: JwtUtils.generateToken(user.id, user.role),
     };
   }

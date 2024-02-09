@@ -15,6 +15,13 @@ export interface UserDataContract {
   role: string;
 }
 
+export interface UseDataResponse {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 export interface UserContractInput {
   name: string;
   email: string;

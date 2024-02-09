@@ -1,4 +1,5 @@
 import {
+  UseDataResponse,
   UserContractInput,
   UserData,
   UserDataContract,
@@ -11,6 +12,6 @@ export interface UserRepositoryContract {
 }
 
 export interface UserServiceContract {
-  signup(input: UserContractInput): Promise<{ access_token: string }>;
+  signup(input: UserContractInput): Promise<UseDataResponse>;
   signin(input: UserLoginInput): Promise<{ access_token: string }>;
 }
