@@ -15,9 +15,8 @@ export interface CategoryRepositoryContract {
     input: ProductToCategoryInput
   ): Promise<ProductToCategoryContract | null>;
   deleteById(id: string): Promise<void>;
-  addProductToCategory(input: ProductCategoryContract[]): Promise<void>;
-  deleteProduct(input: ProductToCategoryInput): Promise<void>;
-  updateById(id: string, input: CategoryInput): Promise<void>
+
+  updateById(id: string, input: CategoryInput): Promise<void>;
 }
 
 export interface CategoryServiceContract {
@@ -25,7 +24,6 @@ export interface CategoryServiceContract {
   getById(id: string): Promise<CategoryContract | null>;
   getAll(): Promise<CategoryContract | null>;
   deleteById(id: string): Promise<void>;
-  addProductToCategory(input: ProductCategoryInput): Promise<void>;
-  deleteProduct(input: ProductToCategoryInput): Promise<void>;
-  updateById(id: string, input: CategoryInput): Promise<void>
+
+  updateById(id: string, input: CategoryInput): Promise<void>;
 }

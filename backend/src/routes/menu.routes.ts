@@ -1,16 +1,11 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { makeMenuController } from "../utils/factories/makeMenuController";
-import {
-  AddCategoryToMenuInput,
-  AddCategoryToMenuSchema,
-  MenuInput,
-  MenuProductInput,
-  MenuSchema,
-} from "../dto/menu.dto";
+import { MenuInput, MenuProductInput, MenuSchema } from "../dto/menu.dto";
 import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
 import { allowed } from "../middleware/allowed";
 import { ROLE } from "../config/constants";
+import { ProductCategoryInput } from "../dto/category.dto";
 
 const router = Router();
 const slug = "/menu";
@@ -27,26 +22,6 @@ router.post(
       const result = await controller.create(input);
 
       return response.status(201).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.post(
-  "/add/category",
-  authenticated,
-  allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const input: AddCategoryToMenuInput[] = AddCategoryToMenuSchema.parse(
-        request.body
-      ) as AddCategoryToMenuInput[];
-
-      const controller = makeMenuController();
-      await controller.addCategoryToMenu(input);
-
-      return response.status(200).send({ message: "Categoria adicionada" });
     } catch (error) {
       next(error);
     }
@@ -103,6 +78,65 @@ router.get(
       const result = await controller.getAll(input);
 
       return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/:menuId/category/:categoryId/product/:productId/weekDay/:weekDay",
+  authenticated,
+  allowed([ROLE.Admin]),
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const { menuId, categoryId, productId, weekDay } = request.params;
+
+      const input = {
+        menuId,
+        categoryId,
+        productId,
+        weekDay,
+      };
+
+      const controller = makeMenuController();
+      const result = await controller.deleteProduct(input);
+
+      return response.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/add/product",
+  authenticated,
+  allowed([ROLE.Admin]),
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const input: ProductCategoryInput = request.body;
+
+      const controller = makeMenuController();
+      const result = await controller.addProduct(input);
+
+      return response.status(201).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  "/:menuId",
+  authenticated,
+  allowed([ROLE.Admin]),
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const { menuId } = request.params;
+
+      const controller = makeMenuController();
+      await controller.deleteById(menuId);
     } catch (error) {
       next(error);
     }

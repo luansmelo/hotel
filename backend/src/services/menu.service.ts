@@ -2,8 +2,12 @@ import {
   MenuRepositoryContract,
   MenuServiceContract,
 } from "../utils/contracts/menu-contract";
-import { MenuInput, MenuProductInput } from "../dto/menu.dto";
+import { MenuContract, MenuInput, MenuProductInput } from "../dto/menu.dto";
 import { NotFoundError } from "../errors/httpErrors";
+import {
+  ProductCategoryInput,
+  ProductToCategoryInput,
+} from "../dto/category.dto";
 import { uuid } from "uuidv4";
 
 export class MenuService implements MenuServiceContract {
@@ -17,16 +21,20 @@ export class MenuService implements MenuServiceContract {
       updated_at: new Date().toDateString(),
     };
 
-    return this.repository.save(data);
+    const menu = await this.repository.save(data);
+
+    return {
+      id: menu.id,
+      name: menu.name,
+      created_at: menu.created_at,
+      updated_at: menu.updated_at,
+    };
   }
 
   async getById(id: string): Promise<any> {
     const menu = await this.repository.getById(id);
 
-    if (!menu) {
-      throw new NotFoundError("Cardápio não encontrado");
-    }
-
+    if (!menu) throw new NotFoundError("Cardápio não encontrado");
     return menu;
   }
 
@@ -46,9 +54,7 @@ export class MenuService implements MenuServiceContract {
   async getSelectedMenu(input: MenuProductInput) {
     const menu = await this.repository.getSelectedMenu(input);
 
-    if (!menu) {
-      throw new NotFoundError("Cardápio não encontrado");
-    }
+    if (!menu) throw new NotFoundError("Cardápio não encontrado");
 
     const data = {
       menuId: menu?.id,
@@ -71,5 +77,35 @@ export class MenuService implements MenuServiceContract {
     };
 
     return data;
+  }
+
+  async deleteById(id: string): Promise<MenuContract | null> {
+    const menu = await this.getById(id);
+
+    return this.repository.deleteById(menu.id);
+  }
+
+  async deleteProduct(input: ProductToCategoryInput): Promise<void> {
+    await this.getById(input.categoryId);
+
+    await this.repository.deleteProduct(input);
+  }
+
+  async addProduct(input: ProductCategoryInput): Promise<void> {
+    await this.getById(input.categoryId);
+
+    const products = input.product.flatMap(({ productId, weekDay }) => {
+      return weekDay.map((day) => ({
+        id: uuid(),
+        menuId: input.menuId,
+        categoryId: input.categoryId,
+        productId,
+        weekDay: day,
+        created_at: new Date().toDateString(),
+        updated_at: new Date().toDateString(),
+      }));
+    });
+
+    await this.repository.addProduct(products);
   }
 }

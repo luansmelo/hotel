@@ -1,3 +1,7 @@
+import {
+  ProductCategoryContract,
+  ProductToCategoryInput,
+} from "../dto/category.dto";
 import { MenuContract, MenuProductInput } from "../dto/menu.dto";
 import { MenuRepositoryContract } from "../utils/contracts/menu-contract";
 import { PrismaClient } from "@prisma/client";
@@ -5,8 +9,8 @@ import { PrismaClient } from "@prisma/client";
 export class MenuRepository implements MenuRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: MenuContract): Promise<void> {
-    await this.db.menu.create({
+  async save(input: MenuContract): Promise<MenuContract> {
+    return this.db.menu.create({
       data: input,
     });
   }
@@ -70,6 +74,37 @@ export class MenuRepository implements MenuRepositoryContract {
           },
         },
       },
+    });
+  }
+
+  async deleteProduct(input: ProductToCategoryInput): Promise<void> {
+    await this.db.categoryProductSchedule.deleteMany({
+      where: {
+        menuId: input.menuId,
+        categoryId: input.categoryId,
+        productId: input.productId,
+        weekDay: input.weekDay,
+      },
+    });
+  }
+
+  async addProduct(input: ProductCategoryContract[]): Promise<void> {
+    await this.db.categoryProductSchedule.createMany({
+      data: input.map((item) => ({
+        id: item.id,
+        menuId: item.menuId,
+        categoryId: item.categoryId,
+        productId: item.productId,
+        weekDay: item.weekDay,
+        created_at: item.created_at,
+        updated_at: item.updated_at,
+      })),
+    });
+  }
+
+  async deleteById(id: string): Promise<MenuContract> {
+    return this.db.menu.delete({
+      where: { id },
     });
   }
 }

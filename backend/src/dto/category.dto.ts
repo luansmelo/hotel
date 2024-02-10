@@ -34,7 +34,7 @@ export interface ProductCategoryContract {
 }
 
 export interface ProductToCategoryInput {
-  id: string;
+  menuId: string;
   categoryId: string;
   productId: string;
   weekDay: string;

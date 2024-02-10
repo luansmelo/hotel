@@ -1,16 +1,9 @@
 import { Request, Response, Router, NextFunction } from "express";
-import {
-  ProductToCategoryInput,
-  CategoryInput,
-  ProductCategoryInput,
-} from "../dto/category.dto";
+import { CategoryInput } from "../dto/category.dto";
 import { makeCategoryController } from "../utils/factories/makeCategoryController";
 import { validate } from "../middleware/validate";
 import { authenticated } from "../middleware/authenticated";
-import {
-  CategorySchema,
-  ProductToCategorySchema,
-} from "../validation/category.validation";
+import { CategorySchema } from "../validation/category.validation";
 import { allowed } from "../middleware/allowed";
 import { ROLE } from "../config/constants";
 
@@ -27,6 +20,7 @@ router.post(
       const input: CategoryInput = CategorySchema.parse(
         request.body
       ) as CategoryInput;
+
       const controller = makeCategoryController();
       const result = await controller.create(input);
 
@@ -44,26 +38,10 @@ router.get(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const controller = makeCategoryController();
+
       const result = await controller.getAll();
+
       return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.post(
-  "/add/product",
-  authenticated,
-  allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const input: ProductCategoryInput = request.body;
-
-      const controller = makeCategoryController();
-      await controller.addProductToCategory(input);
-
-      return response.status(201).send({ message: "Produto adicionado!" });
     } catch (error) {
       next(error);
     }
@@ -78,6 +56,7 @@ router.get(
     try {
       const id = request.params.id;
       const controller = makeCategoryController();
+
       const result = await controller.getById(id);
 
       return response.status(200).send(result);
@@ -105,29 +84,6 @@ router.delete(
   }
 );
 
-router.delete(
-  "/",
-  authenticated,
-  allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const input: ProductToCategoryInput = ProductToCategorySchema.parse({
-        id: request.query.menu as string,
-        categoryId: request.query.category as string,
-        productId: request.query.product as string,
-        weekDay: request.query.day as string,
-      }) as ProductToCategoryInput;
-
-      const controller = makeCategoryController();
-      await controller.deleteProduct(input);
-
-      return response.status(200).send({ message: "sucesso" });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 router.put(
   "/:id",
   authenticated,
@@ -136,8 +92,11 @@ router.put(
     try {
       const id = request.params.id;
       const input = request.body;
+
       const controller = makeCategoryController();
+
       await controller.updateById(id, input);
+
       return response.status(200).send({ message: "sucesso" });
     } catch (error) {
       next(error);
