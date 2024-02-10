@@ -64,7 +64,7 @@ export class MenuService implements MenuServiceContract {
           id: categoryProductSchedule.category.id,
           name: categoryProductSchedule.category.name,
           products: (
-            categoryProductSchedule.category.CategoryProductSchedule || []
+            categoryProductSchedule.category.categoryProductSchedule || []
           ).map((schedule) => ({
             id: schedule.product.id,
             name: schedule.product.name,

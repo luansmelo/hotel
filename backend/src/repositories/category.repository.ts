@@ -31,7 +31,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
     return this.db.category.findUnique({
       where: { id },
       include: {
-        CategoryProductSchedule: {
+        categoryProductSchedule: {
           include: {
             product: true,
           },

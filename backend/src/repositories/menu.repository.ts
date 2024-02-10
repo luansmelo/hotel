@@ -39,7 +39,7 @@ export class MenuRepository implements MenuRepositoryContract {
           include: {
             category: {
               include: {
-                CategoryProductSchedule: {
+                categoryProductSchedule: {
                   select: {
                     weekDay: true,
                     product: {
