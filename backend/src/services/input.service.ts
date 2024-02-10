@@ -9,13 +9,27 @@ import {
   UnauthorizedError,
 } from "../errors/httpErrors";
 import { uuid } from "uuidv4";
+import { MeasurementUnitRepositoryContract } from "../utils/contracts/measurementUnit-contract";
 
 export class InputService implements InputServiceContract {
-  constructor(private readonly repository: InputRepositoryContract) {}
+  constructor(
+    private readonly repository: InputRepositoryContract,
+    private readonly measurementRepository: MeasurementUnitRepositoryContract
+  ) {}
 
   async create(input: InputRegister) {
-    if (!input.group || !input.group.length)
+    if (!input.groups || !input.groups.length)
       throw new UnauthorizedError("A lista de grupos não pode ser vazia.");
+
+    const measurementUnit = await this.measurementRepository.getById(
+      input.measurementUnitId
+    );
+
+    if (!measurementUnit)
+      throw new UnauthorizedError("Unidade de medida não cadastrada");
+
+    const inputExists = await this.repository.getByCode(input.code);
+    if (inputExists) throw new ConflictError("O código deve ser único");
 
     const data = {
       id: uuid(),
@@ -24,9 +38,6 @@ export class InputService implements InputServiceContract {
       updated_at: new Date().toDateString(),
     };
 
-    const inputExists = await this.repository.getByCode(input.code);
-
-    if (inputExists) throw new ConflictError("O código deve ser único");
     return this.repository.save(data);
   }
 
@@ -40,7 +51,7 @@ export class InputService implements InputServiceContract {
         unitPrice: item.unitPrice,
         measurementUnit: item.measurementUnit.name,
         code: item.code,
-        groups: item.group.map((e) => e.group) || [],
+        groups: item.groups.map((e) => e.group) || [],
       };
     });
 
@@ -55,7 +66,7 @@ export class InputService implements InputServiceContract {
   }
 
   async updateById(id: string, input: InputRegister) {
-    if (!input.group || !input.group.length)
+    if (!input.groups || !input.groups.length)
       throw new UnauthorizedError("A lista de grupos não pode estar vazia.");
 
     const inputExists = await this.getById(id);

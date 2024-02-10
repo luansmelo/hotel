@@ -66,7 +66,7 @@ model Input {
   code              String             @unique
   unitPrice         Float
   measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id])
-  group             GroupsOnInputs[]
+  groups            GroupsOnInputs[]
   products          InputsOnProducts[]
   created_at        String
   updated_at        String
@@ -77,9 +77,9 @@ model Input {
 
 model GroupsOnInputs {
   id      String @id @default(uuid())
-  input   Input  @relation(fields: [inputId], references: [id])
+  input   Input  @relation(fields: [inputId], references: [id], onDelete: Cascade)
   inputId String
-  group   Group  @relation(fields: [groupId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
   groupId String
 
   @@map("groupsOnInputs")

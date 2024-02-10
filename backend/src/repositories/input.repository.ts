@@ -7,19 +7,30 @@ export class InputRepository implements InputRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
 
   async save(input: InputContract) {
-    const db = await this.db.input.create({
+    return this.db.input.create({
       data: {
         ...input,
-        group: {
-          create: input.group.map((groupId) => ({
+        groups: {
+          create: input.groups.map((groupId) => ({
             id: uuid(),
             groupId,
           })),
         },
       },
+      select: {
+        id: true,
+        name: true,
+        unitPrice: true,
+        measurementUnit: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        code: true,
+        groups: true,
+      },
     });
-
-    return db;
   }
 
   async getById(id: string) {
@@ -45,7 +56,7 @@ export class InputRepository implements InputRepositoryContract {
             name: true,
           },
         },
-        group: {
+        groups: {
           select: {
             group: {
               select: {
@@ -62,7 +73,7 @@ export class InputRepository implements InputRepositoryContract {
   }
 
   async updateById(id: string, input: InputRegister) {
-    const newGroups = input.group || [];
+    const newGroups = input.groups || [];
 
     await this.db.input.update({
       where: { id },
@@ -71,7 +82,7 @@ export class InputRepository implements InputRepositoryContract {
         code: input.code,
         measurementUnitId: input.measurementUnitId,
         unitPrice: input.unitPrice,
-        group: {
+        groups: {
           deleteMany: {
             inputId: id,
           },

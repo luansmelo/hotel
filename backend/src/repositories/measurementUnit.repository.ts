@@ -6,17 +6,21 @@ export class MeasurementUnitRepository
   implements MeasurementUnitRepositoryContract
 {
   constructor(private readonly db: PrismaClient) {}
+  
   async save(input: MeasurementUnitContract) {
     await this.db.measurementUnit.create({
       data: input,
     });
   }
+  
   async getAll(): Promise<any> {
     return this.db.measurementUnit.findMany();
   }
+  
   async getById(id: string): Promise<any> {
     return this.db.measurementUnit.findUnique({ where: { id } });
   }
+  
   async deleteById(id: string): Promise<MeasurementUnitContract> {
     return this.db.measurementUnit.delete({ where: { id } });
   }
