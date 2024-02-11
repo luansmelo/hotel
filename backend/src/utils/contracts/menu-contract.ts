@@ -1,4 +1,8 @@
-import { ProductCategoryContract, ProductCategoryInput, ProductToCategoryInput } from "../../dto/category.dto";
+import {
+  ProductCategoryContract,
+  ProductCategoryInput,
+  ProductToCategoryInput,
+} from "../../dto/category.dto";
 import { MenuContract, MenuInput, MenuProductInput } from "../../dto/menu.dto";
 
 export interface MenuRepositoryContract {
@@ -9,6 +13,7 @@ export interface MenuRepositoryContract {
   getSelectedMenu(input: MenuProductInput): Promise<any | null>;
   deleteProduct(input: ProductToCategoryInput): Promise<void>;
   addProduct(input: ProductCategoryContract[]): Promise<void>;
+  update(id: string, name: string): Promise<void>;
 }
 
 export interface MenuServiceContract {
@@ -19,4 +24,5 @@ export interface MenuServiceContract {
   getSelectedMenu(input: MenuProductInput): Promise<any | null>;
   deleteProduct(input: ProductToCategoryInput): Promise<void>;
   addProduct(input: ProductCategoryInput): Promise<void>;
+  update(id: string, name: string): Promise<void>;
 }

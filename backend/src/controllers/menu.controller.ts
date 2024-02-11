@@ -35,4 +35,8 @@ export class MenuController {
   async deleteById(id: string) {
     return this.service.deleteById(id);
   }
+
+  async update(id: string, name: string) {
+    return this.service.update(id, name);
+  }
 }

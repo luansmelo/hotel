@@ -108,4 +108,8 @@ export class MenuService implements MenuServiceContract {
 
     await this.repository.addProduct(products);
   }
+
+  async update(id: string, name: string) {
+    await this.repository.update(id, name);
+  }
 }

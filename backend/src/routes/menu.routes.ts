@@ -143,4 +143,23 @@ router.delete(
   }
 );
 
+router.put(
+  "/:menuId",
+  authenticated,
+  allowed([ROLE.Admin]),
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const { menuId } = request.params;
+      const { name } = request.body;
+
+      const controller = makeMenuController();
+
+      await controller.update(menuId, name);
+      return response.status(204).end();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { router, slug };

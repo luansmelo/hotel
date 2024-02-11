@@ -107,4 +107,14 @@ export class MenuRepository implements MenuRepositoryContract {
       where: { id },
     });
   }
+
+  async update(id: string, name: string): Promise<void> {
+    await this.db.menu.update({
+      where: { id },
+      data: {
+        name,
+        categoryProductSchedule: {},
+      },
+    });
+  }
 }
