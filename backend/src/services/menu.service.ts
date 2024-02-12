@@ -56,24 +56,32 @@ export class MenuService implements MenuServiceContract {
 
     if (!menu) throw new NotFoundError("Cardápio não encontrado");
 
+    const uniqueCategories = Array.from(
+      new Set(menu.categoryProductSchedule.map((cps) => cps.category.id))
+    );
+
     const data = {
       menuId: menu?.id,
       name: menu?.name,
-      categories: (menu?.categoryProductSchedule || []).map(
-        (categoryProductSchedule) => ({
-          id: categoryProductSchedule.category.id,
-          name: categoryProductSchedule.category.name,
-          products: (
-            categoryProductSchedule.category.categoryProductSchedule || []
-          ).map((schedule) => ({
-            id: schedule.product.id,
-            name: schedule.product.name,
-            description: schedule.product.description,
-            weekDay: schedule.weekDay,
-            inputs: schedule.product.inputs,
-          })),
-        })
-      ),
+      categories: uniqueCategories.map((categoryId) => {
+        const category = menu.categoryProductSchedule.find(
+          (cps) => cps.category.id === categoryId
+        );
+
+        return {
+          categoryId: categoryId,
+          name: category?.category.name,
+          products: (category?.category.categoryProductSchedule || []).map(
+            (schedule) => ({
+              id: schedule.product.id,
+              name: schedule.product.name,
+              description: schedule.product.description,
+              weekDay: schedule.weekDay,
+              inputs: schedule.product.inputs,
+            })
+          ),
+        };
+      }),
     };
 
     return data;
@@ -86,13 +94,13 @@ export class MenuService implements MenuServiceContract {
   }
 
   async deleteProduct(input: ProductToCategoryInput): Promise<void> {
-    await this.getById(input.categoryId);
+    await this.getById(input.menuId);
 
     await this.repository.deleteProduct(input);
   }
 
   async addProduct(input: ProductCategoryInput): Promise<void> {
-    await this.getById(input.categoryId);
+    await this.getById(input.menuId);
 
     const products = input.product.flatMap(({ productId, weekDay }) => {
       return weekDay.map((day) => ({
