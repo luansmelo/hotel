@@ -41,14 +41,28 @@ export class MenuService implements MenuServiceContract {
   async getAll(day?: string) {
     const menus = await this.repository.getList(day);
 
-    return menus?.map((list) => ({
-      menuId: list.id,
-      name: list.name,
-      category: list.categoryProductSchedule.map((category) => ({
-        id: category.category.id,
-        name: category.category.name,
-      })),
-    }));
+    return menus?.map((list) => {
+      const uniqueCategories = Array.from(
+        new Set(
+          list.categoryProductSchedule.map((category) => category.category.id)
+        )
+      );
+
+      return {
+        menuId: list.id,
+        name: list.name,
+        categories: uniqueCategories.map((categoryId) => {
+          const category = list.categoryProductSchedule.find(
+            (cps) => cps.category.id === categoryId
+          );
+
+          return {
+            categoryId: categoryId,
+            name: category?.category.name,
+          };
+        }),
+      };
+    });
   }
 
   async getSelectedMenu(input: MenuProductInput) {
@@ -77,12 +91,26 @@ export class MenuService implements MenuServiceContract {
               name: schedule.product.name,
               description: schedule.product.description,
               weekDay: schedule.weekDay,
-              inputs: schedule.product.inputs,
+              inputs: schedule.product.inputs.map((input) => ({
+                id: input?.input.id,
+                name: input?.input.name,
+                code: input.input.code,
+                unitPrice: input.input.unitPrice,
+                grammage: input.grammage,
+                measurementUnit: input.measurementUnit,
+              })),
             })
           ),
         };
       }),
     };
+
+    console.log(
+      data.categories.map((e) =>
+        e.products.flatMap((e) => e.inputs.map((e) => e.input))
+      ),
+      "data"
+    );
 
     return data;
   }

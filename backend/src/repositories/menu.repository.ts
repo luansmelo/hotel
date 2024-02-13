@@ -47,7 +47,14 @@ export class MenuRepository implements MenuRepositoryContract {
                         id: true,
                         name: true,
                         description: true,
-                        inputs: true,
+                        inputs: {
+                          select: {
+                            id: true,
+                            input: true,
+                            grammage: true,
+                            measurementUnit: true,
+                          },
+                        },
                       },
                     },
                   },
