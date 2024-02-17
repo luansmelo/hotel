@@ -26,9 +26,10 @@ model Product {
   description             String                    @db.VarChar(1000)
   inputs                  InputsOnProducts[]
   productMedia            ProductMedia?
+  categoryProductSchedule CategoryProductSchedule[]
+  photo_url               String?
   created_at              String
   updated_at              String
-  categoryProductSchedule CategoryProductSchedule[]
 
   @@map("product")
 }

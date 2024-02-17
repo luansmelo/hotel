@@ -137,6 +137,8 @@ router.delete(
 
       const controller = makeMenuController();
       await controller.deleteById(menuId);
+
+      return response.status(204).end()
     } catch (error) {
       next(error);
     }

@@ -6,6 +6,7 @@ import {
   UpdatedProductInfo,
 } from "../dto/product.dto";
 import { PrismaClient } from "@prisma/client";
+import { File } from "../utils/s3/file";
 
 export class ProductRepository implements ProductRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
@@ -124,6 +125,27 @@ export class ProductRepository implements ProductRepositoryContract {
       where: {
         productId: input.productId,
         inputId: input.inputId,
+      },
+    });
+  }
+
+  async updateProductPhoto(
+    id: string,
+    file: File
+  ): Promise<Partial<ProductContract>> {
+    return this.db.product.update({
+      where: { id },
+      data: {
+        photo_url: file.filename,
+      },
+    });
+  }
+
+  async removeProductPhoto(id: string) {
+    return this.db.product.update({
+      where: { id },
+      data: {
+        photo_url: null,
       },
     });
   }

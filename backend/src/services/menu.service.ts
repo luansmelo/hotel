@@ -49,7 +49,7 @@ export class MenuService implements MenuServiceContract {
       );
 
       return {
-        menuId: list.id,
+        id: list.id,
         name: list.name,
         categories: uniqueCategories.map((categoryId) => {
           const category = list.categoryProductSchedule.find(
@@ -75,7 +75,7 @@ export class MenuService implements MenuServiceContract {
     );
 
     const data = {
-      menuId: menu?.id,
+      id: menu?.id,
       name: menu?.name,
       categories: uniqueCategories.map((categoryId) => {
         const category = menu.categoryProductSchedule.find(

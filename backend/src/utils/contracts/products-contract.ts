@@ -6,6 +6,7 @@ import {
   ProductInputRemove,
   UpdatedProductInfo,
 } from "../../dto/product.dto";
+import { File } from "../s3/file";
 
 export interface ProductRepositoryContract {
   save(input: ProductContract): Promise<void>;
@@ -15,6 +16,10 @@ export interface ProductRepositoryContract {
   deleteById(id: string): Promise<void>;
   addInputToProduct(input: AddInputToProductData): Promise<void>;
   getPredefinedProduct(id: string): Promise<any>;
+  updateProductPhoto(
+    id: string,
+    file: File
+  ): Promise<Partial<ProductContract> | null>;
   updatePredefinedProduct(
     id: string,
     updatedInfo: UpdatedProductInfo
@@ -30,6 +35,10 @@ export interface ProductServiceContract {
   deleteById(id: string): Promise<void>;
   addInputToProduct(input: AddInputToProduct): Promise<void>;
   getPredefinedProduct(id: string): Promise<any>;
+  updateProductPhoto(
+    id: string,
+    file: File
+  ): Promise<Partial<ProductContract> | null>;
   updatePredefinedProduct(
     id: string,
     updatedInfo: UpdatedProductInfo
