@@ -75,30 +75,45 @@ export class InputRepository implements InputRepositoryContract {
   async updateById(id: string, input: InputRegister) {
     const newGroups = input.groups || [];
 
-    await this.db.input.update({
-      where: { id },
-      data: {
-        name: input.name,
-        code: input.code,
-        measurementUnitId: input.measurementUnitId,
-        unitPrice: input.unitPrice,
-        groups: {
-          deleteMany: {
-            inputId: id,
-          },
-          createMany: {
-            data: newGroups.map((groupId) => ({
-              groupId,
-            })),
-          },
-          updateMany: newGroups.map((groupId) => ({
-            where: { inputId: id },
-            data: {
-              groupId,
+    await this.db.$transaction(async (prisma) => {
+      const existingGroups = await prisma.groupsOnInputs.findMany({
+        where: { inputId: id },
+        select: { groupId: true },
+      });
+
+      const groupsToDelete = existingGroups.filter(
+        (existingGroup) => !newGroups.includes(existingGroup.groupId)
+      );
+
+      const groupsToAdd = newGroups.filter(
+        (groupId) =>
+          !existingGroups.some(
+            (existingGroup) => existingGroup.groupId === groupId
+          )
+      );
+
+      await prisma.input.update({
+        where: { id },
+        data: {
+          name: input.name,
+          code: input.code,
+          measurementUnitId: input.measurementUnitId,
+          unitPrice: input.unitPrice,
+          groups: {
+            deleteMany: {
+              groupId: {
+                in: groupsToDelete.map((group) => group.groupId),
+              },
             },
-          })),
+
+            createMany: {
+              data: groupsToAdd.map((groupId) => ({
+                groupId,
+              })),
+            },
+          },
         },
-      },
+      });
     });
   }
 
