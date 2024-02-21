@@ -1,13 +1,13 @@
-import { NotFoundError } from "../utils/errors/httpErrors";
+import { NotFoundError } from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 import {
   MeasurementUnitContract,
   MeasurementUnitInput,
-} from "../dto/measurementUnit.dto";
+} from "@/dto/measurementUnit.dto";
 import {
   MeasurementUnitRepositoryContract,
   MeasurementUnitServiceContract,
-} from "../utils/contracts/measurementUnit-contract";
+} from "@/utils/contracts/measurementUnit-contract";
 
 export class MeasurementUnitService implements MeasurementUnitServiceContract {
   constructor(private readonly repository: MeasurementUnitRepositoryContract) {}

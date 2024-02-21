@@ -1,5 +1,5 @@
-import { MeasurementUnitInput } from "../dto/measurementUnit.dto";
-import { MeasurementUnitServiceContract } from "../utils/contracts/measurementUnit-contract";
+import { MeasurementUnitInput } from "@/dto/measurementUnit.dto";
+import { MeasurementUnitServiceContract } from "@/utils/contracts/measurementUnit-contract";
 
 export class MeasurementUnitController {
   constructor(private readonly service: MeasurementUnitServiceContract) {}

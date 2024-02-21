@@ -1,7 +1,7 @@
-import { MeasurementUnitController } from "../controllers/measurementUnit.controller";
-import prisma from "../config/prisma";
-import { MeasurementUnitRepository } from "../repositories/measurementUnit.repository";
-import { MeasurementUnitService } from "../services/measurementUnit.service";
+import { MeasurementUnitController } from "@/controllers/measurementUnit.controller";
+import prisma from "@/config/prisma";
+import { MeasurementUnitRepository } from "@/repositories/measurementUnit.repository";
+import { MeasurementUnitService } from "@/services/measurementUnit.service";
 
 export function makeMeasurementUnitController(): MeasurementUnitController {
   const repository = new MeasurementUnitRepository(prisma);

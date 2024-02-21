@@ -1,15 +1,17 @@
 import {
   ProductRepositoryContract,
   ProductServiceContract,
-} from "../utils/contracts/products-contract";
+} from "@/utils/contracts/products-contract";
 import {
   AddInputToProduct,
+  ProductContract,
   ProductInput,
   ProductInputRemove,
   UpdatedProductInfo,
-} from "../dto/product.dto";
-import { NotFoundError, UnauthorizedError } from "../utils/errors/httpErrors";
+} from "@/dto/product.dto";
+import { NotFoundError, UnauthorizedError } from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
+import { File } from "@/storage/s3/file";
 
 export class ProductService implements ProductServiceContract {
   constructor(private readonly repository: ProductRepositoryContract) {}
@@ -128,5 +130,13 @@ export class ProductService implements ProductServiceContract {
     await this.getById(input.productId);
 
     return this.repository.removeInputFromProduct(input);
+  }
+
+  async updateProductPhoto(
+    id: string,
+    file: File
+  ): Promise<Partial<ProductContract>> {
+    console.log(id, file);
+    throw new Error("Method not implemented.");
   }
 }

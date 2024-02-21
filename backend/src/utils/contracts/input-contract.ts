@@ -1,4 +1,4 @@
-import { InputContract, InputRegister } from "../../dto/input.dto";
+import { InputContract, InputRegister } from "@/dto/input.dto";
 
 export interface InputRepositoryContract {
   save(input: InputContract): Promise<any>;

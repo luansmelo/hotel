@@ -5,7 +5,7 @@ import {
   CategoryContract,
   ProductCategoryInput,
   ProductCategoryContract,
-} from "../../dto/category.dto";
+} from "@/dto/category.dto";
 
 export interface CategoryRepositoryContract {
   save(input: CategoryContract): Promise<void>;

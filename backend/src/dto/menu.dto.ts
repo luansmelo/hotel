@@ -1,5 +1,5 @@
 import zod from "zod";
-import { Weekdays } from "../utils/enums/weekdays";
+import { Weekdays } from "@/utils/enums/weekdays";
 
 export interface MenuInput {
   name: string;

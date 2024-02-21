@@ -1,7 +1,7 @@
-import { MenuController } from "../controllers/menu.controller";
-import prisma from "../config/prisma";
-import { MenuRepository } from "../repositories/menu.repository";
-import { MenuService } from "../services/menu.service";
+import { MenuController } from "@/controllers/menu.controller";
+import prisma from "@/config/prisma";
+import { MenuRepository } from "@/repositories/menu.repository";
+import { MenuService } from "@/services/menu.service";
 
 export function makeMenuController(): MenuController {
   const repository = new MenuRepository(prisma);

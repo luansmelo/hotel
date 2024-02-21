@@ -30,7 +30,7 @@ export interface UserContractInput {
   password: string;
 }
 
-export interface UserLoginInput {
+export interface AuthPayload {
   email: string;
   password: string;
 }

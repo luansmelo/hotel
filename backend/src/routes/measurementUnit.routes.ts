@@ -1,11 +1,11 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { validate } from "../middlewares/validate";
-import { authenticated } from "../middlewares/authenticated";
-import { makeMeasurementUnitController } from "../factories/makeMeasurementUnitController";
-import { MeasurementUnitInput } from "../dto/measurementUnit.dto";
-import { MeasurementUnitSchema } from "../validators/measurementUnit.validation";
-import { allowed } from "../middlewares/allowed";
-import { ROLE } from "../config/constants";
+import { validate } from "@/middlewares/validate";
+import { authenticated } from "@/middlewares/authenticated";
+import { makeMeasurementUnitController } from "@/factories/makeMeasurementUnitController";
+import { MeasurementUnitInput } from "@/dto/measurementUnit.dto";
+import { MeasurementUnitSchema } from "@/validators/measurementUnit.validation";
+import { allowed } from "@/middlewares/allowed";
+import { ROLE } from "@/config/constants";
 
 const router = Router();
 const slug = "/measurementUnit";

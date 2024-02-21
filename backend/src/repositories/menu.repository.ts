@@ -1,9 +1,9 @@
 import {
   ProductCategoryContract,
   ProductToCategoryInput,
-} from "../dto/category.dto";
-import { MenuContract, MenuProductInput } from "../dto/menu.dto";
-import { MenuRepositoryContract } from "../utils/contracts/menu-contract";
+} from "@/dto/category.dto";
+import { MenuContract, MenuProductInput } from "@/dto/menu.dto";
+import { MenuRepositoryContract } from "@/utils/contracts/menu-contract";
 import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository implements MenuRepositoryContract {

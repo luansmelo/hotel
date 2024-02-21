@@ -1,7 +1,7 @@
 import {
   MeasurementUnitContract,
   MeasurementUnitInput,
-} from "../../dto/measurementUnit.dto";
+} from "@/dto/measurementUnit.dto";
 
 export interface MeasurementUnitRepositoryContract {
   save(input: MeasurementUnitContract): Promise<void>;

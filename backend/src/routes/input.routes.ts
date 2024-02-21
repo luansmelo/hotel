@@ -1,11 +1,11 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { InputRegister } from "../dto/input.dto";
-import { makeInputController } from "../factories/makeInputController";
-import { validate } from "../middlewares/validate";
-import { InputSchema } from "../validators/input.validation";
-import { authenticated } from "../middlewares/authenticated";
-import { allowed } from "../middlewares/allowed";
-import { ROLE } from "../config/constants";
+import { InputRegister } from "@/dto/input.dto";
+import { makeInputController } from "@/factories/makeInputController";
+import { validate } from "@/middlewares/validate";
+import { InputSchema } from "@/validators/input.validation";
+import { authenticated } from "@/middlewares/authenticated";
+import { allowed } from "@/middlewares/allowed";
+import { ROLE } from "@/config/constants";
 
 const router = Router();
 const slug = "/input";

@@ -1,5 +1,5 @@
-import { GroupInput } from "../dto/group.dto";
-import { GroupServiceContract } from "../utils/contracts/group-contract";
+import { GroupInput } from "@/dto/group.dto";
+import { GroupServiceContract } from "@/utils/contracts/group-contract";
 
 export class GroupController {
   constructor(private readonly service: GroupServiceContract) {}

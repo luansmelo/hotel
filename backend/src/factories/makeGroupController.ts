@@ -1,7 +1,7 @@
-import { GroupController } from "../controllers/group.controller";
-import prisma from "../config/prisma";
-import { GroupRepository } from "../repositories/group.repository";
-import { GroupService } from "../services/group.service";
+import { GroupController } from "@/controllers/group.controller";
+import prisma from "@/config/prisma";
+import { GroupRepository } from "@/repositories/group.repository";
+import { GroupService } from "@/services/group.service";
 
 export function makeGroupController(): GroupController {
   const repository = new GroupRepository(prisma);

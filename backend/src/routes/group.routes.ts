@@ -1,11 +1,11 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { makeGroupController } from "../factories/makeGroupController";
-import { validate } from "../middlewares/validate";
-import { authenticated } from "../middlewares/authenticated";
-import { GroupInput } from "../dto/group.dto";
-import { GroupSchema } from "../validators/group.validation";
-import { allowed } from "../middlewares/allowed";
-import { ROLE } from "../config/constants";
+import { makeGroupController } from "@/factories/makeGroupController";
+import { validate } from "@/middlewares/validate";
+import { authenticated } from "@/middlewares/authenticated";
+import { GroupInput } from "@/dto/group.dto";
+import { GroupSchema } from "@/validators/group.validation";
+import { allowed } from "@/middlewares/allowed";
+import { ROLE } from "@/config/constants";
 
 const router = Router();
 const slug = "/group";

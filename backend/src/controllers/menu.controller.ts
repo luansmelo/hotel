@@ -1,9 +1,9 @@
-import { MenuServiceContract } from "../utils/contracts/menu-contract";
-import { MenuInput, MenuProductInput } from "../dto/menu.dto";
+import { MenuServiceContract } from "@/utils/contracts/menu-contract";
+import { MenuInput, MenuProductInput } from "@/dto/menu.dto";
 import {
   ProductCategoryInput,
   ProductToCategoryInput,
-} from "../dto/category.dto";
+} from "@/dto/category.dto";
 
 export class MenuController {
   constructor(private readonly service: MenuServiceContract) {}

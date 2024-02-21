@@ -1,13 +1,13 @@
 import {
   MenuRepositoryContract,
   MenuServiceContract,
-} from "../utils/contracts/menu-contract";
-import { MenuContract, MenuInput, MenuProductInput } from "../dto/menu.dto";
-import { NotFoundError } from "../utils/errors/httpErrors";
+} from "@/utils/contracts/menu-contract";
+import { MenuContract, MenuInput, MenuProductInput } from "@/dto/menu.dto";
+import { NotFoundError } from "@/utils/errors/httpErrors";
 import {
   ProductCategoryInput,
   ProductToCategoryInput,
-} from "../dto/category.dto";
+} from "@/dto/category.dto";
 import { uuid } from "uuidv4";
 
 export class MenuService implements MenuServiceContract {

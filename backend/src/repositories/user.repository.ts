@@ -1,5 +1,5 @@
-import { UserData, UserDataContract } from "../dto/user.dto";
-import { UserRepositoryContract } from "../utils/contracts/user-contract";
+import { UserData, UserDataContract } from "@/dto/user.dto";
+import { UserRepositoryContract } from "@/utils/contracts/user-contract";
 import { PrismaClient } from "@prisma/client";
 
 export class UserRepository implements UserRepositoryContract {

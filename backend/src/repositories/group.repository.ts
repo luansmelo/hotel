@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { GroupContract, GroupInput } from "../dto/group.dto";
-import { GroupRepositoryContract } from "../utils/contracts/group-contract";
+import { GroupContract, GroupInput } from "@/dto/group.dto";
+import { GroupRepositoryContract } from "@/utils/contracts/group-contract";
 
 export class GroupRepository implements GroupRepositoryContract {
   constructor(private readonly db: PrismaClient) {}

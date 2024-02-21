@@ -1,8 +1,8 @@
-import { GroupRepositoryContract } from "../utils/contracts/group-contract";
-import { NotFoundError } from "../utils/errors/httpErrors";
+import { GroupRepositoryContract } from "@/utils/contracts/group-contract";
+import { NotFoundError } from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
-import { GroupServiceContract } from "../utils/contracts/group-contract";
-import { GroupInput } from "../dto/group.dto";
+import { GroupServiceContract } from "@/utils/contracts/group-contract";
+import { GroupInput } from "@/dto/group.dto";
 
 export class GroupService implements GroupServiceContract {
   constructor(private readonly repository: GroupRepositoryContract) {}

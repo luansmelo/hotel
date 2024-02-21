@@ -1,12 +1,12 @@
-import { ProductRepositoryContract } from "../utils/contracts/products-contract";
+import { ProductRepositoryContract } from "@/utils/contracts/products-contract";
 import {
   AddInputToProductData,
   ProductContract,
   ProductInputRemove,
   UpdatedProductInfo,
-} from "../dto/product.dto";
+} from "@/dto/product.dto";
 import { PrismaClient } from "@prisma/client";
-import { File } from "../storage/s3/file";
+import { File } from "@/storage/s3/file";
 
 export class ProductRepository implements ProductRepositoryContract {
   constructor(private readonly db: PrismaClient) {}

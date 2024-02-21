@@ -1,8 +1,8 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { authenticated } from "../middlewares/authenticated";
-import { allowed } from "../middlewares/allowed";
-import { ROLE } from "../config/constants";
-import MulterAdapter, { config } from "../storage/s3/multer-adapter";
+import { authenticated } from "@/middlewares/authenticated";
+import { allowed } from "@/middlewares/allowed";
+import { ROLE } from "@/config/constants";
+import MulterAdapter, { config } from "@/storage/s3/multer-adapter";
 
 const router = Router();
 const slug = "/s3";

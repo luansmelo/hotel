@@ -1,4 +1,4 @@
-import { Weekdays } from "../utils/enums/weekdays";
+import { Weekdays } from "@/utils/enums/weekdays";
 import { ProductInput } from "./product.dto";
 
 export interface CategoryInput {

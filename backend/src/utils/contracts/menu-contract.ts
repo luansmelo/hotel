@@ -2,8 +2,8 @@ import {
   ProductCategoryContract,
   ProductCategoryInput,
   ProductToCategoryInput,
-} from "../../dto/category.dto";
-import { MenuContract, MenuInput, MenuProductInput } from "../../dto/menu.dto";
+} from "@/dto/category.dto";
+import { MenuContract, MenuInput, MenuProductInput } from "@/dto/menu.dto";
 
 export interface MenuRepositoryContract {
   save(input: MenuContract): Promise<MenuContract>;

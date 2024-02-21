@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import env from "../config/env";
+import env from "@/config/env";
 
 class JwtUtils {
   static generateToken(id: string, role: string): string {

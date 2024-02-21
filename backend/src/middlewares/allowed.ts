@@ -1,5 +1,5 @@
 import { Request as ExpressRequest, Response, NextFunction } from "express";
-import { ROLE } from "../config/constants";
+import { ROLE } from "@/config/constants";
 
 interface AuthenticatedRequest extends ExpressRequest {
   user: {

@@ -3,8 +3,8 @@ import {
   UserContractInput,
   UserData,
   UserDataContract,
-  UserLoginInput,
-} from "../../dto/user.dto";
+  AuthPayload,
+} from "@/dto/user.dto";
 
 export interface UserRepositoryContract {
   save(input: UserData): Promise<UserDataContract>;
@@ -13,5 +13,5 @@ export interface UserRepositoryContract {
 
 export interface UserServiceContract {
   signup(input: UserContractInput): Promise<UseDataResponse>;
-  signin(input: UserLoginInput): Promise<{ access_token: string }>;
+  authenticate(input: AuthPayload): Promise<{ access_token: string }>;
 }

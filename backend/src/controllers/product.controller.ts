@@ -1,10 +1,10 @@
-import { ProductServiceContract } from "../utils/contracts/products-contract";
+import { ProductServiceContract } from "@/utils/contracts/products-contract";
 import {
   AddInputToProduct,
   ProductInput,
   ProductInputRemove,
   UpdatedProductInfo,
-} from "../dto/product.dto";
+} from "@/dto/product.dto";
 
 export class ProductController {
   constructor(private readonly service: ProductServiceContract) {}

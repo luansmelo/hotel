@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { MeasurementUnitContract } from "../dto/measurementUnit.dto";
-import { MeasurementUnitRepositoryContract } from "../utils/contracts/measurementUnit-contract";
+import { MeasurementUnitContract } from "@/dto/measurementUnit.dto";
+import { MeasurementUnitRepositoryContract } from "@/utils/contracts/measurementUnit-contract";
 
 export class MeasurementUnitRepository
   implements MeasurementUnitRepositoryContract

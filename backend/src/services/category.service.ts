@@ -1,9 +1,9 @@
 import {
   CategoryRepositoryContract,
   CategoryServiceContract,
-} from "../utils/contracts/category-contract";
-import { CategoryInput } from "../dto/category.dto";
-import { NotFoundError } from "../utils/errors/httpErrors";
+} from "@/utils/contracts/category-contract";
+import { CategoryInput } from "@/dto/category.dto";
+import { NotFoundError } from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 
 export class CategoryService implements CategoryServiceContract {

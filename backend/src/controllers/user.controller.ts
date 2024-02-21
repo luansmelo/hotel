@@ -1,5 +1,5 @@
-import { UserServiceContract } from "../utils/contracts/user-contract";
-import { UserLoginInput, UserContractInput } from "../dto/user.dto";
+import { UserServiceContract } from "@/utils/contracts/user-contract";
+import { AuthPayload, UserContractInput } from "@/dto/user.dto";
 
 export class UserController {
   constructor(private readonly service: UserServiceContract) {}
@@ -8,7 +8,7 @@ export class UserController {
     return this.service.signup(input);
   }
 
-  async signin(input: UserLoginInput) {
-    return this.service.signin(input);
+  async signin(input: AuthPayload) {
+    return this.service.authenticate(input);
   }
 }

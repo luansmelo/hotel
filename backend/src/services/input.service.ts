@@ -1,15 +1,15 @@
 import {
   InputRepositoryContract,
   InputServiceContract,
-} from "../utils/contracts/input-contract";
-import { InputRegister } from "../dto/input.dto";
+} from "@/utils/contracts/input-contract";
+import { InputRegister } from "@/dto/input.dto";
 import {
   ConflictError,
   NotFoundError,
   UnauthorizedError,
-} from "../utils/errors/httpErrors";
+} from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
-import { MeasurementUnitRepositoryContract } from "../utils/contracts/measurementUnit-contract";
+import { MeasurementUnitRepositoryContract } from "@/utils/contracts/measurementUnit-contract";
 
 export class InputService implements InputServiceContract {
   constructor(
