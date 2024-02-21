@@ -1,17 +1,17 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { makeProductController } from "../utils/factories/makeProductController";
-import { validate } from "../middleware/validate";
+import { makeProductController } from "../factories/makeProductController";
+import { validate } from "../middlewares/validate";
 import {
   AddInputToProductSchema,
   ProductSchema,
-} from "../validation/product.validation";
+} from "../validators/product.validation";
 import {
   AddInputToProduct,
   ProductInput,
   ProductInputRemove,
 } from "../dto/product.dto";
-import { authenticated } from "../middleware/authenticated";
-import { allowed } from "../middleware/allowed";
+import { authenticated } from "../middlewares/authenticated";
+import { allowed } from "../middlewares/allowed";
 import { ROLE } from "../config/constants";
 
 const router = Router();

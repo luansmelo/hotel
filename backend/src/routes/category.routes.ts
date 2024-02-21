@@ -1,10 +1,10 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { CategoryInput } from "../dto/category.dto";
-import { makeCategoryController } from "../utils/factories/makeCategoryController";
-import { validate } from "../middleware/validate";
-import { authenticated } from "../middleware/authenticated";
-import { CategorySchema } from "../validation/category.validation";
-import { allowed } from "../middleware/allowed";
+import { makeCategoryController } from "../factories/makeCategoryController";
+import { validate } from "../middlewares/validate";
+import { authenticated } from "../middlewares/authenticated";
+import { CategorySchema } from "../validators/category.validation";
+import { allowed } from "../middlewares/allowed";
 import { ROLE } from "../config/constants";
 
 const router = Router();

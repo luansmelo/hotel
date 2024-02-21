@@ -1,4 +1,4 @@
-import { NotFoundError } from "../errors/httpErrors";
+import { NotFoundError } from "../utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 import {
   MeasurementUnitContract,

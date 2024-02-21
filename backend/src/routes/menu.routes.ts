@@ -1,9 +1,9 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { makeMenuController } from "../utils/factories/makeMenuController";
+import { makeMenuController } from "../factories/makeMenuController";
 import { MenuInput, MenuProductInput, MenuSchema } from "../dto/menu.dto";
-import { validate } from "../middleware/validate";
-import { authenticated } from "../middleware/authenticated";
-import { allowed } from "../middleware/allowed";
+import { validate } from "../middlewares/validate";
+import { authenticated } from "../middlewares/authenticated";
+import { allowed } from "../middlewares/allowed";
 import { ROLE } from "../config/constants";
 import { ProductCategoryInput } from "../dto/category.dto";
 

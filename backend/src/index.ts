@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mainRouter from "./routes";
-import errorHandler from "./middleware/errorHandler";
+import errorHandler from "./middlewares/errorHandler";
 import env from "./config/env";
 
 dotenv.config();

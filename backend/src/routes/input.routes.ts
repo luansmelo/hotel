@@ -1,10 +1,10 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { InputRegister } from "../dto/input.dto";
-import { makeInputController } from "../utils/factories/makeInputController";
-import { validate } from "../middleware/validate";
-import { InputSchema } from "../validation/input.validation";
-import { authenticated } from "../middleware/authenticated";
-import { allowed } from "../middleware/allowed";
+import { makeInputController } from "../factories/makeInputController";
+import { validate } from "../middlewares/validate";
+import { InputSchema } from "../validators/input.validation";
+import { authenticated } from "../middlewares/authenticated";
+import { allowed } from "../middlewares/allowed";
 import { ROLE } from "../config/constants";
 
 const router = Router();

@@ -7,7 +7,7 @@ import {
   ConflictError,
   NotFoundError,
   UnauthorizedError,
-} from "../errors/httpErrors";
+} from "../utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 import { MeasurementUnitRepositoryContract } from "../utils/contracts/measurementUnit-contract";
 

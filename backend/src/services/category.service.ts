@@ -3,7 +3,7 @@ import {
   CategoryServiceContract,
 } from "../utils/contracts/category-contract";
 import { CategoryInput } from "../dto/category.dto";
-import { NotFoundError } from "../errors/httpErrors";
+import { NotFoundError } from "../utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 
 export class CategoryService implements CategoryServiceContract {
@@ -19,13 +19,11 @@ export class CategoryService implements CategoryServiceContract {
 
     await this.repository.save(data);
   }
+
   async getById(id: string): Promise<any> {
     const category = await this.repository.getById(id);
 
-    if (!category) {
-      throw new NotFoundError("Categoria não encontrada");
-    }
-
+    if (!category) throw new NotFoundError("Categoria não encontrada");
     return category;
   }
 

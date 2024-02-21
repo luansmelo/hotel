@@ -3,7 +3,7 @@ import {
   MenuServiceContract,
 } from "../utils/contracts/menu-contract";
 import { MenuContract, MenuInput, MenuProductInput } from "../dto/menu.dto";
-import { NotFoundError } from "../errors/httpErrors";
+import { NotFoundError } from "../utils/errors/httpErrors";
 import {
   ProductCategoryInput,
   ProductToCategoryInput,

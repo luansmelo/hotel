@@ -6,7 +6,7 @@ import {
   UpdatedProductInfo,
 } from "../dto/product.dto";
 import { PrismaClient } from "@prisma/client";
-import { File } from "../utils/s3/file";
+import { File } from "../storage/s3/file";
 
 export class ProductRepository implements ProductRepositoryContract {
   constructor(private readonly db: PrismaClient) {}

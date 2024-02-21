@@ -8,7 +8,7 @@ import {
   ConflictError,
   NotFoundError,
   UnauthorizedError,
-} from "../errors/httpErrors";
+} from "../utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 import JwtUtils from "../utils/jwtUtils";
 import { EmailValidator } from "../utils/email-validator-adapter";

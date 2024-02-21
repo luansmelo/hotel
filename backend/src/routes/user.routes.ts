@@ -1,8 +1,8 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { validate } from "../middleware/validate";
+import { validate } from "../middlewares/validate";
 import { UserLoginInput, UserContractInput } from "../dto/user.dto";
-import { makeUserController } from "../utils/factories/makeUserController";
-import { UserLoginSchema, UserSchema } from "../validation/user.validation";
+import { makeUserController } from "../factories/makeUserController";
+import { UserLoginSchema, UserSchema } from "../validators/user.validation";
 
 const router = Router();
 const slug = "/user";

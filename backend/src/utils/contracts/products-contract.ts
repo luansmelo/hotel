@@ -6,7 +6,7 @@ import {
   ProductInputRemove,
   UpdatedProductInfo,
 } from "../../dto/product.dto";
-import { File } from "../s3/file";
+import { File } from "../../storage/s3/file";
 
 export interface ProductRepositoryContract {
   save(input: ProductContract): Promise<void>;

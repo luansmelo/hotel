@@ -8,7 +8,7 @@ import {
   ProductInputRemove,
   UpdatedProductInfo,
 } from "../dto/product.dto";
-import { NotFoundError, UnauthorizedError } from "../errors/httpErrors";
+import { NotFoundError, UnauthorizedError } from "../utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 
 export class ProductService implements ProductServiceContract {
