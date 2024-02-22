@@ -3,12 +3,7 @@ import {
   UserServiceContract,
 } from "@/utils/contracts/user-contract";
 import { AuthPayload, UserContractInput } from "@/dto/user.dto";
-import {
-  BadRequestError,
-  ConflictError,
-  NotFoundError,
-  UnauthorizedError,
-} from "@/utils/errors/httpErrors";
+import { BadRequestError, UnauthorizedError } from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 import JwtUtils from "@/utils/jwtUtils";
 import { EmailValidator } from "@/utils/email-validator-adapter";
@@ -27,7 +22,7 @@ export class UserService implements UserServiceContract {
 
     const user = await this.repository.getByEmail(input.email);
 
-    if (user) throw new ConflictError("usuário já cadastrado");
+    if (user) throw new BadRequestError("usuário já cadastrado");
 
     const hashedPassword = await bcrypt.hash(input.password, 10);
 

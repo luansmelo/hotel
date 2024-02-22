@@ -18,7 +18,7 @@ router.post(
       const controller = makeUserController();
       const result = await controller.signup(input);
 
-      return response.status(201).send(result);
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }
