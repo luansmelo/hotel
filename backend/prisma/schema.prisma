@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id           String  @id @default(uuid())
+  id           String   @id @default(uuid())
   name         String
-  email        String  @unique
+  email        String   @unique
   password     String
-  role         Role    @default(USER)
-  isAuthorized Boolean @default(false)
-  created_at   String
-  updated_at   String
+  role         Role     @default(USER)
+  isAuthorized Boolean  @default(false)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 
   @@map("user")
 }
@@ -24,12 +24,14 @@ model Product {
   id                      String                    @id @default(uuid())
   name                    String                    @unique
   description             String                    @db.VarChar(1000)
+  preparationTime         Float
+  resource                String                    @db.VarChar(400)
   inputs                  InputsOnProducts[]
   productMedia            ProductMedia?
   categoryProductSchedule CategoryProductSchedule[]
   photo_url               String?
-  created_at              String
-  updated_at              String
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
 
   @@map("product")
 }
@@ -40,7 +42,7 @@ model ProductMedia {
   originalName String
   mimeType     String
   productId    String  @unique
-  product      Product @relation(fields: [productId], references: [id])
+  product      Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at   String
   updated_at   String
 
@@ -53,8 +55,8 @@ model InputsOnProducts {
   inputId         String
   measurementUnit String
   grammage        Float
-  input           Input   @relation(fields: [inputId], references: [id])
-  product         Product @relation(fields: [productId], references: [id])
+  input           Input   @relation(fields: [inputId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product         Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at      String
   updated_at      String
 
@@ -66,7 +68,7 @@ model Input {
   name              String
   code              String             @unique
   unitPrice         Float
-  measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id])
+  measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groups            GroupsOnInputs[]
   products          InputsOnProducts[]
   created_at        String
@@ -78,9 +80,9 @@ model Input {
 
 model GroupsOnInputs {
   id      String @id @default(uuid())
-  input   Input  @relation(fields: [inputId], references: [id], onDelete: Cascade)
+  input   Input  @relation(fields: [inputId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   inputId String
-  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groupId String
 
   @@map("groupsOnInputs")
@@ -99,8 +101,8 @@ model Group {
 model Menu {
   id                      String                    @id @default(uuid())
   name                    String
-  created_at              String
-  updated_at              String
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
   categoryProductSchedule CategoryProductSchedule[]
 
   @@map("menu")
@@ -112,9 +114,9 @@ model CategoryProductSchedule {
   categoryId String
   productId  String
   weekDay    String
-  menu       Menu     @relation(fields: [menuId], references: [id])
-  category   Category @relation(fields: [categoryId], references: [id])
-  product    Product  @relation(fields: [productId], references: [id])
+  menu       Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   created_at String
   updated_at String
 
@@ -124,8 +126,8 @@ model CategoryProductSchedule {
 model Category {
   id                      String                    @id @default(uuid())
   name                    String
-  created_at              String
-  updated_at              String
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime                  @updatedAt
   categoryProductSchedule CategoryProductSchedule[]
 
   @@map("category")
@@ -143,5 +145,6 @@ model MeasurementUnit {
 
 enum Role {
   USER
+  LEADER
   ADMIN
 }
