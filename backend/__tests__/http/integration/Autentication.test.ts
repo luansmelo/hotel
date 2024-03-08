@@ -1,5 +1,6 @@
 import request from "supertest";
-import { app, server } from "../../../src/index";
+import { Server } from "../../../src/server";
+import { Application } from "express";
 import prisma from "../../../src/config/prisma";
 import { EmailValidatorAdapter } from "../../../src/utils/email-validator-adapter";
 import { UserRepository } from "../../../src/repositories/user.repository";
@@ -10,10 +11,18 @@ const repository = new UserRepository(prisma);
 const User = new UserService(repository, emailValidator);
 
 describe("Autenticação de usuário", () => {
+  let server: Server;
+  let app: Application;
+
+  beforeEach(async () => {
+    server = new Server();
+    app = server.start();
+  });
+
   afterEach(async () => {
     await prisma.user.deleteMany();
     await prisma.$disconnect();
-    server.close();
+    server.stop();
   });
 
   const user = {
@@ -25,10 +34,7 @@ describe("Autenticação de usuário", () => {
   test("deve retornar 200 com os dados do usuário e o token JWT", async () => {
     await User.signup(user);
 
-    const response = await request(app).post("/v1/auth").send({
-      email: user.email,
-      password: user.password,
-    });
+    const response = await request(app).post("/v1/auth").send(user);
 
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
@@ -58,7 +64,7 @@ describe("Autenticação de usuário", () => {
       email: user.email,
       password: "password1234",
     });
-+
+
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("error");
   });

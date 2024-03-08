@@ -1,13 +1,22 @@
 import request from "supertest";
+import { Application } from "express";
 import prisma from "../../../src/config/prisma";
 import bcrypt from "bcrypt";
-import { app, server } from "../../../src/index";
+import { Server } from "../../../src/server";
 
 describe("Criação de conta", () => {
+  let server: Server;
+  let app: Application;
+
+  beforeEach(async () => {
+    server = new Server();
+    app = server.start();
+  });
+
   afterEach(async () => {
     await prisma.user.deleteMany();
     await prisma.$disconnect();
-    server.close();
+    server.stop();
   });
 
   const user = {
