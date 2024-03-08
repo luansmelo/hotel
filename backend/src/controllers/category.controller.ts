@@ -1,5 +1,5 @@
 import { CategoryServiceContract } from "@/utils/contracts/category-contract";
-import { CategoryInput } from "@/dto/category.dto";
+import { CategoryInput } from "@/dto/category/category.dto";
 
 export class CategoryController {
   constructor(private readonly service: CategoryServiceContract) {}

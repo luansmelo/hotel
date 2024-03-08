@@ -1,15 +1,25 @@
 import zod from "zod";
-import { Weekdays } from "@/utils/enums/weekdays";
+import { Product } from "../product/product.dto";
 
-export interface MenuInput {
-  name: string;
+export interface AddProductRepositoryModal {
+  id?: string;
+  menuId: string;
+  categoryId: string;
+  productId: string;
+  weekDay: string;
 }
 
-export interface MenuContract {
-  id: string;
+export interface AddProductModal {
+  menuId: string;
+  categoryId: string;
+  product: Product[];
+}
+
+export interface MenuProduct extends AddProductRepositoryModal {}
+
+export interface MenuModal {
+  id?: string;
   name: string;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface AddCategoryToMenuInput {
@@ -21,8 +31,6 @@ export interface AddCategoryToMenuContract {
   id: string;
   menuId: string;
   categoryId: string;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface MenuProductInput {
@@ -36,8 +44,6 @@ export interface MenuProductContract {
   menuId: string;
   categoryId: string;
   day: string;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface MenuProdutionMapDTO {

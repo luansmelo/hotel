@@ -1,5 +1,5 @@
 import { InputRepositoryContract } from "@/utils/contracts/input-contract";
-import { InputContract, InputRegister } from "@/dto/input.dto";
+import { InputContract, InputRegister } from "@/dto/input/input.dto";
 import { PrismaClient } from "@prisma/client";
 import { uuid } from "uuidv4";
 

@@ -1,15 +1,14 @@
 import { ProductServiceContract } from "@/utils/contracts/products-contract";
 import {
   AddInputToProduct,
-  ProductInput,
+  ProductModel,
   ProductInputRemove,
-  UpdatedProductInfo,
-} from "@/dto/product.dto";
+} from "@/dto/product/product.dto";
 
 export class ProductController {
   constructor(private readonly service: ProductServiceContract) {}
 
-  async create(input: ProductInput) {
+  async create(input: ProductModel) {
     return this.service.create(input);
   }
 
@@ -37,8 +36,8 @@ export class ProductController {
     return this.service.addInputToProduct(input);
   }
 
-  async updatePredefinedProduct(id: string, updatedInfo: UpdatedProductInfo) {
-    return this.service.updatePredefinedProduct(id, updatedInfo);
+  async updateById(id: string, input: ProductModel) {
+    return this.service.updateById(id, input);
   }
 
   async removeInputFromProduct(input: ProductInputRemove): Promise<void> {

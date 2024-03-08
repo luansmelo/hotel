@@ -4,11 +4,9 @@ import {
 } from "@/utils/contracts/products-contract";
 import {
   AddInputToProduct,
-  ProductContract,
-  ProductInput,
+  ProductModel,
   ProductInputRemove,
-  UpdatedProductInfo,
-} from "@/dto/product.dto";
+} from "@/dto/product/product.dto";
 import { NotFoundError, UnauthorizedError } from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 import { File } from "@/storage/s3/file";
@@ -16,19 +14,16 @@ import { File } from "@/storage/s3/file";
 export class ProductService implements ProductServiceContract {
   constructor(private readonly repository: ProductRepositoryContract) {}
 
-  async create(input: ProductInput) {
+  async create(input: ProductModel) {
     const product = await this.getByName(input.name);
 
-    if (product) {
-      throw new NotFoundError("Produto já cadastrado");
-    }
+    if (product) throw new NotFoundError("Produto já cadastrado");
 
     const data = {
-      id: uuid(),
       name: input.name,
       description: input.description,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
+      preparationTime: input.preparationTime,
+      resource: input.resource,
     };
 
     return this.repository.save(data);
@@ -37,9 +32,7 @@ export class ProductService implements ProductServiceContract {
   async getById(id: string): Promise<any> {
     const product = await this.repository.getById(id);
 
-    if (!product) {
-      throw new NotFoundError("Produto não encontrado");
-    }
+    if (!product) throw new NotFoundError("Produto não encontrado");
 
     return product;
   }
@@ -71,9 +64,7 @@ export class ProductService implements ProductServiceContract {
 
     const predefinedProduct = await this.repository.getPredefinedProduct(id);
 
-    if (!predefinedProduct) {
-      throw new NotFoundError("Produto não encontrado");
-    }
+    if (!predefinedProduct) throw new NotFoundError("Produto não encontrado");
 
     const processedProduct = {
       id: predefinedProduct.id,
@@ -104,26 +95,20 @@ export class ProductService implements ProductServiceContract {
       inputIdsToAdd.includes(productInput.id)
     );
 
-    if (inputOnProduct) {
+    if (inputOnProduct)
       throw new UnauthorizedError("Input já foi adicionado ao produto");
-    }
 
     const data = {
       id: uuid(),
       ...input,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
     };
 
     return this.repository.addInputToProduct(data);
   }
 
-  async updatePredefinedProduct(
-    id: string,
-    updatedInfo: UpdatedProductInfo
-  ): Promise<void> {
+  async updateById(id: string, param: Partial<ProductModel>): Promise<void> {
     await this.getById(id);
-    return this.repository.updatePredefinedProduct(id, updatedInfo);
+    return this.repository.updateById(id, param);
   }
 
   async removeInputFromProduct(input: ProductInputRemove): Promise<void> {
@@ -135,7 +120,7 @@ export class ProductService implements ProductServiceContract {
   async updateProductPhoto(
     id: string,
     file: File
-  ): Promise<Partial<ProductContract>> {
+  ): Promise<Partial<ProductModel>> {
     console.log(id, file);
     throw new Error("Method not implemented.");
   }

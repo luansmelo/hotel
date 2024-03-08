@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { InputRegister } from "@/dto/input.dto";
+import { InputRegister } from "@/dto/input/input.dto";
 import { makeInputController } from "@/factories/makeInputController";
 import { validate } from "@/middlewares/validate";
 import { InputSchema } from "@/validators/input.validation";

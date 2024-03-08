@@ -1,10 +1,7 @@
 export interface UserData {
-  id: string;
   name: string;
   email: string;
   password: string;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface UserDataContract {
@@ -13,7 +10,7 @@ export interface UserDataContract {
   email: string;
   password: string;
   role: string;
-  isAuthorized: boolean
+  isAuthorized: boolean;
 }
 
 export interface UseDataResponse {
@@ -21,7 +18,7 @@ export interface UseDataResponse {
   name: string;
   email: string;
   role: string;
-  isAuthorized: boolean
+  isAuthorized: boolean;
 }
 
 export interface UserContractInput {

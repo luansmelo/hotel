@@ -1,11 +1,11 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { makeMenuController } from "@/factories/makeMenuController";
-import { MenuInput, MenuProductInput, MenuSchema } from "@/dto/menu.dto";
+import { MenuInput, MenuProductInput, MenuSchema } from "@/dto/menu/menu.dto";
 import { validate } from "@/middlewares/validate";
 import { authenticated } from "@/middlewares/authenticated";
 import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
-import { ProductCategoryInput } from "@/dto/category.dto";
+import { ProductCategoryInput } from "@/dto/category/category.dto";
 
 const router = Router();
 const slug = "/menu";

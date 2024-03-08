@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { GroupContract, GroupInput } from "@/dto/group.dto";
+import { GroupContract, GroupInput } from "@/dto/group/group.dto";
 import { GroupRepositoryContract } from "@/utils/contracts/group-contract";
 
 export class GroupRepository implements GroupRepositoryContract {
@@ -9,12 +9,15 @@ export class GroupRepository implements GroupRepositoryContract {
       data: input,
     });
   }
+
   async getAll(): Promise<any> {
     return this.db.group.findMany();
   }
+
   async getById(id: string): Promise<any> {
     return this.db.group.findUnique({ where: { id } });
   }
+
   async deleteById(id: string): Promise<GroupInput> {
     return this.db.group.delete({ where: { id } });
   }

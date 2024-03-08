@@ -2,7 +2,7 @@ import {
   InputRepositoryContract,
   InputServiceContract,
 } from "@/utils/contracts/input-contract";
-import { InputRegister } from "@/dto/input.dto";
+import { InputRegister } from "@/dto/input/input.dto";
 import {
   ConflictError,
   NotFoundError,
@@ -34,8 +34,6 @@ export class InputService implements InputServiceContract {
     const data = {
       id: uuid(),
       ...input,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
     };
 
     return this.repository.save(data);

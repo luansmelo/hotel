@@ -2,22 +2,14 @@ import {
   CategoryRepositoryContract,
   CategoryServiceContract,
 } from "@/utils/contracts/category-contract";
-import { CategoryInput } from "@/dto/category.dto";
+import { Category } from "@/dto/category/category.dto";
 import { NotFoundError } from "@/utils/errors/httpErrors";
-import { uuid } from "uuidv4";
 
 export class CategoryService implements CategoryServiceContract {
   constructor(private readonly repository: CategoryRepositoryContract) {}
 
-  async create(input: CategoryInput): Promise<void> {
-    const data = {
-      id: uuid(),
-      name: input.name,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
-    };
-
-    await this.repository.save(data);
+  async create(input: Category): Promise<void> {
+    await this.repository.save(input);
   }
 
   async getById(id: string): Promise<any> {
@@ -37,7 +29,7 @@ export class CategoryService implements CategoryServiceContract {
     await this.repository.deleteById(category.id);
   }
 
-  async updateById(id: string, input: CategoryInput): Promise<void> {
+  async updateById(id: string, input: Partial<Category>): Promise<void> {
     await this.getById(id);
 
     await this.repository.updateById(id, input);

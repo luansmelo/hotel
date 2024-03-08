@@ -2,33 +2,16 @@ import {
   MenuRepositoryContract,
   MenuServiceContract,
 } from "@/utils/contracts/menu-contract";
-import { MenuContract, MenuInput, MenuProductInput } from "@/dto/menu.dto";
+import { MenuModal, MenuProductInput } from "@/dto/menu/menu.dto";
 import { NotFoundError } from "@/utils/errors/httpErrors";
-import {
-  ProductCategoryInput,
-  ProductToCategoryInput,
-} from "@/dto/category.dto";
-import { uuid } from "uuidv4";
+import { AddProductModal, MenuProduct } from "@/dto/menu/menu.dto";
 
 export class MenuService implements MenuServiceContract {
   constructor(private readonly repository: MenuRepositoryContract) {}
 
-  async create(input: MenuInput) {
-    const data = {
-      id: uuid(),
-      name: input.name,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
-    };
-
-    const menu = await this.repository.save(data);
-
-    return {
-      id: menu.id,
-      name: menu.name,
-      created_at: menu.created_at,
-      updated_at: menu.updated_at,
-    };
+  async create(input: MenuModal) {
+    const menu = await this.repository.save(input);
+    return menu;
   }
 
   async getById(id: string): Promise<any> {
@@ -105,47 +88,37 @@ export class MenuService implements MenuServiceContract {
       }),
     };
 
-    console.log(
-      data.categories.map((e) =>
-        e.products.flatMap((e) => e.inputs.map((e) => e.input))
-      ),
-      "data"
-    );
-
     return data;
   }
 
-  async deleteById(id: string): Promise<MenuContract | null> {
+  async deleteById(id: string): Promise<MenuModal | null> {
     const menu = await this.getById(id);
 
     return this.repository.deleteById(menu.id);
   }
 
-  async deleteProduct(input: ProductToCategoryInput): Promise<void> {
+  async deleteProduct(input: MenuProduct): Promise<void> {
     await this.getById(input.menuId);
 
     await this.repository.deleteProduct(input);
   }
 
-  async addProduct(input: ProductCategoryInput): Promise<void> {
+  async addProduct(input: AddProductModal): Promise<void> {
     await this.getById(input.menuId);
 
     const products = input.product.flatMap(({ productId, weekDay }) => {
       return weekDay.map((day) => ({
-        id: uuid(),
         menuId: input.menuId,
         categoryId: input.categoryId,
         productId,
         weekDay: day,
-        created_at: new Date().toDateString(),
-        updated_at: new Date().toDateString(),
       }));
     });
 
     await this.repository.addProduct(products);
   }
 
-  async update(id: string, name: string) {
-    await this.repository.update(id, name);
+  async updateById(id: string, name: string) {
+    await this.repository.updateById(id, name);
   }
 }

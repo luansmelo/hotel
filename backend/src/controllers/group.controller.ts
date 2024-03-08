@@ -1,4 +1,4 @@
-import { GroupInput } from "@/dto/group.dto";
+import { GroupInput } from "@/dto/group/group.dto";
 import { GroupServiceContract } from "@/utils/contracts/group-contract";
 
 export class GroupController {

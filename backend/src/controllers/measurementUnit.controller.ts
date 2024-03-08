@@ -1,4 +1,4 @@
-import { MeasurementUnitInput } from "@/dto/measurementUnit.dto";
+import { MeasurementUnitInput } from "@/dto/measurementUnit/measurementUnit.dto";
 import { MeasurementUnitServiceContract } from "@/utils/contracts/measurementUnit-contract";
 
 export class MeasurementUnitController {

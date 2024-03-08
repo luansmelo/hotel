@@ -5,8 +5,6 @@ export interface InputContract {
   unitPrice: number;
   measurementUnitId: string;
   groups: string[];
-  created_at: string;
-  updated_at: string;
 }
 
 export interface Input {

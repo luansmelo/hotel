@@ -1,4 +1,4 @@
-import { GroupInput } from "@/dto/group.dto";
+import { GroupInput } from "@/dto/group/group.dto";
 
 export interface GroupRepositoryContract {
   save(input: GroupInput): Promise<void>;

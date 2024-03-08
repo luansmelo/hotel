@@ -1,53 +1,36 @@
 import { ProductRepositoryContract } from "@/utils/contracts/products-contract";
 import {
   AddInputToProductData,
-  ProductContract,
+  ProductModel,
   ProductInputRemove,
-  UpdatedProductInfo,
-} from "@/dto/product.dto";
+} from "@/dto/product/product.dto";
 import { PrismaClient } from "@prisma/client";
 import { File } from "@/storage/s3/file";
 
 export class ProductRepository implements ProductRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: ProductContract) {
+  async save(input: ProductModel) {
     await this.db.product.create({
-      data: input,
+      data: {
+        ...input,
+        inputs: null,
+      },
     });
   }
 
-  async getById(id: string): Promise<ProductContract | null> {
+  async getById(id: string): Promise<ProductModel | null> {
     const db = await this.db.product.findUnique({ where: { id } });
     return db;
   }
 
-  async getByName(name: string): Promise<ProductContract | null> {
+  async getByName(name: string): Promise<ProductModel | null> {
     const db = await this.db.product.findUnique({ where: { name } });
     return db;
   }
 
   async getAll() {
-    const db = await this.db.product.findMany({
-      include: {
-        inputs: {
-          select: {
-            id: true,
-            measurementUnit: true,
-            grammage: true,
-            input: {
-              select: {
-                id: true,
-                name: true,
-                code: true,
-                unitPrice: true,
-                groups: true,
-              },
-            },
-          },
-        },
-      },
-    });
+    const db = await this.db.product.findMany();
     return db;
   }
 
@@ -76,27 +59,20 @@ export class ProductRepository implements ProductRepositoryContract {
     return db;
   }
 
-  async updateById(id: string, input: ProductContract) {
-    await this.db.product.update({
-      where: { id },
-      data: input,
-    });
-  }
-
-  async updatePredefinedProduct(id: string, updatedInfo: UpdatedProductInfo) {
+  async updateById(id: string, input: Partial<ProductModel>) {
     await this.db.product.update({
       where: { id },
       data: {
-        name: updatedInfo.name,
-        description: updatedInfo.description,
+        ...input,
         inputs: {
-          updateMany: updatedInfo.inputs.map((input) => ({
-            where: { inputId: input.id },
-            data: {
-              grammage: input.grammage,
-              measurementUnit: input.measurementUnit,
-            },
-          })),
+          updateMany:
+            input.inputs.map((input) => ({
+              where: { inputId: input.id },
+              data: {
+                grammage: input.grammage,
+                measurementUnit: input.measurementUnit,
+              },
+            })) || [],
         },
       },
     });
@@ -114,9 +90,8 @@ export class ProductRepository implements ProductRepositoryContract {
       inputId: inputItem.id as string,
       measurementUnit: inputItem.measurementUnit,
       grammage: inputItem.grammage,
-      created_at: input.created_at,
-      updated_at: input.updated_at,
     }));
+
     await this.db.inputsOnProducts.createMany({ data });
   }
 
@@ -132,7 +107,7 @@ export class ProductRepository implements ProductRepositoryContract {
   async updateProductPhoto(
     id: string,
     file: File
-  ): Promise<Partial<ProductContract>> {
+  ): Promise<Partial<ProductModel>> {
     return this.db.product.update({
       where: { id },
       data: {

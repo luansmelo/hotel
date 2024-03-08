@@ -4,7 +4,7 @@ import {
   UserData,
   UserDataContract,
   AuthPayload,
-} from "@/dto/user.dto";
+} from "@/dto/user/user.dto";
 
 export interface UserRepositoryContract {
   save(input: UserData): Promise<UserDataContract>;

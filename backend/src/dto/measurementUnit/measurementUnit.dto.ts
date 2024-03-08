@@ -5,6 +5,4 @@ export interface MeasurementUnitInput {
 export interface MeasurementUnitContract {
   id: string;
   name: string;
-  created_at: string;
-  updated_at: string;
 }

@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { CategoryInput } from "@/dto/category.dto";
+import { CategoryInput } from "@/dto/category/category.dto";
 import { makeCategoryController } from "@/factories/makeCategoryController";
 import { validate } from "@/middlewares/validate";
 import { authenticated } from "@/middlewares/authenticated";

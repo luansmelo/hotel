@@ -7,9 +7,9 @@ import {
 } from "@/validators/product.validation";
 import {
   AddInputToProduct,
-  ProductInput,
+  ProductModel,
   ProductInputRemove,
-} from "@/dto/product.dto";
+} from "@/dto/product/product.dto";
 import { authenticated } from "@/middlewares/authenticated";
 import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
@@ -24,9 +24,9 @@ router.post(
   validate(ProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductInput = ProductSchema.parse(
+      const input: ProductModel = ProductSchema.parse(
         request.body
-      ) as ProductInput;
+      ) as ProductModel;
       const controller = makeProductController();
       const result = await controller.create(input);
 
@@ -96,7 +96,7 @@ router.delete(
       const id = request.params.id;
       const controller = makeProductController();
       const result = await controller.deleteById(id);
-      return response.status(200).send({ message: "sucesso" });
+      return response.status(200).end();
     } catch (error) {
       next(error);
     }
@@ -117,7 +117,7 @@ router.post(
       const controller = makeProductController();
       await controller.addInputToProduct(input);
 
-      return response.status(200).send({ message: "sucesso" });
+      return response.status(200).end();
     } catch (error) {
       next(error);
     }
@@ -138,7 +138,7 @@ router.delete(
       const controller = makeProductController();
       await controller.removeInputFromProduct(input);
 
-      return response.status(200).send({ message: "sucesso" });
+      return response.status(200).end();
     } catch (error) {
       next(error);
     }
@@ -153,8 +153,8 @@ router.put(
     try {
       const id = request.params.id;
       const controller = makeProductController();
-      await controller.updatePredefinedProduct(id, request.body);
-      return response.status(200).send({ message: "sucesso" });
+      await controller.updateById(id, request.body);
+      return response.status(200).end();
     } catch (error) {
       next(error);
     }

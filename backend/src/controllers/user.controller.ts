@@ -1,5 +1,5 @@
 import { UserServiceContract } from "@/utils/contracts/user-contract";
-import { AuthPayload, UserContractInput } from "@/dto/user.dto";
+import { AuthPayload, UserContractInput } from "@/dto/user/user.dto";
 
 export class UserController {
   constructor(private readonly service: UserServiceContract) {}

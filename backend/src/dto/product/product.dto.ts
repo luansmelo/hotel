@@ -1,17 +1,23 @@
-import { Input, InputContract } from "./input.dto";
+import { Input } from "../input/input.dto";
 
-export interface ProductContract {
-  id: string;
+export interface ProductModel {
+  id?: string;
   name: string;
   description: string;
+  preparationTime: number;
+  resource: string;
   photo_url?: string;
-  created_at: string;
-  updated_at: string;
+  inputs?: Input[];
 }
 
 export interface ProductInput {
   name: string;
   description: string;
+}
+
+export interface Product {
+  productId: string;
+  weekDay: string[];
 }
 
 export interface ProductInputRemove {
@@ -23,8 +29,6 @@ export interface AddInputToProductData {
   id: string;
   productId: string;
   input: Input[];
-  created_at: string;
-  updated_at: string;
 }
 
 export interface AddInputToProduct {
@@ -32,14 +36,7 @@ export interface AddInputToProduct {
   input: Input[];
 }
 
-export interface UpdatedProductInfo {
-  name: string;
-  description: string;
-  inputs: UpdatedInputInfo[];
-}
-
-export interface UpdatedInputInfo {
-  id: string;
+export interface UpdatedInput {
   grammage: number;
   measurementUnit: string;
 }

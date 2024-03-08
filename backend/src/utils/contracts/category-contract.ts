@@ -1,29 +1,24 @@
 import {
   ProductToCategoryInput,
-  CategoryInput,
+  Category,
   ProductToCategoryContract,
-  CategoryContract,
-  ProductCategoryInput,
-  ProductCategoryContract,
-} from "@/dto/category.dto";
+} from "@/dto/category/category.dto";
 
 export interface CategoryRepositoryContract {
-  save(input: CategoryContract): Promise<void>;
-  getAll(): Promise<CategoryContract[] | null>;
-  getById(id: string): Promise<CategoryContract | null>;
+  save(input: Category): Promise<void>;
+  getAll(): Promise<Category[] | null>;
+  getById(id: string): Promise<Category | null>;
   getProductInCategory(
     input: ProductToCategoryInput
   ): Promise<ProductToCategoryContract | null>;
   deleteById(id: string): Promise<void>;
-
-  updateById(id: string, input: CategoryInput): Promise<void>;
+  updateById(id: string, input: Partial<Category>): Promise<void>;
 }
 
 export interface CategoryServiceContract {
-  create(input: CategoryInput): Promise<void>;
-  getById(id: string): Promise<CategoryContract | null>;
-  getAll(): Promise<CategoryContract | null>;
+  create(input: Category): Promise<void>;
+  getById(id: string): Promise<Category | null>;
+  getAll(): Promise<Category | null>;
   deleteById(id: string): Promise<void>;
-
-  updateById(id: string, input: CategoryInput): Promise<void>;
+  updateById(id: string, input: Partial<Category>): Promise<void>;
 }

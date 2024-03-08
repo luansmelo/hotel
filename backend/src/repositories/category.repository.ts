@@ -1,23 +1,22 @@
 import { CategoryRepositoryContract } from "@/utils/contracts/category-contract";
 import {
   ProductToCategoryInput,
-  CategoryContract,
   ProductToCategoryContract,
-  CategoryInput,
-} from "@/dto/category.dto";
+  Category,
+} from "@/dto/category/category.dto";
 import { Weekdays } from "@/utils/enums/weekdays";
 import { PrismaClient } from "@prisma/client";
 
 export class CategoryRepository implements CategoryRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: CategoryContract): Promise<void> {
+  async save(input: Category): Promise<void> {
     await this.db.category.create({
       data: input,
     });
   }
 
-  async getAll(): Promise<CategoryContract[] | null> {
+  async getAll(): Promise<Category[] | null> {
     const db = this.db.category.findMany({
       orderBy: {
         name: "asc",
@@ -27,7 +26,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
     return db;
   }
 
-  async getById(id: string): Promise<CategoryContract | null> {
+  async getById(id: string): Promise<Category | null> {
     return this.db.category.findUnique({
       where: { id },
       include: {
@@ -59,7 +58,7 @@ export class CategoryRepository implements CategoryRepositoryContract {
     return db;
   }
 
-  async updateById(id: string, input: CategoryInput): Promise<void> {
+  async updateById(id: string, input: Partial<Category>): Promise<void> {
     await this.db.category.update({
       where: { id },
       data: input,

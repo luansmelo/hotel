@@ -2,7 +2,7 @@ import {
   UserRepositoryContract,
   UserServiceContract,
 } from "@/utils/contracts/user-contract";
-import { AuthPayload, UserContractInput } from "@/dto/user.dto";
+import { AuthPayload, UserContractInput } from "@/dto/user/user.dto";
 import { BadRequestError, UnauthorizedError } from "@/utils/errors/httpErrors";
 import { uuid } from "uuidv4";
 import JwtUtils from "@/utils/jwtUtils";
@@ -15,25 +15,18 @@ export class UserService implements UserServiceContract {
     private readonly emailValidator: EmailValidator
   ) {}
 
-  async signup(input: UserContractInput) {
-    const isValid = this.emailValidator.isValid(input.email);
+  async signup(account: UserContractInput) {
+    const isValid = this.emailValidator.isValid(account.email);
 
     if (!isValid) throw new BadRequestError("email inválido");
 
-    const user = await this.repository.getByEmail(input.email);
+    const user = await this.repository.getByEmail(account.email);
 
     if (user) throw new BadRequestError("usuário já cadastrado");
 
-    const hashedPassword = await bcrypt.hash(input.password, 10);
+    const hashedPassword = await bcrypt.hash(account.password, 10);
 
-    const data = {
-      id: uuid(),
-      email: input.email,
-      name: input.name,
-      password: hashedPassword,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
-    };
+    const data = Object.assign({}, account, { password: hashedPassword });
 
     const userCreated = await this.repository.save(data);
 

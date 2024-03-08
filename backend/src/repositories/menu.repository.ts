@@ -1,21 +1,18 @@
-import {
-  ProductCategoryContract,
-  ProductToCategoryInput,
-} from "@/dto/category.dto";
-import { MenuContract, MenuProductInput } from "@/dto/menu.dto";
+import { AddProductRepositoryModal, MenuProduct } from "@/dto/menu/menu.dto";
+import { MenuModal, MenuProductInput } from "@/dto/menu/menu.dto";
 import { MenuRepositoryContract } from "@/utils/contracts/menu-contract";
 import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository implements MenuRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: MenuContract): Promise<MenuContract> {
+  async save(input: MenuModal): Promise<MenuModal> {
     return this.db.menu.create({
       data: input,
     });
   }
 
-  async getById(id: string): Promise<MenuContract | null> {
+  async getById(id: string): Promise<MenuModal | null> {
     const db = await this.db.menu.findUnique({
       where: {
         id,
@@ -84,7 +81,7 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async deleteProduct(input: ProductToCategoryInput): Promise<void> {
+  async deleteProduct(input: MenuProduct): Promise<void> {
     await this.db.categoryProductSchedule.deleteMany({
       where: {
         menuId: input.menuId,
@@ -95,7 +92,7 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async addProduct(input: ProductCategoryContract[]): Promise<void> {
+  async addProduct(input: AddProductRepositoryModal[]): Promise<void> {
     await this.db.categoryProductSchedule.createMany({
       data: input.map((item) => ({
         id: item.id,
@@ -103,19 +100,17 @@ export class MenuRepository implements MenuRepositoryContract {
         categoryId: item.categoryId,
         productId: item.productId,
         weekDay: item.weekDay,
-        created_at: item.created_at,
-        updated_at: item.updated_at,
       })),
     });
   }
 
-  async deleteById(id: string): Promise<MenuContract> {
+  async deleteById(id: string): Promise<MenuModal> {
     return this.db.menu.delete({
       where: { id },
     });
   }
 
-  async update(id: string, name: string): Promise<void> {
+  async updateById(id: string, name: string): Promise<void> {
     await this.db.menu.update({
       where: { id },
       data: {

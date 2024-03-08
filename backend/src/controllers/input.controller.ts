@@ -1,5 +1,5 @@
 import { InputServiceContract } from "@/utils/contracts/input-contract";
-import { InputRegister } from "@/dto/input.dto";
+import { InputRegister } from "@/dto/input/input.dto";
 
 export class InputController {
   constructor(private readonly service: InputServiceContract) {}

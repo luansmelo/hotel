@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import authConfig from "@/config/env";
 import "dotenv/config";
-import { UserDataContract } from "@/dto/user.dto";
+import { UserDataContract } from "@/dto/user/user.dto";
 
 export function authenticated(
   request: Request,

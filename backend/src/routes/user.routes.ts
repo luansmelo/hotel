@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { validate } from "@/middlewares/validate";
-import { UserContractInput } from "@/dto/user.dto";
+import { UserContractInput } from "@/dto/user/user.dto";
 import { makeUserController } from "@/factories/makeUserController";
 import { UserLoginSchema, UserSchema } from "@/validators/user.validation";
 
