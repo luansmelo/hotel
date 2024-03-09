@@ -5,7 +5,7 @@ import {
 } from "@/contracts";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
-export class CreateCategoryService {
+export class DeleteCategoryUseCase {
   constructor(
     private readonly deleteCategory: DeleteCategoryContract,
     private readonly findCategory: FindCategoryByIdContract

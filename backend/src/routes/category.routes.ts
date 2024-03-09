@@ -5,7 +5,10 @@ import { authenticated } from "@/middlewares/authenticated";
 import { CategorySchema } from "@/validators/category.validation";
 import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
-import { makeCreateCategoryController } from "@/factories/category";
+import {
+  makeCreateCategoryController,
+  makeDeleteCategoryController,
+} from "@/factories/category";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
 
 const router = Router();
@@ -75,7 +78,7 @@ router.delete(
     try {
       const id = request.params.id;
 
-      const controller = makeCategoryController();
+      const controller = makeDeleteCategoryController();
       await controller.deleteById(id);
 
       return response.status(200).send({ message: "sucesso" });

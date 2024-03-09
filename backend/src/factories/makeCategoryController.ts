@@ -1,4 +1,4 @@
-import { CategoryController } from "@/controllers/category/category.controller";
+import { CategoryController } from "@/controllers/category/categoryController";
 import { CategoryRepository } from "@/repositories/category.repository";
 import { CategoryService } from "@/useCase/category/category.service";
 

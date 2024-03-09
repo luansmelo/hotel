@@ -1,6 +1,6 @@
 import { CategoryModel, FindCategoryByNameContract } from "@/contracts";
 
-export class FindCategoryByName {
+export class FindCategoryByNameUseCase {
   constructor(private readonly findCategories: FindCategoryByNameContract) {}
 
   async findByName(name: string): Promise<CategoryModel> {
