@@ -4,7 +4,7 @@ import { FindGroupByIdController } from "@/controllers/groups/findGroupById/find
 import { GroupRepository } from "@/repositories/group.repository";
 import { FindGroupByIdUseCase } from "@/useCase/group/findGroupById/findGroupById";
 
-export function makeFindCategoryByIdController(): FindGroupByIdController {
+export function makeFindGroupByIdController(): FindGroupByIdController {
   const repo = new GroupRepository(prisma);
 
   const categories = new FindGroupByIdUseCase(repo);

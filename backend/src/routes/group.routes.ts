@@ -1,11 +1,15 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { makeGroupController } from "@/factories/makeGroupController";
-import { validate } from "@/middlewares/validate";
-import { authenticated } from "@/middlewares/authenticated";
+import {
+  makeCreateGroupController,
+  makeUpdateGroupController,
+  makeFindGroupByIdController,
+  makeFindGroupsController,
+  makeDeleteGroupController,
+} from "@/factories";
 import { GroupInput } from "@/dto/group/group.dto";
 import { GroupSchema } from "@/validators/group.validation";
-import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
+import { allowed, authenticated, validate } from "@/middlewares";
 
 const router = Router();
 const slug = "/group";
@@ -18,7 +22,8 @@ router.post(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const input: GroupInput = GroupSchema.parse(request.body) as GroupInput;
-      const controller = makeGroupController();
+      const controller = makeCreateGroupController();
+
       const result = await controller.create(input);
 
       return response.status(201).send(result);
@@ -35,8 +40,9 @@ router.get(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const controller = makeGroupController();
-      const result = await controller.getById(id);
+      const controller = makeFindGroupByIdController();
+
+      const result = await controller.findById(id);
 
       return response.status(200).send(result);
     } catch (error) {
@@ -51,8 +57,9 @@ router.get(
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const controller = makeGroupController();
-      const result = await controller.getAll();
+      const controller = makeFindGroupsController();
+
+      const result = await controller.findAll();
 
       return response.status(200).send(result);
     } catch (error) {
@@ -68,9 +75,10 @@ router.delete(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const controller = makeGroupController();
-      await controller.deleteById(id);
-      return response.status(200).send({ message: "sucesso" });
+      const controller = makeDeleteGroupController();
+      const result = await controller.deleteById(id);
+
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }
@@ -85,8 +93,10 @@ router.put(
     try {
       const id = request.params.id;
       const input = request.body;
-      const controller = makeGroupController();
+      const controller = makeUpdateGroupController();
+
       const result = await controller.updateById(id, input);
+
       return response.status(200).send(result);
     } catch (error) {
       next(error);
