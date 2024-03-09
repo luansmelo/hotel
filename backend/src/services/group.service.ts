@@ -1,6 +1,5 @@
 import { GroupRepositoryContract } from "@/utils/contracts/group-contract";
 import { NotFoundError } from "@/utils/errors/httpErrors";
-import { uuid } from "uuidv4";
 import { GroupServiceContract } from "@/utils/contracts/group-contract";
 import { GroupInput } from "@/dto/group/group.dto";
 
@@ -8,12 +7,7 @@ export class GroupService implements GroupServiceContract {
   constructor(private readonly repository: GroupRepositoryContract) {}
 
   async create(input: GroupInput): Promise<void> {
-    const data = {
-      id: uuid(),
-      name: input.name,
-    };
-
-    await this.repository.save(data);
+    await this.repository.save(input);
   }
   async getById(id: string): Promise<any> {
     const group = await this.repository.getById(id);

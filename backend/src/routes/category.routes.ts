@@ -1,27 +1,28 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { CategoryInput } from "@/dto/category/category.dto";
 import { makeCategoryController } from "@/factories/makeCategoryController";
 import { validate } from "@/middlewares/validate";
 import { authenticated } from "@/middlewares/authenticated";
 import { CategorySchema } from "@/validators/category.validation";
 import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
+import { makeCreateCategoryController } from "@/factories/category";
+import { CreateCategoryModel } from "@/entities/category/createCategory";
 
 const router = Router();
 const slug = "/category";
 
 router.post(
   "/create",
-  authenticated,
-  allowed([ROLE.Admin]),
-  validate(CategorySchema),
+  // authenticated,
+  // allowed([ROLE.Admin]),
+  // validate(CategorySchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: CategoryInput = CategorySchema.parse(
+      const input: CreateCategoryModel = CategorySchema.parse(
         request.body
-      ) as CategoryInput;
+      ) as CreateCategoryModel;
 
-      const controller = makeCategoryController();
+      const controller = makeCreateCategoryController();
       const result = await controller.create(input);
 
       return response.status(201).send(result);

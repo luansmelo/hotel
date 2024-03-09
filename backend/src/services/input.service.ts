@@ -8,7 +8,6 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from "@/utils/errors/httpErrors";
-import { uuid } from "uuidv4";
 import { MeasurementUnitRepositoryContract } from "@/utils/contracts/measurementUnit-contract";
 
 export class InputService implements InputServiceContract {
@@ -31,12 +30,7 @@ export class InputService implements InputServiceContract {
     const inputExists = await this.repository.getByCode(input.code);
     if (inputExists) throw new ConflictError("O código deve ser único");
 
-    const data = {
-      id: uuid(),
-      ...input,
-    };
-
-    return this.repository.save(data);
+    return this.repository.save(input);
   }
 
   async getAll() {
@@ -69,14 +63,7 @@ export class InputService implements InputServiceContract {
 
     const inputExists = await this.getById(id);
 
-    const data = {
-      id: uuid(),
-      ...input,
-      created_at: new Date().toDateString(),
-      updated_at: new Date().toDateString(),
-    };
-
-    return this.repository.updateById(inputExists.id, data);
+    return this.repository.updateById(inputExists.id, input);
   }
 
   async deleteById(id: string) {

@@ -1,8 +1,4 @@
-export interface MeasurementUnitInput {
-  name: string;
-}
-
-export interface MeasurementUnitContract {
-  id: string;
+export interface MeasureModel {
+  id?: string;
   name: string;
 }

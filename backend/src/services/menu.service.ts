@@ -2,14 +2,14 @@ import {
   MenuRepositoryContract,
   MenuServiceContract,
 } from "@/utils/contracts/menu-contract";
-import { MenuModal, MenuProductInput } from "@/dto/menu/menu.dto";
+import { MenuModel, MenuProductInput } from "@/dto/menu/menu.dto";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 import { AddProductModal, MenuProduct } from "@/dto/menu/menu.dto";
 
 export class MenuService implements MenuServiceContract {
   constructor(private readonly repository: MenuRepositoryContract) {}
 
-  async create(input: MenuModal) {
+  async create(input: MenuModel) {
     const menu = await this.repository.save(input);
     return menu;
   }
@@ -91,7 +91,7 @@ export class MenuService implements MenuServiceContract {
     return data;
   }
 
-  async deleteById(id: string): Promise<MenuModal | null> {
+  async deleteById(id: string): Promise<MenuModel | null> {
     const menu = await this.getById(id);
 
     return this.repository.deleteById(menu.id);

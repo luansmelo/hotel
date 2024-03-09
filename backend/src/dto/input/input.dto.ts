@@ -1,5 +1,5 @@
-export interface InputContract {
-  id: string;
+export interface InputModal {
+  id?: string;
   name: string;
   code: string;
   unitPrice: number;

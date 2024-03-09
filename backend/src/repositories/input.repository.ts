@@ -1,18 +1,16 @@
 import { InputRepositoryContract } from "@/utils/contracts/input-contract";
-import { InputContract, InputRegister } from "@/dto/input/input.dto";
+import { InputModal, InputRegister } from "@/dto/input/input.dto";
 import { PrismaClient } from "@prisma/client";
-import { uuid } from "uuidv4";
 
 export class InputRepository implements InputRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: InputContract) {
+  async save(input: InputModal) {
     return this.db.input.create({
       data: {
         ...input,
         groups: {
           create: input.groups.map((groupId) => ({
-            id: uuid(),
             groupId,
           })),
         },

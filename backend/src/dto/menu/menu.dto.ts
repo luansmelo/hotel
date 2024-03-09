@@ -17,7 +17,7 @@ export interface AddProductModal {
 
 export interface MenuProduct extends AddProductRepositoryModal {}
 
-export interface MenuModal {
+export interface MenuModel {
   id?: string;
   name: string;
 }
@@ -44,13 +44,6 @@ export interface MenuProductContract {
   menuId: string;
   categoryId: string;
   day: string;
-}
-
-export interface MenuProdutionMapDTO {
-  menuId: string;
-  productId: string;
-  day: number;
-  category: number;
 }
 
 export const MenuSchema = zod.object({

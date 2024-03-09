@@ -1,5 +1,4 @@
 import {
-  ProductToCategoryInput,
   Category,
   ProductToCategoryContract,
 } from "@/dto/category/category.dto";
@@ -8,9 +7,6 @@ export interface CategoryRepositoryContract {
   save(input: Category): Promise<void>;
   getAll(): Promise<Category[] | null>;
   getById(id: string): Promise<Category | null>;
-  getProductInCategory(
-    input: ProductToCategoryInput
-  ): Promise<ProductToCategoryContract | null>;
   deleteById(id: string): Promise<void>;
   updateById(id: string, input: Partial<Category>): Promise<void>;
 }

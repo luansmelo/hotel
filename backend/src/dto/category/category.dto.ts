@@ -4,7 +4,7 @@ export class Category {
 }
 
 export interface ProductToCategoryContract {
-  id: string;
+  id?: string;
   categoryId: string;
   productId: string;
   weekDay: string;

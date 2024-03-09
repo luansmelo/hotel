@@ -1,10 +1,10 @@
 import { CategoryServiceContract } from "@/utils/contracts/category-contract";
-import { CategoryInput } from "@/dto/category/category.dto";
+import { Category } from "@/dto/category/category.dto";
 
 export class CategoryController {
   constructor(private readonly service: CategoryServiceContract) {}
 
-  async create(input: CategoryInput) {
+  async create(input: Category) {
     return this.service.create(input);
   }
 
@@ -20,7 +20,7 @@ export class CategoryController {
     return this.service.deleteById(id);
   }
 
-  async updateById(id: string, input: CategoryInput) {
+  async updateById(id: string, input: Category) {
     return this.service.updateById(id, input);
   }
 }

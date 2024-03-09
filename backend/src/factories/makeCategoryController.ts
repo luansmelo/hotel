@@ -1,11 +1,11 @@
-import { CategoryController } from "@/controllers/category.controller";
-import prisma from "@/config/prisma";
+import { CategoryController } from "@/controllers/category/category.controller";
 import { CategoryRepository } from "@/repositories/category.repository";
-import { CategoryService } from "@/services/category.service";
+import { CategoryService } from "@/useCase/category/category.service";
+
 
 export function makeCategoryController(): CategoryController {
-  const repository = new CategoryRepository(prisma);
-  const service = new CategoryService(repository);
+  const repository = new CategoryRepository(null);
+  const service = new CategoryService(null);
   const controller = new CategoryController(service);
   return controller;
 }

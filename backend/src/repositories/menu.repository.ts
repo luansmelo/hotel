@@ -1,18 +1,18 @@
 import { AddProductRepositoryModal, MenuProduct } from "@/dto/menu/menu.dto";
-import { MenuModal, MenuProductInput } from "@/dto/menu/menu.dto";
+import { MenuModel, MenuProductInput } from "@/dto/menu/menu.dto";
 import { MenuRepositoryContract } from "@/utils/contracts/menu-contract";
 import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository implements MenuRepositoryContract {
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: MenuModal): Promise<MenuModal> {
+  async save(input: MenuModel): Promise<MenuModel> {
     return this.db.menu.create({
       data: input,
     });
   }
 
-  async getById(id: string): Promise<MenuModal | null> {
+  async getById(id: string): Promise<MenuModel | null> {
     const db = await this.db.menu.findUnique({
       where: {
         id,
@@ -104,7 +104,7 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async deleteById(id: string): Promise<MenuModal> {
+  async deleteById(id: string): Promise<MenuModel> {
     return this.db.menu.delete({
       where: { id },
     });
