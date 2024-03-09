@@ -1,9 +1,9 @@
 import { CategoryModel, UpdateCategory } from "@/contracts/category";
 
 export class UpdateCategoryController {
-  constructor(private readonly deleteCategory: UpdateCategory) {}
+  constructor(private readonly updateCategory: UpdateCategory) {}
 
   async updateById(id: string, input: Partial<CategoryModel>) {
-    return this.deleteCategory.updateById(id, input);
+    return this.updateCategory.updateById(id, input);
   }
 }

@@ -5,7 +5,7 @@ import * as menus from "./menu.routes";
 import * as category from "./category.routes";
 import * as user from "./user.routes";
 import * as group from "./group.routes";
-import * as measurementUnit from "./measurementUnit.routes";
+import * as measure from "./measure.routes";
 import * as auth from "./auth.routes";
 import * as s3 from "./s3.routes";
 
@@ -17,7 +17,7 @@ mainRouter.use(menus.slug, menus.router);
 mainRouter.use(category.slug, category.router);
 mainRouter.use(user.slug, user.router);
 mainRouter.use(group.slug, group.router);
-mainRouter.use(measurementUnit.slug, measurementUnit.router);
+mainRouter.use(measure.slug, measure.router);
 mainRouter.use(s3.slug, s3.router);
 mainRouter.use(auth.slug, auth.router);
 
