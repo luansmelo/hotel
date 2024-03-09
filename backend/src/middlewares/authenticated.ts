@@ -20,7 +20,7 @@ export function authenticated(
 
   try {
     const decodedToken = verify(token, secret) as UserDataContract;
-    request['user'] = decodedToken;
+    request["user"] = decodedToken;
     return next();
   } catch (error) {
     return response.status(401).json({ message: "Token invalid" });

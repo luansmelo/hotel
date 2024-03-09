@@ -1,17 +1,14 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { validate } from "@/middlewares/validate";
-import { authenticated } from "@/middlewares/authenticated";
-import { CategorySchema } from "@/validators/category.validation";
-import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
-
+import { CategorySchema } from "@/validators/category.validation";
+import { allowed, authenticated, validate } from "@/middlewares";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
-import { makeFindCategoryByIdController } from "@/factories/category/findCategoryById";
 import {
   makeCreateCategoryController,
   makeDeleteCategoryController,
   makeFindCategoriesController,
   makeUpdateCategoryController,
+  makeFindCategoryByIdController,
 } from "@/factories/category";
 
 const router = Router();
@@ -82,9 +79,9 @@ router.delete(
       const id = request.params.id;
 
       const controller = makeDeleteCategoryController();
-      await controller.deleteById(id);
+      const result = await controller.deleteById(id);
 
-      return response.status(200).end();
+      return response.status(200).send(result);
     } catch (error) {
       next();
     }
@@ -102,9 +99,9 @@ router.put(
 
       const controller = makeUpdateCategoryController();
 
-      await controller.updateById(id, input);
+      const result = await controller.updateById(id, input);
 
-      return response.status(200).end();
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }

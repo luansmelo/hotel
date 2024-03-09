@@ -4,7 +4,6 @@ import {
 } from "@/utils/contracts/user-contract";
 import { AuthPayload, UserContractInput } from "@/dto/user/user.dto";
 import { BadRequestError, UnauthorizedError } from "@/utils/errors/httpErrors";
-import { uuid } from "uuidv4";
 import JwtUtils from "@/utils/jwtUtils";
 import { EmailValidator } from "@/utils/email-validator-adapter";
 import bcrypt from "bcrypt";
