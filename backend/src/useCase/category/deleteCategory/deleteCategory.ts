@@ -1,11 +1,12 @@
 import {
   CategoryModel,
+  DeleteCategory,
   DeleteCategoryContract,
   FindCategoryByIdContract,
 } from "@/contracts";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
-export class DeleteCategoryUseCase {
+export class DeleteCategoryUseCase implements DeleteCategory {
   constructor(
     private readonly deleteCategory: DeleteCategoryContract,
     private readonly findCategory: FindCategoryByIdContract
