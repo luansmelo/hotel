@@ -1,4 +1,5 @@
 import { CreateInputModel } from "@/entities/input/createInput";
+import { GroupModel } from "../group";
 
 export interface InputModel {
   id?: string;
@@ -6,7 +7,7 @@ export interface InputModel {
   code: string;
   unitPrice: number;
   measurementUnitId: string;
-  groups: string[];
+  groups: GroupModel[];
 }
 
 export interface CreateInputContract {

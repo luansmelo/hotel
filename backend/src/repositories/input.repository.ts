@@ -1,12 +1,30 @@
-import { InputRepositoryContract } from "@/utils/contracts/input-contract";
-import { InputModal, InputRegister } from "@/dto/input/input.dto";
 import { PrismaClient } from "@prisma/client";
+import {
+  CreateInputContract,
+  DeleteInputContract,
+  FindInputByCodeContract,
+  FindInputByIdContract,
+  FindInputByNameContract,
+  FindInputsContract,
+  InputModel,
+  UpdateInputContract,
+} from "@/contracts/input";
+import { CreateInputModel } from "@/entities/input/createInput";
 
-export class InputRepository implements InputRepositoryContract {
+export class InputRepository
+  implements
+    CreateInputContract,
+    FindInputByCodeContract,
+    FindInputByIdContract,
+    FindInputByNameContract,
+    FindInputsContract,
+    DeleteInputContract,
+    UpdateInputContract
+{
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: InputModal) {
-    return this.db.input.create({
+  async save(input: CreateInputModel): Promise<InputModel> {
+    const formattedInput = await this.db.input.create({
       data: {
         ...input,
         groups: {
@@ -26,36 +44,8 @@ export class InputRepository implements InputRepositoryContract {
           },
         },
         code: true,
-        groups: true,
-      },
-    });
-  }
-
-  async getById(id: string) {
-    const db = await this.db.input.findUnique({ where: { id } });
-
-    return db;
-  }
-
-  async getByCode(code: string): Promise<any> {
-    const db = await this.db.input.findUnique({ where: { code } });
-
-    return db;
-  }
-
-  async getAll() {
-    const db = await this.db.input.findMany({
-      orderBy: {
-        name: "asc",
-      },
-      include: {
-        measurementUnit: {
-          select: {
-            name: true,
-          },
-        },
         groups: {
-          select: {
+          include: {
             group: {
               select: {
                 id: true,
@@ -67,10 +57,127 @@ export class InputRepository implements InputRepositoryContract {
       },
     });
 
-    return db;
+    const mappedSerializedInput = {
+      ...formattedInput,
+      groups: formattedInput.groups.map((e) => e.group),
+      measurementUnitId: formattedInput.measurementUnit.id,
+    };
+
+    return mappedSerializedInput;
   }
 
-  async updateById(id: string, input: InputRegister) {
+  async findById(id: string): Promise<InputModel | null> {
+    const db = await this.db.input.findUnique({
+      where: { id },
+      include: {
+        groups: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const serialized = {
+      ...db,
+      groups: db.groups.map((e) => e.group),
+    };
+
+    return serialized;
+  }
+
+  async findByName(name: string): Promise<InputModel | null> {
+    const db = await this.db.input.findFirst({
+      where: { name },
+      include: {
+        groups: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const serialized = {
+      ...db,
+      groups: db.groups.map((e) => e.group),
+    };
+
+    return serialized;
+  }
+  async findByCode(code: string): Promise<InputModel | null> {
+    const db = await this.db.input.findUnique({
+      where: { code },
+      include: {
+        groups: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const serialized = {
+      ...db,
+      groups: db.groups.map((e) => e.group),
+    };
+
+    return serialized;
+  }
+
+  async findAll(): Promise<InputModel[] | null> {
+    const db = await this.db.input.findMany({
+      orderBy: {
+        name: "asc",
+      },
+      include: {
+        measurementUnit: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        groups: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const serializedFormattedInput = db.map((inputs) => ({
+      ...inputs,
+      measurementUnitId: inputs.measurementUnitId,
+      groups: inputs.groups.map((input) => input.group),
+    }));
+
+    return serializedFormattedInput;
+  }
+
+  async updateById(
+    id: string,
+    input: Partial<CreateInputModel>
+  ): Promise<void> {
     const newGroups = input.groups || [];
 
     await this.db.$transaction(async (prisma) => {
@@ -115,9 +222,26 @@ export class InputRepository implements InputRepositoryContract {
     });
   }
 
-  async deleteById(id: string) {
-    await this.db.input.delete({
+  async deleteById(id: string): Promise<InputModel> {
+    const db = await this.db.input.delete({
       where: { id },
+      include: {
+        groups: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
+
+    return {
+      ...db,
+      groups: db.groups.map((e) => e.group),
+    };
   }
 }
