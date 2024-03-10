@@ -9,6 +9,7 @@ import {
   makeFindInputsController,
   makeUpdateInputController,
 } from "@/factories/input";
+import { CreateInputModel } from "@/entities/input/createInput";
 
 const router = Router();
 const slug = "/input";
@@ -20,9 +21,9 @@ router.post(
   validate(InputSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: InputRegister = InputSchema.parse(
+      const input: CreateInputModel = InputSchema.parse(
         request.body
-      ) as InputRegister;
+      ) as CreateInputModel;
 
       const controller = makeCreateInputController();
 
@@ -59,9 +60,9 @@ router.put(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const input: InputRegister = InputSchema.parse(
+      const input: CreateInputModel = InputSchema.parse(
         request.body
-      ) as InputRegister;
+      ) as CreateInputModel;
 
       const controller = makeUpdateInputController();
 

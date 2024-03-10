@@ -2,7 +2,7 @@ import prisma from "@/config/prisma";
 
 import { CreateGroupController } from "@/controllers/groups/createGroup/createGroupController";
 import { GroupRepository } from "@/repositories/group.repository";
-import { CreateGroupUseCase } from "@/useCase/group/createGroup/createMeasure";
+import { CreateGroupUseCase } from "@/useCase/group/createGroup/createGroup";
 import { FindGroupByNameUseCase } from "@/useCase/group/findGroupsByName/findGroupByName";
 
 export function makeCreateGroupController(): CreateGroupController {

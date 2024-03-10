@@ -37,12 +37,7 @@ export class InputRepository
         id: true,
         name: true,
         unitPrice: true,
-        measurementUnit: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
+        measurementUnitId: true,
         code: true,
         groups: {
           include: {
@@ -60,7 +55,7 @@ export class InputRepository
     const mappedSerializedInput = {
       ...formattedInput,
       groups: formattedInput.groups.map((e) => e.group),
-      measurementUnitId: formattedInput.measurementUnit.id,
+      measurementUnitId: formattedInput.measurementUnitId,
     };
 
     return mappedSerializedInput;
@@ -83,6 +78,8 @@ export class InputRepository
       },
     });
 
+    if (!db) return null;
+
     const serialized = {
       ...db,
       groups: db.groups.map((e) => e.group),
@@ -92,7 +89,7 @@ export class InputRepository
   }
 
   async findByName(name: string): Promise<InputModel | null> {
-    const db = await this.db.input.findFirst({
+    const db = await this.db.input.findUnique({
       where: { name },
       include: {
         groups: {
@@ -108,9 +105,11 @@ export class InputRepository
       },
     });
 
+    if (!db) return null;
+
     const serialized = {
       ...db,
-      groups: db.groups.map((e) => e.group),
+      groups: db?.groups?.map((e) => e.group),
     };
 
     return serialized;
@@ -132,9 +131,11 @@ export class InputRepository
       },
     });
 
+    if (!db) return null;
+
     const serialized = {
       ...db,
-      groups: db.groups.map((e) => e.group),
+      groups: db?.groups?.map((e) => e.group),
     };
 
     return serialized;

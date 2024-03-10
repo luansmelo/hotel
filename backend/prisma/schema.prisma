@@ -65,7 +65,7 @@ model InputsOnProducts {
 
 model Input {
   id                String             @id @default(uuid())
-  name              String
+  name              String             @unique
   code              String             @unique
   unitPrice         Float
   measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id], onDelete: Cascade, onUpdate: Cascade)
