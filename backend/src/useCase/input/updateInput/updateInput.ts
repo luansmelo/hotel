@@ -17,13 +17,13 @@ export class UpdateInputUseCase implements UpdateInput {
   async updateById(
     id: string,
     param: Partial<CreateInputModel>
-  ): Promise<InputModel> {
+  ): Promise<void> {
     const input = await this.findInput.findById(id);
 
     if (!input) {
       throw new NotFoundError("Insumo não encontrado");
     }
 
-    return this.updateInput.updateById(input.id, { name: param.name });
+    await this.updateInput.updateById(input.id, { name: param.name });
   }
 }
