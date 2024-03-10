@@ -1,6 +1,10 @@
-import { FindGroupByIdContract, GroupModel } from "@/contracts/group";
+import {
+  FindGroupById,
+  FindGroupByIdContract,
+  GroupModel,
+} from "@/contracts/group";
 
-export class FindGroupByIdUseCase {
+export class FindGroupByIdUseCase implements FindGroupById {
   constructor(private readonly findGroup: FindGroupByIdContract) {}
 
   async findById(id: string): Promise<GroupModel> {

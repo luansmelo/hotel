@@ -1,11 +1,12 @@
 import {
+  DeleteGroup,
   DeleteGroupContract,
   FindGroupByIdContract,
   GroupModel,
 } from "@/contracts/group";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
-export class DeleteGroupUseCase {
+export class DeleteGroupUseCase implements DeleteGroup {
   constructor(
     private readonly deleteGroup: DeleteGroupContract,
     private readonly findGroup: FindGroupByIdContract
