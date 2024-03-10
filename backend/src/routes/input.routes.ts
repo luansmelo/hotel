@@ -1,11 +1,14 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { InputRegister } from "@/dto/input/input.dto";
-import { makeInputController } from "@/factories/makeInputController";
-import { validate } from "@/middlewares/validate";
 import { InputSchema } from "@/validators/input.validation";
-import { authenticated } from "@/middlewares/authenticated";
-import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
+import { allowed, authenticated, validate } from "@/middlewares";
+import {
+  makeCreateInputController,
+  makeDeleteInputController,
+  makeFindInputsController,
+  makeUpdateInputController,
+} from "@/factories/input";
 
 const router = Router();
 const slug = "/input";
@@ -21,7 +24,7 @@ router.post(
         request.body
       ) as InputRegister;
 
-      const controller = makeInputController();
+      const controller = makeCreateInputController();
 
       const result = await controller.create(input);
 
@@ -38,8 +41,8 @@ router.get(
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const controller = makeInputController();
-      const result = await controller.getAll();
+      const controller = makeFindInputsController();
+      const result = await controller.findAll();
 
       return response.status(200).send({ data: result });
     } catch (error) {
@@ -60,11 +63,11 @@ router.put(
         request.body
       ) as InputRegister;
 
-      const controller = makeInputController();
+      const controller = makeUpdateInputController();
 
       await controller.updateById(id, input);
 
-      return response.status(200).send({ message: "sucesso" });
+      return response.status(200).end();
     } catch (error) {
       next(error);
     }
@@ -78,11 +81,11 @@ router.delete(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const controller = makeInputController();
+      const controller = makeDeleteInputController();
 
-      await controller.deleteById(id);
+      const result = await controller.deleteById(id);
 
-      response.status(200).send({ message: "sucesso" });
+      response.status(200).send(result);
     } catch (error) {
       next(error);
     }
