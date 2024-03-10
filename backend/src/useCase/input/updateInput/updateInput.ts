@@ -2,8 +2,9 @@ import {
   FindInputByIdContract,
   UpdateInput,
   UpdateInputContract,
+  InputModel,
 } from "@/contracts/input";
-import { InputModel } from "@/contracts/input/createInput";
+
 import { CreateInputModel } from "@/entities/input/createInput";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
