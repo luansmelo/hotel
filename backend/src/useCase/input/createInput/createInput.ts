@@ -8,7 +8,7 @@ import {
 } from "@/contracts/input/createInput";
 import { FindInputByCodeContract } from "@/contracts/input/findInputByCode";
 import { CreateInputModel } from "@/entities/input/createInput";
-import { ConflictError } from "@/utils/errors/httpErrors";
+import { ConflictError, NotFoundError } from "@/utils/errors/httpErrors";
 
 export class CreateInputUseCase implements CreateInput {
   constructor(
@@ -37,15 +37,15 @@ export class CreateInputUseCase implements CreateInput {
     );
 
     if (!measure) {
-      throw new ConflictError("Unidade de medida não encontrada");
+      throw new NotFoundError("Unidade de medida não encontrada");
     }
 
     const groups = await Promise.all(
-      inputModel.groups.map((group) => this.findGroupById.findById(group))
+      inputModel.groups.map((groupId) => this.findGroupById.findById(groupId))
     );
 
     if (groups.some((group) => !group)) {
-      throw new ConflictError("Grupos não encontrados");
+      throw new NotFoundError("Grupos não encontrados");
     }
 
     return this.createInput.save(inputModel);
