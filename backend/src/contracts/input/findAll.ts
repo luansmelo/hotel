@@ -1,9 +1,9 @@
 import { InputModel } from "./createInput";
 
-export interface FindInputContract {
+export interface FindInputsContract {
   findAll(): Promise<InputModel[] | null>;
 }
 
-export interface FindInput {
+export interface FindInputs {
   findAll(): Promise<InputModel[] | null>;
 }
