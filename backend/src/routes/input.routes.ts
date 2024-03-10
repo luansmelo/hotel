@@ -1,5 +1,4 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { InputRegister } from "@/dto/input/input.dto";
 import { InputSchema } from "@/validators/input.validation";
 import { ROLE } from "@/config/constants";
 import { allowed, authenticated, validate } from "@/middlewares";
@@ -68,7 +67,9 @@ router.put(
 
       await controller.updateById(id, input);
 
-      return response.status(200).end();
+      return response.status(200).send({
+        message: "Insumo editado com sucesso!",
+      });
     } catch (error) {
       next(error);
     }

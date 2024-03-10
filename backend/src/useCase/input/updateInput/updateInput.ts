@@ -24,6 +24,6 @@ export class UpdateInputUseCase implements UpdateInput {
       throw new NotFoundError("Insumo não encontrado");
     }
 
-    await this.updateInput.updateById(input.id, { name: param.name });
+    await this.updateInput.updateById(input.id, param);
   }
 }

@@ -1,12 +1,13 @@
 import { CreateInputModel } from "@/entities/input/createInput";
 import { GroupModel } from "../group";
+import { MeasureModel } from "../measure";
 
 export interface InputModel {
   id?: string;
   name: string;
   code: string;
   unitPrice: number;
-  measurementUnitId: string;
+  measurementUnit: MeasureModel;
   groups: GroupModel[];
 }
 
