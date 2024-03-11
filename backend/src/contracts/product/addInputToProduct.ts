@@ -5,6 +5,6 @@ export interface AddInputToProductContract {
   add(input: AddInputToProductModel): Promise<ProductModel>;
 }
 
-export interface AddInputToCreateProduct {
+export interface AddInputToProduct {
   save(input: AddInputToProductModel): Promise<ProductModel>;
 }
