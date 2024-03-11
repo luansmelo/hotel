@@ -10,6 +10,7 @@ import {
   GroupModel,
 } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
+import { FindGroupsByIdContract } from "@/contracts/group/findGroupsById";
 
 export class GroupRepository
   implements
@@ -17,6 +18,7 @@ export class GroupRepository
     DeleteGroupContract,
     FindGroupByIdContract,
     FindGroupByNameContract,
+    FindGroupsByIdContract,
     FindGroupsContract,
     UpdateGroupContract
 {
@@ -33,6 +35,16 @@ export class GroupRepository
 
   async findById(id: string): Promise<GroupModel | null> {
     return this.db.group.findUnique({ where: { id } });
+  }
+
+  async findByIds(ids: string[]): Promise<GroupModel[]> {
+    return this.db.group.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
   }
 
   async findByName(name: string): Promise<GroupModel | null> {

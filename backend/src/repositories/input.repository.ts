@@ -37,7 +37,7 @@ export class InputRepository
         id: true,
         name: true,
         unitPrice: true,
-        measurementUnitId: true,
+        measurementUnit: true,
         code: true,
         groups: {
           include: {
@@ -55,7 +55,6 @@ export class InputRepository
     const mappedSerializedInput = {
       ...formattedInput,
       groups: formattedInput.groups.map((e) => e.group),
-      measurementUnitId: formattedInput.measurementUnitId,
     };
 
     return mappedSerializedInput;
@@ -65,6 +64,12 @@ export class InputRepository
     const db = await this.db.input.findUnique({
       where: { id },
       include: {
+        measurementUnit: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         groups: {
           include: {
             group: {
@@ -82,6 +87,7 @@ export class InputRepository
 
     const serialized = {
       ...db,
+      measurement: db.measurementUnit,
       groups: db.groups.map((e) => e.group),
     };
 
@@ -92,6 +98,12 @@ export class InputRepository
     const db = await this.db.input.findUnique({
       where: { name },
       include: {
+        measurementUnit: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         groups: {
           include: {
             group: {
@@ -118,6 +130,12 @@ export class InputRepository
     const db = await this.db.input.findUnique({
       where: { code },
       include: {
+        measurementUnit: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         groups: {
           include: {
             group: {
@@ -227,6 +245,12 @@ export class InputRepository
     const db = await this.db.input.delete({
       where: { id },
       include: {
+        measurementUnit: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         groups: {
           include: {
             group: {
