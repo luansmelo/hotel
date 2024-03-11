@@ -6,10 +6,11 @@ import {
   makeFindGroupsController,
   makeDeleteGroupController,
 } from "@/factories";
-import { GroupInput } from "@/dto/group/group.dto";
+
 import { GroupSchema } from "@/validators/group.validation";
 import { ROLE } from "@/config/constants";
 import { allowed, authenticated, validate } from "@/middlewares";
+import { CreateGroupModel } from "@/entities/group/createGroup";
 
 const router = Router();
 const slug = "/group";
@@ -21,7 +22,9 @@ router.post(
   validate(GroupSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: GroupInput = GroupSchema.parse(request.body) as GroupInput;
+      const input: CreateGroupModel = GroupSchema.parse(
+        request.body
+      ) as CreateGroupModel;
       const controller = makeCreateGroupController();
 
       const result = await controller.create(input);
@@ -32,7 +35,7 @@ router.post(
     }
   }
 );
-  
+
 router.get(
   "/:id",
   authenticated,

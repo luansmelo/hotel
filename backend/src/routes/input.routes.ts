@@ -7,9 +7,9 @@ import {
   makeDeleteInputController,
   makeFindInputsController,
   makeUpdateInputController,
+  makeFindInputByIdController,
 } from "@/factories/input";
 import { CreateInputModel } from "@/entities/input/createInput";
-import { makeFindInputByIdController } from "@/factories/input/findInputById";
 
 const router = Router();
 const slug = "/input";
