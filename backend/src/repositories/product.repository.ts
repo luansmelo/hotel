@@ -6,12 +6,13 @@ import {
 } from "@/dto/product/product.dto";
 import { PrismaClient } from "@prisma/client";
 import { File } from "@/storage/s3/file";
+import { CreateProductContract } from "@/contracts/product";
 
-export class ProductRepository implements ProductRepositoryContract {
+export class ProductRepository implements CreateProductContract {
   constructor(private readonly db: PrismaClient) {}
 
   async save(input: ProductModel) {
-    await this.db.product.create({
+    return this.db.product.create({
       data: {
         ...input,
         inputs: null,
