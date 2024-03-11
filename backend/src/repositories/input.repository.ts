@@ -87,7 +87,7 @@ export class InputRepository
 
     const serialized = {
       ...db,
-      measurement: db.measurementUnit,
+      measurementUnitId: undefined,
       groups: db.groups.map((e) => e.group),
     };
 
@@ -121,6 +121,7 @@ export class InputRepository
 
     const serialized = {
       ...db,
+      measurementUnitId: undefined,
       groups: db?.groups?.map((e) => e.group),
     };
 
@@ -186,7 +187,7 @@ export class InputRepository
 
     const serializedFormattedInput = db.map((inputs) => ({
       ...inputs,
-      measurementUnitId: inputs.measurementUnitId,
+
       groups: inputs.groups.map((input) => input.group),
     }));
 

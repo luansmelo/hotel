@@ -9,6 +9,7 @@ import {
   makeUpdateInputController,
 } from "@/factories/input";
 import { CreateInputModel } from "@/entities/input/createInput";
+import { makeFindInputByIdController } from "@/factories/input/findInputById";
 
 const router = Router();
 const slug = "/input";
@@ -45,6 +46,24 @@ router.get(
       const result = await controller.findAll();
 
       return response.status(200).send({ data: result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/:id",
+  authenticated,
+  allowed([ROLE.Admin, ROLE.User]),
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = request.params.id;
+
+      const controller = makeFindInputByIdController();
+      const result = await controller.findById(id);
+
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }
