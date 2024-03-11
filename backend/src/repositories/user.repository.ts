@@ -1,10 +1,11 @@
-import { UserData, UserDataContract } from "@/dto/user/user.dto";
-import { UserRepositoryContract } from "@/utils/contracts/user-contract";
+import { CreateUserContract, UserModel } from "@/contracts/user/createUser";
+import { UserDataContract } from "@/dto/user/user.dto";
+import { CreateUserModel } from "@/entities/user/createUser";
 import { PrismaClient } from "@prisma/client";
 
-export class UserRepository implements UserRepositoryContract {
+export class UserRepository implements CreateUserContract {
   constructor(private readonly db: PrismaClient) {}
-  async save(input: UserData) {
+  async save(input: CreateUserModel): Promise<UserModel> {
     return this.db.user.create({
       data: input,
     });

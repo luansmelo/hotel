@@ -5,8 +5,8 @@ export interface UserModel {
   name: string;
   email: string;
   role: string;
-  isAuthorized: string;
-  access_token: string;
+  isAuthorized: boolean;
+  access_token?: string;
 }
 
 export interface CreateUserContract {
