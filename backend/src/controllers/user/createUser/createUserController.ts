@@ -1,7 +1,7 @@
 import { CreateUser } from "@/contracts/user";
 import { CreateUserModel } from "@/entities/user/createUser";
 
-export class UserController {
+export class CreateUserController {
   constructor(private readonly user: CreateUser) {}
 
   async signup(input: CreateUserModel) {
