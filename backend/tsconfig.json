@@ -14,7 +14,7 @@
   },
   "include": [
     "src/**/*.ts"
-, "src/factories/category/createCategory/createCategoryFactory.ts"  ],
+, "src/factories/category/CreateCategoryFactory.ts"  ],
   "exclude": [
     "**/*.test",
     "**/__tests__/*"

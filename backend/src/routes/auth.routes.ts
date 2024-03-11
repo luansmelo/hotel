@@ -1,5 +1,5 @@
-import { AuthPayload } from "@/dto/user/user.dto";
-import { makeAuthController } from "@/factories/auth/createAuth/createAuthFactory";
+import { CreateAuthModel } from "@/entities/auth/auth";
+import { makeAuthController } from "@/factories/auth/CreateAuthFactory";
 import { validate } from "@/middlewares/validate";
 import { UserLoginSchema } from "@/validators/user.validation";
 import { Router, Request, Response, NextFunction } from "express";
@@ -12,9 +12,9 @@ router.post(
   validate(UserLoginSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AuthPayload = UserLoginSchema.parse(
+      const input: CreateAuthModel = UserLoginSchema.parse(
         request.body
-      ) as AuthPayload;
+      ) as CreateAuthModel;
 
       const controller = makeAuthController();
 

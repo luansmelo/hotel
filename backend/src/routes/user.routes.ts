@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction } from "express";
 import { validate } from "@/middlewares/validate";
 import { UserSchema } from "@/validators/user.validation";
 import { CreateUserModel } from "@/entities/user/createUser";
-import { makeCreateUserController } from "@/factories/user/createUser/createUserFactory";
+import { makeCreateUserController } from "@/factories/user/CreateUserFactory";
 
 const router = Router();
 const slug = "/user";
