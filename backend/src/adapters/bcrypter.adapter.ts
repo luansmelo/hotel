@@ -1,25 +1,25 @@
 import bcrypt from "bcrypt";
 
-export interface Encrypter {
-  encrypt(value: string): Promise<string>;
+export interface HasherProtocol {
+  hash(value: string): Promise<string>;
 }
 
-export interface Decrypter {
-  decrypt(value: string, hashValue: string): Promise<boolean>;
+export interface HasherCompare {
+  compare(value: string, hashValue: string): Promise<boolean>;
 }
 
-export class BcrypterAdapter implements Encrypter, Decrypter {
+export class BcrypterAdapter implements HasherProtocol, HasherCompare {
   private readonly salt: number;
   constructor(salt: number) {
     this.salt = salt;
   }
 
-  async encrypt(value: string): Promise<string> {
+  async hash(value: string): Promise<string> {
     const hash = await bcrypt.hash(value, this.salt);
     return hash;
   }
 
-  async decrypt(value: string, hashValue: string): Promise<boolean> {
+  async compare(value: string, hashValue: string): Promise<boolean> {
     const hash = await bcrypt.compare(value, hashValue);
     return hash;
   }

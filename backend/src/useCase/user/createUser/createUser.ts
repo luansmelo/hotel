@@ -8,14 +8,14 @@ import {
 import { CreateUserModel } from "@/entities/user/createUser";
 import { EmailValidator } from "@/utils/email-validator-adapter";
 import { BadRequestError } from "@/utils/errors/httpErrors";
-import { Encrypter } from "@/adapters/bcrypter.adapter";
+import { HasherProtocol } from "@/adapters/bcrypter.adapter";
 
 export class CreateUserUseCase implements CreateUser {
   constructor(
     private readonly createUser: CreateUserContract,
     private readonly findUser: FindUserByEmailContract,
     private readonly emailValidator: EmailValidator,
-    private readonly encrypter: Encrypter
+    private readonly hasher: HasherProtocol
   ) {}
 
   async create(userModel: CreateUserModel): Promise<UserModel> {
@@ -27,7 +27,7 @@ export class CreateUserUseCase implements CreateUser {
 
     if (user) throw new BadRequestError("usuário já cadastrado");
 
-    const hashedPassword = await this.encrypter.encrypt(userModel.password);
+    const hashedPassword = await this.hasher.hash(userModel.password);
 
     const data = Object.assign({}, userModel, { password: hashedPassword });
 

@@ -1,5 +1,5 @@
 import { AuthPayload } from "@/dto/user/user.dto";
-import { makeAuthController } from "@/factories/makeAuthController";
+import { makeAuthController } from "@/factories/auth/createAuth/createAuthFactory";
 import { validate } from "@/middlewares/validate";
 import { UserLoginSchema } from "@/validators/user.validation";
 import { Router, Request, Response, NextFunction } from "express";
