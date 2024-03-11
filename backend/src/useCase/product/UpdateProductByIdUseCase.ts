@@ -3,7 +3,8 @@ import {
   UpdateProduct,
   UpdateProductContract,
 } from "@/contracts/product";
-import { CreateProductModel } from "@/entities/product/createProduct";
+
+import { UpdateProductModel } from "@/entities/product/updateProduct";
 
 export class UpdateProductByIdUseCase implements UpdateProduct {
   constructor(
@@ -11,10 +12,7 @@ export class UpdateProductByIdUseCase implements UpdateProduct {
     private readonly findProduct: FindProductByIdContract
   ) {}
 
-  async updateById(
-    id: string,
-    input: Partial<CreateProductModel>
-  ): Promise<void> {
+  async updateById(id: string, input: UpdateProductModel): Promise<void> {
     const product = await this.findProduct.findById(id);
 
     await this.updateProduct.updateById(product.id, input);

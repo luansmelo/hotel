@@ -1,17 +1,35 @@
-import { ProductRepositoryContract } from "@/utils/contracts/products-contract";
-import {
-  AddInputToProductData,
-  ProductModel,
-  ProductInputRemove,
-} from "@/dto/product/product.dto";
 import { PrismaClient } from "@prisma/client";
 import { File } from "@/storage/s3/file";
-import { CreateProductContract } from "@/contracts/product";
+import {
+  CreateProductContract,
+  DeleteInputToProductContract,
+  DeleteProductContract,
+  FindProductByIdContract,
+  FindProductByNameContract,
+  FindProductsContract,
+  ProductModel,
+  UpdateProductContract,
+} from "@/contracts/product";
+import { CreateProductModel } from "@/entities/product/createProduct";
+import { FindPredefinedProductByIdContract } from "@/contracts/product/findPredefinedProductById";
+import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
+import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
+import { UpdateProductModel } from "@/entities/product/updateProduct";
 
-export class ProductRepository implements CreateProductContract {
+export class ProductRepository
+  implements
+    CreateProductContract,
+    FindProductByIdContract,
+    FindProductByNameContract,
+    FindProductsContract,
+    FindPredefinedProductByIdContract,
+    DeleteProductContract,
+    DeleteInputToProductContract,
+    UpdateProductContract
+{
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: ProductModel) {
+  async save(input: CreateProductModel) {
     return this.db.product.create({
       data: {
         ...input,
@@ -20,17 +38,20 @@ export class ProductRepository implements CreateProductContract {
     });
   }
 
-  async getById(id: string): Promise<ProductModel | null> {
-    const db = await this.db.product.findUnique({ where: { id } });
+  async findById(id: string): Promise<ProductModel | null> {
+    const db = await this.db.product.findUnique({
+      where: { id },
+    });
+
     return db;
   }
 
-  async getByName(name: string): Promise<ProductModel | null> {
+  async findByName(name: string): Promise<ProductModel | null> {
     const db = await this.db.product.findUnique({ where: { name } });
     return db;
   }
 
-  async getAll() {
+  async findAll() {
     const db = await this.db.product.findMany();
     return db;
   }
@@ -60,7 +81,7 @@ export class ProductRepository implements CreateProductContract {
     return db;
   }
 
-  async updateById(id: string, input: Partial<ProductModel>) {
+  async updateById(id: string, input: Partial<UpdateProductModel>) {
     await this.db.product.update({
       where: { id },
       data: {
@@ -80,14 +101,14 @@ export class ProductRepository implements CreateProductContract {
   }
 
   async deleteById(id: string) {
-    await this.db.product.delete({
+    return this.db.product.delete({
       where: { id },
     });
   }
 
-  async addInputToProduct(input: AddInputToProductData): Promise<void> {
+  async addInputToProduct(input: AddInputToProductModel): Promise<void> {
     const data = input.input.map((inputItem) => ({
-      productId: input.productId,
+      productId: input.id,
       inputId: inputItem.id as string,
       measurementUnit: inputItem.measurementUnit,
       grammage: inputItem.grammage,
@@ -96,7 +117,9 @@ export class ProductRepository implements CreateProductContract {
     await this.db.inputsOnProducts.createMany({ data });
   }
 
-  async removeInputFromProduct(input: ProductInputRemove): Promise<void> {
+  async deleteInputToProductById(
+    input: RemoveInputToProductModel
+  ): Promise<void> {
     await this.db.inputsOnProducts.deleteMany({
       where: {
         productId: input.productId,

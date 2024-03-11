@@ -1,10 +1,9 @@
 import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
-import { ProductModel } from "./createProduct";
 
 export interface DeleteInputToProductContract {
-  deleteInputToProductById(param: RemoveInputToProductModel): Promise<ProductModel>;
+  deleteInputToProductById(param: RemoveInputToProductModel): Promise<void>;
 }
 
 export interface DeleteInputToProduct {
-  deleteInputToProductById(param: RemoveInputToProductModel): Promise<ProductModel>;
+  deleteInputToProductById(param: RemoveInputToProductModel): Promise<void>;
 }

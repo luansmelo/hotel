@@ -1,4 +1,4 @@
-import { Input } from "../input/input.dto";
+import { InputModel } from "@/contracts/input";
 
 export interface ProductModel {
   id?: string;
@@ -7,7 +7,7 @@ export interface ProductModel {
   preparationTime: number;
   resource: string;
   photo_url?: string;
-  inputs?: Input[];
+  inputs?: InputModel[];
 }
 
 export interface ProductInput {
