@@ -17,6 +17,14 @@ export class DeleteInputToProductUseCase implements DeleteInputToProduct {
   ): Promise<void> {
     const product = await this.findProduct.findById(productModel.productId);
 
+    const inputToProduct = product.inputs.map(
+      (input) => input.id === productModel.inputId
+    );
+
+    if (!inputToProduct.length) {
+      throw new NotFoundError("Insumo para o prato não encontrado");
+    }
+
     if (!product) {
       throw new NotFoundError("Produto não encontrado");
     }

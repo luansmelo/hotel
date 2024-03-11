@@ -43,9 +43,26 @@ export class ProductRepository
   async findById(id: string): Promise<ProductModel | null> {
     const db = await this.db.product.findUnique({
       where: { id },
+      include: {
+        inputs: {
+          select: {
+            id: true,
+            measurementUnit: true,
+            grammage: true,
+            input: {
+              select: {
+                name: true,
+                groups: true,
+                measurementUnit: true,
+                unitPrice: true,
+              },
+            },
+          },
+        },
+      },
     });
 
-    return db;
+    return db as unknown as ProductModel;
   }
 
   async findByName(name: string): Promise<ProductModel | null> {

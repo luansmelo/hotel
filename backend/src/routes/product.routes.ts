@@ -1,23 +1,27 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { makeProductController } from "@/factories/makeProductController";
-import { validate } from "@/middlewares/validate";
+
 import {
   AddInputToProductSchema,
   ProductSchema,
 } from "@/validators/product.validation";
-import {
-  AddInputToProduct,
-  ProductModel,
-  ProductInputRemove,
-} from "@/dto/product/product.dto";
-import { authenticated } from "@/middlewares/authenticated";
-import { allowed } from "@/middlewares/allowed";
+import { ProductInputRemove } from "@/dto/product/product.dto";
 import { ROLE } from "@/config/constants";
-import { makeCreateProductController } from "@/factories/product/CreateProductFactory";
+
 import { CreateProductModel } from "@/entities/product/createProduct";
-import { makeFindPredefinedProductByIdController } from "@/factories/product/FindPredefinedProductByIdFactory";
-import { makeAddInputToProductController } from "@/factories/product/AddInputToProductFactory";
+import {
+  makeCreateProductController,
+  makeFindPredefinedProductByIdController,
+  makeAddInputToProductController,
+  makeFindProductsController,
+  makeUpdateProductController,
+  makeFindProductByIdController,
+  makeDeleteProductController,
+} from "@/factories/product/";
+
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
+import { allowed, authenticated, validate } from "@/middlewares";
+import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
+import { makeDeleteInputToProductController } from "@/factories/product/DeleteInputToProductByIdFactory";
 
 const router = Router();
 const slug = "/product";
@@ -49,8 +53,8 @@ router.get(
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const controller = makeProductController();
-      const result = await controller.getAll();
+      const controller = makeFindProductsController();
+      const result = await controller.findAll();
 
       return response.status(200).send({ data: result });
     } catch (error) {
@@ -77,14 +81,14 @@ router.get(
 );
 
 router.get(
-  ":id",
+  "/:id",
   authenticated,
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const controller = makeProductController();
-      const result = await controller.getById(id);
+      const controller = makeFindProductByIdController();
+      const result = await controller.findById(id);
 
       return response.status(200).send(result);
     } catch (error) {
@@ -100,9 +104,10 @@ router.delete(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const controller = makeProductController();
+      const controller = makeDeleteProductController();
+
       const result = await controller.deleteById(id);
-      return response.status(200).end();
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }
@@ -138,15 +143,18 @@ router.delete(
   allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductInputRemove = {
+      const input: RemoveInputToProductModel = {
         productId: request.params.productId,
         inputId: request.params.inputId,
       };
 
-      const controller = makeProductController();
-      await controller.removeInputFromProduct(input);
+      const controller = makeDeleteInputToProductController();
 
-      return response.status(200).end();
+      await controller.deleteById(input);
+
+      return response.status(200).send({
+        message: "Insumo removido com sucesso",
+      });
     } catch (error) {
       next(error);
     }
@@ -160,9 +168,12 @@ router.put(
   async (request, response, next) => {
     try {
       const id = request.params.id;
-      const controller = makeProductController();
+      const controller = makeUpdateProductController();
+
       await controller.updateById(id, request.body);
-      return response.status(200).end();
+      return response.status(200).send({
+        message: "Produto atualizado com sucesso",
+      });
     } catch (error) {
       next(error);
     }

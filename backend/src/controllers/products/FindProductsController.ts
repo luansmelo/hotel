@@ -1,6 +1,6 @@
 import { FindProducts, ProductModel } from "@/contracts/product";
 
-export class FindProductController {
+export class FindProductsController {
   constructor(private readonly products: FindProducts) {}
 
   async findAll(): Promise<ProductModel[] | null> {
