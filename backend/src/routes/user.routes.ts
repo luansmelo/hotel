@@ -1,8 +1,8 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { validate } from "@/middlewares/validate";
-import { UserContractInput } from "@/dto/user/user.dto";
-import { makeUserController } from "@/factories/makeUserController";
-import { UserLoginSchema, UserSchema } from "@/validators/user.validation";
+import { UserSchema } from "@/validators/user.validation";
+import { CreateUserModel } from "@/entities/user/createUser";
+import { makeCreateUserController } from "@/factories/user/createUser/createUserFactory";
 
 const router = Router();
 const slug = "/user";
@@ -12,10 +12,11 @@ router.post(
   validate(UserSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: UserContractInput = UserSchema.parse(
+      const input: CreateUserModel = UserSchema.parse(
         request.body
-      ) as UserContractInput;
-      const controller = makeUserController();
+      ) as CreateUserModel;
+      const controller = makeCreateUserController();
+
       const result = await controller.signup(input);
 
       return response.status(200).send(result);

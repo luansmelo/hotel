@@ -4,7 +4,7 @@ import {
   FindUserByEmailContract,
   UserModel,
 } from "@/contracts/user";
-import bcrypt from "bcrypt";
+
 import { CreateUserModel } from "@/entities/user/createUser";
 import { EmailValidator } from "@/utils/email-validator-adapter";
 import { BadRequestError } from "@/utils/errors/httpErrors";
@@ -23,9 +23,6 @@ export class CreateUserUseCase implements CreateUser {
 
     if (!isValid) throw new BadRequestError("email inválido");
 
-    if (userModel.password !== userModel.confirmPassword)
-      throw new BadRequestError("senhas não conferem");
-
     const user = await this.findUser.findByEmail(userModel.email);
 
     if (user) throw new BadRequestError("usuário já cadastrado");
@@ -35,6 +32,8 @@ export class CreateUserUseCase implements CreateUser {
     const data = Object.assign({}, userModel, { password: hashedPassword });
 
     const userCreated = await this.createUser.save(data);
+
+    userCreated.password = undefined;
 
     return userCreated;
   }
