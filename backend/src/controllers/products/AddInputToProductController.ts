@@ -4,7 +4,7 @@ import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
 export class AddInputToProductController {
   constructor(private readonly product: AddInputToProduct) {}
 
-  async create(input: AddInputToProductModel) {
-    return this.product.save(input);
+  async add(input: AddInputToProductModel) {
+    return this.product.addInput(input);
   }
 }

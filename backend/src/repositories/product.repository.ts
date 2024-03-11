@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { File } from "@/storage/s3/file";
 import {
+  AddInputToProductContract,
   CreateProductContract,
   DeleteInputToProductContract,
   DeleteProductContract,
@@ -15,10 +16,12 @@ import { FindPredefinedProductByIdContract } from "@/contracts/product/findPrede
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
 import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
 import { UpdateProductModel } from "@/entities/product/updateProduct";
+import { FindInputsByIdContract } from "@/contracts/input/FindInputsById";
 
 export class ProductRepository
   implements
     CreateProductContract,
+    AddInputToProductContract,
     FindProductByIdContract,
     FindProductByNameContract,
     FindProductsContract,
@@ -33,7 +36,6 @@ export class ProductRepository
     return this.db.product.create({
       data: {
         ...input,
-        inputs: null,
       },
     });
   }
@@ -56,7 +58,7 @@ export class ProductRepository
     return db;
   }
 
-  async getPredefinedProduct(id: string) {
+  async findPredefinedById(id: string): Promise<ProductModel | null> {
     const db = await this.db.product.findFirst({
       where: { id: id },
       include: {
@@ -70,6 +72,7 @@ export class ProductRepository
                 id: true,
                 name: true,
                 code: true,
+                measurementUnit: true,
                 unitPrice: true,
                 groups: true,
               },
@@ -78,7 +81,10 @@ export class ProductRepository
         },
       },
     });
-    return db;
+
+    if (!db) return null;
+
+    return db as unknown as ProductModel;
   }
 
   async updateById(id: string, input: Partial<UpdateProductModel>) {
@@ -106,8 +112,8 @@ export class ProductRepository
     });
   }
 
-  async addInputToProduct(input: AddInputToProductModel): Promise<void> {
-    const data = input.input.map((inputItem) => ({
+  async add(input: AddInputToProductModel): Promise<void> {
+    const data = input.inputs.map((inputItem) => ({
       productId: input.id,
       inputId: inputItem.id as string,
       measurementUnit: inputItem.measurementUnit,

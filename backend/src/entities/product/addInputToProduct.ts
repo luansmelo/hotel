@@ -6,5 +6,5 @@ export interface InputToProduct {
 
 export interface AddInputToProductModel {
   id: string;
-  input: InputToProduct[];
+  inputs: InputToProduct[];
 }

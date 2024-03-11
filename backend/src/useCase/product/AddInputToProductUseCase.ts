@@ -1,29 +1,23 @@
+import { FindInputsById } from "@/contracts/input/FindInputsById";
 import {
   AddInputToProduct,
   AddInputToProductContract,
-  FindProductByIdContract,
-  ProductModel,
 } from "@/contracts/product";
+import { FindPredefinedProductByIdContract } from "@/contracts/product/findPredefinedProductById";
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
-import { UnauthorizedError } from "@/utils/errors/httpErrors";
+import { NotFoundError } from "@/utils/errors/httpErrors";
 
 export class AddInputToProductUseCase implements AddInputToProduct {
   constructor(
-    private readonly addInput: AddInputToProductContract,
-    private readonly findProduct: FindProductByIdContract
+    private readonly input: AddInputToProductContract,
+    private readonly findProduct: FindPredefinedProductByIdContract
   ) {}
 
-  async save(productModel: AddInputToProductModel): Promise<ProductModel> {
-    const product = await this.findProduct.findById(productModel.id);
+  async addInput(productModel: AddInputToProductModel): Promise<void> {
+    const product = await this.findProduct.findPredefinedById(productModel.id);
 
-    const inputIdsToAdd = productModel.input.map((i) => i.id);
-    const inputOnProduct = product.inputs.some((input) =>
-      inputIdsToAdd.includes(input.id)
-    );
+    if (!product) throw new NotFoundError("Produto não encontrado");
 
-    if (inputOnProduct)
-      throw new UnauthorizedError("Input já foi adicionado ao produto");
-
-    return this.addInput.add(productModel);
+    await this.input.add(productModel);
   }
 }

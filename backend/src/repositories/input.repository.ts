@@ -10,6 +10,7 @@ import {
   UpdateInputContract,
 } from "@/contracts/input";
 import { CreateInputModel } from "@/entities/input/createInput";
+import { FindInputsByIdContract } from "@/contracts/input/FindInputsById";
 
 export class InputRepository
   implements
@@ -17,6 +18,7 @@ export class InputRepository
     FindInputByCodeContract,
     FindInputByIdContract,
     FindInputByNameContract,
+    FindInputsByIdContract,
     FindInputsContract,
     DeleteInputContract,
     UpdateInputContract
@@ -90,6 +92,43 @@ export class InputRepository
       measurementUnitId: undefined,
       groups: db.groups.map((e) => e.group),
     };
+
+    return serialized;
+  }
+
+  async findByIds(ids: string[]): Promise<InputModel[]> {
+    const db = await this.db.input.findFirst({
+      where: { id: { in: ids } },
+      include: {
+        measurementUnit: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        groups: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!db) return null;
+
+    const serialized = {
+      id: db.id,
+      name: db.name,
+      code: db.code,
+      unitPrice: db.unitPrice,
+      measurementUnit: db.measurementUnit,
+      groups: db.groups.map((e) => e.group),
+    } as unknown as InputModel[];
 
     return serialized;
   }

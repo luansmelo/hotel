@@ -13,6 +13,11 @@ import {
 import { authenticated } from "@/middlewares/authenticated";
 import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
+import { makeCreateProductController } from "@/factories/product/CreateProductFactory";
+import { CreateProductModel } from "@/entities/product/createProduct";
+import { makeFindPredefinedProductByIdController } from "@/factories/product/FindPredefinedProductByIdFactory";
+import { makeAddInputToProductController } from "@/factories/product/AddInputToProductFactory";
+import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
 
 const router = Router();
 const slug = "/product";
@@ -24,10 +29,11 @@ router.post(
   validate(ProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductModel = ProductSchema.parse(
+      const input: CreateProductModel = ProductSchema.parse(
         request.body
-      ) as ProductModel;
-      const controller = makeProductController();
+      ) as CreateProductModel;
+
+      const controller = makeCreateProductController();
       const result = await controller.create(input);
 
       return response.status(201).send(result);
@@ -60,8 +66,8 @@ router.get(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const controller = makeProductController();
-      const result = await controller.getPredefinedProduct(id);
+      const controller = makeFindPredefinedProductByIdController();
+      const result = await controller.findPredefinedById(id);
 
       return response.status(200).send(result);
     } catch (error) {
@@ -110,14 +116,16 @@ router.post(
   validate(AddInputToProductSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: AddInputToProduct = AddInputToProductSchema.parse(
+      const input: AddInputToProductModel = AddInputToProductSchema.parse(
         request.body
-      ) as AddInputToProduct;
+      ) as AddInputToProductModel;
 
-      const controller = makeProductController();
-      await controller.addInputToProduct(input);
+      const controller = makeAddInputToProductController();
+      await controller.add(input);
 
-      return response.status(200).end();
+      return response.status(200).send({
+        message: "Insumo adicionado com sucesso",
+      });
     } catch (error) {
       next(error);
     }
