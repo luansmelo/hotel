@@ -5,6 +5,8 @@ import {
 import { MenuModel, MenuProductInput } from "@/dto/menu/menu.dto";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 import { AddProductModal, MenuProduct } from "@/dto/menu/menu.dto";
+import { AddProductModel } from "@/entities/menu/AddProductToMenuEntity";
+import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
 
 export class MenuService implements MenuServiceContract {
   constructor(private readonly repository: MenuRepositoryContract) {}
@@ -97,13 +99,13 @@ export class MenuService implements MenuServiceContract {
     return this.repository.deleteById(menu.id);
   }
 
-  async deleteProduct(input: MenuProduct): Promise<void> {
+  async deleteProduct(input: RemoveProductModel): Promise<void> {
     await this.getById(input.menuId);
 
     await this.repository.deleteProduct(input);
   }
 
-  async addProduct(input: AddProductModal): Promise<void> {
+  async addProduct(input: AddProductModel): Promise<void> {
     await this.getById(input.menuId);
 
     const products = input.product.flatMap(({ productId, weekDay }) => {
