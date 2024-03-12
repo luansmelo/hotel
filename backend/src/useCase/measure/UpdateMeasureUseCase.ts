@@ -1,12 +1,13 @@
 import {
   FindMeasureByIdContract,
   MeasureModel,
+  UpdateMeasure,
   UpdateMeasureContract,
 } from "@/contracts";
 import { CreateMeasureModel } from "@/entities/measure/createMeasure";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
-export class UpdateMeasureUseCase {
+export class UpdateMeasureUseCase implements UpdateMeasure {
   constructor(
     private readonly updateMeasure: UpdateMeasureContract,
     private readonly findMeasure: FindMeasureByIdContract

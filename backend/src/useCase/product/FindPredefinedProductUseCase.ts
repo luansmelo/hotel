@@ -4,7 +4,6 @@ import {
   FindPredefinedProductByIdContract,
 } from "@/contracts/product/FindPredefinedProductByIdContract";
 import { NotFoundError } from "@/utils/errors/httpErrors";
-import { mapperProduct } from "./mapper/mapperProduct";
 
 export class FindPredefinedProductByIdUseCase
   implements FindPredefinedProductById

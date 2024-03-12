@@ -1,11 +1,12 @@
 import {
   CategoryModel,
   FindCategoryByIdContract,
+  UpdateCategory,
   UpdateCategoryContract,
 } from "@/contracts";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
-export class UpdateCategoryUseCase {
+export class UpdateCategoryUseCase implements UpdateCategory {
   constructor(
     private readonly updateCategory: UpdateCategoryContract,
     private readonly findCategory: FindCategoryByIdContract

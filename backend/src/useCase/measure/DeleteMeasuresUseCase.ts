@@ -1,11 +1,12 @@
 import {
+  DeleteMeasure,
   DeleteMeasureContract,
   FindMeasureByIdContract,
   MeasureModel,
 } from "@/contracts";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
-export class DeleteMeasureUseCase {
+export class DeleteMeasureUseCase implements DeleteMeasure {
   constructor(
     private readonly deleteMeasure: DeleteMeasureContract,
     private readonly findMeasure: FindMeasureByIdContract

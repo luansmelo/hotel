@@ -1,6 +1,6 @@
-import { FindMeasuresContract, MeasureModel } from "@/contracts";
+import { FindMeasures, FindMeasuresContract, MeasureModel } from "@/contracts";
 
-export class FindMeasuresUseCase {
+export class FindMeasuresUseCase implements FindMeasures {
   constructor(private readonly measures: FindMeasuresContract) {}
 
   async findAll(): Promise<MeasureModel[] | null> {

@@ -1,12 +1,13 @@
 import {
   FindGroupByIdContract,
   GroupModel,
+  UpdateGroup,
   UpdateGroupContract,
 } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
 import { NotFoundError } from "@/utils/errors/httpErrors";
 
-export class UpdateGroupUseCase {
+export class UpdateGroupUseCase implements UpdateGroup {
   constructor(
     private readonly updateGroup: UpdateGroupContract,
     private readonly findGroup: FindGroupByIdContract
