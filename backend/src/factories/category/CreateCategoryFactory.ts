@@ -2,8 +2,8 @@ import prisma from "@/config/prisma";
 
 import { CreateCategoryController } from "@/controllers/category/CreateCategoryController";
 import { CategoryRepository } from "@/repositories/category.repository";
-import { CreateCategoryUseCase } from "@/useCase/category/createCategory/createCategory";
-import { FindCategoryByNameUseCase } from "@/useCase/category/findCategoryByName/findCategoryByName";
+import { CreateCategoryUseCase } from "@/useCase/category/CreateCategoryUseCase";
+import { FindCategoryByNameUseCase } from "@/useCase/category/FindCategoryByNameUseCase";
 
 export function makeCreateCategoryController(): CreateCategoryController {
   const repo = new CategoryRepository(prisma);

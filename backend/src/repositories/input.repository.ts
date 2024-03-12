@@ -10,7 +10,7 @@ import {
   UpdateInputContract,
 } from "@/contracts/input";
 import { CreateInputModel } from "@/entities/input/createInput";
-import { FindInputsByIdContract } from "@/contracts/input/FindInputsById";
+import { FindInputsByIdContract } from "@/contracts/input/FindInputsByIdContract";
 
 export class InputRepository
   implements

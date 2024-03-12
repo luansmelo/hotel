@@ -12,7 +12,7 @@ import {
   UpdateProductContract,
 } from "@/contracts/product";
 import { CreateProductModel } from "@/entities/product/createProduct";
-import { FindPredefinedProductByIdContract } from "@/contracts/product/findPredefinedProductById";
+import { FindPredefinedProductByIdContract } from "@/contracts/product/FindPredefinedProductByIdContract";
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
 import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
 import { UpdateProductModel } from "@/entities/product/updateProduct";

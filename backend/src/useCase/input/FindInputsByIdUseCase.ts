@@ -1,8 +1,8 @@
 import {
   FindInputsById,
   FindInputsByIdContract,
-} from "@/contracts/input/FindInputsById";
-import { InputModel } from "@/contracts/input/createInput";
+} from "@/contracts/input/FindInputsByIdContract";
+import { InputModel } from "@/contracts/input/CreateInputContract";
 
 export class FindInputsByIdUseCase implements FindInputsById {
   constructor(private readonly findInput: FindInputsByIdContract) {}

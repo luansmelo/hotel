@@ -2,8 +2,8 @@ import prisma from "@/config/prisma";
 import { DeleteCategoryController } from "@/controllers/category/DeleteCategoryController";
 
 import { CategoryRepository } from "@/repositories/category.repository";
-import { DeleteCategoryUseCase } from "@/useCase/category/deleteCategory/deleteCategory";
-import { FindCategoryByIdUseCase } from "@/useCase/category/findCategoryById/findCategoryById";
+import { DeleteCategoryUseCase } from "@/useCase/category/DeleteCategoryUseCase";
+import { FindCategoryByIdUseCase } from "@/useCase/category/FindCategoryByIdUseCase";
 
 export function makeDeleteCategoryController(): DeleteCategoryController {
   const repo = new CategoryRepository(prisma);

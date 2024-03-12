@@ -2,7 +2,7 @@ import {
   AddInputToProduct,
   AddInputToProductContract,
 } from "@/contracts/product";
-import { FindPredefinedProductByIdContract } from "@/contracts/product/findPredefinedProductById";
+import { FindPredefinedProductByIdContract } from "@/contracts/product/FindPredefinedProductByIdContract";
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
 import { BadRequestError, NotFoundError } from "@/utils/errors/httpErrors";
 

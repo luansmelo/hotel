@@ -1,8 +1,8 @@
 import prisma from "@/config/prisma";
 import { UpdateMeasureController } from "@/controllers/measure/UpdateMeasureController";
 import { MeasureRepository } from "@/repositories/measure.repository";
-import { FindMeasureByIdUseCase } from "@/useCase/measure/findMeasureById/findMeasureById";
-import { UpdateMeasureUseCase } from "@/useCase/measure/updateMeasure/updateMeasure";
+import { FindMeasureByIdUseCase } from "@/useCase/measure/FindMeasureByIdUseCase";
+import { UpdateMeasureUseCase } from "@/useCase/measure/UpdateMeasureUseCase";
 
 export function makeUpdateMeasureController(): UpdateMeasureController {
   const repo = new MeasureRepository(prisma);

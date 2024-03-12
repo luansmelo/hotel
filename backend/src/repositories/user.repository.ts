@@ -1,5 +1,5 @@
-import { CreateUserContract, UserModel } from "@/contracts/user/createUser";
-import { FindUserByEmailContract } from "@/contracts/user/findUseryByEmail";
+import { CreateUserContract, UserModel } from "@/contracts/user/CreateUserContract";
+import { FindUserByEmailContract } from "@/contracts/user/FindUseryByEmailContract";
 import { CreateUserModel } from "@/entities/user/createUser";
 import { PrismaClient } from "@prisma/client";
 

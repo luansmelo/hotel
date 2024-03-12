@@ -1,5 +1,5 @@
 import { ProductModel } from "@/contracts/product";
-import { FindPredefinedProductById } from "@/contracts/product/findPredefinedProductById";
+import { FindPredefinedProductById } from "@/contracts/product/FindPredefinedProductByIdContract";
 
 export class FindPredefinedProductByIdController {
   constructor(private readonly product: FindPredefinedProductById) {}

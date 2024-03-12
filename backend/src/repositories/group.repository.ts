@@ -10,7 +10,7 @@ import {
   GroupModel,
 } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
-import { FindGroupsByIdContract } from "@/contracts/group/findGroupsById";
+import { FindGroupsByIdContract } from "@/contracts/group/FindGroupsByIdContract";
 
 export class GroupRepository
   implements

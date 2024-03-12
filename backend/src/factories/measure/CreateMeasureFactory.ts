@@ -2,8 +2,8 @@ import prisma from "@/config/prisma";
 
 import { CreateMeasureController } from "@/controllers/measure/CreateMeasureController";
 import { MeasureRepository } from "@/repositories/measure.repository";
-import { CreateMeasureUseCase } from "@/useCase/measure/createMeasure/createMeasure";
-import { FindMeasureByNameUseCase } from "@/useCase/measure/findMeasureByName/findMeasureByName";
+import { CreateMeasureUseCase } from "@/useCase/measure/CreateMeasureUseCase";
+import { FindMeasureByNameUseCase } from "@/useCase/measure/FindMeasureByNameUseCase";
 
 export function makeCreateMeasureController(): CreateMeasureController {
   const repo = new MeasureRepository(prisma);

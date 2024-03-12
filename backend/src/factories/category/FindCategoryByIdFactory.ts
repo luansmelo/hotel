@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 import { FindCategoryByIdController } from "@/controllers/category/FindCategoryByIdController";
 import { CategoryRepository } from "@/repositories/category.repository";
-import { FindCategoryByIdUseCase } from "@/useCase/category/findCategoryById/findCategoryById";
+import { FindCategoryByIdUseCase } from "@/useCase/category/FindCategoryByIdUseCase";
 
 export function makeFindCategoryByIdController(): FindCategoryByIdController {
   const repo = new CategoryRepository(prisma);

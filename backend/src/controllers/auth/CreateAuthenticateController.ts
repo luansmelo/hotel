@@ -1,4 +1,4 @@
-import { CreateAuth } from "@/contracts/auth/authentication";
+import { CreateAuth } from "@/contracts/auth/AuthenticationContract";
 import { CreateAuthModel } from "@/entities/auth/auth";
 
 export class CreateAuthenticationController {

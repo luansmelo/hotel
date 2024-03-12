@@ -4,10 +4,10 @@ import { UpdateInputController } from "@/controllers/input/UpdateInputController
 import { GroupRepository } from "@/repositories/group.repository";
 import { InputRepository } from "@/repositories/input.repository";
 import { MeasureRepository } from "@/repositories/measure.repository";
-import { FindGroupsByIdUseCase } from "@/useCase/group/findGroupsById/findGroupsById";
-import { FindInputByIdUseCase } from "@/useCase/input/findInputById/findInputById";
-import { UpdateInputUseCase } from "@/useCase/input/updateInput/updateInput";
-import { FindMeasureByIdUseCase } from "@/useCase/measure/findMeasureById/findMeasureById";
+import { FindGroupsByIdUseCase } from "@/useCase/group/FindGroupsByIdUseCase";
+import { FindInputByIdUseCase } from "@/useCase/input/FindInputByIdUseCase";
+import { UpdateInputUseCase } from "@/useCase/input/UpdateInputUseCase";
+import { FindMeasureByIdUseCase } from "@/useCase/measure/FindMeasureByIdUseCase";
 
 export function makeUpdateInputController(): UpdateInputController {
   const repo = new InputRepository(prisma);

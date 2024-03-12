@@ -4,7 +4,7 @@ import { BcrypterAdapter, JwtAdapter } from "@/adapters";
 import { CRYPTOGRAPHY_SALTING_ROUNDS } from "@/config/constants";
 import { CreateAuthenticationController } from "@/controllers/auth/CreateAuthenticateController";
 import { UserRepository } from "@/repositories/user.repository";
-import { CreateAuthUseCase } from "@/useCase/auth/createAuth/createAuth";
+import { CreateAuthUseCase } from "@/useCase/auth/CreateAuthUseCase";
 import { EmailValidatorAdapter } from "@/utils/email-validator-adapter";
 import env from "@/config/env";
 

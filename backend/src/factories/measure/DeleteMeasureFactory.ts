@@ -2,8 +2,8 @@ import prisma from "@/config/prisma";
 
 import { DeleteMeasureController } from "@/controllers/measure/DeleteMeasureController";
 import { MeasureRepository } from "@/repositories/measure.repository";
-import { DeleteMeasureUseCase } from "@/useCase/measure/deleteMeasures/deleteMeasures";
-import { FindMeasureByIdUseCase } from "@/useCase/measure/findMeasureById/findMeasureById";
+import { DeleteMeasureUseCase } from "@/useCase/measure/DeleteMeasuresUseCase";
+import { FindMeasureByIdUseCase } from "@/useCase/measure/FindMeasureByIdUseCase";
 
 export function makeDeleteMeasureController(): DeleteMeasureController {
   const repo = new MeasureRepository(prisma);
