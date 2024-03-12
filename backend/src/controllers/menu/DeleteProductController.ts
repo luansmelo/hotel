@@ -1,9 +1,9 @@
-import { DeleteProduct } from "@/contracts/product";
+import { DeleteMenu } from "@/contracts/menu/DeleteMenuContract";
 
-export class DeleteProductController {
-  constructor(private readonly product: DeleteProduct) {}
+export class DeleteMenuController {
+  constructor(private readonly menu: DeleteMenu) {}
 
   async deleteById(id: string) {
-    return this.product.deleteById(id);
+    return this.menu.deleteById(id);
   }
 }

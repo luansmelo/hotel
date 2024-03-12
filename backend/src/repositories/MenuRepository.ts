@@ -105,6 +105,8 @@ export class MenuRepository
       },
     });
 
+    if (!menu) return null;
+
     const uniqueCategories = Array.from(
       new Set(menu.categoryProductSchedule.map((cps) => cps.category.id))
     );

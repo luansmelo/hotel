@@ -16,7 +16,7 @@ export class DeleteMenuUseCase implements DeleteMenu {
     const menu = await this.menu.findById(id);
 
     if (!menu) {
-      throw new NotFoundError("Unidade de medida não encontrada");
+      throw new NotFoundError("Cardápio não encontrado");
     }
 
     return this.deleteMenu.deleteById(menu.id);

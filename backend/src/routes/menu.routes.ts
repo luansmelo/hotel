@@ -1,11 +1,18 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { makeMenuController } from "@/factories/makeMenuController";
-import { MenuInput, MenuProductInput, MenuSchema } from "@/dto/menu/menu.dto";
-import { validate } from "@/middlewares/validate";
-import { authenticated } from "@/middlewares/authenticated";
-import { allowed } from "@/middlewares/allowed";
 import { ROLE } from "@/config/constants";
-import { ProductCategoryInput } from "@/dto/category/category.dto";
+import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
+import { MenuSchema } from "@/validators/MenuValidation";
+import {
+  makeCreateMenuController,
+  makeDeleteMenuController,
+  makeUpdateMenuController,
+  makeFindMenusController,
+  makeFindMenuController,
+  makeDeleteProductToMenuController,
+  makeFindMenuByIdController,
+  makeAddProductToMenuController,
+} from "@/factories/menu/";
+import { allowed, authenticated, validate } from "@/middlewares";
 
 const router = Router();
 const slug = "/menu";
@@ -17,8 +24,11 @@ router.post(
   validate(MenuSchema),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: MenuInput = MenuSchema.parse(request.body) as MenuInput;
-      const controller = makeMenuController();
+      const input: CreateMenuModel = MenuSchema.parse(
+        request.body
+      ) as CreateMenuModel;
+
+      const controller = makeCreateMenuController();
       const result = await controller.create(input);
 
       return response.status(201).send(result);
@@ -29,19 +39,20 @@ router.post(
 );
 
 router.get(
-  "/select/filter",
+  "/production/map",
   authenticated,
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: MenuProductInput = {
+      const input = {
         menuId: request.query.menu as string,
         categoryId: request.query.category as string,
         day: request.query.day as string,
       };
 
-      const controller = makeMenuController();
-      const result = await controller.getSelectedMenu(input);
+      const controller = makeFindMenuController();
+
+      const result = await controller.findMenu(input);
 
       return response.status(200).send(result);
     } catch (error) {
@@ -57,8 +68,9 @@ router.get(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = request.params.id;
-      const controller = makeMenuController();
-      const result = await controller.getById(id);
+
+      const controller = makeFindMenuByIdController();
+      const result = await controller.findById(id);
 
       return response.status(200).send(result);
     } catch (error) {
@@ -73,9 +85,9 @@ router.get(
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: string = request.query.day as string;
-      const controller = makeMenuController();
-      const result = await controller.getAll(input);
+      const controller = makeFindMenusController();
+
+      const result = await controller.findAll();
 
       return response.status(200).send(result);
     } catch (error) {
@@ -99,7 +111,8 @@ router.delete(
         weekDay,
       };
 
-      const controller = makeMenuController();
+      const controller = makeDeleteProductToMenuController();
+
       const result = await controller.deleteProduct(input);
 
       return response.status(200).send(result);
@@ -115,10 +128,10 @@ router.post(
   allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const input: ProductCategoryInput = request.body;
+      const input = request.body;
 
-      const controller = makeMenuController();
-      const result = await controller.addProduct(input);
+      const controller = makeAddProductToMenuController();
+      const result = await controller.add(input);
 
       return response.status(201).send(result);
     } catch (error) {
@@ -128,17 +141,20 @@ router.post(
 );
 
 router.delete(
-  "/:menuId",
+  "/:id",
   authenticated,
   allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const { menuId } = request.params;
+      const id = request.params.id;
 
-      const controller = makeMenuController();
-      await controller.deleteById(menuId);
+      const controller = makeDeleteMenuController();
 
-      return response.status(204).end()
+      await controller.deleteById(id);
+
+      return response.status(200).send({
+        message: "Cardápio excluído com sucesso",
+      });
     } catch (error) {
       next(error);
     }
@@ -146,18 +162,21 @@ router.delete(
 );
 
 router.put(
-  "/:menuId",
+  "/:id",
   authenticated,
   allowed([ROLE.Admin]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const { menuId } = request.params;
-      const { name } = request.body;
+      const id = request.params.id;
+      const input: CreateMenuModel = request.body;
 
-      const controller = makeMenuController();
+      const controller = makeUpdateMenuController();
 
-      await controller.update(menuId, name);
-      return response.status(204).end();
+      await controller.updateById(id, input);
+
+      return response.status(200).send({
+        message: "Cardápio atualizado com sucesso",
+      });
     } catch (error) {
       next(error);
     }
