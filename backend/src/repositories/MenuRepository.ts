@@ -10,13 +10,11 @@ import { FindMenuByNameContract } from "@/contracts/menu/FindMenuByNameContract"
 import { FindMenuContract } from "@/contracts/menu/FindMenuContract";
 import { FindMenusContract } from "@/contracts/menu/FindMenusContract";
 import { UpdateMenuContract } from "@/contracts/menu/UpdateMenuContract";
-import {
-  AddProductModel,
-  AddProductToMenuModel,
-} from "@/entities/menu/AddProductToMenuEntity";
+import { AddProductToMenuModel } from "@/entities/menu/AddProductToMenuEntity";
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
 import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
 import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
+import { mapperMenu } from "@/useCase/menu/mapper/mapperMenu";
 import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository
@@ -40,13 +38,20 @@ export class MenuRepository
   }
 
   async findById(id: string): Promise<MenuModel | null> {
-    const db = await this.db.menu.findUnique({
+    const menu = await this.db.menu.findUnique({
       where: {
         id,
       },
+      include: {
+        categoryProductSchedule: {
+          select: {
+            category: true,
+          },
+        },
+      },
     });
 
-    return db;
+    return mapperMenu(menu);
   }
 
   async findByName(name: string): Promise<MenuModel | null> {
@@ -59,7 +64,7 @@ export class MenuRepository
     return db;
   }
 
-  async findMenu(input: FindMenuModel): Promise<MenuModel[] | null> {
+  async findMenu(input: FindMenuModel): Promise<MenuModel | null> {
     const menu = await this.db.menu.findFirst({
       where: {
         id: input.menuId,
@@ -107,46 +112,11 @@ export class MenuRepository
 
     if (!menu) return null;
 
-    const uniqueCategories = Array.from(
-      new Set(menu.categoryProductSchedule.map((cps) => cps.category.id))
-    );
-
-    const data = {
-      id: menu?.id,
-      name: menu?.name,
-      categories: uniqueCategories.map((categoryId) => {
-        const category = menu.categoryProductSchedule.find(
-          (cps) => cps.category.id === categoryId
-        );
-
-        return {
-          categoryId: categoryId,
-          name: category?.category.name,
-          products: (category?.category.categoryProductSchedule || []).map(
-            (schedule) => ({
-              id: schedule.product.id,
-              name: schedule.product.name,
-              description: schedule.product.description,
-              weekDay: schedule.weekDay,
-              inputs: schedule.product.inputs.map((input) => ({
-                id: input?.input.id,
-                name: input?.input.name,
-                code: input.input.code,
-                unitPrice: input.input.unitPrice,
-                grammage: input.grammage,
-                measurementUnit: input.measurementUnit,
-              })),
-            })
-          ),
-        };
-      }),
-    };
-
-    return data as unknown as MenuModel[];
+    return mapperMenu(menu);
   }
 
   async findAll(): Promise<MenuModel[] | null> {
-    return this.db.menu.findMany({
+    const menu = await this.db.menu.findMany({
       include: {
         categoryProductSchedule: {
           include: {
@@ -155,6 +125,8 @@ export class MenuRepository
         },
       },
     });
+
+    return menu.map((menu) => mapperMenu(menu));
   }
 
   async deleteProduct(input: RemoveProductModel): Promise<void> {
@@ -166,6 +138,7 @@ export class MenuRepository
         weekDay: input.weekDay,
       },
     });
+    console.log("Delete Product", input);
   }
 
   async add(input: AddProductToMenuModel[]): Promise<void> {

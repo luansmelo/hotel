@@ -2,7 +2,7 @@ import prisma from "@/config/prisma";
 
 import { DeleteProductToMenuController } from "@/controllers/menu/DeleteProductToMenuController";
 import { MenuRepository } from "@/repositories/MenuRepository";
-import { DeleteProductToMenuUseCase } from "@/useCase/menu/DeleteProductToMenuUseCase copy";
+import { DeleteProductToMenuUseCase } from "@/useCase/menu/DeleteProductToMenuUseCase";
 import { FindMenuByIdUseCase } from "@/useCase/menu/FindMenuByIdUseCase";
 
 export function makeDeleteProductToMenuController(): DeleteProductToMenuController {

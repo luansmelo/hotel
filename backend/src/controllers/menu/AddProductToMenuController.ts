@@ -5,6 +5,6 @@ export class AddProductToMenuController {
   constructor(private readonly menu: AddProductToMenu) {}
 
   async add(input: AddProductModel) {
-    return this.menu.addInput(input);
+    return this.menu.addProduct(input);
   }
 }

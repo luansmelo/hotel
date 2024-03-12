@@ -6,7 +6,7 @@ import { NotFoundError } from "@/utils/errors/httpErrors";
 export class FindMenuUseCase implements FindMenu {
   constructor(private readonly menu: FindMenuContract) {}
 
-  async findMenu(param: FindMenuModel): Promise<MenuModel[]> {
+  async findMenu(param: FindMenuModel): Promise<MenuModel> {
     const menu = await this.menu.findMenu(param);
 
     if (!menu) {

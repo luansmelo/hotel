@@ -113,9 +113,11 @@ router.delete(
 
       const controller = makeDeleteProductToMenuController();
 
-      const result = await controller.deleteProduct(input);
+      await controller.deleteProduct(input);
 
-      return response.status(200).send(result);
+      return response.status(200).send({
+        message: "Cardápio excluído com sucesso",
+      });
     } catch (error) {
       next(error);
     }
