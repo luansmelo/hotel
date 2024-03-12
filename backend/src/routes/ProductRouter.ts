@@ -1,10 +1,8 @@
 import { Request, Response, Router, NextFunction } from "express";
-
 import {
   AddInputToProductSchema,
   ProductSchema,
 } from "@/validators/product.validation";
-import { ProductInputRemove } from "@/dto/product/product.dto";
 import { ROLE } from "@/config/constants";
 
 import { CreateProductModel } from "@/entities/product/createProduct";

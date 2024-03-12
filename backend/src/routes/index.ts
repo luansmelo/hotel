@@ -1,13 +1,13 @@
 import { Router } from "express";
-import * as inputs from "./input.routes";
-import * as products from "./product.routes";
-import * as menus from "./menu.routes";
-import * as category from "./category.routes";
-import * as user from "./user.routes";
-import * as group from "./group.routes";
-import * as measure from "./measure.routes";
-import * as auth from "./auth.routes";
-import * as s3 from "./s3.routes";
+import * as inputs from "./InputRouter";
+import * as products from "./ProductRouter";
+import * as menus from "./MenuRouter";
+import * as category from "./CategoryRouter";
+import * as user from "./UserRouter";
+import * as group from "./GroupRouter";
+import * as measure from "./MeasureRouter";
+import * as auth from "./AuthRouter";
+import * as s3 from "./S3Router";
 
 const mainRouter = Router();
 
