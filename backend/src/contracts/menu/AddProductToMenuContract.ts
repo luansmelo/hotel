@@ -5,5 +5,5 @@ export interface AddProductToMenuContract {
 }
 
 export interface AddProductToMenu {
-  addInput(input: AddProductModel): Promise<void>;
+  addInput(input: AddProductModel[]): Promise<void>;
 }

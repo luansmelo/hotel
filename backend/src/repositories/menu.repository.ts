@@ -1,18 +1,40 @@
-import { AddProductRepositoryModal, MenuProduct } from "@/dto/menu/menu.dto";
-import { MenuModel, MenuProductInput } from "@/dto/menu/menu.dto";
-import { MenuRepositoryContract } from "@/utils/contracts/menu-contract";
+import { AddProductToMenuContract } from "@/contracts/menu/AddProductToMenuContract";
+import {
+  CreateMenuContract,
+  MenuModel,
+} from "@/contracts/menu/CreateMenuContract";
+import { DeleteMenuContract } from "@/contracts/menu/DeleteMenuContract";
+import { DeleteProductToMenuContract } from "@/contracts/menu/DeleteProductToMenuContract";
+import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
+import { FindMenuContract } from "@/contracts/menu/FindMenuContract";
+import { FindMenusContract } from "@/contracts/menu/FindMenusContract";
+import { UpdateMenuContract } from "@/contracts/menu/UpdateMenuContract";
+import { AddProductModel } from "@/entities/menu/AddProductToMenuEntity";
+import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
+import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
+import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
 import { PrismaClient } from "@prisma/client";
 
-export class MenuRepository implements MenuRepositoryContract {
+export class MenuRepository
+  implements
+    CreateMenuContract,
+    FindMenuById,
+    FindMenuContract,
+    FindMenusContract,
+    DeleteMenuContract,
+    DeleteProductToMenuContract,
+    AddProductToMenuContract,
+    UpdateMenuContract
+{
   constructor(private readonly db: PrismaClient) {}
 
-  async save(input: MenuModel): Promise<MenuModel> {
+  async save(input: CreateMenuModel): Promise<MenuModel> {
     return this.db.menu.create({
       data: input,
     });
   }
 
-  async getById(id: string): Promise<MenuModel | null> {
+  async findById(id: string): Promise<MenuModel | null> {
     const db = await this.db.menu.findUnique({
       where: {
         id,
@@ -22,8 +44,8 @@ export class MenuRepository implements MenuRepositoryContract {
     return db;
   }
 
-  async getSelectedMenu(input: MenuProductInput): Promise<any | null> {
-    return this.db.menu.findFirst({
+  async findMenu(input: FindMenuModel): Promise<MenuModel[] | null> {
+    const menu = await this.db.menu.findFirst({
       where: {
         id: input.menuId,
       },
@@ -67,9 +89,46 @@ export class MenuRepository implements MenuRepositoryContract {
         },
       },
     });
+
+    const uniqueCategories = Array.from(
+      new Set(menu.categoryProductSchedule.map((cps) => cps.category.id))
+    );
+
+    const data = {
+      id: menu?.id,
+      name: menu?.name,
+      categories: uniqueCategories.map((categoryId) => {
+        const category = menu.categoryProductSchedule.find(
+          (cps) => cps.category.id === categoryId
+        );
+
+        return {
+          categoryId: categoryId,
+          name: category?.category.name,
+          products: (category?.category.categoryProductSchedule || []).map(
+            (schedule) => ({
+              id: schedule.product.id,
+              name: schedule.product.name,
+              description: schedule.product.description,
+              weekDay: schedule.weekDay,
+              inputs: schedule.product.inputs.map((input) => ({
+                id: input?.input.id,
+                name: input?.input.name,
+                code: input.input.code,
+                unitPrice: input.input.unitPrice,
+                grammage: input.grammage,
+                measurementUnit: input.measurementUnit,
+              })),
+            })
+          ),
+        };
+      }),
+    };
+
+    return data as unknown as MenuModel[];
   }
 
-  async getList(): Promise<any> {
+  async findAll(): Promise<MenuModel[] | null> {
     return this.db.menu.findMany({
       include: {
         categoryProductSchedule: {
@@ -81,7 +140,7 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async deleteProduct(input: MenuProduct): Promise<void> {
+  async deleteProduct(input: RemoveProductModel): Promise<void> {
     await this.db.categoryProductSchedule.deleteMany({
       where: {
         menuId: input.menuId,
@@ -92,14 +151,16 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async addProduct(input: AddProductRepositoryModal[]): Promise<void> {
+  async add(input: AddProductModel): Promise<void> {
     await this.db.categoryProductSchedule.createMany({
-      data: input.map((item) => ({
-        id: item.id,
-        menuId: item.menuId,
-        categoryId: item.categoryId,
+      data: input.product.map((item) => ({
+        menuId: input.menuId,
+        categoryId: input.categoryId,
         productId: item.productId,
-        weekDay: item.weekDay,
+        weekDay: item.weekDay
+          .map((day) => day)
+          .join("")
+          .trim(),
       })),
     });
   }
@@ -110,13 +171,10 @@ export class MenuRepository implements MenuRepositoryContract {
     });
   }
 
-  async updateById(id: string, name: string): Promise<void> {
+  async updateById(id: string, param: Partial<CreateMenuModel>): Promise<void> {
     await this.db.menu.update({
       where: { id },
-      data: {
-        name,
-        categoryProductSchedule: {},
-      },
+      data: param,
     });
   }
 }
