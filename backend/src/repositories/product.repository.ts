@@ -16,7 +16,7 @@ import { FindPredefinedProductByIdContract } from "@/contracts/product/findPrede
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
 import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
 import { UpdateProductModel } from "@/entities/product/updateProduct";
-import { FindInputsByIdContract } from "@/contracts/input/FindInputsById";
+import { mapperProduct } from "@/useCase/product/mapper/mapperProduct";
 
 export class ProductRepository
   implements
@@ -41,20 +41,29 @@ export class ProductRepository
   }
 
   async findById(id: string): Promise<ProductModel | null> {
-    const db = await this.db.product.findUnique({
+    const product = await this.db.product.findUnique({
       where: { id },
       include: {
         inputs: {
           select: {
             id: true,
-            measurementUnit: true,
             grammage: true,
             input: {
               select: {
                 name: true,
-                groups: true,
-                measurementUnit: true,
+                groups: {
+                  select: {
+                    group: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
                 unitPrice: true,
+                measurementUnit: true,
+                code: true,
               },
             },
           },
@@ -62,7 +71,9 @@ export class ProductRepository
       },
     });
 
-    return db as unknown as ProductModel;
+    if (!product) return null;
+
+    return mapperProduct(product);
   }
 
   async findByName(name: string): Promise<ProductModel | null> {
@@ -70,28 +81,29 @@ export class ProductRepository
     return db;
   }
 
-  async findAll() {
-    const db = await this.db.product.findMany();
-    return db;
-  }
-
-  async findPredefinedById(id: string): Promise<ProductModel | null> {
-    const db = await this.db.product.findFirst({
-      where: { id: id },
+  async findAll(): Promise<ProductModel[] | null> {
+    const db = await this.db.product.findMany({
       include: {
         inputs: {
           select: {
             id: true,
-            measurementUnit: true,
             grammage: true,
             input: {
               select: {
-                id: true,
                 name: true,
-                code: true,
-                measurementUnit: true,
+                groups: {
+                  select: {
+                    group: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
                 unitPrice: true,
-                groups: true,
+                measurementUnit: true,
+                code: true,
               },
             },
           },
@@ -101,7 +113,44 @@ export class ProductRepository
 
     if (!db) return null;
 
-    return db as unknown as ProductModel;
+    return db.map((product) => mapperProduct(product));
+  }
+
+  async findPredefinedById(id: string): Promise<ProductModel | null> {
+    const product = await this.db.product.findFirst({
+      where: { id },
+      include: {
+        inputs: {
+          select: {
+            id: true,
+            grammage: true,
+            input: {
+              select: {
+                id: true,
+                name: true,
+                groups: {
+                  select: {
+                    group: {
+                      select: {
+                        id: true,
+                        name: true,
+                      },
+                    },
+                  },
+                },
+                unitPrice: true,
+                measurementUnit: true,
+                code: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!product) return null;
+
+    return mapperProduct(product);
   }
 
   async updateById(id: string, input: Partial<UpdateProductModel>) {

@@ -4,6 +4,7 @@ import {
   FindPredefinedProductByIdContract,
 } from "@/contracts/product/findPredefinedProductById";
 import { NotFoundError } from "@/utils/errors/httpErrors";
+import { mapperProduct } from "./mapper/mapperProduct";
 
 export class FindPredefinedProductByIdUseCase
   implements FindPredefinedProductById
@@ -19,23 +20,6 @@ export class FindPredefinedProductByIdUseCase
       throw new NotFoundError("Nenhum prato predefinido encontrado");
     }
 
-    const processedProduct = {
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      preparationTime: product.preparationTime,
-      resource: product.resource,
-      inputs: product.inputs.map((e) => ({
-        id: e.id,
-        name: e.name,
-        code: e.code,
-        measurementUnit: e.measurementUnit,
-        unitPrice: e.unitPrice,
-        groups: e.groups,
-        grammage: e.grammage,
-      })),
-    };
-
-    return processedProduct;
+    return product;
   }
 }

@@ -1,6 +1,6 @@
 import prisma from "@/config/prisma";
-import { AddInputToProductController } from "@/controllers/products/AddInputToProductController";
 
+import { AddInputToProductController } from "@/controllers/products/AddInputToProductController";
 import { ProductRepository } from "@/repositories/product.repository";
 import { AddInputToProductUseCase } from "@/useCase/product/AddInputToProductUseCase";
 import { FindPredefinedProductByIdUseCase } from "@/useCase/product/FindPredefinedProductUseCase";

@@ -8,6 +8,8 @@ export class FindProductByNameUseCase implements FindProductByName {
   constructor(private readonly findProduct: FindProductByNameContract) {}
 
   async findByName(id: string): Promise<ProductModel> {
-    return this.findProduct.findByName(id);
+    const product = await this.findProduct.findByName(id);
+
+    return product;
   }
 }
