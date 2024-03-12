@@ -1,9 +1,12 @@
-import { AddProductModel } from "@/entities/menu/AddProductToMenuEntity";
+import {
+  AddProductModel,
+  AddProductToMenuModel,
+} from "@/entities/menu/AddProductToMenuEntity";
 
 export interface AddProductToMenuContract {
-  add(input: AddProductModel): Promise<void>;
+  add(input: AddProductToMenuModel[]): Promise<void>;
 }
 
 export interface AddProductToMenu {
-  addInput(input: AddProductModel[]): Promise<void>;
+  addProduct(input: AddProductModel): Promise<void>;
 }

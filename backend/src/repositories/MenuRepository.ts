@@ -6,10 +6,14 @@ import {
 import { DeleteMenuContract } from "@/contracts/menu/DeleteMenuContract";
 import { DeleteProductToMenuContract } from "@/contracts/menu/DeleteProductToMenuContract";
 import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
+import { FindMenuByNameContract } from "@/contracts/menu/FindMenuByNameContract";
 import { FindMenuContract } from "@/contracts/menu/FindMenuContract";
 import { FindMenusContract } from "@/contracts/menu/FindMenusContract";
 import { UpdateMenuContract } from "@/contracts/menu/UpdateMenuContract";
-import { AddProductModel } from "@/entities/menu/AddProductToMenuEntity";
+import {
+  AddProductModel,
+  AddProductToMenuModel,
+} from "@/entities/menu/AddProductToMenuEntity";
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
 import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
 import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
@@ -21,6 +25,7 @@ export class MenuRepository
     FindMenuById,
     FindMenuContract,
     FindMenusContract,
+    FindMenuByNameContract,
     DeleteMenuContract,
     DeleteProductToMenuContract,
     AddProductToMenuContract,
@@ -38,6 +43,16 @@ export class MenuRepository
     const db = await this.db.menu.findUnique({
       where: {
         id,
+      },
+    });
+
+    return db;
+  }
+
+  async findByName(name: string): Promise<MenuModel | null> {
+    const db = await this.db.menu.findUnique({
+      where: {
+        name,
       },
     });
 
@@ -151,16 +166,13 @@ export class MenuRepository
     });
   }
 
-  async add(input: AddProductModel): Promise<void> {
+  async add(input: AddProductToMenuModel[]): Promise<void> {
     await this.db.categoryProductSchedule.createMany({
-      data: input.product.map((item) => ({
-        menuId: input.menuId,
-        categoryId: input.categoryId,
+      data: input.map((item) => ({
+        menuId: item.menuId,
+        categoryId: item.categoryId,
         productId: item.productId,
-        weekDay: item.weekDay
-          .map((day) => day)
-          .join("")
-          .trim(),
+        weekDay: item.weekDay,
       })),
     });
   }

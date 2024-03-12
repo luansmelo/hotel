@@ -8,3 +8,10 @@ export interface AddProductModel {
   categoryId: string;
   product: Product[];
 }
+
+export interface AddProductToMenuModel {
+  menuId: string;
+  categoryId: string;
+  productId: string;
+  weekDay: string;
+}

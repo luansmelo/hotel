@@ -102,7 +102,7 @@ model Group {
 
 model Menu {
   id                      String                    @id @default(uuid())
-  name                    String
+  name                    String                    @unique
   createdAt               DateTime                  @default(now()) @map(name: "created_at")
   updatedAt               DateTime                  @updatedAt @map(name: "updated_at")
   categoryProductSchedule CategoryProductSchedule[]
@@ -127,7 +127,7 @@ model CategoryProductSchedule {
 
 model Category {
   id                      String                    @id @default(uuid())
-  name                    String
+  name                    String                    @unique
   created_at              DateTime                  @default(now())
   updated_at              DateTime                  @updatedAt
   categoryProductSchedule CategoryProductSchedule[]
