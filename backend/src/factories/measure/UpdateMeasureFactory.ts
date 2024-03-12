@@ -1,6 +1,6 @@
 import prisma from "@/config/prisma";
 import { UpdateMeasureController } from "@/controllers/measure/UpdateMeasureController";
-import { MeasureRepository } from "@/repositories/measure.repository";
+import { MeasureRepository } from "@/repositories/MeasureRepository";
 import { FindMeasureByIdUseCase } from "@/useCase/measure/FindMeasureByIdUseCase";
 import { UpdateMeasureUseCase } from "@/useCase/measure/UpdateMeasureUseCase";
 

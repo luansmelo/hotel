@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { DeleteGroupController } from "@/controllers/groups/DeleteGroupController";
-import { GroupRepository } from "@/repositories/group.repository";
+import { GroupRepository } from "@/repositories/GroupRepository";
 import { DeleteGroupUseCase } from "@/useCase/group/DeleteGroupUseCase";
 import { FindGroupByIdUseCase } from "@/useCase/group/FindGroupByIdUseCase";
 

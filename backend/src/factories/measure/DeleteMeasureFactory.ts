@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { DeleteMeasureController } from "@/controllers/measure/DeleteMeasureController";
-import { MeasureRepository } from "@/repositories/measure.repository";
+import { MeasureRepository } from "@/repositories/MeasureRepository";
 import { DeleteMeasureUseCase } from "@/useCase/measure/DeleteMeasuresUseCase";
 import { FindMeasureByIdUseCase } from "@/useCase/measure/FindMeasureByIdUseCase";
 

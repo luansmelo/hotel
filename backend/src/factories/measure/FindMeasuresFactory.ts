@@ -1,6 +1,6 @@
 import prisma from "@/config/prisma";
 import { FindMeasuresController } from "@/controllers/measure/FindMeasuresController";
-import { MeasureRepository } from "@/repositories/measure.repository";
+import { MeasureRepository } from "@/repositories/MeasureRepository";
 import { FindMeasuresUseCase } from "@/useCase/measure/FindMeasuresUseCase";
 
 export function makeFindMeasuresController(): FindMeasuresController {

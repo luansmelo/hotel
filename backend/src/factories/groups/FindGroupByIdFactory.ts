@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { FindGroupByIdController } from "@/controllers/groups/FindGroupByIdController";
-import { GroupRepository } from "@/repositories/group.repository";
+import { GroupRepository } from "@/repositories/GroupRepository";
 import { FindGroupByIdUseCase } from "@/useCase/group/FindGroupByIdUseCase";
 
 export function makeFindGroupByIdController(): FindGroupByIdController {

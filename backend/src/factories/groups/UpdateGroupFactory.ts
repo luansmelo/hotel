@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { UpdateGroupController } from "@/controllers/groups/UpdateGroupController";
-import { GroupRepository } from "@/repositories/group.repository";
+import { GroupRepository } from "@/repositories/GroupRepository";
 import { FindGroupByIdUseCase } from "@/useCase/group/FindGroupByIdUseCase";
 import { UpdateGroupUseCase } from "@/useCase/group/UpdateGroupUseCase";
 

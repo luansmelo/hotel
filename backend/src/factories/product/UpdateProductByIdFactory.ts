@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { UpdateProductController } from "@/controllers/products/UpdateInputController";
-import { ProductRepository } from "@/repositories/product.repository";
+import { ProductRepository } from "@/repositories/ProductRepository";
 import { FindProductByIdUseCase } from "@/useCase/product/FindProductByIdUseCase";
 import { UpdateProductByIdUseCase } from "@/useCase/product/UpdateProductByIdUseCase";
 

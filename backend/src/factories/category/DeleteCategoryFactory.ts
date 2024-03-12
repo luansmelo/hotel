@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 import { DeleteCategoryController } from "@/controllers/category/DeleteCategoryController";
 
-import { CategoryRepository } from "@/repositories/category.repository";
+import { CategoryRepository } from "@/repositories/CategoryRepository";
 import { DeleteCategoryUseCase } from "@/useCase/category/DeleteCategoryUseCase";
 import { FindCategoryByIdUseCase } from "@/useCase/category/FindCategoryByIdUseCase";
 

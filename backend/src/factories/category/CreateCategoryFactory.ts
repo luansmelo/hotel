@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { CreateCategoryController } from "@/controllers/category/CreateCategoryController";
-import { CategoryRepository } from "@/repositories/category.repository";
+import { CategoryRepository } from "@/repositories/CategoryRepository";
 import { CreateCategoryUseCase } from "@/useCase/category/CreateCategoryUseCase";
 import { FindCategoryByNameUseCase } from "@/useCase/category/FindCategoryByNameUseCase";
 

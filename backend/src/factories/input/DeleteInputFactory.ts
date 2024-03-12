@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { DeleteInputController } from "@/controllers/input/DeleteInputController";
-import { InputRepository } from "@/repositories/input.repository";
+import { InputRepository } from "@/repositories/InputRepository";
 import { DeleteInputUseCase } from "@/useCase/input/DeleteInputUseCase";
 import { FindInputByIdUseCase } from "@/useCase/input/FindInputByIdUseCase";
 

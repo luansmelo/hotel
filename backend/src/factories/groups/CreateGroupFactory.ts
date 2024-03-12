@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { CreateGroupController } from "@/controllers/groups/CreateGroupController";
-import { GroupRepository } from "@/repositories/group.repository";
+import { GroupRepository } from "@/repositories/GroupRepository";
 import { CreateGroupUseCase } from "@/useCase/group/CreateGroupUseCase";
 import { FindGroupByNameUseCase } from "@/useCase/group/FindGroupByNameUseCase";
 

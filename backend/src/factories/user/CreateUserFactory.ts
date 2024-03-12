@@ -3,7 +3,7 @@ import prisma from "@/config/prisma";
 import { BcrypterAdapter } from "@/adapters/bcrypter.adapter";
 import { CRYPTOGRAPHY_SALTING_ROUNDS } from "@/config/constants";
 import { CreateUserController } from "@/controllers/user/CreateUserController";
-import { UserRepository } from "@/repositories/user.repository";
+import { UserRepository } from "@/repositories/UserRepository";
 import { CreateUserUseCase } from "@/useCase/user/CreateUserUseCase";
 import { FindUserByEmailUseCase } from "@/useCase/user/FindUserByEmailUseCase";
 import { EmailValidatorAdapter } from "@/utils/email-validator-adapter";

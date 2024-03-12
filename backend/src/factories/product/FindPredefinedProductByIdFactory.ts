@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { FindPredefinedProductByIdController } from "@/controllers/products/FindPredefinedProductByIdController";
-import { ProductRepository } from "@/repositories/product.repository";
+import { ProductRepository } from "@/repositories/ProductRepository";
 import { FindPredefinedProductByIdUseCase } from "@/useCase/product/FindPredefinedProductUseCase";
 
 export function makeFindPredefinedProductByIdController(): FindPredefinedProductByIdController {

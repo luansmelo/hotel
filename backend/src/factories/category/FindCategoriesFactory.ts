@@ -1,6 +1,6 @@
 import prisma from "@/config/prisma";
 import { FindCategoriesController } from "@/controllers/category/FindCategoriesController";
-import { CategoryRepository } from "@/repositories/category.repository";
+import { CategoryRepository } from "@/repositories/CategoryRepository";
 import { FindCategoriesUseCase } from "@/useCase/category/FindCategoriesUseCase";
 
 export function makeFindCategoriesController(): FindCategoriesController {

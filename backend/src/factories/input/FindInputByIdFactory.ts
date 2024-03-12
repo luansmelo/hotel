@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { FindInputByIdController } from "@/controllers/input/FindInputByIdController";
-import { InputRepository } from "@/repositories/input.repository";
+import { InputRepository } from "@/repositories/InputRepository";
 import { FindInputByIdUseCase } from "@/useCase/input/FindInputByIdUseCase";
 
 export function makeFindInputByIdController(): FindInputByIdController {

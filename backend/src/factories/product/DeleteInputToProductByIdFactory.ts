@@ -1,7 +1,7 @@
 import prisma from "@/config/prisma";
 
 import { DeleteInputToProductController } from "@/controllers/products/DeleteInputToProductController";
-import { ProductRepository } from "@/repositories/product.repository";
+import { ProductRepository } from "@/repositories/ProductRepository";
 import { DeleteInputToProductUseCase } from "@/useCase/product/DeleteInputToProduct";
 import { FindProductByIdUseCase } from "@/useCase/product/FindProductByIdUseCase";
 

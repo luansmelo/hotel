@@ -1,8 +1,8 @@
 import prisma from "@/config/prisma";
 import { CreateInputController } from "@/controllers/input/CreateInputController";
-import { GroupRepository } from "@/repositories/group.repository";
-import { InputRepository } from "@/repositories/input.repository";
-import { MeasureRepository } from "@/repositories/measure.repository";
+import { GroupRepository } from "@/repositories/GroupRepository";
+import { InputRepository } from "@/repositories/InputRepository";
+import { MeasureRepository } from "@/repositories/MeasureRepository";
 import { FindGroupByIdUseCase } from "@/useCase/group/FindGroupByIdUseCase";
 import { CreateInputUseCase } from "@/useCase/input/CreateInputUseCase";
 import { FindInputByCodeUseCase } from "@/useCase/input/FindInputByCodeUseCase";
