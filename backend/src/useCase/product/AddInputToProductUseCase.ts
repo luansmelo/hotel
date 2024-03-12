@@ -30,19 +30,6 @@ export class AddInputToProductUseCase implements AddInputToProduct {
       );
     }
 
-    const existingInputIdsSet = new Set(existingInputIds);
-    const invalidInputs = uniqueInputs.filter(
-      (input) => !existingInputIdsSet.has(input.id)
-    );
-
-    if (invalidInputs.length) {
-      throw new BadRequestError(
-        `Os seguintes insumos não existem: ${invalidInputs
-          .map((input) => input.id)
-          .join(", ")}`
-      );
-    }
-
     await this.input.add({
       id: productModel.id,
       inputs: uniqueInputs,
