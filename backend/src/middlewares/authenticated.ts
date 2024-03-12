@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 import authConfig from "@/config/env";
 import "dotenv/config";
-import { UserDataContract } from "@/dto/user/user.dto";
 
 export function authenticated(
   request: Request,
@@ -19,7 +18,7 @@ export function authenticated(
   const [, token] = authToken.split(" ");
 
   try {
-    const decodedToken = verify(token, secret) as UserDataContract;
+    const decodedToken = verify(token, secret);
     request["user"] = decodedToken;
     return next();
   } catch (error) {
