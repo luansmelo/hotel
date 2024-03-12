@@ -2,7 +2,7 @@ import { Request, Response, Router, NextFunction } from "express";
 import {
   AddInputToProductSchema,
   ProductSchema,
-} from "@/validators/product.validation";
+} from "@/validators/ProductValidation";
 import { ROLE } from "@/config/constants";
 
 import { CreateProductModel } from "@/entities/product/createProduct";

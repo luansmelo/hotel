@@ -1,7 +1,7 @@
 import { CreateAuthModel } from "@/entities/auth/auth";
 import { makeAuthController } from "@/factories/auth/CreateAuthFactory";
 import { validate } from "@/middlewares/validate";
-import { UserLoginSchema } from "@/validators/user.validation";
+import { UserLoginSchema } from "@/validators/UserValidation";
 import { Router, Request, Response, NextFunction } from "express";
 
 const router = Router();

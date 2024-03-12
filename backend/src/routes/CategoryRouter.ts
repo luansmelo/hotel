@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { ROLE } from "@/config/constants";
-import { CategorySchema } from "@/validators/category.validation";
+import { CategorySchema } from "@/validators/CategoryValidation";
 import { allowed, authenticated, validate } from "@/middlewares";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
 import {

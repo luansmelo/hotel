@@ -1,5 +1,5 @@
 import zod from "zod";
-import { InputToProductSchema } from "./input.validation";
+import { InputToProductSchema } from "./InputValidation";
 
 export const ProductSchema = zod.object({
   name: zod

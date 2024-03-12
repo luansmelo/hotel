@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { InputSchema } from "@/validators/input.validation";
+import { InputSchema } from "@/validators/InputValidation";
 import { ROLE } from "@/config/constants";
 import { allowed, authenticated, validate } from "@/middlewares";
 import {

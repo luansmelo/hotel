@@ -1,6 +1,6 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { validate } from "@/middlewares/validate";
-import { UserSchema } from "@/validators/user.validation";
+import { UserSchema } from "@/validators/UserValidation";
 import { CreateUserModel } from "@/entities/user/createUser";
 import { makeCreateUserController } from "@/factories/user/CreateUserFactory";
 

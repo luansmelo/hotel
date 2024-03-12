@@ -7,7 +7,7 @@ import {
   makeDeleteGroupController,
 } from "@/factories";
 
-import { GroupSchema } from "@/validators/group.validation";
+import { GroupSchema } from "@/validators/GroupValidation";
 import { ROLE } from "@/config/constants";
 import { allowed, authenticated, validate } from "@/middlewares";
 import { CreateGroupModel } from "@/entities/group/createGroup";

@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { MeasurementUnitSchema } from "@/validators/measurementUnit.validation";
+import { MeasurementUnitSchema } from "@/validators/MeasureValidation";
 import { CreateMeasureModel } from "@/entities/measure/createMeasure";
 import {
   makeCreateMeasureController,
