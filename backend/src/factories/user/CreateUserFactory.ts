@@ -6,7 +6,7 @@ import { CreateUserController } from "@/controllers/user/CreateUserController";
 import { UserRepository } from "@/repositories/UserRepository";
 import { CreateUserUseCase } from "@/useCase/user/CreateUserUseCase";
 import { FindUserByEmailUseCase } from "@/useCase/user/FindUserByEmailUseCase";
-import { EmailValidatorAdapter } from "@/utils/email-validator-adapter";
+import { EmailValidatorAdapter } from "@/adapters/email-validator-adapter";
 
 export function makeCreateUserController(): CreateUserController {
   const repository = new UserRepository(prisma);

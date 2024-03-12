@@ -6,7 +6,7 @@ import {
 } from "@/contracts/user";
 
 import { CreateUserModel } from "@/entities/user/createUser";
-import { EmailValidator } from "@/utils/email-validator-adapter";
+import { EmailValidator } from "@/adapters/email-validator-adapter";
 import { BadRequestError } from "@/utils/errors/httpErrors";
 import { HasherProtocol } from "@/adapters/bcrypter.adapter";
 

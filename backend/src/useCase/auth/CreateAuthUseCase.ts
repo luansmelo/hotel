@@ -1,6 +1,6 @@
 import { FindUserByEmailContract, UserModel } from "@/contracts/user";
 import { CreateUserModel } from "@/entities/user/createUser";
-import { EmailValidator } from "@/utils/email-validator-adapter";
+import { EmailValidator } from "@/adapters/email-validator-adapter";
 import { UnauthorizedError } from "@/utils/errors/httpErrors";
 import { CreateAuth } from "@/contracts/auth/AuthenticationContract";
 import { Encrypter, HasherCompare } from "@/adapters";
