@@ -10,6 +10,7 @@ import {
   makeUpdateCategoryController,
   makeFindCategoryByIdController,
 } from "@/factories/category";
+import { Sort } from "@/entities/category/FindCategoriesParams";
 
 const router = Router();
 const slug = "/category";
@@ -41,9 +42,17 @@ router.get(
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
+      const { order, sort, page } = request.query;
+
       const controller = makeFindCategoriesController();
 
-      const result = await controller.findAll();
+      const findParams = {
+        order: order as "asc" | "desc",
+        sort: sort as Sort,
+        page: parseInt(page as string, 10),
+      };
+
+      const result = await controller.findAll(findParams);
 
       return response.status(200).send(result);
     } catch (error) {

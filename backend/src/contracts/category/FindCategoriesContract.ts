@@ -1,9 +1,12 @@
-import { CategoryModel } from "./CreateCategoryContract";
+import {
+  FindCategoriesParams,
+  FindCategoriesResponse,
+} from "@/entities/category/FindCategoriesParams";
 
 export interface FindCategoriesContract {
-  findAll(): Promise<CategoryModel[] | null>;
+  findAll(params: FindCategoriesParams): Promise<FindCategoriesResponse | null>;
 }
 
 export interface FindCategories {
-  findAll(): Promise<CategoryModel[] | null>;
+  findAll(params: FindCategoriesParams): Promise<FindCategoriesResponse | null>;
 }

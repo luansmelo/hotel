@@ -1,13 +1,15 @@
+import { FindCategories, FindCategoriesContract } from "@/contracts";
 import {
-  CategoryModel,
-  FindCategories,
-  FindCategoriesContract,
-} from "@/contracts";
+  FindCategoriesParams,
+  FindCategoriesResponse,
+} from "@/entities/category/FindCategoriesParams";
 
 export class FindCategoriesUseCase implements FindCategories {
   constructor(private readonly findCategories: FindCategoriesContract) {}
 
-  async findAll(): Promise<CategoryModel[] | null> {
-    return this.findCategories.findAll();
+  async findAll(
+    params: FindCategoriesParams
+  ): Promise<FindCategoriesResponse | null> {
+    return this.findCategories.findAll(params);
   }
 }

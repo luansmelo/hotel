@@ -7,6 +7,10 @@ import {
   FindCategoryByNameContract,
   UpdateCategoryContract,
 } from "@/contracts";
+import {
+  FindCategoriesParams,
+  FindCategoriesResponse,
+} from "@/entities/category/FindCategoriesParams";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
 import { PrismaClient } from "@prisma/client";
 
@@ -27,14 +31,31 @@ export class CategoryRepository
     });
   }
 
-  async findAll(): Promise<CategoryModel[] | null> {
-    const db = this.db.category.findMany({
+  async findAll(
+    findParams: FindCategoriesParams
+  ): Promise<FindCategoriesResponse> {
+    const page = findParams.page || 1;
+    const limit = process.env.PAGE_LIMIT
+      ? parseInt(process.env.PAGE_LIMIT)
+      : 10;
+    const offset = (page - 1) * limit;
+    const order = findParams.order || "asc";
+
+    const categories = await this.db.category.findMany({
       orderBy: {
-        name: "asc",
+        name: order,
       },
+      take: limit,
+      skip: offset,
     });
 
-    return db;
+    const totalItems = categories.length;
+
+    return {
+      categories,
+      totalPages: Math.ceil(totalItems / limit),
+      totalItems,
+    };
   }
 
   async findById(id: string): Promise<CategoryModel | null> {
