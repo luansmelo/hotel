@@ -1,9 +1,12 @@
-import { GroupModel } from "./CreateGroupContract";
+import {
+  FindGroupsParams,
+  FindGroupsResponse,
+} from "@/entities/group/FindGroupsParams";
 
 export interface FindGroupsContract {
-  findAll(): Promise<GroupModel[] | null>;
+  findAll(params: FindGroupsParams): Promise<FindGroupsResponse | null>;
 }
 
 export interface FindGroups {
-  findAll(): Promise<GroupModel[] | null>;
+  findAll(params: FindGroupsParams): Promise<FindGroupsResponse | null>;
 }

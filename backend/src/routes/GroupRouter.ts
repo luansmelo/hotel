@@ -11,6 +11,7 @@ import { GroupSchema } from "@/validators/GroupValidation";
 import { ROLE } from "@/config/constants";
 import { allowed, authenticated, validate } from "@/middlewares";
 import { CreateGroupModel } from "@/entities/group/createGroup";
+import { Sort } from "@/entities/group/FindGroupsParams";
 
 const router = Router();
 const slug = "/group";
@@ -60,9 +61,17 @@ router.get(
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
+      const { order, sort, page } = request.query;
+
       const controller = makeFindGroupsController();
 
-      const result = await controller.findAll();
+      const findParams = {
+        order: order as "asc" | "desc",
+        sort: sort as Sort,
+        page: parseInt(page as string, 10),
+      };
+
+      const result = await controller.findAll(findParams);
 
       return response.status(200).send(result);
     } catch (error) {
