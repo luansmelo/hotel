@@ -1,7 +1,4 @@
 import { Router } from "express";
-import { ROLE } from "@/config/constants";
-import { CategorySchema } from "@/validators/CategoryValidation";
-import { allowed, authenticated, validate } from "@/middlewares";
 
 import {
   makeCreateCategoryController,
@@ -13,13 +10,19 @@ import {
 
 import { adaptRoute } from "@/adapters";
 
-const router = Router();
-const slug = "/category";
+export default (router: Router): void => {
+  const categoryRouter = Router();
 
-router.post("/create", authenticated, allowed([ROLE.Admin]), validate(CategorySchema), adaptRoute(makeCreateCategoryController()));
-router.get("/", authenticated, allowed([ROLE.Admin, ROLE.User]), adaptRoute(makeFindCategoriesController()));
-router.get("/:id", authenticated, allowed([ROLE.Admin, ROLE.User]), adaptRoute(makeFindCategoryByIdController()));
-router.delete("/:id", authenticated, allowed([ROLE.Admin]), adaptRoute(makeDeleteCategoryController()));
-router.put("/:id", authenticated, allowed([ROLE.Admin]), adaptRoute(makeUpdateCategoryController()));
+  categoryRouter.get("/", adaptRoute(makeFindCategoriesController()));
+  categoryRouter.get("/:id", adaptRoute(makeFindCategoryByIdController()));
 
-export { router, slug };
+  // Admin Routes
+  categoryRouter.post("/create", adaptRoute(makeCreateCategoryController()));
+  categoryRouter.delete("/:id", adaptRoute(makeDeleteCategoryController()));
+  categoryRouter.put("/:id", adaptRoute(makeUpdateCategoryController()));
+
+  router.use('/category', categoryRouter);
+}
+
+
+

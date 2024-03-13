@@ -1,4 +1,4 @@
-import { Request, Response, Router, NextFunction } from "express";
+import { Router } from "express";
 import {
   makeCreateGroupController,
   makeUpdateGroupController,
@@ -7,113 +7,22 @@ import {
   makeDeleteGroupController,
 } from "@/factories";
 
-import { GroupSchema } from "@/validators/GroupValidation";
-import { ROLE } from "@/config/constants";
-import { allowed, authenticated, validate } from "@/middlewares";
-import { CreateGroupModel } from "@/entities/group/createGroup";
-import { Sort } from "@/entities/group/FindGroupsParams";
+import { adaptRoute } from "@/adapters";
+import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
 
-const router = Router();
-const slug = "/group";
+export default (router: Router): void => {
+  const groupRouter = Router();
 
-router.post(
-  "/create",
-  authenticated,
-  allowed([ROLE.Admin]),
-  validate(GroupSchema),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const input: CreateGroupModel = GroupSchema.parse(
-        request.body
-      ) as CreateGroupModel;
-      const controller = makeCreateGroupController();
+  groupRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindGroupByIdController()));
+  groupRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindGroupsController()));
 
-      const result = await controller.create(input);
+  // Admin Routes
+  groupRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateGroupController()));
+  groupRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateGroupController()));
+  groupRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteGroupController()));
 
-      return response.status(201).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+  router.use('/group', groupRouter);
+}
 
-router.get(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin, ROLE.User]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-      const controller = makeFindGroupByIdController();
 
-      const result = await controller.findById(id);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  "/",
-  authenticated,
-  allowed([ROLE.Admin, ROLE.User]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const { order, sort, page } = request.query;
-
-      const controller = makeFindGroupsController();
-
-      const findParams = {
-        order: order as "ASC" | "DESC",
-        sort: sort as Sort,
-        page: parseInt(page as string, 10),
-      };
-
-      const result = await controller.findAll(findParams);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.delete(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-      const controller = makeDeleteGroupController();
-      const result = await controller.deleteById(id);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.put(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-      const input = request.body;
-      const controller = makeUpdateGroupController();
-
-      const result = await controller.updateById(id, input);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-export { router, slug };

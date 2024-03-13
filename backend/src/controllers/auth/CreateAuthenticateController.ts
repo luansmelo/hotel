@@ -8,7 +8,7 @@ import { HttpRequest } from "../protocols/httpRequest";
 import { HttpResponse } from "../protocols/httpResponse";
 
 export class CreateAuthenticationController implements Controller {
-  constructor(private readonly auth: CreateAuth) {}
+  constructor(private readonly auth: CreateAuth) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

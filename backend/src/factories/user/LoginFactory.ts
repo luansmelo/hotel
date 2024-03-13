@@ -8,7 +8,7 @@ import { CreateAuthUseCase } from "@/useCase/auth/CreateAuthUseCase";
 import { EmailValidatorAdapter } from "@/adapters/EmailValidatorAdapter";
 import env from "@/config/env";
 
-export function makeAuthController(): CreateAuthenticationController {
+export function makeLoginController(): CreateAuthenticationController {
   const emailValidator = new EmailValidatorAdapter();
 
   const hashed = new BcrypterAdapter(CRYPTOGRAPHY_SALTING_ROUNDS);
