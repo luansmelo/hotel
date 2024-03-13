@@ -1,6 +1,4 @@
-import { Request, Response, Router, NextFunction } from "express";
-import { MeasurementUnitSchema } from "@/validators/MeasureValidation";
-import { CreateMeasureModel } from "@/entities/measure/createMeasure";
+import { Router } from "express";
 import {
   makeCreateMeasureController,
   makeUpdateMeasureController,
@@ -8,107 +6,21 @@ import {
   makeDeleteMeasureController,
   makeFindMeasureByIdController,
 } from "@/factories/";
-import { allowed, authenticated, validate } from "@/middlewares";
-import { ROLE } from "@/config/constants";
 
-const router = Router();
-const slug = "/measure";
+import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { adaptRoute } from "@/adapters";
 
-router.post(
-  "/create",
-  authenticated,
-  allowed([ROLE.Admin]),
-  validate(MeasurementUnitSchema),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const payload: CreateMeasureModel = MeasurementUnitSchema.parse(
-        request.body
-      ) as CreateMeasureModel;
+export default (router: Router): void => {
+  const measureRouter = Router();
 
-      const controller = makeCreateMeasureController();
+  measureRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMeasureByIdController()));
+  measureRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMeasuresController()));
 
-      const result = await controller.create(payload);
+  // Admin Routes
+  measureRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateMeasureController()));
+  measureRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteMeasureController()));
+  measureRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateMeasureController()));
 
-      return response.status(201).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin, ROLE.User]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-      const controller = makeFindMeasureByIdController();
-
-      const result = await controller.findById(id);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  "/",
-  authenticated,
-  allowed([ROLE.Admin, ROLE.User]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const controller = makeFindMeasuresController();
-      const result = await controller.findAll();
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.delete(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-      const controller = makeDeleteMeasureController();
-
-      const result = await controller.deleteById(id);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.put(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-
-      const payload: CreateMeasureModel = MeasurementUnitSchema.parse(
-        request.body
-      ) as CreateMeasureModel;
-
-      const controller = makeUpdateMeasureController();
-
-      const result = await controller.updateById(id, payload);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-export { router, slug };
+  router.use('/measure', measureRouter);
+}

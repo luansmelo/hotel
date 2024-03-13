@@ -4,7 +4,6 @@ import * as products from "./ProductRouter";
 import * as menus from "./MenuRouter";
 import * as user from "./UserRouter";
 import * as measure from "./MeasureRouter";
-import * as auth from "./AuthRouter";
 import * as s3 from "./S3Router";
 
 const mainRouter = Router();
@@ -15,6 +14,6 @@ mainRouter.use(menus.slug, menus.router);
 mainRouter.use(user.slug, user.router);
 mainRouter.use(measure.slug, measure.router);
 mainRouter.use(s3.slug, s3.router);
-mainRouter.use(auth.slug, auth.router);
+
 
 export default mainRouter;

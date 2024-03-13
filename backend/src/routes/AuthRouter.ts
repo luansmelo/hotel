@@ -5,9 +5,10 @@ import { validate } from "@/middlewares/validate";
 import { UserLoginSchema } from "@/validators/UserValidation";
 import { Router } from "express";
 
-const router = Router();
-const slug = "/auth";
+export default (app: Router): void => {
+    const authRouter = Router();
 
-router.post("/", validate(UserLoginSchema), adaptRoute(makeLoginController()));
+    authRouter.post("/", validate(UserLoginSchema), adaptRoute(makeLoginController()));
 
-export { router, slug };
+    app.use('/auth', authRouter);
+}

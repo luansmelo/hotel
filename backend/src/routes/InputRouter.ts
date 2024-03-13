@@ -1,7 +1,5 @@
 import { Router } from "express";
-import { InputSchema } from "@/validators/InputValidation";
-import { ROLE } from "@/config/constants";
-import { allowed, authenticated, validate } from "@/middlewares";
+
 import {
   makeCreateInputController,
   makeDeleteInputController,
@@ -11,45 +9,22 @@ import {
 } from "@/factories/input";
 
 import { adaptRoute } from "@/adapters/ExpressRouteAdapter";
+import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
 
-const router = Router();
-const slug = "/input";
+export default (router: Router): void => {
+  const inputRouter = Router();
 
-router.post(
-  "/create",
-  authenticated,
-  allowed([ROLE.Admin]),
-  validate(InputSchema),
-  adaptRoute(makeCreateInputController())
-);
+  inputRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindInputsController()));
+  inputRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindInputByIdController()));
 
-router.get(
-  "/",
-  authenticated,
-  allowed([ROLE.Admin, ROLE.User]),
-  adaptRoute(makeFindInputsController())
-);
+  // Admin Routes
+  inputRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateInputController()));
+  inputRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateInputController()));
+  inputRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteInputController()));
 
-router.get(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin, ROLE.User]),
-  adaptRoute(makeFindInputByIdController())
-);
+  router.use('/input', inputRouter);
+}
 
-router.put(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin]),
-  validate(InputSchema),
-  adaptRoute(makeUpdateInputController())
-);
 
-router.delete(
-  "/:id",
-  authenticated,
-  allowed([ROLE.Admin]),
-  adaptRoute(makeDeleteInputController())
-);
 
-export { router, slug };
