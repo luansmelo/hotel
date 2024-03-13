@@ -1,9 +1,13 @@
-import { InputModel } from "./CreateInputContract";
+import {
+  FindInputsParams,
+  FindInputsResponse,
+} from "@/entities/input/FindInputsParams";
+
 
 export interface FindInputsContract {
-  findAll(): Promise<InputModel[] | null>;
+  findAll(params: FindInputsParams): Promise<FindInputsResponse | null>;
 }
 
 export interface FindInputs {
-  findAll(): Promise<InputModel[] | null>;
+  findAll(params: FindInputsParams): Promise<FindInputsResponse | null>;
 }

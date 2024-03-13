@@ -11,6 +11,11 @@ import {
 } from "@/contracts/input";
 import { CreateInputModel } from "@/entities/input/createInput";
 import { FindInputsByIdContract } from "@/contracts/input/FindInputsByIdContract";
+import {
+  FindInputsParams,
+  FindInputsResponse,
+} from "@/entities/input/FindInputsParams";
+import { mapperInput } from "@/useCase/input/mapper/mapperInput";
 
 export class InputRepository
   implements
@@ -26,7 +31,7 @@ export class InputRepository
   constructor(private readonly db: PrismaClient) {}
 
   async save(input: CreateInputModel): Promise<InputModel> {
-    const formattedInput = await this.db.input.create({
+    const createInput = await this.db.input.create({
       data: {
         ...input,
         groups: {
@@ -54,12 +59,7 @@ export class InputRepository
       },
     });
 
-    const mappedSerializedInput = {
-      ...formattedInput,
-      groups: formattedInput.groups.map((e) => e.group),
-    };
-
-    return mappedSerializedInput;
+    return mapperInput(createInput);
   }
 
   async findById(id: string): Promise<InputModel | null> {
@@ -86,14 +86,7 @@ export class InputRepository
     });
 
     if (!db) return null;
-
-    const serialized = {
-      ...db,
-      measurementUnitId: undefined,
-      groups: db.groups.map((e) => e.group),
-    };
-
-    return serialized;
+    return mapperInput(db);
   }
 
   async findByIds(ids: string[]): Promise<InputModel[]> {
@@ -158,13 +151,7 @@ export class InputRepository
 
     if (!db) return null;
 
-    const serialized = {
-      ...db,
-      measurementUnitId: undefined,
-      groups: db?.groups?.map((e) => e.group),
-    };
-
-    return serialized;
+    return mapperInput(db);
   }
   async findByCode(code: string): Promise<InputModel | null> {
     const db = await this.db.input.findUnique({
@@ -191,18 +178,22 @@ export class InputRepository
 
     if (!db) return null;
 
-    const serialized = {
-      ...db,
-      groups: db?.groups?.map((e) => e.group),
-    };
-
-    return serialized;
+    return mapperInput(db);
   }
 
-  async findAll(): Promise<InputModel[] | null> {
-    const db = await this.db.input.findMany({
+  async findAll(
+    findParams: FindInputsParams
+  ): Promise<FindInputsResponse | null> {
+    const page = findParams.page || 1;
+    const limit = process.env.PAGE_LIMIT
+      ? parseInt(process.env.PAGE_LIMIT)
+      : 10;
+    const offset = (page - 1) * limit;
+    const order = findParams.order || "asc";
+
+    const input = await this.db.input.findMany({
       orderBy: {
-        name: "asc",
+        name: order,
       },
       include: {
         measurementUnit: {
@@ -222,15 +213,20 @@ export class InputRepository
           },
         },
       },
+      take: limit,
+      skip: offset,
     });
 
-    const serializedFormattedInput = db.map((inputs) => ({
-      ...inputs,
+    const totalItems = input.length;
+    const totalPages = Math.ceil(totalItems / limit);
 
-      groups: inputs.groups.map((input) => input.group),
-    }));
+    const inputs = input.map((inputs) => mapperInput(inputs));
 
-    return serializedFormattedInput;
+    return {
+      inputs,
+      totalPages,
+      totalItems,
+    };
   }
 
   async updateById(
@@ -304,9 +300,6 @@ export class InputRepository
       },
     });
 
-    return {
-      ...db,
-      groups: db.groups.map((e) => e.group),
-    };
+    return mapperInput(db)
   }
 }

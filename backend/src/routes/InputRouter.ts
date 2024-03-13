@@ -10,6 +10,7 @@ import {
   makeFindInputByIdController,
 } from "@/factories/input";
 import { CreateInputModel } from "@/entities/input/createInput";
+import { Sort } from "@/entities/input/FindInputsParams";
 
 const router = Router();
 const slug = "/input";
@@ -42,10 +43,19 @@ router.get(
   allowed([ROLE.Admin, ROLE.User]),
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const controller = makeFindInputsController();
-      const result = await controller.findAll();
+      const { order, sort, page } = request.query;
 
-      return response.status(200).send({ data: result });
+      const controller = makeFindInputsController();
+
+      const findParams = {
+        order: order as "asc" | "desc",
+        sort: sort as Sort,
+        page: parseInt(page as string, 10),
+      };
+
+      const result = await controller.findAll(findParams);
+
+      return response.status(200).send(result);
     } catch (error) {
       next(error);
     }
