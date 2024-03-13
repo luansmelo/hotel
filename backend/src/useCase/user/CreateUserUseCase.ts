@@ -17,7 +17,7 @@ export class CreateUserUseCase implements CreateUser {
     private readonly findUser: FindUserByEmailContract,
     private readonly emailValidator: EmailValidator,
     private readonly hasher: HasherProtocol
-  ) {}
+  ) { }
 
   async create(userModel: CreateUserModel): Promise<UserModel> {
     const isValid = this.emailValidator.isValid(userModel.email);
@@ -33,8 +33,6 @@ export class CreateUserUseCase implements CreateUser {
     const data = Object.assign({}, userModel, { password: hashedPassword });
 
     const userCreated = await this.createUser.save(data);
-
-    userCreated.password = undefined;
 
     return userCreated;
   }

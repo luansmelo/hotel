@@ -1,29 +1,13 @@
-import { Request, Response, Router, NextFunction } from "express";
-import { validate } from "@/middlewares/validate";
-import { UserSchema } from "@/validators/UserValidation";
-import { CreateUserModel } from "@/entities/user/createUser";
+import { Router } from "express";
 import { makeCreateUserController } from "@/factories/user/CreateUserFactory";
+import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { adaptRoute } from "@/adapters";
 
-const router = Router();
-const slug = "/user";
+export default (router: Router): void => {
+  const userRouter = Router();
 
-router.post(
-  "/signup",
-  validate(UserSchema),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const input: CreateUserModel = UserSchema.parse(
-        request.body
-      ) as CreateUserModel;
-      const controller = makeCreateUserController();
+  userRouter.post("/signup", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateUserController()));
 
-      const result = await controller.signup(input);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-export { router, slug };
+  router.use('/user', router);
+}
