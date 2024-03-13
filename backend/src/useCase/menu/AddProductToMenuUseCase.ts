@@ -10,9 +10,9 @@ export class AddProductToMenuUseCase implements AddProductToMenu {
   constructor(
     private readonly menuSave: AddProductToMenuContract,
     private readonly menu: FindMenuById
-  ) {}
+  ) { }
 
-  async addProduct(menuModel: AddProductModel): Promise<void> {
+  async addProduct(menuModel: AddProductModel): Promise<Partial<{ count: number }>> {
     const menu = await this.menu.findById(menuModel.menuId);
 
     if (!menu) {
@@ -28,6 +28,6 @@ export class AddProductToMenuUseCase implements AddProductToMenu {
       }))
     );
 
-    await this.menuSave.add(products);
+    return this.menuSave.add(products);
   }
 }

@@ -10,7 +10,7 @@ import { FindMenuByNameContract } from "@/contracts/menu/FindMenuByNameContract"
 import { FindMenuContract } from "@/contracts/menu/FindMenuContract";
 import { FindMenusContract } from "@/contracts/menu/FindMenusContract";
 import { UpdateMenuContract } from "@/contracts/menu/UpdateMenuContract";
-import { AddProductToMenuModel } from "@/entities/menu/AddProductToMenuEntity";
+import { AddProductModel, AddProductToMenuModel } from "@/entities/menu/AddProductToMenuEntity";
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
 import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
 import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
@@ -19,17 +19,16 @@ import { PrismaClient } from "@prisma/client";
 
 export class MenuRepository
   implements
-    CreateMenuContract,
-    FindMenuById,
-    FindMenuContract,
-    FindMenusContract,
-    FindMenuByNameContract,
-    DeleteMenuContract,
-    DeleteProductToMenuContract,
-    AddProductToMenuContract,
-    UpdateMenuContract
-{
-  constructor(private readonly db: PrismaClient) {}
+  CreateMenuContract,
+  FindMenuById,
+  FindMenuContract,
+  FindMenusContract,
+  FindMenuByNameContract,
+  DeleteMenuContract,
+  DeleteProductToMenuContract,
+  AddProductToMenuContract,
+  UpdateMenuContract {
+  constructor(private readonly db: PrismaClient) { }
 
   async save(input: CreateMenuModel): Promise<MenuModel> {
     return this.db.menu.create({
@@ -138,11 +137,10 @@ export class MenuRepository
         weekDay: input.weekDay,
       },
     });
-    console.log("Delete Product", input);
   }
 
-  async add(input: AddProductToMenuModel[]): Promise<void> {
-    await this.db.categoryProductSchedule.createMany({
+  async add(input: AddProductToMenuModel[]): Promise<Partial<{ count: number }>> {
+    return this.db.categoryProductSchedule.createMany({
       data: input.map((item) => ({
         menuId: item.menuId,
         categoryId: item.categoryId,
@@ -158,8 +156,8 @@ export class MenuRepository
     });
   }
 
-  async updateById(id: string, param: Partial<CreateMenuModel>): Promise<void> {
-    await this.db.menu.update({
+  async updateById(id: string, param: Partial<CreateMenuModel>): Promise<Partial<MenuModel>> {
+    return this.db.menu.update({
       where: { id },
       data: param,
     });
