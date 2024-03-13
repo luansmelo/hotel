@@ -1,5 +1,5 @@
 import { FindProductById, ProductModel } from "@/contracts/product";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
 
 export class FindProductByIdController {
   constructor(private readonly product: FindProductById) {}
@@ -8,7 +8,7 @@ export class FindProductByIdController {
     const product = await this.product.findById(id);
 
     if (!product) {
-      throw new NotFoundError("Produto não encontrado");
+      throw new ProductNotFoundError();
     }
 
     return product;

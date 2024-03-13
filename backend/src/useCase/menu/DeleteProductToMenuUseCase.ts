@@ -4,7 +4,7 @@ import {
 } from "@/contracts/menu/DeleteProductToMenuContract";
 import { FindMenuByIdContract } from "@/contracts/menu/FindMenuByIdContract";
 import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
 
 export class DeleteProductToMenuUseCase implements DeleteProductToMenu {
   constructor(
@@ -16,7 +16,7 @@ export class DeleteProductToMenuUseCase implements DeleteProductToMenu {
     const menu = await this.menu.findById(param.menuId);
 
     if (!menu) {
-      throw new NotFoundError("Cardápio não encontrado");
+      throw new MenuNotFoundError()
     }
 
     await this.removeProduct.deleteProduct(param);

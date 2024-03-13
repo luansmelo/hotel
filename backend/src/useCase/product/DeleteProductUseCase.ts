@@ -4,7 +4,7 @@ import {
   FindProductByIdContract,
   ProductModel,
 } from "@/contracts/product";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
 
 export class DeleteProductUseCase implements DeleteProduct {
   constructor(
@@ -16,7 +16,7 @@ export class DeleteProductUseCase implements DeleteProduct {
     const product = await this.findProduct.findById(id);
 
     if (!product) {
-      throw new NotFoundError("Produto não encontrado");
+      throw new ProductNotFoundError();
     }
 
     return this.deleteProduct.deleteById(id);

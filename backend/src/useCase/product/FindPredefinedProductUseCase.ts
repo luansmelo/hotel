@@ -3,7 +3,7 @@ import {
   FindPredefinedProductById,
   FindPredefinedProductByIdContract,
 } from "@/contracts/product/FindPredefinedProductByIdContract";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
 
 export class FindPredefinedProductByIdUseCase
   implements FindPredefinedProductById
@@ -16,7 +16,7 @@ export class FindPredefinedProductByIdUseCase
     const product = await this.findProduct.findPredefinedById(id);
 
     if (!product) {
-      throw new NotFoundError("Nenhum prato predefinido encontrado");
+      throw new ProductNotFoundError();
     }
 
     return product;

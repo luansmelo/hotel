@@ -189,12 +189,15 @@ export class InputRepository
       ? parseInt(process.env.PAGE_LIMIT)
       : 10;
     const offset = (page - 1) * limit;
-    const order = findParams.order || "asc";
+    const order = findParams.order || "ASC";
+    const sort = findParams.sort || "name";
 
     const input = await this.db.input.findMany({
-      orderBy: {
-        name: order,
-      },
+      orderBy: [
+        {
+          [sort]: order,
+        },
+      ],
       include: {
         measurementUnit: {
           select: {
@@ -232,10 +235,10 @@ export class InputRepository
   async updateById(
     id: string,
     input: Partial<CreateInputModel>
-  ): Promise<void> {
+  ): Promise<Partial<InputModel>> {
     const newGroups = input.groups || [];
 
-    await this.db.$transaction(async (prisma) => {
+    return this.db.$transaction(async (prisma) => {
       const existingGroups = await prisma.groupsOnInputs.findMany({
         where: { inputId: id },
         select: { groupId: true },
@@ -252,7 +255,7 @@ export class InputRepository
           )
       );
 
-      await prisma.input.update({
+      return prisma.input.update({
         where: { id },
         data: {
           name: input.name,
@@ -300,6 +303,6 @@ export class InputRepository
       },
     });
 
-    return mapperInput(db)
+    return mapperInput(db);
   }
 }

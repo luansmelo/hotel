@@ -4,7 +4,7 @@ import {
   UpdateMenuContract,
 } from "@/contracts/menu/UpdateMenuContract";
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
 
 export class UpdateMenuUseCase implements UpdateMenu {
   constructor(
@@ -16,7 +16,7 @@ export class UpdateMenuUseCase implements UpdateMenu {
     const menu = await this.findMenu.findById(id);
 
     if (!menu) {
-      throw new NotFoundError("Cardápio não encontrado");
+      throw new MenuNotFoundError()
     }
 
     await this.updateMenu.updateById(menu.id, { name: input.name });

@@ -4,7 +4,8 @@ import {
   FindProductByIdContract,
 } from "@/contracts/product";
 import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { InputNotFoundError } from "@/utils/errors/InputNotFoundError";
+import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
 
 export class DeleteInputToProductUseCase implements DeleteInputToProduct {
   constructor(
@@ -18,13 +19,13 @@ export class DeleteInputToProductUseCase implements DeleteInputToProduct {
     const product = await this.findProduct.findById(productModel.productId);
 
     if (!product) {
-      throw new NotFoundError("Produto não encontrado");
+      throw new ProductNotFoundError();
     }
 
     const inputToProduct = new Set(product.inputs.map((input) => input.id));
 
     if (!inputToProduct.has(productModel.inputId)) {
-      throw new NotFoundError("Insumo para o prato não encontrado");
+      throw new InputNotFoundError();
     }
 
     await this.removeInput.deleteInputToProductById(productModel);

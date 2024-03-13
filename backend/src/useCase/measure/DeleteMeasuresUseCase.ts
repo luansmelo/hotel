@@ -4,7 +4,7 @@ import {
   FindMeasureByIdContract,
   MeasureModel,
 } from "@/contracts";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
 
 export class DeleteMeasureUseCase implements DeleteMeasure {
   constructor(
@@ -16,7 +16,7 @@ export class DeleteMeasureUseCase implements DeleteMeasure {
     const measure = await this.findMeasure.findById(id);
 
     if (!measure) {
-      throw new NotFoundError("Unidade de medida não encontrada");
+      throw new MeasureNotFoundError();
     }
 
     return this.deleteMeasure.deleteById(measure.id);

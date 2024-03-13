@@ -5,7 +5,7 @@ import {
   UpdateMeasureContract,
 } from "@/contracts";
 import { CreateMeasureModel } from "@/entities/measure/createMeasure";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
 
 export class UpdateMeasureUseCase implements UpdateMeasure {
   constructor(
@@ -20,7 +20,7 @@ export class UpdateMeasureUseCase implements UpdateMeasure {
     const measure = await this.findMeasure.findById(id);
 
     if (!measure) {
-      throw new NotFoundError("Unidade de medida não encontrada");
+      throw new MeasureNotFoundError();
     }
 
     return this.updateMeasure.updateById(measure.id, { name: input.name });

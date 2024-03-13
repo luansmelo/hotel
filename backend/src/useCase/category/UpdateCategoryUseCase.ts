@@ -4,7 +4,7 @@ import {
   UpdateCategory,
   UpdateCategoryContract,
 } from "@/contracts";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { CategoryNotFoundError } from "@/utils/errors/CategoryNotFoundError";
 
 export class UpdateCategoryUseCase implements UpdateCategory {
   constructor(
@@ -19,7 +19,7 @@ export class UpdateCategoryUseCase implements UpdateCategory {
     const category = await this.findCategory.findById(id);
 
     if (!category) {
-      throw new NotFoundError("Categoria não encontrada");
+      throw new CategoryNotFoundError();
     }
 
     return this.updateCategory.updateById(category.id, { name: input.name });

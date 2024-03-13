@@ -4,7 +4,7 @@ import {
 } from "@/contracts/menu/AddProductToMenuContract";
 import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
 import { AddProductModel } from "@/entities/menu/AddProductToMenuEntity";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
 
 export class AddProductToMenuUseCase implements AddProductToMenu {
   constructor(
@@ -16,7 +16,7 @@ export class AddProductToMenuUseCase implements AddProductToMenu {
     const menu = await this.menu.findById(menuModel.menuId);
 
     if (!menu) {
-      throw new NotFoundError("Cardápio não encontrado");
+      throw new MenuNotFoundError();
     }
 
     const products = menuModel.product.flatMap(({ productId, weekDay }) =>

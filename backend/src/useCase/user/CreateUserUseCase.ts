@@ -6,9 +6,10 @@ import {
 } from "@/contracts/user";
 
 import { CreateUserModel } from "@/entities/user/createUser";
-import { EmailValidator } from "@/adapters/email-validator-adapter";
-import { BadRequestError } from "@/utils/errors/httpErrors";
-import { HasherProtocol } from "@/adapters/bcrypter.adapter";
+import { EmailValidator } from "@/adapters/EmailValidatorAdapter";
+import { HasherProtocol } from "@/adapters/BcrypterAdapter";
+import { UserAlreadyExistsError } from "@/utils/errors/UserAlreadyExistsError";
+import { InvalidCredentialsError } from "@/utils/errors/InvalidCredentialsError";
 
 export class CreateUserUseCase implements CreateUser {
   constructor(
@@ -21,11 +22,11 @@ export class CreateUserUseCase implements CreateUser {
   async create(userModel: CreateUserModel): Promise<UserModel> {
     const isValid = this.emailValidator.isValid(userModel.email);
 
-    if (!isValid) throw new BadRequestError("email inválido");
+    if (!isValid) throw new InvalidCredentialsError("email inválido");
 
     const user = await this.findUser.findByEmail(userModel.email);
 
-    if (user) throw new BadRequestError("usuário já cadastrado");
+    if (user) throw new UserAlreadyExistsError("usuário já cadastrado");
 
     const hashedPassword = await this.hasher.hash(userModel.password);
 

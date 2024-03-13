@@ -1,5 +1,5 @@
 import { FindMeasureById, MeasureModel } from "@/contracts";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
 
 export class FindMeasureByIdController {
   constructor(private readonly measure: FindMeasureById) {}
@@ -8,7 +8,7 @@ export class FindMeasureByIdController {
     const measure = await this.measure.findById(id);
 
     if (!measure) {
-      throw new NotFoundError("Unidade de medida não encontrada");
+      throw new MeasureNotFoundError();
     }
 
     return measure;

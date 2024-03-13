@@ -6,7 +6,7 @@ import {
 import { FindMenuByNameContract } from "@/contracts/menu/FindMenuByNameContract";
 
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
-import { ConflictError } from "@/utils/errors/httpErrors";
+import { MenuAlreadyExistsError } from "@/utils/errors/MenuAlreadyExistsError";
 
 export class CreateMenuUseCase implements CreateMenu {
   constructor(
@@ -18,7 +18,7 @@ export class CreateMenuUseCase implements CreateMenu {
     const menu = await this.findProduct.findByName(menuModel.name);
 
     if (menu) {
-      throw new ConflictError("Cardápio já criado");
+      throw new MenuAlreadyExistsError("Cardápio já criado");
     }
 
     return this.createMenu.save(menuModel);

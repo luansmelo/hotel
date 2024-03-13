@@ -1,6 +1,6 @@
 import { MenuModel } from "@/contracts/menu/CreateMenuContract";
 import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
 
 export class FindMenuByIdController {
   constructor(private readonly menu: FindMenuById) {}
@@ -9,7 +9,7 @@ export class FindMenuByIdController {
     const menu = await this.menu.findById(id);
 
     if (!menu) {
-      throw new NotFoundError("Menu não encontrado");
+      throw new MenuNotFoundError()
     }
 
     return menu;

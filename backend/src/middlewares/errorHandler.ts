@@ -1,4 +1,4 @@
-import { HttpError } from "@/utils/errors/httpErrors";
+import { HttpError } from "@/utils/helpers/httpErrors";
 import { Request, Response, NextFunction } from "express";
 
 function errorHandler(

@@ -5,7 +5,7 @@ import {
   UpdateGroupContract,
 } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
 
 export class UpdateGroupUseCase implements UpdateGroup {
   constructor(
@@ -20,7 +20,7 @@ export class UpdateGroupUseCase implements UpdateGroup {
     const group = await this.findGroup.findById(id);
 
     if (!group) {
-      throw new NotFoundError("Grupo não encontrado");
+      throw new GroupNotFoundError();
     }
 
     return this.updateGroup.updateById(group.id, { name: input.name });

@@ -2,8 +2,6 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mainRouter from "./routes";
-import errorHandler from "./middlewares/errorHandler";
-import { HttpError } from "./utils/errors/httpErrors";
 
 dotenv.config();
 
@@ -28,19 +26,6 @@ export class Server {
     this.app.use(express.json());
 
     this.app.use(`/v${this.version}`, mainRouter);
-    this.middleware();
-  }
-
-  middleware(): void {
-    this.app.use(
-      (err: HttpError, req: Request, res: Response, next: NextFunction) => {
-        if (err instanceof HttpError) {
-          return err.sendResponse(res);
-        }
-        console.error(err);
-        return res.status(500).json({ error: "Internal Server Error" });
-      }
-    );
   }
 
   public start(): Application {

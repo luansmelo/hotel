@@ -8,7 +8,10 @@ import {
 } from "@/contracts/input/CreateInputContract";
 import { FindInputByCodeContract } from "@/contracts/input/FindInputByCodeContract";
 import { CreateInputModel } from "@/entities/input/createInput";
-import { ConflictError, NotFoundError } from "@/utils/errors/httpErrors";
+import { CodeAlreadyExistsError } from "@/utils/errors/CodeAlreadyExistsError";
+import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
+import { InputAlreadyExistsError } from "@/utils/errors/InputAlreadyExistsError";
+import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
 
 export class CreateInputUseCase implements CreateInput {
   constructor(
@@ -23,13 +26,13 @@ export class CreateInputUseCase implements CreateInput {
     const input = await this.findByName.findByName(inputModel.name);
 
     if (input) {
-      throw new ConflictError("Insumo já cadastrado");
+      throw new InputAlreadyExistsError("Insumo já cadastrado");
     }
 
     const code = await this.findByCode.findByCode(inputModel.code);
 
     if (code) {
-      throw new ConflictError("Código já cadastrado");
+      throw new CodeAlreadyExistsError("Código já cadastrado");
     }
 
     const measure = await this.findMeasureById.findById(
@@ -37,7 +40,7 @@ export class CreateInputUseCase implements CreateInput {
     );
 
     if (!measure) {
-      throw new NotFoundError("Unidade de medida não encontrada");
+      throw new MeasureNotFoundError();
     }
 
     const groups = await Promise.all(
@@ -45,7 +48,7 @@ export class CreateInputUseCase implements CreateInput {
     );
 
     if (groups.some((group) => !group)) {
-      throw new NotFoundError("Grupos não encontrados");
+      throw new GroupNotFoundError();
     }
 
     return this.createInput.save(inputModel);

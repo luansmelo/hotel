@@ -1,4 +1,4 @@
-import { Request, Response, Router, NextFunction } from "express";
+import { Router } from "express";
 import { InputSchema } from "@/validators/InputValidation";
 import { ROLE } from "@/config/constants";
 import { allowed, authenticated, validate } from "@/middlewares";
@@ -9,8 +9,8 @@ import {
   makeUpdateInputController,
   makeFindInputByIdController,
 } from "@/factories/input";
-import { CreateInputModel } from "@/entities/input/createInput";
-import { Sort } from "@/entities/input/FindInputsParams";
+
+import { adaptRoute } from "@/adapters/ExpressRouteAdapter";
 
 const router = Router();
 const slug = "/input";
@@ -20,64 +20,21 @@ router.post(
   authenticated,
   allowed([ROLE.Admin]),
   validate(InputSchema),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const input: CreateInputModel = InputSchema.parse(
-        request.body
-      ) as CreateInputModel;
-
-      const controller = makeCreateInputController();
-
-      const result = await controller.create(input);
-
-      return response.status(201).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
+  adaptRoute(makeCreateInputController())
 );
 
 router.get(
   "/",
   authenticated,
   allowed([ROLE.Admin, ROLE.User]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const { order, sort, page } = request.query;
-
-      const controller = makeFindInputsController();
-
-      const findParams = {
-        order: order as "asc" | "desc",
-        sort: sort as Sort,
-        page: parseInt(page as string, 10),
-      };
-
-      const result = await controller.findAll(findParams);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
+  adaptRoute(makeFindInputsController())
 );
 
 router.get(
   "/:id",
   authenticated,
   allowed([ROLE.Admin, ROLE.User]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-
-      const controller = makeFindInputByIdController();
-      const result = await controller.findById(id);
-
-      return response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
+  adaptRoute(makeFindInputByIdController())
 );
 
 router.put(
@@ -85,42 +42,14 @@ router.put(
   authenticated,
   allowed([ROLE.Admin]),
   validate(InputSchema),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-      const input: CreateInputModel = InputSchema.parse(
-        request.body
-      ) as CreateInputModel;
-
-      const controller = makeUpdateInputController();
-
-      await controller.updateById(id, input);
-
-      return response.status(200).send({
-        message: "Insumo editado com sucesso!",
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
+  adaptRoute(makeUpdateInputController())
 );
 
 router.delete(
   "/:id",
   authenticated,
   allowed([ROLE.Admin]),
-  async (request: Request, response: Response, next: NextFunction) => {
-    try {
-      const id = request.params.id;
-      const controller = makeDeleteInputController();
-
-      const result = await controller.deleteById(id);
-
-      response.status(200).send(result);
-    } catch (error) {
-      next(error);
-    }
-  }
+  adaptRoute(makeDeleteInputController())
 );
 
 export { router, slug };

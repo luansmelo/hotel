@@ -4,7 +4,8 @@ import {
 } from "@/contracts/product";
 import { FindPredefinedProductByIdContract } from "@/contracts/product/FindPredefinedProductByIdContract";
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
-import { BadRequestError, NotFoundError } from "@/utils/errors/httpErrors";
+import { InputAlreadyExistsError } from "@/utils/errors/InputAlreadyExistsError";
+import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
 
 export class AddInputToProductUseCase implements AddInputToProduct {
   constructor(
@@ -16,7 +17,7 @@ export class AddInputToProductUseCase implements AddInputToProduct {
     const product = await this.findProduct.findPredefinedById(productModel.id);
 
     if (!product) {
-      throw new NotFoundError("Produto não encontrado");
+      throw new ProductNotFoundError();
     }
 
     const existingInputIds = new Set(product.inputs.map((input) => input.id));
@@ -25,7 +26,7 @@ export class AddInputToProductUseCase implements AddInputToProduct {
     );
 
     if (!uniqueInputs.length) {
-      throw new BadRequestError(
+      throw new InputAlreadyExistsError(
         "Todos os insumos já estão inclusos no produto"
       );
     }

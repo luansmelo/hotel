@@ -5,7 +5,7 @@ import {
   FindCategoryByNameContract,
 } from "@/contracts";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
-import { ConflictError } from "@/utils/errors/httpErrors";
+import { CategoryAlreadyExistsError } from "@/utils/errors/CategoryAlreadyExistsError";
 
 export class CreateCategoryUseCase implements CreateCategory {
   constructor(
@@ -17,7 +17,7 @@ export class CreateCategoryUseCase implements CreateCategory {
     const category = await this.findCategory.findByName(categoryModel.name);
 
     if (category) {
-      throw new ConflictError("Categoria já cadastrada");
+      throw new CategoryAlreadyExistsError("Categoria já cadastrada");
     }
 
     return this.createCategory.save(categoryModel);

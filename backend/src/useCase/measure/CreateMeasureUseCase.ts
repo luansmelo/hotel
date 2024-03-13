@@ -5,7 +5,7 @@ import {
   MeasureModel,
 } from "@/contracts";
 import { CreateMeasureModel } from "@/entities/measure/createMeasure";
-import { ConflictError } from "@/utils/errors/httpErrors";
+import { MeasureAlreadyExistsError } from "@/utils/errors/MeasureAlreadyExistsError";
 
 export class CreateMeasureUseCase implements CreateMeasure {
   constructor(
@@ -17,7 +17,7 @@ export class CreateMeasureUseCase implements CreateMeasure {
     const measure = await this.findMeasure.findByName(measureModel.name);
 
     if (measure) {
-      throw new ConflictError("Unidade de medida já cadastrada");
+      throw new MeasureAlreadyExistsError("Unidade de medida já cadastrada");
     }
 
     return this.createMeasure.save(measureModel);

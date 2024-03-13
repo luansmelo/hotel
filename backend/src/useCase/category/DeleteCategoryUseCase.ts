@@ -4,7 +4,7 @@ import {
   DeleteCategoryContract,
   FindCategoryByIdContract,
 } from "@/contracts";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { CategoryNotFoundError } from "@/utils/errors/CategoryNotFoundError";
 
 export class DeleteCategoryUseCase implements DeleteCategory {
   constructor(
@@ -16,7 +16,7 @@ export class DeleteCategoryUseCase implements DeleteCategory {
     const category = await this.findCategory.findById(id);
 
     if (!category) {
-      throw new NotFoundError("Categoria não encontrada");
+      throw new CategoryNotFoundError();
     }
 
     return this.deleteCategory.deleteById(category.id);

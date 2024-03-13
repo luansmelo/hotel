@@ -1,7 +1,7 @@
 import { MenuModel } from "@/contracts/menu/CreateMenuContract";
 import { FindMenu, FindMenuContract } from "@/contracts/menu/FindMenuContract";
 import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
 
 export class FindMenuUseCase implements FindMenu {
   constructor(private readonly menu: FindMenuContract) {}
@@ -10,7 +10,7 @@ export class FindMenuUseCase implements FindMenu {
     const menu = await this.menu.findMenu(param);
 
     if (!menu) {
-      throw new NotFoundError("Cardápio não encontrado");
+      throw new MenuNotFoundError();
     }
 
     return menu;

@@ -1,15 +1,10 @@
 import {
-  CategoryModel,
-  DeleteCategoryContract,
-  FindCategoryByIdContract,
-} from "@/contracts";
-import {
   DeleteInput,
   DeleteInputContract,
   FindInputByIdContract,
 } from "@/contracts/input";
 import { InputModel } from "@/contracts/input/CreateInputContract";
-import { NotFoundError } from "@/utils/errors/httpErrors";
+import { InputNotFoundError } from "@/utils/errors/InputNotFoundError";
 
 export class DeleteInputUseCase implements DeleteInput {
   constructor(
@@ -21,7 +16,7 @@ export class DeleteInputUseCase implements DeleteInput {
     const input = await this.findInput.findById(id);
 
     if (!input) {
-      throw new NotFoundError("Insumo não encontrado");
+      throw new InputNotFoundError();
     }
 
     return this.deleteInput.deleteById(input.id);

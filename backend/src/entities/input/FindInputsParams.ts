@@ -4,8 +4,8 @@ export type Sort = "name" | "code" | "unitPrice" | "measurementUnit" | "groups" 
 
 export interface FindInputsParams {
   page?: number;
-  sort: Sort;
-  order: "asc" | "desc";
+  sort?: Sort;
+  order?: 'ASC' | 'DESC';
 }
 
 export interface FindInputsResponse {

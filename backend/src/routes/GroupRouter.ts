@@ -66,7 +66,7 @@ router.get(
       const controller = makeFindGroupsController();
 
       const findParams = {
-        order: order as "asc" | "desc",
+        order: order as "ASC" | "DESC",
         sort: sort as Sort,
         page: parseInt(page as string, 10),
       };
