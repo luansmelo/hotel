@@ -1,16 +1,28 @@
-import { FindProductById, ProductModel } from "@/contracts/product";
+import { FindProductById } from "@/contracts/product";
 import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { Controller } from "../protocols/controller";
+import { HttpRequest } from "../protocols/httpRequest";
+import { HttpResponse } from "../protocols/httpResponse";
+import { errorHandler } from "@/utils/helpers/errorHandler/errorHandler";
+import { notFound, ok } from "@/utils/helpers/httpCodesHelper";
 
-export class FindProductByIdController {
-  constructor(private readonly product: FindProductById) {}
+export class FindProductByIdController implements Controller {
+  constructor(private readonly product: FindProductById) { }
 
-  async findById(id: string): Promise<ProductModel | null> {
-    const product = await this.product.findById(id);
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+    try {
 
-    if (!product) {
-      throw new ProductNotFoundError();
+      const { id } = httpRequest.params as { id: string }
+
+      const foundProduct = await this.product.findById(id)
+
+      if (!foundProduct) {
+        return notFound(new ProductNotFoundError())
+      }
+
+      return ok(foundProduct)
+    } catch (error) {
+      return errorHandler(error)
     }
-
-    return product;
   }
 }

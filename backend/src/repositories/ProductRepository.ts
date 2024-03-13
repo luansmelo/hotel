@@ -20,17 +20,16 @@ import { mapperProduct } from "@/useCase/product/mapper/mapperProduct";
 
 export class ProductRepository
   implements
-    CreateProductContract,
-    AddInputToProductContract,
-    FindProductByIdContract,
-    FindProductByNameContract,
-    FindProductsContract,
-    FindPredefinedProductByIdContract,
-    DeleteProductContract,
-    DeleteInputToProductContract,
-    UpdateProductContract
-{
-  constructor(private readonly db: PrismaClient) {}
+  CreateProductContract,
+  AddInputToProductContract,
+  FindProductByIdContract,
+  FindProductByNameContract,
+  FindProductsContract,
+  FindPredefinedProductByIdContract,
+  DeleteProductContract,
+  DeleteInputToProductContract,
+  UpdateProductContract {
+  constructor(private readonly db: PrismaClient) { }
 
   async save(input: CreateProductModel) {
     return this.db.product.create({
@@ -154,7 +153,7 @@ export class ProductRepository
   }
 
   async updateById(id: string, input: Partial<UpdateProductModel>) {
-    await this.db.product.update({
+    return this.db.product.update({
       where: { id },
       data: {
         ...input,
@@ -178,7 +177,7 @@ export class ProductRepository
     });
   }
 
-  async add(input: AddInputToProductModel): Promise<void> {
+  async add(input: AddInputToProductModel): Promise<Partial<{ count: number }>> {
     const data = input.inputs.map((inputItem) => ({
       productId: input.id,
       inputId: inputItem.id as string,
@@ -186,13 +185,13 @@ export class ProductRepository
       grammage: inputItem.grammage,
     }));
 
-    await this.db.inputsOnProducts.createMany({ data });
+    return this.db.inputsOnProducts.createMany({ data });
   }
 
   async deleteInputToProductById(
     input: RemoveInputToProductModel
-  ): Promise<void> {
-    await this.db.inputsOnProducts.deleteMany({
+  ): Promise<Partial<{ count: number }>> {
+    return this.db.inputsOnProducts.deleteMany({
       where: {
         productId: input.productId,
         inputId: input.inputId,

@@ -11,11 +11,11 @@ export class DeleteInputToProductUseCase implements DeleteInputToProduct {
   constructor(
     private readonly removeInput: DeleteInputToProductContract,
     private readonly findProduct: FindProductByIdContract
-  ) {}
+  ) { }
 
   async deleteInputToProductById(
     productModel: RemoveInputToProductModel
-  ): Promise<void> {
+  ): Promise<Partial<{ count: number }>> {
     const product = await this.findProduct.findById(productModel.productId);
 
     if (!product) {
@@ -28,6 +28,6 @@ export class DeleteInputToProductUseCase implements DeleteInputToProduct {
       throw new InputNotFoundError();
     }
 
-    await this.removeInput.deleteInputToProductById(productModel);
+    return this.removeInput.deleteInputToProductById(productModel);
   }
 }

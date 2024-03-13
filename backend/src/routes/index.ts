@@ -1,11 +1,17 @@
-import { Router } from "express";
-import * as products from "./ProductRouter";
-import * as s3 from "./S3Router";
+import { Express, Router } from 'express';
+import { readdirSync } from 'fs';
+import { join } from 'path';
 
-const mainRouter = Router();
+export default (app: Express): void => {
+    const router = Router();
 
-mainRouter.use(products.slug, products.router);
-mainRouter.use(s3.slug, s3.router);
+    app.use('/api', router);
 
+    const routesDir = join(__dirname, '../routes');
 
-export default mainRouter;
+    readdirSync(routesDir, { recursive: true }).map(async file => {
+        if (file.includes('Router.')) {
+            (await import(`${routesDir}/${file}`)).default(router);
+        }
+    });
+};

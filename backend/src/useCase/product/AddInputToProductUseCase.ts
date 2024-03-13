@@ -11,9 +11,9 @@ export class AddInputToProductUseCase implements AddInputToProduct {
   constructor(
     private readonly input: AddInputToProductContract,
     private readonly findProduct: FindPredefinedProductByIdContract
-  ) {}
+  ) { }
 
-  async addInput(productModel: AddInputToProductModel): Promise<void> {
+  async addInput(productModel: AddInputToProductModel): Promise<Partial<{ count: number }>> {
     const product = await this.findProduct.findPredefinedById(productModel.id);
 
     if (!product) {
@@ -31,7 +31,7 @@ export class AddInputToProductUseCase implements AddInputToProduct {
       );
     }
 
-    await this.input.add({
+    return this.input.add({
       id: productModel.id,
       inputs: uniqueInputs,
     });

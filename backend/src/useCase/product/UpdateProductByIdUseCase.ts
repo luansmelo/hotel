@@ -11,15 +11,15 @@ export class UpdateProductByIdUseCase implements UpdateProduct {
   constructor(
     private readonly updateProduct: UpdateProductContract,
     private readonly findProduct: FindProductByIdContract
-  ) {}
+  ) { }
 
-  async updateById(id: string, input: UpdateProductModel): Promise<void> {
+  async updateById(id: string, input: UpdateProductModel): Promise<Partial<UpdateProductModel>> {
     const product = await this.findProduct.findById(id);
-    
+
     if (!product) {
       throw new ProductNotFoundError();
     }
 
-    await this.updateProduct.updateById(product.id, input);
+    return this.updateProduct.updateById(product.id, input);
   }
 }
