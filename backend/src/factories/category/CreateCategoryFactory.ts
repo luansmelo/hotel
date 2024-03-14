@@ -4,6 +4,7 @@ import { CreateCategoryController } from "@/controllers/category/CreateCategoryC
 import { CategoryRepository } from "@/repositories/CategoryRepository";
 import { CreateCategoryUseCase } from "@/useCase/category/CreateCategoryUseCase";
 import { FindCategoryByNameUseCase } from "@/useCase/category/FindCategoryByNameUseCase";
+import { makeCategoryValidationFactory } from "./CategoryValidationFactory";
 
 export function makeCreateCategoryController(): CreateCategoryController {
   const repo = new CategoryRepository(prisma);
@@ -12,5 +13,7 @@ export function makeCreateCategoryController(): CreateCategoryController {
 
   const createCategory = new CreateCategoryUseCase(repo, findCategoryByName);
 
-  return new CreateCategoryController(createCategory);
+  const validator = makeCategoryValidationFactory()
+
+  return new CreateCategoryController(createCategory, validator);
 }

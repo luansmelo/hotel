@@ -10,8 +10,8 @@ import {
 
 import { adaptRoute } from "@/adapters/ExpressRouteAdapter";
 import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
-import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
-import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
+import { makeAuthMiddleware } from "@/factories/middlewares/AuthMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "@/factories/middlewares/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const inputRouter = Router();

@@ -9,9 +9,9 @@ import {
 } from "@/factories/category";
 
 import { adaptRoute } from "@/adapters";
-import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "@/factories/middlewares/AuthAdminMiddlewareFactory";
 import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
-import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { makeAuthMiddleware } from "@/factories/middlewares/AuthMiddlewareFactory";
 
 export default (router: Router): void => {
   const categoryRouter = Router();

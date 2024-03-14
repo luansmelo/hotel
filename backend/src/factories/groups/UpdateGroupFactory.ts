@@ -3,6 +3,7 @@ import prisma from "@/config/prisma";
 import { UpdateGroupController } from "@/controllers/groups/UpdateGroupController";
 import { GroupRepository } from "@/repositories/GroupRepository";
 import { FindGroupByIdUseCase } from "@/useCase/group/FindGroupByIdUseCase";
+import { FindGroupByNameUseCase } from "@/useCase/group/FindGroupByNameUseCase";
 import { UpdateGroupUseCase } from "@/useCase/group/UpdateGroupUseCase";
 
 export function makeUpdateGroupController(): UpdateGroupController {
@@ -10,7 +11,9 @@ export function makeUpdateGroupController(): UpdateGroupController {
 
   const findGroupById = new FindGroupByIdUseCase(repo);
 
-  const updateGroup = new UpdateGroupUseCase(repo, findGroupById);
+  const findGroupByName = new FindGroupByNameUseCase(repo)
+
+  const updateGroup = new UpdateGroupUseCase(repo, findGroupById, findGroupByName);
 
   return new UpdateGroupController(updateGroup);
 }

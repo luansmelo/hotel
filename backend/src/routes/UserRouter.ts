@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { makeCreateUserController } from "@/factories/user/CreateUserFactory";
 import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
-import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { makeAuthMiddleware } from "@/factories/middlewares/AuthMiddlewareFactory";
 import { adaptRoute } from "@/adapters";
 
 export default (router: Router): void => {

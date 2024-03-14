@@ -8,6 +8,7 @@ import { FindGroupsByIdUseCase } from "@/useCase/group/FindGroupsByIdUseCase";
 import { FindInputByIdUseCase } from "@/useCase/input/FindInputByIdUseCase";
 import { UpdateInputUseCase } from "@/useCase/input/UpdateInputUseCase";
 import { FindMeasureByIdUseCase } from "@/useCase/measure/FindMeasureByIdUseCase";
+import { makeInputValidationFactory } from "./InputValidationFactory";
 
 export function makeUpdateInputController(): UpdateInputController {
   const repo = new InputRepository(prisma);
@@ -27,5 +28,7 @@ export function makeUpdateInputController(): UpdateInputController {
     findGroupsById
   );
 
-  return new UpdateInputController(updateInput);
+  const validator = makeInputValidationFactory()
+
+  return new UpdateInputController(updateInput, validator);
 }

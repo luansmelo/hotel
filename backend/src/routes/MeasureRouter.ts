@@ -8,9 +8,9 @@ import {
 } from "@/factories/";
 
 import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
-import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { makeAuthMiddleware } from "@/factories/middlewares/AuthMiddlewareFactory";
 import { adaptRoute } from "@/adapters";
-import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "@/factories/middlewares/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const measureRouter = Router();

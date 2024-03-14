@@ -41,7 +41,7 @@ export class CategoryRepository
     const offset = (page - 1) * limit;
     const order = findParams.order || "ASC";
     const sort = findParams.sort || "name";
-    console.log(order, sort)
+
     const categories = await this.db.category.findMany({
       orderBy: [
         {

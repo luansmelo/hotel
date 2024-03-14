@@ -8,12 +8,12 @@ import {
   makeDeleteProductToMenuController,
   makeFindMenuByIdController,
   makeAddProductToMenuController,
-} from "@/factories/menu/";
+} from "@/factories/menu";
 
 import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
-import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { makeAuthMiddleware } from "@/factories/middlewares/AuthMiddlewareFactory";
 import { adaptRoute } from "@/adapters";
-import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "@/factories/middlewares/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const menuRouter = Router();

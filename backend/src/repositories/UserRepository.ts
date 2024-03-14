@@ -18,7 +18,7 @@ export class UserRepository
   }
 
   async findByIdAndRole(id: string, role?: string): Promise<UserModel | null> {
-    console.log(id, role)
+
     return this.db.user.findUnique({
       where: {
         id,

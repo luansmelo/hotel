@@ -1,24 +1,35 @@
 import { UpdateInput } from "@/contracts/input";
 import { CreateInputModel } from "@/entities/input/createInput";
 import { errorHandler } from "@/utils/helpers/errorHandler/errorHandler";
-import { forbidden, ok } from "@/utils/helpers/httpCodesHelper";
-import { HttpRequest } from "../protocols/httpRequest";
-import { HttpResponse } from "../protocols/httpResponse";
+import { badRequest, forbidden, ok } from "@/utils/helpers/httpCodesHelper";
 import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
-import { Controller } from "../protocols/controller";
-
+import { FORBIDDEN_UPDATE_UPDATING_INPUT } from "@/utils/errors/pt-br";
+import { Controller, HttpRequest, HttpResponse, Validation } from "../protocols";
+import { MissingParamError } from "@/utils/errors/MissingParamError";
 export class UpdateInputController implements Controller {
-  constructor(private readonly updateInput: UpdateInput) {}
+  constructor(private readonly updateInput: UpdateInput, private readonly validation: Validation) { }
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id } = request.params as { id: string };
-      const payload = request.body as CreateInputModel;
 
-      const input = await this.updateInput.updateById(id, payload);
+      const error = this.validation.validate(request.params);
+
+      if (error) {
+        return badRequest(error);
+      }
+
+      const { id } = request.params as { id: string };
+
+      if (!id) {
+        return badRequest(new MissingParamError('id'));
+      }
+
+      const body = request.body as CreateInputModel;
+
+      const input = await this.updateInput.updateById(id, body);
 
       if (!input) {
-        return forbidden(new AccessDeniedError());
+        return forbidden(new AccessDeniedError(FORBIDDEN_UPDATE_UPDATING_INPUT));
       }
 
       return ok(input);

@@ -4,7 +4,7 @@ import { RequiredFieldValitation } from "@/validators/RequiredFieldValidation";
 import { Validation } from "@/validators/sort/SortInputValidator";
 import { ValidationComposite } from "@/validators/ValidationComposition";
 
-export const makeGroupValidationFactory = (): ValidationComposite => {
+export const makeCategoryValidationFactory = (): ValidationComposite => {
     const validations: Validation[] = [];
     const requiredFields = [
         'name'
@@ -14,9 +14,9 @@ export const makeGroupValidationFactory = (): ValidationComposite => {
         validations.push(new RequiredFieldValitation(field));
     }
 
-    const groupValidator = new FieldValidator(new GroupFieldValidatorAdapter());
+    const categoryValidator = new FieldValidator(new GroupFieldValidatorAdapter());
 
-    validations.push(groupValidator);
+    validations.push(categoryValidator);
 
     return new ValidationComposite(validations);
 };

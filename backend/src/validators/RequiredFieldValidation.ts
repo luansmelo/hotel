@@ -1,5 +1,5 @@
 import { MissingParamError } from "@/utils/errors/MissingParamError";
-import { Validation } from "./SortInputValidator";
+import { Validation } from "./sort/SortInputValidator";
 
 export class RequiredFieldValitation implements Validation {
     constructor(private readonly field: string) { }

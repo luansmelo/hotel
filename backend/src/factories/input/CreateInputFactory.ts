@@ -1,4 +1,5 @@
 import prisma from "@/config/prisma";
+
 import { CreateInputController } from "@/controllers/input/CreateInputController";
 import { GroupRepository } from "@/repositories/GroupRepository";
 import { InputRepository } from "@/repositories/InputRepository";
@@ -8,10 +9,13 @@ import { CreateInputUseCase } from "@/useCase/input/CreateInputUseCase";
 import { FindInputByCodeUseCase } from "@/useCase/input/FindInputByCodeUseCase";
 import { FindInputByNameUseCase } from "@/useCase/input/FindInputByNameUseCase";
 import { FindMeasureByIdUseCase } from "@/useCase/measure/FindMeasureByIdUseCase";
+import { makeInputValidationFactory } from "./InputValidationFactory";
 
 export function makeCreateInputController(): CreateInputController {
   const repo = new InputRepository(prisma);
+
   const measureRepo = new MeasureRepository(prisma);
+  
   const groupRepo = new GroupRepository(prisma);
 
   const findInputByName = new FindInputByNameUseCase(repo);
@@ -30,5 +34,7 @@ export function makeCreateInputController(): CreateInputController {
     findGroupById
   );
 
-  return new CreateInputController(createCategory);
+  const validator = makeInputValidationFactory()
+
+  return new CreateInputController(createCategory, validator);
 }

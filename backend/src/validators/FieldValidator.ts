@@ -1,4 +1,4 @@
-import { Validation } from "./SortInputValidator";
+import { Validation } from "./sort/SortInputValidator";
 
 export interface FieldValidatorProtocol {
     validate: (field: string, value: unknown) => Error | void;

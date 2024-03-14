@@ -8,7 +8,7 @@ const schemas = {
   }).min(3).max(50),
 };
 
-export class GroupFieldValidatorAdapter implements FieldValidatorProtocol {
+export class CategoryFieldValidatorAdapter implements FieldValidatorProtocol {
   validate(field: string, value: unknown): Error | void {
     let schema = schemas[field] || z.string().min(1);
 

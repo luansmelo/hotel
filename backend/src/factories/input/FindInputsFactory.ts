@@ -4,7 +4,7 @@ import { FindInputsController } from "@/controllers/input/FindInputController";
 import { InputRepository } from "@/repositories/InputRepository";
 import { FindInputsUseCase } from "@/useCase/input/FindInputsUseCase";
 import { SortInputValidator } from "@/validators/sort/SortInputValidator";
-import { ValidationComposite } from "@/validators/sort/ValidationComposition";
+import { ValidationComposite } from "@/validators/ValidationComposition";
 
 export function makeFindInputsController(): FindInputsController {
   const repo = new InputRepository(prisma);

@@ -17,6 +17,7 @@ model User {
   createdAt    DateTime @default(now()) @map(name: "created_at")
   updatedAt    DateTime @updatedAt @map(name: "updated_at")
 
+  @@index([email])
   @@map("user")
 }
 
@@ -33,6 +34,7 @@ model Product {
   createdAt               DateTime                  @default(now()) @map(name: "created_at")
   updatedAt               DateTime                  @updatedAt @map(name: "updated_at")
 
+  @@index([name])
   @@map("product")
 }
 
@@ -75,6 +77,7 @@ model Input {
   updatedAt         DateTime           @updatedAt @map(name: "updated_at")
   measurementUnitId String
 
+  @@index([code, name, unitPrice])
   @@map("input")
 }
 
@@ -87,6 +90,7 @@ model GroupsOnInputs {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
 
+  @@index([inputId, groupId])
   @@map("groupsOnInputs")
 }
 
@@ -97,6 +101,7 @@ model Group {
   createdAt DateTime         @default(now()) @map(name: "created_at")
   updatedAt DateTime         @updatedAt @map(name: "updated_at")
 
+  @@index([name])
   @@map("group")
 }
 
@@ -107,6 +112,7 @@ model Menu {
   updatedAt               DateTime                  @updatedAt @map(name: "updated_at")
   categoryProductSchedule CategoryProductSchedule[]
 
+  @@index([name])
   @@map("menu")
 }
 
@@ -122,6 +128,7 @@ model CategoryProductSchedule {
   createdAt  DateTime @default(now()) @map(name: "created_at")
   updatedAt  DateTime @updatedAt @map(name: "updated_at")
 
+  @@index([menuId, categoryId, productId, weekDay])
   @@map("categoryProductSchedule")
 }
 
@@ -132,6 +139,7 @@ model Category {
   updated_at              DateTime                  @updatedAt
   categoryProductSchedule CategoryProductSchedule[]
 
+  @@index([name])
   @@map("category")
 }
 
@@ -142,6 +150,7 @@ model MeasurementUnit {
   updatedAt DateTime @updatedAt @map(name: "updated_at")
   input     Input[]
 
+  @@index([name])
   @@map("measurementUnit")
 }
 

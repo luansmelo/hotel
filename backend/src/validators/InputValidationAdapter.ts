@@ -3,12 +3,15 @@ import { z, ZodError } from 'zod';
 import { FieldValidatorProtocol } from './FieldValidator';
 
 const schemas = {
-  name: z.string({
-    required_error: 'O nome da categoria é obrigatório',
-  }).min(3).max(50),
+  name: z.string().min(3, { message: "O nome deve ter no mínimo 3 caracteres" })
+    .max(50, { message: "O nome deve ter no máximo 50 caracteres" }),
+  code: z.string().min(2, { message: "O código deve ter pelo menos 2 caracteres" }).max(50),
+  unitPrice: z.number().min(0.01),
+  measurementUnitId: z.string(),
+  groups: z.array(z.string()),
 };
 
-export class GroupFieldValidatorAdapter implements FieldValidatorProtocol {
+export class InputFieldValidatorAdapter implements FieldValidatorProtocol {
   validate(field: string, value: unknown): Error | void {
     let schema = schemas[field] || z.string().min(1);
 
