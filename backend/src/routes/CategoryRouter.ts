@@ -9,17 +9,20 @@ import {
 } from "@/factories/category";
 
 import { adaptRoute } from "@/adapters";
+import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
+import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
+import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
 
 export default (router: Router): void => {
   const categoryRouter = Router();
 
-  categoryRouter.get("/", adaptRoute(makeFindCategoriesController()));
-  categoryRouter.get("/:id", adaptRoute(makeFindCategoryByIdController()));
+  categoryRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindCategoriesController()));
+  categoryRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindCategoryByIdController()));
 
   // Admin Routes
-  categoryRouter.post("/create", adaptRoute(makeCreateCategoryController()));
-  categoryRouter.delete("/:id", adaptRoute(makeDeleteCategoryController()));
-  categoryRouter.put("/:id", adaptRoute(makeUpdateCategoryController()));
+  categoryRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateCategoryController()));
+  categoryRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteCategoryController()));
+  categoryRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateCategoryController()));
 
   router.use('/category', categoryRouter);
 }

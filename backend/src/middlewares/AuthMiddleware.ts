@@ -16,6 +16,7 @@ export class AuthMiddleware implements Middleware {
     ) { }
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+
         try {
             const token = httpRequest.headers as { 'x-access-token': string };
 

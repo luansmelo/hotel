@@ -17,6 +17,8 @@ export async function errorHandler(error: unknown): Promise<HttpResponse> {
     }
   }
 
+  console.log(error)
+
   if (error instanceof JsonWebTokenError) {
     return badRequest({
       name: error.name,

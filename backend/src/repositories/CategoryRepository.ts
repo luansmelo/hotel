@@ -16,14 +16,13 @@ import { PrismaClient } from "@prisma/client";
 
 export class CategoryRepository
   implements
-    CreateCategoryContract,
-    FindCategoriesContract,
-    FindCategoryByNameContract,
-    FindCategoryByIdContract,
-    DeleteCategoryContract,
-    UpdateCategoryContract
-{
-  constructor(private readonly db: PrismaClient) {}
+  CreateCategoryContract,
+  FindCategoriesContract,
+  FindCategoryByNameContract,
+  FindCategoryByIdContract,
+  DeleteCategoryContract,
+  UpdateCategoryContract {
+  constructor(private readonly db: PrismaClient) { }
 
   async save(input: CreateCategoryModel): Promise<CategoryModel> {
     return await this.db.category.create({
@@ -39,12 +38,15 @@ export class CategoryRepository
       ? parseInt(process.env.PAGE_LIMIT)
       : 10;
     const offset = (page - 1) * limit;
-    const order = findParams.order || "asc";
+    const order = findParams.order || "ASC";
+    const sort = findParams.sort || "name";
 
     const categories = await this.db.category.findMany({
-      orderBy: {
-        name: order,
-      },
+      orderBy: [
+        {
+          [sort]: order,
+        },
+      ],
       take: limit,
       skip: offset,
     });

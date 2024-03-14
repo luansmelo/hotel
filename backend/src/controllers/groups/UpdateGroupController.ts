@@ -4,8 +4,9 @@ import { Controller } from "../protocols/controller";
 import { HttpRequest } from "../protocols/httpRequest";
 import { HttpResponse } from "../protocols/httpResponse";
 import { errorHandler } from "@/utils/helpers/errorHandler/errorHandler";
-import { notFound, ok } from "@/utils/helpers/httpCodesHelper";
-import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
+import { forbidden, ok } from "@/utils/helpers/httpCodesHelper";
+import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
+import { FORBIDDEN_DELETE_UPDATING_GROUP } from "@/utils/errors/pt-br";
 
 export class UpdateGroupController implements Controller {
   constructor(private readonly group: UpdateGroup) { }
@@ -18,7 +19,7 @@ export class UpdateGroupController implements Controller {
       const result = await this.group.updateById(id, input);
 
       if (!result) {
-        return notFound(new GroupNotFoundError());
+        return forbidden(new AccessDeniedError(FORBIDDEN_DELETE_UPDATING_GROUP));
       }
 
       return ok(result)

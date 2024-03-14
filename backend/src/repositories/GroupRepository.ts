@@ -18,15 +18,14 @@ import {
 
 export class GroupRepository
   implements
-    CreateGroupContract,
-    DeleteGroupContract,
-    FindGroupByIdContract,
-    FindGroupByNameContract,
-    FindGroupsByIdContract,
-    FindGroupsContract,
-    UpdateGroupContract
-{
-  constructor(private readonly db: PrismaClient) {}
+  CreateGroupContract,
+  DeleteGroupContract,
+  FindGroupByIdContract,
+  FindGroupByNameContract,
+  FindGroupsByIdContract,
+  FindGroupsContract,
+  UpdateGroupContract {
+  constructor(private readonly db: PrismaClient) { }
   async save(input: CreateGroupModel): Promise<GroupModel> {
     return this.db.group.create({
       data: input,
@@ -41,12 +40,15 @@ export class GroupRepository
       ? parseInt(process.env.PAGE_LIMIT)
       : 10;
     const offset = (page - 1) * limit;
-    const order = findParams.order || "asc";
+    const order = findParams.order || "ASC";
+    const sort = findParams.sort || "name";
 
     const groups = await this.db.group.findMany({
-      orderBy: {
-        name: order,
-      },
+      orderBy: [
+        {
+          [sort]: order,
+        },
+      ],
       take: limit,
       skip: offset,
     });

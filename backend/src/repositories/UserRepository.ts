@@ -18,7 +18,13 @@ export class UserRepository
     return this.db.user.findUnique({ where: { email } });
   }
 
-  async findByIdAndRole(id: string, role?: string): Promise<UserModel> {
-    return this.db.user.findFirst({ where: { id, role: ROLE[role] } });
+  async findByIdAndRole(id: string, role?: string): Promise<UserModel | null> {
+    return this.db.user.findFirst({
+      where: {
+        id,
+        role: role ? ROLE[role] : [ROLE.User, ROLE.Admin],
+      }
+    });
   }
+
 }

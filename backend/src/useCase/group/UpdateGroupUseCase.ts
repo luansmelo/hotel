@@ -5,24 +5,23 @@ import {
   UpdateGroupContract,
 } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
-import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
 
 export class UpdateGroupUseCase implements UpdateGroup {
   constructor(
     private readonly updateGroup: UpdateGroupContract,
     private readonly findGroup: FindGroupByIdContract
-  ) {}
+  ) { }
 
   async updateById(
     id: string,
     input: Partial<CreateGroupModel>
-  ): Promise<GroupModel> {
+  ): Promise<Partial<GroupModel | null>> {
     const group = await this.findGroup.findById(id);
 
     if (!group) {
-      throw new GroupNotFoundError();
+      return null;
     }
 
-    return this.updateGroup.updateById(group.id, { name: input.name });
+    return this.updateGroup.updateById(group.id, { name: input.name });;
   }
 }

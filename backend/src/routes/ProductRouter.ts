@@ -10,9 +10,10 @@ import {
 } from "@/factories/product/";
 
 import { makeDeleteInputToProductController } from "@/factories/product/DeleteInputToProductByIdFactory";
-import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
 import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
 import { adaptRoute } from "@/adapters";
+import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const productRouter = Router();
@@ -22,11 +23,11 @@ export default (router: Router): void => {
   productRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindProductByIdController()));
 
   // Admin Routes
-  productRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateProductController()));
-  productRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteProductController()));
-  productRouter.post("/add/input/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeAddInputToProductController()))
-  productRouter.delete("/:productId/input/:inputId", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteInputToProductController()));
-  productRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateProductController()));
+  productRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateProductController()));
+  productRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteProductController()));
+  productRouter.post("/add/input/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeAddInputToProductController()))
+  productRouter.delete("/:productId/input/:inputId", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteInputToProductController()));
+  productRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateProductController()));
 
   router.use('/product', productRouter);
 }

@@ -8,8 +8,9 @@ import {
 } from "@/factories";
 
 import { adaptRoute } from "@/adapters";
-import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
 import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const groupRouter = Router();
@@ -18,9 +19,9 @@ export default (router: Router): void => {
   groupRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindGroupsController()));
 
   // Admin Routes
-  groupRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateGroupController()));
-  groupRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateGroupController()));
-  groupRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteGroupController()));
+  groupRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateGroupController()));
+  groupRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateGroupController()));
+  groupRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteGroupController()));
 
   router.use('/group', groupRouter);
 }

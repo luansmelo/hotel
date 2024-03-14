@@ -11,7 +11,7 @@ export class CreateGroupUseCase implements CreateGroup {
   constructor(
     private readonly createGroup: CreateGroupContract,
     private readonly findGroup: FindGroupByNameContract
-  ) {}
+  ) { }
 
   async create(groupModel: CreateGroupModel): Promise<GroupModel> {
     const group = await this.findGroup.findByName(groupModel.name);

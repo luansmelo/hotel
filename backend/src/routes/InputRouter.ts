@@ -9,8 +9,9 @@ import {
 } from "@/factories/input";
 
 import { adaptRoute } from "@/adapters/ExpressRouteAdapter";
-import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
 import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const inputRouter = Router();
@@ -19,9 +20,9 @@ export default (router: Router): void => {
   inputRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindInputByIdController()));
 
   // Admin Routes
-  inputRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateInputController()));
-  inputRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateInputController()));
-  inputRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteInputController()));
+  inputRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateInputController()));
+  inputRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateInputController()));
+  inputRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteInputController()));
 
   router.use('/input', inputRouter);
 }

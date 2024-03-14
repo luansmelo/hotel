@@ -3,8 +3,9 @@ import { Controller } from "../protocols/controller";
 import { HttpResponse } from "../protocols/httpResponse";
 import { HttpRequest } from "../protocols/httpRequest";
 import { errorHandler } from "@/utils/helpers/errorHandler/errorHandler";
-import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
-import { notFound, ok } from "@/utils/helpers/httpCodesHelper";
+import { forbidden, ok } from "@/utils/helpers/httpCodesHelper";
+import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
+import { FORBIDDEN_DELETE_DELETING_GROUP } from "@/utils/errors/pt-br";
 
 export class DeleteGroupController implements Controller {
   constructor(private readonly group: DeleteGroup) { }
@@ -16,7 +17,7 @@ export class DeleteGroupController implements Controller {
       const result = await this.group.deleteById(id);
 
       if (!result) {
-        return notFound(new GroupNotFoundError())
+        return forbidden(new AccessDeniedError(FORBIDDEN_DELETE_DELETING_GROUP))
       }
 
       return ok(result)

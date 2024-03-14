@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { makeCreateUserController } from "@/factories/user/CreateUserFactory";
-import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
 import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
 import { adaptRoute } from "@/adapters";
 

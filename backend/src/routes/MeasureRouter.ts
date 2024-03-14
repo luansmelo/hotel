@@ -7,9 +7,10 @@ import {
   makeFindMeasureByIdController,
 } from "@/factories/";
 
-import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
 import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
 import { adaptRoute } from "@/adapters";
+import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const measureRouter = Router();
@@ -18,9 +19,9 @@ export default (router: Router): void => {
   measureRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMeasuresController()));
 
   // Admin Routes
-  measureRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateMeasureController()));
-  measureRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteMeasureController()));
-  measureRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateMeasureController()));
+  measureRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateMeasureController()));
+  measureRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteMeasureController()));
+  measureRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateMeasureController()));
 
   router.use('/measure', measureRouter);
 }

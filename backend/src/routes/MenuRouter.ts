@@ -10,9 +10,10 @@ import {
   makeAddProductToMenuController,
 } from "@/factories/menu/";
 
-import { adaptMiddleware } from "@/adapters/middlewares/ExpressMiddlewareAdapter";
+import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
 import { makeAuthMiddleware } from "@/factories/authMiddleware/AuthMiddlewareFactory";
 import { adaptRoute } from "@/adapters";
+import { makeAuthAdminMiddleware } from "@/factories/authAdminMiddleware/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const menuRouter = Router();
@@ -22,11 +23,11 @@ export default (router: Router): void => {
   menuRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMenusController()));
 
   // Admin Routes
-  menuRouter.post("/create", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCreateMenuController()));
-  menuRouter.delete("/:menuId/category/:categoryId/product/:productId/weekDay/:weekDay", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteProductToMenuController()));
-  menuRouter.post("/add/product", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeAddProductToMenuController()));
-  menuRouter.delete("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeDeleteMenuController()));
-  menuRouter.put("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeUpdateMenuController()));
+  menuRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateMenuController()));
+  menuRouter.delete("/:menuId/category/:categoryId/product/:productId/weekDay/:weekDay", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteProductToMenuController()));
+  menuRouter.post("/add/product", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeAddProductToMenuController()));
+  menuRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteMenuController()));
+  menuRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateMenuController()));
 
   router.use('/menu', menuRouter);
 }
