@@ -37,10 +37,11 @@ export class CategoryRepository
     const limit = process.env.PAGE_LIMIT
       ? parseInt(process.env.PAGE_LIMIT)
       : 10;
+
     const offset = (page - 1) * limit;
     const order = findParams.order || "ASC";
     const sort = findParams.sort || "name";
-
+    console.log(order, sort)
     const categories = await this.db.category.findMany({
       orderBy: [
         {

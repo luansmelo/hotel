@@ -17,7 +17,7 @@ export class CreateGroupUseCase implements CreateGroup {
     const group = await this.findGroup.findByName(groupModel.name);
 
     if (group) {
-      throw new GroupAlreadyExistsError();
+      throw new GroupAlreadyExistsError('Grupo ja cadastrado');
     }
 
     return this.createGroup.save(groupModel);

@@ -8,10 +8,10 @@ export class FindUserByToken implements FindUserByToken {
     ) { }
 
     async findByToken(token: string, role?: string): Promise<UserModel | null> {
-        const result = await this.decrypter.decrypt(token) as { sub: string };
+        const result = await this.decrypter.decrypt(token) as { id: string };
 
         if (result) {
-            return this.findUserByTokenRepository.findByIdAndRole(result.sub, role);
+            return this.findUserByTokenRepository.findByIdAndRole(result.id, role);
         }
 
         return null;

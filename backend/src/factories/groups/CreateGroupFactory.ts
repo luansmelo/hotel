@@ -4,6 +4,7 @@ import { CreateGroupController } from "@/controllers/groups/CreateGroupControlle
 import { GroupRepository } from "@/repositories/GroupRepository";
 import { CreateGroupUseCase } from "@/useCase/group/CreateGroupUseCase";
 import { FindGroupByNameUseCase } from "@/useCase/group/FindGroupByNameUseCase";
+import { makeGroupValidationFactory } from "./GroupValidationFactory";
 
 export function makeCreateGroupController(): CreateGroupController {
   const repo = new GroupRepository(prisma);
@@ -12,5 +13,7 @@ export function makeCreateGroupController(): CreateGroupController {
 
   const createGroup = new CreateGroupUseCase(repo, findGroupByName);
 
-  return new CreateGroupController(createGroup);
+  const validator = makeGroupValidationFactory()
+
+  return new CreateGroupController(createGroup, validator);
 }

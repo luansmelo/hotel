@@ -11,13 +11,11 @@ export async function errorHandler(error: unknown): Promise<HttpResponse> {
     const errorClass = Object.values(errorModule).find(
       (value) => typeof value === "function" && value.prototype instanceof Error
     );
-    
+
     if (errorClass) {
       errors.push(errorClass as Error);
     }
   }
-
-  console.log(error)
 
   if (error instanceof JsonWebTokenError) {
     return badRequest({
@@ -25,6 +23,8 @@ export async function errorHandler(error: unknown): Promise<HttpResponse> {
       message: "Token expirado ou inválido!",
     });
   }
+
+  console.log(error)
 
   if (errors.some((errorItem) => error instanceof (errorItem as never))) {
     return badRequest(error as Error);

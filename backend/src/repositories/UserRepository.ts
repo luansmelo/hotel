@@ -1,9 +1,8 @@
-import { ROLE } from "@/config/constants";
 import { CreateUserContract, UserModel } from "@/contracts/user/CreateUserContract";
 import { FindUserByTokenContract } from "@/contracts/user/FindUserByTokenAndRole";
 import { FindUserByEmailContract } from "@/contracts/user/FindUseryByEmailContract";
 import { CreateUserModel } from "@/entities/user/createUser";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 
 export class UserRepository
   implements CreateUserContract, FindUserByEmailContract, FindUserByTokenContract {
@@ -19,12 +18,12 @@ export class UserRepository
   }
 
   async findByIdAndRole(id: string, role?: string): Promise<UserModel | null> {
-    return this.db.user.findFirst({
+    console.log(id, role)
+    return this.db.user.findUnique({
       where: {
         id,
-        role: role ? ROLE[role] : [ROLE.User, ROLE.Admin],
+        role: role as Role,
       }
     });
   }
-
 }

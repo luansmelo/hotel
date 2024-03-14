@@ -1,8 +1,5 @@
 import { FindGroups } from "@/contracts/group";
-import {
-  FindGroupsParams,
-  FindGroupsResponse,
-} from "@/entities/group/FindGroupsParams";
+import { FindGroupsParams } from "@/entities/group/FindGroupsParams";
 import { Controller } from "../protocols/controller";
 import { HttpRequest } from "../protocols/httpRequest";
 import { HttpResponse } from "../protocols/httpResponse";
@@ -15,7 +12,7 @@ export class FindGroupsController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
 
-      const params = httpRequest.params as FindGroupsParams
+      const params = httpRequest.query as FindGroupsParams
 
       const groups = await this.groups.findAll(params)
 
