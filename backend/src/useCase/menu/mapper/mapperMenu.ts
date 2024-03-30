@@ -1,5 +1,3 @@
-import { MenuModel } from "@/contracts/menu/CreateMenuContract";
-
 export function mapperMenu(menu: any) {
   if (!menu) return null;
 

@@ -1,4 +1,4 @@
-import { CategoryModel, FindCategoryById } from "@/contracts/category";
+import { FindCategoryById } from "@/contracts/category";
 import { Controller } from "../protocols/controller";
 import { HttpRequest } from "../protocols/httpRequest";
 import { HttpResponse } from "../protocols/httpResponse";
@@ -13,7 +13,6 @@ export class FindCategoryByIdController implements Controller {
     try {
 
       const { id } = httpRequest.params as { id: string }
-
 
       const result = await this.category.findById(id);
 

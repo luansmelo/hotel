@@ -1,4 +1,4 @@
-import { adaptRoute } from "@/adapters";
+import { adaptRoute } from "../adapters";
 
 import { makeLoginController } from "@/factories/user/LoginFactory";
 import { Router } from "express";

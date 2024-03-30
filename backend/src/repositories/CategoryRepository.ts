@@ -12,7 +12,7 @@ import {
   FindCategoriesResponse,
 } from "@/entities/category/FindCategoriesParams";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
-import { PrismaClient } from "@prisma/client";
+import Category from "@/models/category";
 
 export class CategoryRepository
   implements
@@ -22,10 +22,9 @@ export class CategoryRepository
   FindCategoryByIdContract,
   DeleteCategoryContract,
   UpdateCategoryContract {
-  constructor(private readonly db: PrismaClient) { }
 
   async save(input: CreateCategoryModel): Promise<CategoryModel> {
-    return await this.db.category.create({
+    return await Category.create({
       data: input,
     });
   }
@@ -42,7 +41,7 @@ export class CategoryRepository
     const order = findParams.order || "ASC";
     const sort = findParams.sort || "name";
 
-    const categories = await this.db.category.findMany({
+    const categories = await Category.findMany({
       orderBy: [
         {
           [sort]: order,
@@ -62,26 +61,26 @@ export class CategoryRepository
   }
 
   async findById(id: string): Promise<CategoryModel | null> {
-    return this.db.category.findUnique({
+    return Category.findUnique({
       where: { id },
     });
   }
 
   async findByName(name: string): Promise<CategoryModel | null> {
-    return this.db.category.findFirst({
+    return Category.findFirst({
       where: { name },
     });
   }
 
   async deleteById(id: string): Promise<CategoryModel> {
-    return this.db.category.delete({ where: { id } });
+    return Category.delete({ where: { id } });
   }
 
   async updateById(
     id: string,
     input: Partial<CategoryModel>
   ): Promise<CategoryModel> {
-    return this.db.category.update({
+    return Category.update({
       where: { id },
       data: input,
     });

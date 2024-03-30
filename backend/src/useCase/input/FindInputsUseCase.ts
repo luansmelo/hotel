@@ -1,5 +1,5 @@
 import { FindInputs, FindInputsContract } from "@/contracts/input";
-import { InputModel } from "@/contracts/input/CreateInputContract";
+
 import {
   FindInputsParams,
   FindInputsResponse,

@@ -8,7 +8,7 @@ import {
   makeFindCategoryByIdController,
 } from "@/factories/category";
 
-import { adaptRoute } from "@/adapters";
+import { adaptRoute } from "../adapters";
 import { makeAuthAdminMiddleware } from "@/factories/middlewares/AuthAdminMiddlewareFactory";
 import { adaptMiddleware } from "@/controllers/middlewares/ExpressMiddlewareAdapter";
 import { makeAuthMiddleware } from "@/factories/middlewares/AuthMiddlewareFactory";

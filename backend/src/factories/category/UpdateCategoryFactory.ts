@@ -1,4 +1,4 @@
-import prisma from "@/config/prisma";
+
 
 import { UpdateCategoryController } from "@/controllers/category/UpdateCategoryController";
 import { CategoryRepository } from "@/repositories/CategoryRepository";
@@ -6,7 +6,7 @@ import { FindCategoryByIdUseCase } from "@/useCase/category/FindCategoryByIdUseC
 import { UpdateCategoryUseCase } from "@/useCase/category/UpdateCategoryUseCase";
 
 export function makeUpdateCategoryController(): UpdateCategoryController {
-  const repo = new CategoryRepository(prisma);
+  const repo = new CategoryRepository();
 
   const findCategoryById = new FindCategoryByIdUseCase(repo);
 

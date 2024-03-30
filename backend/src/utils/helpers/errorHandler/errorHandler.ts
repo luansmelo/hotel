@@ -22,7 +22,9 @@ export async function errorHandler(error: unknown): Promise<HttpResponse> {
       name: error.name,
       message: "Token expirado ou inválido!",
     });
-  }
+  } 
+
+  console.log(error)
 
   if (errors.some((errorItem) => error instanceof (errorItem as never))) {
     return badRequest(error as Error);

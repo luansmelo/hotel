@@ -19,16 +19,15 @@ import { mapperInput } from "@/useCase/input/mapper/mapperInput";
 
 export class InputRepository
   implements
-    CreateInputContract,
-    FindInputByCodeContract,
-    FindInputByIdContract,
-    FindInputByNameContract,
-    FindInputsByIdContract,
-    FindInputsContract,
-    DeleteInputContract,
-    UpdateInputContract
-{
-  constructor(private readonly db: PrismaClient) {}
+  CreateInputContract,
+  FindInputByCodeContract,
+  FindInputByIdContract,
+  FindInputByNameContract,
+  FindInputsByIdContract,
+  FindInputsContract,
+  DeleteInputContract,
+  UpdateInputContract {
+  constructor(private readonly db: PrismaClient) { }
 
   async save(input: CreateInputModel): Promise<InputModel> {
     const createInput = await this.db.input.create({
@@ -153,6 +152,7 @@ export class InputRepository
 
     return mapperInput(db);
   }
+
   async findByCode(code: string): Promise<InputModel | null> {
     const db = await this.db.input.findUnique({
       where: { code },
@@ -184,6 +184,7 @@ export class InputRepository
   async findAll(
     findParams: FindInputsParams
   ): Promise<FindInputsResponse | null> {
+
     const page = findParams.page || 1;
     const limit = process.env.PAGE_LIMIT
       ? parseInt(process.env.PAGE_LIMIT)

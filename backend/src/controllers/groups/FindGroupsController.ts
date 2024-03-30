@@ -13,7 +13,7 @@ export class FindGroupsController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const params = httpRequest.query as FindGroupsParams
-
+      
       const error = this.validation.validate(params)
 
       if (error) {

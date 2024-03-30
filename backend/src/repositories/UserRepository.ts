@@ -1,29 +1,42 @@
+import { ROLE } from "@/config/constants";
 import { CreateUserContract, UserModel } from "@/contracts/user/CreateUserContract";
+import { FindUsersContract } from "@/contracts/user/FindAllUsers";
 import { FindUserByTokenContract } from "@/contracts/user/FindUserByTokenAndRole";
 import { FindUserByEmailContract } from "@/contracts/user/FindUseryByEmailContract";
 import { CreateUserModel } from "@/entities/user/createUser";
-import { PrismaClient, Role } from "@prisma/client";
+import User from "@/models/user";
 
 export class UserRepository
-  implements CreateUserContract, FindUserByEmailContract, FindUserByTokenContract {
-  constructor(private readonly db: PrismaClient) { }
+  implements CreateUserContract,
+  FindUserByEmailContract,
+  FindUserByTokenContract,
+  FindUsersContract {
+
   async save(input: CreateUserModel): Promise<UserModel> {
-    return this.db.user.create({
-      data: input,
+  
+    return User.create({
+      data: {
+        ...input,
+        role: input.role as ROLE
+      },
     });
   }
 
   async findByEmail(email: string): Promise<UserModel | null> {
-    return this.db.user.findUnique({ where: { email } });
+    return User.findUnique({ where: { email } });
   }
 
   async findByIdAndRole(id: string, role?: string): Promise<UserModel | null> {
 
-    return this.db.user.findUnique({
+    return User.findUnique({
       where: {
         id,
-        role: role as Role,
+        role: role as ROLE,
       }
     });
+  }
+
+  async findUsers(): Promise<UserModel[]> {
+    return User.findMany()
   }
 }

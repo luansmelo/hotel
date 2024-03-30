@@ -1,5 +1,3 @@
-import { PrismaClient } from "@prisma/client";
-
 import {
   CreateGroupContract,
   DeleteGroupContract,
@@ -15,6 +13,7 @@ import {
   FindGroupsParams,
   FindGroupsResponse,
 } from "@/entities/group/FindGroupsParams";
+import Group from "@/models/group";
 
 export class GroupRepository
   implements
@@ -25,9 +24,9 @@ export class GroupRepository
   FindGroupsByIdContract,
   FindGroupsContract,
   UpdateGroupContract {
-  constructor(private readonly db: PrismaClient) { }
+  
   async save(input: CreateGroupModel): Promise<GroupModel> {
-    return this.db.group.create({
+    return Group.create({
       data: input,
     });
   }
@@ -43,7 +42,7 @@ export class GroupRepository
     const order = findParams.order || "ASC";
     const sort = findParams.sort || "name";
 
-    const groups = await this.db.group.findMany({
+    const groups = await Group.findMany({
       orderBy: [
         {
           [sort]: order,
@@ -64,11 +63,11 @@ export class GroupRepository
   }
 
   async findById(id: string): Promise<GroupModel | null> {
-    return this.db.group.findUnique({ where: { id } });
+    return Group.findUnique({ where: { id } });
   }
 
   async findByIds(ids: string[]): Promise<GroupModel[]> {
-    return this.db.group.findMany({
+    return Group.findMany({
       where: {
         id: {
           in: ids,
@@ -78,17 +77,17 @@ export class GroupRepository
   }
 
   async findByName(name: string): Promise<GroupModel | null> {
-    return this.db.group.findUnique({ where: { name } });
+    return Group.findUnique({ where: { name } });
   }
 
   async deleteById(id: string): Promise<GroupModel> {
-    return this.db.group.delete({ where: { id } });
+    return Group.delete({ where: { id } });
   }
 
   async updateById(
     id: string,
     input: Partial<CreateGroupModel>
   ): Promise<GroupModel> {
-    return this.db.group.update({ where: { id }, data: input });
+    return Group.update({ where: { id }, data: input });
   }
 }
