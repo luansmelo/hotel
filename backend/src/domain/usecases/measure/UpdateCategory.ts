@@ -1,7 +1,6 @@
+import { MeasureModel } from "@/domain/models/Measure";
+import { CreateMeasureModel } from "@/domain/usecases/measure/CreateMeasure";
 
-import { CategoryModel } from "@/domain/models/Category";
-import { CreateCategoryModel } from "@/entities/category/createCategory";
-
-export interface UpdateCategoryUseCaseContract {
-    updateById(id: string, input: Partial<CreateCategoryModel>): Promise<Partial<CategoryModel | null>>;
+export interface UpdateMeasureUseCaseContract {
+    updateById(id: string, input: Partial<CreateMeasureModel>): Promise<Partial<MeasureModel | null>>;
 }
