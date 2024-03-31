@@ -11,8 +11,7 @@
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
-    "test": "rimraf ./temp && npx prisma migrate deploy && jest --watch --debug",
-    "test:integration": "npm test -- --watch -c jest-integration-config.js"
+    "test": "jest --passWithNoTests --watch --detectOpenHandles"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.514.0",

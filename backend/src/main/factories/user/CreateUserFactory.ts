@@ -4,6 +4,7 @@ import { UserRepository } from "@/infra/db/mysql/user/UserRepository";
 import { CreateUserUseCase } from "@/data/usecases/user/CreateUser";
 import { EmailValidatorAdapter } from "@/utils/EmailValidatorAdapter";
 import { BcryptAdapter } from "@/infra/cryptography";
+import { makeCreateAccountValidationFactory } from "./CreateUserValidationFactory";
 
 export function makeCreateUserController(): CreateUserController {
   const repository = new UserRepository();
@@ -19,5 +20,5 @@ export function makeCreateUserController(): CreateUserController {
     bcryptAdapter
   );
 
-  return new CreateUserController(createUser);
+  return new CreateUserController(createUser, makeCreateAccountValidationFactory());
 }
