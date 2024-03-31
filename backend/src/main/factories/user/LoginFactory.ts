@@ -1,15 +1,16 @@
 import { CRYPTOGRAPHY_SALTING_ROUNDS } from "@/config/constants";
 import env from "@/config/env";
-import { CreateAuthUseCase } from "@/data/usecases/auth/CreateAuthUseCase";
+import { CreateAuthUseCase } from "@/data/usecases/user/CreateAuthUseCase";
 
 import { BcryptAdapter } from "@/infra/cryptography";
 import { UserRepository } from "@/infra/db/mysql/user/UserRepository";
 
 import { JwtAdapter } from "@/infra/token";
-import { CreateAuthenticationController } from "@/presentation/controllers/auth/CreateAuthenticateController";
+import { LoginController } from "@/presentation/controllers/user/Login";
+
 import { EmailValidatorAdapter } from "@/utils/EmailValidatorAdapter";
 
-export function makeLoginController(): CreateAuthenticationController {
+export function makeLoginController(): LoginController {
   const repository = new UserRepository();
 
   const emailValidator = new EmailValidatorAdapter();
@@ -25,5 +26,5 @@ export function makeLoginController(): CreateAuthenticationController {
     jwtAdapter
   );
   
-  return new CreateAuthenticationController(createAuth);
+  return new LoginController(createAuth);
 }

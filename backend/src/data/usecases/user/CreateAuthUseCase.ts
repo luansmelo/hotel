@@ -1,19 +1,18 @@
-import { CreateAuth } from "@/contracts/auth/AuthenticationContract";
 import { Encrypter, HasherComparer } from "@/data/protocols/cryptography";
 import { EmailValidator } from "@/utils/EmailValidatorAdapter";
-import { UserModel } from "@/domain/models/User";
 import { LoadUserByEmailRepository } from "@/data/protocols/db/user/LoadUserByEmailRepository.protocol";
 import { CreateUserModel } from "@/domain/usecases/user/CreateUser";
+import { AuthenticatedUserModel, Authentication } from "@/domain/usecases/user/Authentication";
 
-export class CreateAuthUseCase implements CreateAuth {
+export class CreateAuthUseCase implements Authentication {
   constructor(
     private readonly findUser: LoadUserByEmailRepository,
     private readonly emailValidator: EmailValidator,
     private readonly hashed: HasherComparer,
     private readonly encrypter: Encrypter
-  ) {}
+  ) { }
 
-  async authenticate(userModel: CreateUserModel): Promise<UserModel | null> {
+  async auth(userModel: CreateUserModel): Promise<AuthenticatedUserModel> {
     const isValid = this.emailValidator.isValid(userModel.email);
 
     if (!isValid) return null;
@@ -35,9 +34,11 @@ export class CreateAuthUseCase implements CreateAuth {
     });
 
     return {
-      ...user,
-      password: undefined,
-      access_token: token,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token,
     };
   }
 }

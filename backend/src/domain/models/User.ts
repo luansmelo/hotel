@@ -4,6 +4,4 @@ export interface UserModel {
     email: string;
     password?: string;
     role: string;
-    isAuthorized: boolean;
-    access_token?: string;
   }
