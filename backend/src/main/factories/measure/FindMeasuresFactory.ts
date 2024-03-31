@@ -1,12 +1,11 @@
-import prisma from "@/config/prisma";
+import { LoadMeasuresUseCase } from "@/data/usecases/measure/LoadMeasuresUseCase";
+import { MeasureRepository } from "@/infra/db/mysql/measure/MeasureRepository";
 import { FindMeasuresController } from "@/presentation/controllers/measure/FindMeasuresController";
-import { MeasureRepository } from "@/infra/db/mysql/MeasureRepository";
-import { FindMeasuresUseCase } from "@/data/usecases/measure/FindMeasuresUseCase";
 
 export function makeFindMeasuresController(): FindMeasuresController {
-  const repo = new MeasureRepository(prisma);
+  const repo = new MeasureRepository();
 
-  const measures = new FindMeasuresUseCase(repo);
+  const measures = new LoadMeasuresUseCase(repo);
 
   return new FindMeasuresController(measures);
 }

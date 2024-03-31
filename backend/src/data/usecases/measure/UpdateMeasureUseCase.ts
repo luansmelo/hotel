@@ -1,23 +1,20 @@
-import {
-  FindMeasureByIdContract,
-  MeasureModel,
-  UpdateMeasure,
-  UpdateMeasureContract,
-} from "@/contracts";
-import { CreateMeasureModel } from "@/entities/measure/createMeasure";
+import { LoadMeasureByIdRepository } from "@/data/protocols/db/measure/LoadMeasureByIdRepository.protocol";
+import { UpdateMeasureRepository } from "@/data/protocols/db/measure/UpdateMeasureRepository.protocol";
+import { CreateMeasureModel } from "@/domain/usecases/measure/CreateMeasure";
+import { UpdateMeasureUseCaseContract } from "@/domain/usecases/measure/UpdateCategory";
 import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 
-export class UpdateMeasureUseCase implements UpdateMeasure {
+export class UpdateMeasureUseCase implements UpdateMeasureUseCaseContract {
   constructor(
-    private readonly updateMeasure: UpdateMeasureContract,
-    private readonly findMeasure: FindMeasureByIdContract
-  ) {}
+    private readonly updateMeasure: UpdateMeasureRepository,
+    private readonly findMeasure: LoadMeasureByIdRepository
+  ) { }
 
   async updateById(
     id: string,
     input: Partial<CreateMeasureModel>
-  ): Promise<MeasureModel> {
-    const measure = await this.findMeasure.findById(id);
+  ) {
+    const measure = await this.findMeasure.loadById(id);
 
     if (!measure) {
       throw new MeasureNotFoundError();

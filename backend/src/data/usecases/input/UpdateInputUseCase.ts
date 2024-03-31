@@ -7,6 +7,7 @@ import {
   UpdateInputContract,
 } from "@/contracts/input";
 import { LoadGroupsByIdsRepository } from "@/data/protocols/db/group/LoadGroupsByIdsRepository.protocol";
+import { LoadMeasureByIdRepository } from "@/data/protocols/db/measure/LoadMeasureByIdRepository.protocol";
 
 import { CreateInputModel } from "@/entities/input/createInput";
 import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
@@ -17,7 +18,7 @@ export class UpdateInputUseCase implements UpdateInput {
   constructor(
     private readonly updateInput: UpdateInputContract,
     private readonly findInput: FindInputByIdContract,
-    private readonly findMeasure: FindMeasureByIdContract,
+    private readonly findMeasure: LoadMeasureByIdRepository,
     private readonly findGroups: LoadGroupsByIdsRepository
   ) {}
 
@@ -32,7 +33,7 @@ export class UpdateInputUseCase implements UpdateInput {
     }
 
     if (param.measurementUnitId !== input.measurementUnit.id) {
-      const measure = await this.findMeasure.findById(param.measurementUnitId);
+      const measure = await this.findMeasure.loadById(param.measurementUnitId);
 
       if (!measure) {
         throw new MeasureNotFoundError();

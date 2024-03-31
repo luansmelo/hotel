@@ -1,16 +1,11 @@
-import prisma from "@/config/prisma";
-
 import { DeleteMeasureController } from "@/presentation/controllers/measure/DeleteMeasureController";
-import { MeasureRepository } from "@/infra/db/mysql/MeasureRepository";
 import { DeleteMeasureUseCase } from "@/data/usecases/measure/DeleteMeasuresUseCase";
-import { FindMeasureByIdUseCase } from "@/data/usecases/measure/FindMeasureByIdUseCase";
+import { MeasureRepository } from "@/infra/db/mysql/measure/MeasureRepository";
 
 export function makeDeleteMeasureController(): DeleteMeasureController {
-  const repo = new MeasureRepository(prisma);
+  const repo = new MeasureRepository();
 
-  const findMeasureById = new FindMeasureByIdUseCase(repo);
-
-  const deleteMeasure = new DeleteMeasureUseCase(repo, findMeasureById);
+  const deleteMeasure = new DeleteMeasureUseCase(repo, repo);
 
   return new DeleteMeasureController(deleteMeasure);
 }

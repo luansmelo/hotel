@@ -7,6 +7,7 @@ import {
 } from "@/contracts/input/CreateInputContract";
 import { FindInputByCodeContract } from "@/contracts/input/FindInputByCodeContract";
 import { LoadGroupByIdRepository } from "@/data/protocols/db/group/LoadGroupByIdRepository.protocol";
+import { LoadMeasureByIdRepository } from "@/data/protocols/db/measure/LoadMeasureByIdRepository.protocol";
 import { CreateInputModel } from "@/entities/input/createInput";
 import { CodeAlreadyExistsError } from "@/presentation/errors/CodeAlreadyExistsError";
 import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
@@ -18,7 +19,7 @@ export class CreateInputUseCase implements CreateInput {
     private readonly createInput: CreateInputContract,
     private readonly findByName: FindInputByNameContract,
     private readonly findByCode: FindInputByCodeContract,
-    private readonly findMeasureById: FindMeasureByIdContract,
+    private readonly findMeasureById: LoadMeasureByIdRepository,
     private readonly findGroupById: LoadGroupByIdRepository
   ) {}
 
@@ -35,7 +36,7 @@ export class CreateInputUseCase implements CreateInput {
       throw new CodeAlreadyExistsError("Código já cadastrado");
     }
 
-    const measure = await this.findMeasureById.findById(
+    const measure = await this.findMeasureById.loadById(
       inputModel.measurementUnitId
     );
 
