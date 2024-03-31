@@ -8,10 +8,10 @@ import {
 } from "@/contracts/input/CreateInputContract";
 import { FindInputByCodeContract } from "@/contracts/input/FindInputByCodeContract";
 import { CreateInputModel } from "@/entities/input/createInput";
-import { CodeAlreadyExistsError } from "@/utils/errors/CodeAlreadyExistsError";
-import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
-import { InputAlreadyExistsError } from "@/utils/errors/InputAlreadyExistsError";
-import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
+import { CodeAlreadyExistsError } from "@/presentation/errors/CodeAlreadyExistsError";
+import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
+import { InputAlreadyExistsError } from "@/presentation/errors/InputAlreadyExistsError";
+import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 
 export class CreateInputUseCase implements CreateInput {
   constructor(

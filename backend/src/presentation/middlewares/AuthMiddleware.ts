@@ -5,8 +5,8 @@ import { forbidden, ok, unauthorized } from "@/presentation/helpers/httpCodesHel
 import { HttpRequest } from "@/presentation/protocols/httpRequest";
 import { HttpResponse } from "@/presentation/protocols/httpResponse";
 import { Middleware } from "@/presentation/protocols/middleware";
-import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
-import { InvalidTokenError } from "@/utils/errors/InvalidTokenError";
+import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
+import { InvalidTokenError } from "@/presentation/errors/InvalidTokenError";
 
 export class AuthMiddleware implements Middleware {
     constructor(

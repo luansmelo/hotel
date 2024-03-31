@@ -1,4 +1,4 @@
-import { UserModel } from "./CreateUserContract";
+import { UserModel } from "@/domain/models/User";
 
 export interface FindUserByTokenContract {
   findByIdAndRole(token: string, role?: string): Promise<UserModel | null>;

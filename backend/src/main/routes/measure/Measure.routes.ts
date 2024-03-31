@@ -5,13 +5,13 @@ import {
   makeFindMeasuresController,
   makeDeleteMeasureController,
   makeFindMeasureByIdController,
-} from "@/main/factories";
+} from "../../factories";
 
-import { makeAuthMiddleware } from "@/main/factories/middlewares/AuthMiddlewareFactory";
-import { adaptRoute } from "../adapters/express/ExpressRouteAdapter";
-import { adaptMiddleware } from "../adapters/middlewares/ExpressMiddlewareAdapter";
+import { makeAuthMiddleware } from "../../factories/middlewares/AuthMiddlewareFactory";
+import { adaptRoute } from "../../adapters/express/ExpressRouteAdapter";
+import { adaptMiddleware } from "../../adapters/middlewares/ExpressMiddlewareAdapter";
 
-import { makeAuthAdminMiddleware } from "@/main/factories/middlewares/AuthAdminMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "../../factories/middlewares/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const measureRouter = Router();

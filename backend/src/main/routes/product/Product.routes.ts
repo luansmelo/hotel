@@ -7,14 +7,14 @@ import {
   makeUpdateProductController,
   makeFindProductByIdController,
   makeDeleteProductController,
-} from "@/main/factories/product";
+} from "../../factories/product";
 
-import { makeDeleteInputToProductController } from "@/main/factories/product/DeleteInputToProductByIdFactory";
-import { adaptRoute } from "../adapters/express/ExpressRouteAdapter";
-import { adaptMiddleware } from "../adapters/middlewares/ExpressMiddlewareAdapter";
-import { makeAuthMiddleware } from "@/main/factories/middlewares/AuthMiddlewareFactory";
+import { makeDeleteInputToProductController } from "../../factories/product/DeleteInputToProductByIdFactory";
+import { adaptRoute } from "../../adapters/express/ExpressRouteAdapter";
+import { adaptMiddleware } from "../../adapters/middlewares/ExpressMiddlewareAdapter";
+import { makeAuthMiddleware } from "../../factories/middlewares/AuthMiddlewareFactory";
 
-import { makeAuthAdminMiddleware } from "@/main/factories/middlewares/AuthAdminMiddlewareFactory";
+import { makeAuthAdminMiddleware } from "../../factories/middlewares/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const productRouter = Router();

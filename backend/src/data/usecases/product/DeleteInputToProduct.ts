@@ -4,8 +4,8 @@ import {
   FindProductByIdContract,
 } from "@/contracts/product";
 import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
-import { InputNotFoundError } from "@/utils/errors/InputNotFoundError";
-import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { InputNotFoundError } from "@/presentation/errors/InputNotFoundError";
+import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
 export class DeleteInputToProductUseCase implements DeleteInputToProduct {
   constructor(

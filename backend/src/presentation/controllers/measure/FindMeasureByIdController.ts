@@ -1,5 +1,5 @@
 import { FindMeasureById, MeasureModel } from "@/contracts";
-import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
+import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";

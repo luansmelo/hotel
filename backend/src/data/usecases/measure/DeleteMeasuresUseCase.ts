@@ -4,7 +4,7 @@ import {
   FindMeasureByIdContract,
   MeasureModel,
 } from "@/contracts";
-import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
+import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 
 export class DeleteMeasureUseCase implements DeleteMeasure {
   constructor(

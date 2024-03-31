@@ -5,8 +5,8 @@ import { HttpRequest } from "../../protocols/httpRequest";
 import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 
-import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
-import { FORBIDDEN_DELETE_DELETING_GROUP } from "@/utils/errors/pt-br";
+import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
+import { FORBIDDEN_DELETE_DELETING_GROUP } from "@/presentation/errors/pt-br";
 
 export class DeleteGroupController implements Controller {
   constructor(private readonly group: DeleteGroup) { }

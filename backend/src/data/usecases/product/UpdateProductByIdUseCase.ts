@@ -5,7 +5,7 @@ import {
 } from "@/contracts/product";
 
 import { UpdateProductModel } from "@/entities/product/updateProduct";
-import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
 export class UpdateProductByIdUseCase implements UpdateProduct {
   constructor(

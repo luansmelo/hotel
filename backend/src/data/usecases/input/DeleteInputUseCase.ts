@@ -4,7 +4,7 @@ import {
   FindInputByIdContract,
 } from "@/contracts/input";
 import { InputModel } from "@/contracts/input/CreateInputContract";
-import { InputNotFoundError } from "@/utils/errors/InputNotFoundError";
+import { InputNotFoundError } from "@/presentation/errors/InputNotFoundError";
 
 export class DeleteInputUseCase implements DeleteInput {
   constructor(

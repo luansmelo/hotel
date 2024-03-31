@@ -6,12 +6,12 @@ import {
   makeFindCategoriesController,
   makeUpdateCategoryController,
   makeFindCategoryByIdController,
-} from "@/main/factories/category";
+} from "../../factories/category";
 
-import { adaptRoute } from "../adapters/express/ExpressRouteAdapter";
-import { makeAuthAdminMiddleware } from "@/main/factories/middlewares/AuthAdminMiddlewareFactory";
-import { makeAuthMiddleware } from "@/main/factories/middlewares/AuthMiddlewareFactory";
-import { adaptMiddleware } from "../adapters/middlewares/ExpressMiddlewareAdapter";
+import { adaptRoute } from "../../adapters/express/ExpressRouteAdapter";
+import { makeAuthAdminMiddleware } from "../../factories/middlewares/AuthAdminMiddlewareFactory";
+import { makeAuthMiddleware } from "../../factories/middlewares/AuthMiddlewareFactory";
+import { adaptMiddleware } from "../../adapters/middlewares/ExpressMiddlewareAdapter";
 
 export default (router: Router): void => {
   const categoryRouter = Router();

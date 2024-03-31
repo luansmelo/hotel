@@ -1,4 +1,4 @@
-import { UserModel } from "./CreateUserContract";
+import { UserModel } from "@/domain/models/User";
 
 export interface FindUserByEmailContract {
   findByEmail(email: string): Promise<UserModel | null>;

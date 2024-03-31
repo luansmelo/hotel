@@ -5,7 +5,7 @@ import {
   UpdateMenuContract,
 } from "@/contracts/menu/UpdateMenuContract";
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
-import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
+import { MenuNotFoundError } from "@/presentation/errors/MenuNotFoundError";
 
 export class UpdateMenuUseCase implements UpdateMenu {
   constructor(

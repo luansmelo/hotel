@@ -6,7 +6,7 @@ import { HttpResponse } from "../../protocols/httpResponse";
 import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 
-import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
+import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 
 export class AddProductToMenuController implements Controller {
   constructor(private readonly menu: AddProductToMenu) { }

@@ -1,6 +1,6 @@
 import { CreateAuth } from "@/contracts/auth/AuthenticationContract";
 import { CreateAuthModel } from "@/entities/auth/auth";
-import { InvalidCredentialsError } from "@/utils/errors/InvalidCredentialsError";
+import { InvalidCredentialsError } from "@/presentation/errors/InvalidCredentialsError";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";

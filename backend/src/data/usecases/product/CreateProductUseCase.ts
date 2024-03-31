@@ -5,9 +5,9 @@ import {
   ProductModel,
 } from "@/contracts/product";
 import { CreateProductModel } from "@/entities/product/createProduct";
-import { ProductAlreadyExistsError } from "@/utils/errors/ProductAlreadyExistsError";
-import { ProductReportPreparationTimeError } from "@/utils/errors/ProductReportPreparationTimeError";
-import { ProductReportResourceError } from "@/utils/errors/ProductReportResourceError";
+import { ProductAlreadyExistsError } from "@/presentation/errors/ProductAlreadyExistsError";
+import { ProductReportPreparationTimeError } from "@/presentation/errors/ProductReportPreparationTimeError";
+import { ProductReportResourceError } from "@/presentation/errors/ProductReportResourceError";
 
 export class CreateProductUseCase implements CreateProduct {
   constructor(

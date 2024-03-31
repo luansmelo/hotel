@@ -1,11 +1,11 @@
 import { ROLE } from "@/config/constants";
-import { CreateUserContract, UserModel } from "@/contracts/user/CreateUserContract";
 import { FindUsersContract } from "@/contracts/user/FindAllUsers";
 import { FindUserByTokenContract } from "@/contracts/user/FindUserByTokenAndRole";
 import { FindUserByEmailContract } from "@/contracts/user/FindUseryByEmailContract";
 import { CreateUserModel } from "@/entities/user/createUser";
 import User from "@/data/local/entity/user";
 import { CreateUserRepository } from "@/data/protocols/db/user/CreateUserRepository.protocol";
+import { UserModel } from "@/domain/models/User";
 
 export class UserRepository
   implements CreateUserRepository,

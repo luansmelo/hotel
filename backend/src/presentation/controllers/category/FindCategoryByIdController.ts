@@ -2,7 +2,7 @@ import { FindCategoryById } from "@/contracts/category";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
-import { CategoryNotFoundError } from "@/utils/errors/CategoryNotFoundError";
+import { CategoryNotFoundError } from "@/presentation/errors/CategoryNotFoundError";
 import { notFound, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 

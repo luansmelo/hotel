@@ -16,7 +16,7 @@ export function makeCreateInputController(): CreateInputController {
 
   const measureRepo = new MeasureRepository(prisma);
   
-  const groupRepo = new GroupRepository(prisma);
+  const groupRepo = new GroupRepository();
 
   const findInputByName = new FindInputByNameUseCase(repo);
 

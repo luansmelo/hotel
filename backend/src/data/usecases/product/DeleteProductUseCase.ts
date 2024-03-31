@@ -4,7 +4,7 @@ import {
   FindProductByIdContract,
   ProductModel,
 } from "@/contracts/product";
-import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
 export class DeleteProductUseCase implements DeleteProduct {
   constructor(

@@ -6,7 +6,7 @@ import {
   UpdateGroupContract,
 } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
-import { GroupAlreadyExistsError } from "@/utils/errors/GroupAlreadyExistsError";
+import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 
 export class UpdateGroupUseCase implements UpdateGroup {
   constructor(

@@ -2,7 +2,7 @@ import { FindGroupById } from "@/contracts/group";
 import { Controller } from "../../protocols/controller";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { HttpRequest } from "../../protocols/httpRequest";
-import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
+import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
 import { notFound, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 

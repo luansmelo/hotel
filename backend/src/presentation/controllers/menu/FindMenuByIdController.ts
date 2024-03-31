@@ -1,5 +1,5 @@
 import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
-import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
+import { MenuNotFoundError } from "@/presentation/errors/MenuNotFoundError";
 import { Controller } from "../../protocols/controller";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { HttpRequest } from "../../protocols/httpRequest";

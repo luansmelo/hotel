@@ -4,7 +4,7 @@ import {
 } from "@/contracts/menu/AddProductToMenuContract";
 import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
 import { AddProductModel } from "@/entities/menu/AddProductToMenuEntity";
-import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
+import { MenuNotFoundError } from "@/presentation/errors/MenuNotFoundError";
 
 export class AddProductToMenuUseCase implements AddProductToMenu {
   constructor(

@@ -1,6 +1,6 @@
-import { Decrypter } from "@/adapters";
-import { UserModel } from "@/contracts/user";
 import { FindUserByTokenContract } from "@/contracts/user/FindUserByTokenAndRole";
+import { Decrypter } from "@/data/protocols/cryptography";
+import { UserModel } from "@/domain/models/User";
 
 export class FindUserByToken implements FindUserByToken {
     constructor(private readonly decrypter: Decrypter,

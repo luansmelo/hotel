@@ -1,5 +1,5 @@
 import { FindProductById } from "@/contracts/product";
-import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";

@@ -1,15 +1,15 @@
 import {
-  CreateUser,
   FindUserByEmailContract,
-  UserModel,
 } from "@/contracts/user";
 
 import { CreateUserModel } from "@/entities/user/createUser";
-import { UserAlreadyExistsError } from "@/utils/errors/UserAlreadyExistsError";
-import { InvalidCredentialsError } from "@/utils/errors/InvalidCredentialsError";
+import { InvalidCredentialsError } from "@/presentation/errors/InvalidCredentialsError";
 import { CreateUserRepository } from "@/data/protocols/db/user/CreateUserRepository.protocol";
 import { EmailValidator } from "@/utils/EmailValidatorAdapter";
 import { Hasher } from "@/data/protocols/cryptography";
+import { CreateUser } from "@/domain/usecases/user/CreateUser";
+import { UserModel } from "@/domain/models/User";
+import { UserAlreadyExistsError } from "@/presentation/errors/UserAlreadyExistsError";
 
 export class CreateUserUseCase implements CreateUser {
   constructor(

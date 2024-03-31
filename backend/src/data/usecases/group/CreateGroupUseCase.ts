@@ -5,7 +5,7 @@ import {
   GroupModel,
 } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
-import { GroupAlreadyExistsError } from "@/utils/errors/GroupAlreadyExistsError";
+import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 
 export class CreateGroupUseCase implements CreateGroup {
   constructor(

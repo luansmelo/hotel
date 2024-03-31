@@ -1,4 +1,4 @@
-import { InvalidParamError } from '@/utils/errors/InvalidParamError';
+import { InvalidParamError } from '@/presentation/errors/InvalidParamError';
 import { z, ZodError } from 'zod';
 import { FieldValidatorProtocol } from './FieldValidator';
 

@@ -1,4 +1,4 @@
-import { MissingParamError } from "@/utils/errors/MissingParamError";
+import { MissingParamError } from "@/presentation/errors/MissingParamError";
 import { Validation } from "./sort/SortInputValidator";
 
 export class RequiredFieldValitation implements Validation {

@@ -6,7 +6,7 @@ import {
 import { FindMenuByNameContract } from "@/contracts/menu/FindMenuByNameContract";
 
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
-import { MenuAlreadyExistsError } from "@/utils/errors/MenuAlreadyExistsError";
+import { MenuAlreadyExistsError } from "@/presentation/errors/MenuAlreadyExistsError";
 
 export class CreateMenuUseCase implements CreateMenu {
   constructor(

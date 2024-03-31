@@ -3,7 +3,7 @@ import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
-import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
+import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 

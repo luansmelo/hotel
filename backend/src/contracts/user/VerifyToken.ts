@@ -1,4 +1,4 @@
-import { Verify } from "@/adapters";
+import { Verify } from "@/data/protocols/cryptography";
 
 export interface VerifyUserToken {
     verify(token: string): Promise<boolean>;

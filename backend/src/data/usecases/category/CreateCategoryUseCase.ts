@@ -5,7 +5,7 @@ import {
   FindCategoryByNameContract,
 } from "@/contracts";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
-import { CategoryAlreadyExistsError } from "@/utils/errors/CategoryAlreadyExistsError";
+import { CategoryAlreadyExistsError } from "@/presentation/errors/CategoryAlreadyExistsError";
 
 export class CreateCategoryUseCase implements CreateCategory {
   constructor(

@@ -1,17 +1,10 @@
+import { adaptRoute } from "@/main/adapters/express/ExpressRouteAdapter";
+import { adaptMiddleware } from "@/main/adapters/middlewares/ExpressMiddlewareAdapter";
+import { makeCreateInputController, makeDeleteInputController, makeFindInputByIdController, makeFindInputsController, makeUpdateInputController } from "@/main/factories";
+import { makeAuthAdminMiddleware } from "@/main/factories/middlewares/AuthAdminMiddlewareFactory";
+import { makeAuthMiddleware } from "@/main/factories/middlewares/AuthMiddlewareFactory";
 import { Router } from "express";
 
-import {
-  makeCreateInputController,
-  makeDeleteInputController,
-  makeFindInputsController,
-  makeUpdateInputController,
-  makeFindInputByIdController,
-} from "@/main/factories/input";
-import { adaptRoute } from "../adapters/express/ExpressRouteAdapter";
-import { adaptMiddleware } from "../adapters/middlewares/ExpressMiddlewareAdapter";
-
-import { makeAuthMiddleware } from "@/main/factories/middlewares/AuthMiddlewareFactory";
-import { makeAuthAdminMiddleware } from "@/main/factories/middlewares/AuthAdminMiddlewareFactory";
 
 export default (router: Router): void => {
   const inputRouter = Router();

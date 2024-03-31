@@ -5,7 +5,7 @@ import {
   MeasureModel,
 } from "@/contracts";
 import { CreateMeasureModel } from "@/entities/measure/createMeasure";
-import { MeasureAlreadyExistsError } from "@/utils/errors/MeasureAlreadyExistsError";
+import { MeasureAlreadyExistsError } from "@/presentation/errors/MeasureAlreadyExistsError";
 
 export class CreateMeasureUseCase implements CreateMeasure {
   constructor(

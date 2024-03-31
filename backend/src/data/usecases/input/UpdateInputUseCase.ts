@@ -8,9 +8,9 @@ import {
 } from "@/contracts/input";
 
 import { CreateInputModel } from "@/entities/input/createInput";
-import { GroupNotFoundError } from "@/utils/errors/GroupNotFoundError";
-import { InputNotFoundError } from "@/utils/errors/InputNotFoundError";
-import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
+import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
+import { InputNotFoundError } from "@/presentation/errors/InputNotFoundError";
+import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 
 export class UpdateInputUseCase implements UpdateInput {
   constructor(

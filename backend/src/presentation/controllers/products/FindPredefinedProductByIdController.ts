@@ -2,7 +2,7 @@ import { FindPredefinedProductById } from "@/contracts/product/FindPredefinedPro
 import { Controller } from "../../protocols/controller";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { HttpRequest } from "../../protocols/httpRequest";
-import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 import { notFound, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 

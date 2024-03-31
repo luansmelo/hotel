@@ -4,7 +4,7 @@ import {
   DeleteCategoryContract,
   FindCategoryByIdContract,
 } from "@/contracts";
-import { CategoryNotFoundError } from "@/utils/errors/CategoryNotFoundError";
+import { CategoryNotFoundError } from "@/presentation/errors/CategoryNotFoundError";
 
 export class DeleteCategoryUseCase implements DeleteCategory {
   constructor(

@@ -4,8 +4,8 @@ import {
 } from "@/contracts/product";
 import { FindPredefinedProductByIdContract } from "@/contracts/product/FindPredefinedProductByIdContract";
 import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
-import { InputAlreadyExistsError } from "@/utils/errors/InputAlreadyExistsError";
-import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { InputAlreadyExistsError } from "@/presentation/errors/InputAlreadyExistsError";
+import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
 export class AddInputToProductUseCase implements AddInputToProduct {
   constructor(

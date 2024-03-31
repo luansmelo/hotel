@@ -1,9 +1,9 @@
 import { UpdateInput } from "@/contracts/input";
 import { CreateInputModel } from "@/entities/input/createInput";
-import { AccessDeniedError } from "@/utils/errors/AccessDeniedError";
-import { FORBIDDEN_UPDATE_UPDATING_INPUT } from "@/utils/errors/pt-br";
+import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
+import { FORBIDDEN_UPDATE_UPDATING_INPUT } from "@/presentation/errors/pt-br";
 import { Controller, HttpRequest, HttpResponse, Validation } from "../../protocols";
-import { MissingParamError } from "@/utils/errors/MissingParamError";
+import { MissingParamError } from "@/presentation/errors/MissingParamError";
 import { badRequest, forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 export class UpdateInputController implements Controller {

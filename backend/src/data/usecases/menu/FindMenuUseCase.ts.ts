@@ -1,7 +1,7 @@
 import { MenuModel } from "@/contracts/menu/CreateMenuContract";
 import { FindMenu, FindMenuContract } from "@/contracts/menu/FindMenuContract";
 import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
-import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
+import { MenuNotFoundError } from "@/presentation/errors/MenuNotFoundError";
 
 export class FindMenuUseCase implements FindMenu {
   constructor(private readonly menu: FindMenuContract) {}

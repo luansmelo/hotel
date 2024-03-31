@@ -3,7 +3,7 @@ import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
-import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
+import { MenuNotFoundError } from "@/presentation/errors/MenuNotFoundError";
 import { notFound, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 

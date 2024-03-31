@@ -3,7 +3,7 @@ import {
   FindPredefinedProductById,
   FindPredefinedProductByIdContract,
 } from "@/contracts/product/FindPredefinedProductByIdContract";
-import { ProductNotFoundError } from "@/utils/errors/ProductNotFoundError";
+import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
 export class FindPredefinedProductByIdUseCase
   implements FindPredefinedProductById

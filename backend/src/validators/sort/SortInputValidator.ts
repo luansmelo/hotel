@@ -1,4 +1,4 @@
-import { InvalidParamError } from "@/utils/errors/InvalidParamError";
+import { InvalidParamError } from "@/presentation/errors/InvalidParamError";
 
 export interface Validation {
   validate(input: unknown): void | Error;

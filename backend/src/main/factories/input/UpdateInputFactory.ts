@@ -13,7 +13,7 @@ import { makeInputValidationFactory } from "./InputValidationFactory";
 export function makeUpdateInputController(): UpdateInputController {
   const repo = new InputRepository(prisma);
   const measureRepo = new MeasureRepository(prisma);
-  const groupRepo = new GroupRepository(prisma);
+  const groupRepo = new GroupRepository();
 
   const findInputById = new FindInputByIdUseCase(repo);
 

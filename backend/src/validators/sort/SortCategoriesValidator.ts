@@ -1,5 +1,5 @@
 import { Validation } from "@/presentation/protocols/validator/ValidationProtocol";
-import { InvalidParamError } from "@/utils/errors/InvalidParamError";
+import { InvalidParamError } from "@/presentation/errors/InvalidParamError";
 
 export class SortCategoriesValidator implements Validation {
   validate(input: unknown): void | Error {

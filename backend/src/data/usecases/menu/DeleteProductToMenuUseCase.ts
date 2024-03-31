@@ -4,7 +4,7 @@ import {
 } from "@/contracts/menu/DeleteProductToMenuContract";
 import { FindMenuByIdContract } from "@/contracts/menu/FindMenuByIdContract";
 import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
-import { MenuNotFoundError } from "@/utils/errors/MenuNotFoundError";
+import { MenuNotFoundError } from "@/presentation/errors/MenuNotFoundError";
 
 export class DeleteProductToMenuUseCase implements DeleteProductToMenu {
   constructor(

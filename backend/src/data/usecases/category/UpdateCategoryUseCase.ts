@@ -4,7 +4,7 @@ import {
   UpdateCategory,
   UpdateCategoryContract,
 } from "@/contracts";
-import { CategoryNotFoundError } from "@/utils/errors/CategoryNotFoundError";
+import { CategoryNotFoundError } from "@/presentation/errors/CategoryNotFoundError";
 
 export class UpdateCategoryUseCase implements UpdateCategory {
   constructor(

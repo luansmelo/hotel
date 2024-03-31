@@ -5,7 +5,7 @@ import {
   UpdateMeasureContract,
 } from "@/contracts";
 import { CreateMeasureModel } from "@/entities/measure/createMeasure";
-import { MeasureNotFoundError } from "@/utils/errors/MeasureNotFoundError";
+import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 
 export class UpdateMeasureUseCase implements UpdateMeasure {
   constructor(

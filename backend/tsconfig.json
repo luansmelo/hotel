@@ -1,22 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "module": "commonjs",
     "target": "es2019",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "outDir": "dist",
     "esModuleInterop": true,
     "noEmit": false,
-    "baseUrl": ".",
+    "baseUrl": "./src",
+    "rootDir": "src",
     "paths": {
       "@/*": [
-        "src/*"
+        "*"
       ]
     }
   },
-  "include": [
-    "src/**/*.ts"
-, "src/main/factories/category/CreateCategoryFactory.ts"  ],
+  "include": ["src"],
   "exclude": [
-    "**/*.test",
-    "**/__tests__/*"
+    "node_modules",
+    "dist",
   ]
 }
