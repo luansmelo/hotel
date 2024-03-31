@@ -1,10 +1,11 @@
-import { FindInputById, FindInputByIdContract } from "@/contracts/input";
-import { InputModel } from "@/contracts/input/CreateInputContract";
+import { LoadInputByIdRepository } from "@/data/protocols/db/input/LoadInputByIdRepository.protocol";
+import { InputModel } from "@/domain/models/Input";
+import { LoadInputByIdUseCaseContract } from "@/domain/usecases/input/LoadInputById";
 
-export class FindInputByIdUseCase implements FindInputById {
-  constructor(private readonly findInput: FindInputByIdContract) {}
+export class LoadInputByIdUseCase implements LoadInputByIdUseCaseContract {
+  constructor(private readonly findInput: LoadInputByIdRepository) {}
 
-  async findById(id: string): Promise<InputModel | null> {
-    return this.findInput.findById(id);
+  async loadById(id: string): Promise<InputModel | null> {
+    return this.findInput.loadById(id);
   }
 }

@@ -1,21 +1,18 @@
-import {
-  FindInputByIdContract,
-  InputModel,
-  UpdateInput,
-  UpdateInputContract,
-} from "@/contracts/input";
 import { LoadGroupsByIdsRepository } from "@/data/protocols/db/group/LoadGroupsByIdsRepository.protocol";
+import { LoadInputByIdRepository } from "@/data/protocols/db/input/LoadInputByIdRepository.protocol";
+import { UpdateInputRepository } from "@/data/protocols/db/input/UpdateInputRepository.protocol";
 import { LoadMeasureByIdRepository } from "@/data/protocols/db/measure/LoadMeasureByIdRepository.protocol";
-
-import { CreateInputModel } from "@/entities/input/createInput";
+import { InputModel } from "@/domain/models/Input";
+import { CreateInputModel } from "@/domain/usecases/input/CreateInput";
+import { UpdateInputUseCaseContract } from "@/domain/usecases/input/UpdateInput";
 import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
 import { InputNotFoundError } from "@/presentation/errors/InputNotFoundError";
 import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 
-export class UpdateInputUseCase implements UpdateInput {
+export class UpdateInputUseCase implements UpdateInputUseCaseContract {
   constructor(
-    private readonly updateInput: UpdateInputContract,
-    private readonly findInput: FindInputByIdContract,
+    private readonly updateInput: UpdateInputRepository,
+    private readonly findInput: LoadInputByIdRepository,
     private readonly findMeasure: LoadMeasureByIdRepository,
     private readonly findGroups: LoadGroupsByIdsRepository
   ) {}
@@ -24,7 +21,7 @@ export class UpdateInputUseCase implements UpdateInput {
     id: string,
     param: Partial<CreateInputModel>
   ): Promise<Partial<InputModel>> {
-    const input = await this.findInput.findById(id);
+    const input = await this.findInput.loadById(id);
 
     if (!input) {
       throw new InputNotFoundError();

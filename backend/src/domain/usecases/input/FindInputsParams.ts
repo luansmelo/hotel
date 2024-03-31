@@ -1,4 +1,4 @@
-import { InputModel } from "@/contracts/input";
+import { InputModel } from "@/domain/models/Input";
 
 export type Sort = "name" | "code" | "unitPrice" | "measurementUnit" | "groups" | "createdAt" | "updatedAt";
 

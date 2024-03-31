@@ -1,13 +1,11 @@
-import prisma from "@/config/prisma";
-
 import { FindInputByIdController } from "@/presentation/controllers/input/FindInputByIdController";
-import { InputRepository } from "@/infra/db/mysql/InputRepository";
-import { FindInputByIdUseCase } from "@/data/usecases/input/FindInputByIdUseCase";
+import { InputRepository } from "@/infra/db/mysql/input/InputRepository";
+import { LoadInputByIdUseCase } from "@/data/usecases/input/FindInputByIdUseCase";
 
 export function makeFindInputByIdController(): FindInputByIdController {
-  const repo = new InputRepository(prisma);
+  const repo = new InputRepository();
 
-  const input = new FindInputByIdUseCase(repo);
+  const input = new LoadInputByIdUseCase(repo);
 
   return new FindInputByIdController(input);
 }

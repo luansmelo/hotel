@@ -1,5 +1,5 @@
+import { InputModel } from "@/domain/models/Input";
 import { CreateProductModel } from "@/entities/product/createProduct";
-import { InputModel } from "../input";
 
 export interface ProductModel {
   id?: string;

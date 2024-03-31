@@ -1,10 +1,11 @@
-import { FindInputByName, FindInputByNameContract } from "@/contracts/input";
-import { InputModel } from "@/contracts/input/CreateInputContract";
+import { LoadInputByNameRepository } from "@/data/protocols/db/input/LoadInputByNameRepository.protocol";
+import { InputModel } from "@/domain/models/Input";
+import { LoadInputByNameUseCaseContract } from "@/domain/usecases/input/LoadInputByName";
 
-export class FindInputByNameUseCase implements FindInputByName {
-  constructor(private readonly findInput: FindInputByNameContract) {}
+export class FindInputByNameUseCase implements LoadInputByNameUseCaseContract {
+  constructor(private readonly findInput: LoadInputByNameRepository) {}
 
-  async findByName(name: string): Promise<InputModel | null> {
-    return this.findInput.findByName(name);
+  async loadByName(name: string): Promise<InputModel | null> {
+    return this.findInput.loadByName(name);
   }
 }

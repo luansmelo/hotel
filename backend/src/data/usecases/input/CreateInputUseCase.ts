@@ -1,35 +1,32 @@
-import { FindInputByNameContract } from "@/contracts/input";
-import {
-  CreateInput,
-  CreateInputContract,
-  InputModel,
-} from "@/contracts/input/CreateInputContract";
-import { FindInputByCodeContract } from "@/contracts/input/FindInputByCodeContract";
 import { LoadGroupByIdRepository } from "@/data/protocols/db/group/LoadGroupByIdRepository.protocol";
+import { CreateInputRepository } from "@/data/protocols/db/input/CreateInputRepository.protocol";
+import { LoadInputByCodeRepository } from "@/data/protocols/db/input/LoadInputByCodeRepository.protocol";
+import { LoadInputByNameRepository } from "@/data/protocols/db/input/LoadInputByNameRepository.protocol";
 import { LoadMeasureByIdRepository } from "@/data/protocols/db/measure/LoadMeasureByIdRepository.protocol";
-import { CreateInputModel } from "@/entities/input/createInput";
+import { InputModel } from "@/domain/models/Input";
+import { CreateInputModel, CreateInputUseCaseContract } from "@/domain/usecases/input/CreateInput";
 import { CodeAlreadyExistsError } from "@/presentation/errors/CodeAlreadyExistsError";
 import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
 import { InputAlreadyExistsError } from "@/presentation/errors/InputAlreadyExistsError";
 import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError";
 
-export class CreateInputUseCase implements CreateInput {
+export class CreateInputUseCase implements CreateInputUseCaseContract {
   constructor(
-    private readonly createInput: CreateInputContract,
-    private readonly findByName: FindInputByNameContract,
-    private readonly findByCode: FindInputByCodeContract,
+    private readonly createInput: CreateInputRepository,
+    private readonly findByName: LoadInputByNameRepository,
+    private readonly findByCode: LoadInputByCodeRepository,
     private readonly findMeasureById: LoadMeasureByIdRepository,
     private readonly findGroupById: LoadGroupByIdRepository
   ) {}
 
   async create(inputModel: CreateInputModel): Promise<InputModel> {
-    const input = await this.findByName.findByName(inputModel.name);
+    const input = await this.findByName.loadByName(inputModel.name);
 
     if (input) {
       throw new InputAlreadyExistsError("Insumo já cadastrado");
     }
 
-    const code = await this.findByCode.findByCode(inputModel.code);
+    const code = await this.findByCode.loadByCode(inputModel.code);
 
     if (code) {
       throw new CodeAlreadyExistsError("Código já cadastrado");
@@ -51,6 +48,6 @@ export class CreateInputUseCase implements CreateInput {
       throw new GroupNotFoundError();
     }
 
-    return this.createInput.save(inputModel);
+    return this.createInput.create(inputModel);
   }
 }

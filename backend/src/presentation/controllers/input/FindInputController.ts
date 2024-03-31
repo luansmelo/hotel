@@ -1,15 +1,15 @@
-import { FindInputs } from "@/contracts/input";
-import { FindInputsParams } from "@/entities/input/FindInputsParams";
 import { Validation } from "@/validators/sort/SortInputValidator";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { Controller } from "../../protocols/controller";
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
+import { FindInputsParams } from "@/domain/usecases/input/FindInputsParams";
+import { LoadInputsUseCaseContract } from "@/domain/usecases/input/LoadInputs";
 
 export class FindInputsController implements Controller {
   constructor(
-    private readonly inputs: FindInputs,
+    private readonly inputs: LoadInputsUseCaseContract,
     private readonly validation: Validation
   ) {}
 
@@ -22,7 +22,7 @@ export class FindInputsController implements Controller {
         return badRequest(error);
       }
 
-      const inputs = await this.inputs.findAll(params);
+      const inputs = await this.inputs.loadAll(params);
 
       return ok(inputs);
     } catch (error) {
