@@ -1,6 +1,6 @@
 import { CreateInputModel } from "@/entities/input/createInput";
 import { GroupModel } from "@/domain/models/Group";
-import { MeasureModel } from "../measure";
+import { MeasureModel } from "@/domain/models/Measure";
 
 export interface InputModel {
   id?: string;

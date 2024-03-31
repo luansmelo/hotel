@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { File } from "@/storage/s3/file";
 import {
   AddInputToProductContract,
   CreateProductContract,
@@ -195,27 +194,6 @@ export class ProductRepository
       where: {
         productId: input.productId,
         inputId: input.inputId,
-      },
-    });
-  }
-
-  async updateProductPhoto(
-    id: string,
-    file: File
-  ): Promise<Partial<ProductModel>> {
-    return this.db.product.update({
-      where: { id },
-      data: {
-        photo_url: file.filename,
-      },
-    });
-  }
-
-  async removeProductPhoto(id: string) {
-    return this.db.product.update({
-      where: { id },
-      data: {
-        photo_url: null,
       },
     });
   }

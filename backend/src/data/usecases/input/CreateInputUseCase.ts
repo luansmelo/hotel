@@ -1,4 +1,3 @@
-import { FindMeasureByIdContract } from "@/contracts";
 import { FindInputByNameContract } from "@/contracts/input";
 import {
   CreateInput,

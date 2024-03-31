@@ -1,4 +1,3 @@
-import { UpdateMeasure } from "@/contracts";
 import { CreateMeasureModel } from "@/entities/measure/createMeasure";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
