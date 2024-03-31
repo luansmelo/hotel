@@ -1,9 +1,6 @@
 import { LoadGroupsRepository } from "@/data/protocols/db/group/LoadGroupsRepository.protocol";
+import { FindGroupsParams, FindGroupsResponse } from "@/domain/usecases/group/FindGroupsParams";
 import { LoadGroupsUseCaseContract } from "@/domain/usecases/group/LoadGroups";
-import {
-  FindGroupsParams,
-  FindGroupsResponse,
-} from "@/entities/group/FindGroupsParams";
 
 export class FindGroupsUseCase implements LoadGroupsUseCaseContract {
   constructor(private readonly groups: LoadGroupsRepository) {}

@@ -1,8 +1,7 @@
 import { CreateGroupRepository } from "@/data/protocols/db/group/CreateGroupRepository.protocol";
 import { LoadGroupByNameRepository } from "@/data/protocols/db/group/LoadGroupByNameRepository.protocol.ts";
 import { GroupModel } from "@/domain/models/Group";
-import { CreateGroupUseCaseContract } from "@/domain/usecases/group/CreateGroup";
-import { CreateGroupModel } from "@/domain/usecases/group/group/createGroup";
+import { CreateGroupModel, CreateGroupUseCaseContract } from "@/domain/usecases/group/CreateGroup";
 import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 
 export class CreateGroupUseCase implements CreateGroupUseCaseContract {

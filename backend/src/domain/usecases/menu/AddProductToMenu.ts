@@ -9,6 +9,6 @@ export interface AddProductModel {
   product: Product[];
 }
 
-export interface AddProductToMenu {
+export interface AddProductToMenuUseCaseContract {
   addProduct(input: AddProductModel): Promise<Partial<{ count: number }>>;
 }

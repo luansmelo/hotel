@@ -1,8 +1,7 @@
 import { CreateMeasureRepository } from "@/data/protocols/db/measure/CreateMeasureRepository.protocol";
 import { LoadMeasureByNameRepository } from "@/data/protocols/db/measure/LoadMeasureByNameRepository.protocol.ts";
 import { MeasureModel } from "@/domain/models/Measure";
-import { CreateMeasureUseCaseContract } from "@/domain/usecases/measure/CreateMeasure";
-import { CreateMeasureModel } from "@/entities/measure/createMeasure";
+import { CreateMeasureModel, CreateMeasureUseCaseContract } from "@/domain/usecases/measure/CreateMeasure";
 import { MeasureAlreadyExistsError } from "@/presentation/errors/MeasureAlreadyExistsError";
 
 export class CreateMeasureUseCase implements CreateMeasureUseCaseContract {

@@ -1,8 +1,3 @@
-import {
-  FindCategoriesParams,
-  FindCategoriesResponse,
-} from "@/entities/category/FindCategoriesParams";
-import { CreateCategoryModel } from "@/entities/category/createCategory";
 import Category from "@/data/local/entity/category";
 import { CreateCategoryRepository } from "@/data/protocols/db/category/CreateCategoryRepository.protocol";
 import { LoadCategoriesRepository } from "@/data/protocols/db/category/LoadCategoriesRepository.protocol";
@@ -11,6 +6,8 @@ import { LoadCategoryByIdRepository } from "@/data/protocols/db/category/LoadCat
 import { DeleteCategoryRepository } from "@/data/protocols/db/category/DeleteCategoryRepository.protocol.ts";
 import { UpdateCategoryRepository } from "@/data/protocols/db/category/UpdateCategoryRepository.protocol";
 import { CategoryModel } from "@/domain/models/Category";
+import { CreateCategoryModel } from "@/domain/usecases/category/CreateCategory";
+import { FindCategoriesParams, FindCategoriesResponse } from "@/domain/usecases/category/FindCategoriesParams";
 
 export class CategoryRepository
   implements

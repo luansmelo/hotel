@@ -1,11 +1,12 @@
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
-import { FindCategoriesParams } from "@/entities/category/FindCategoriesParams";
+
 import { Validation } from "../../protocols/validator/ValidationProtocol";
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 import { LoadCategoriesUseCaseContract } from "@/domain/usecases/category/LoadCategories";
+import { FindCategoriesParams } from "@/domain/usecases/category/FindCategoriesParams";
 
 export class FindCategoriesController implements Controller {
   constructor(

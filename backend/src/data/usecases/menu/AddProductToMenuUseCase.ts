@@ -1,19 +1,16 @@
-import {
-  AddProductToMenu,
-  AddProductToMenuContract,
-} from "@/contracts/menu/AddProductToMenuContract";
-import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
-import { AddProductModel } from "@/entities/menu/AddProductToMenuEntity";
+import { AddProductToMenuRepository } from "@/data/protocols/db/menu/AddProductToMenuRepository.protocol";
+import { LoadMenuByIdRepository } from "@/data/protocols/db/menu/LoadMenuByIdRepository.protocol";
+import { AddProductModel, AddProductToMenuUseCaseContract } from "@/domain/usecases/menu/AddProductToMenu";
 import { MenuNotFoundError } from "@/presentation/errors/MenuNotFoundError";
 
-export class AddProductToMenuUseCase implements AddProductToMenu {
+export class AddProductToMenuUseCase implements AddProductToMenuUseCaseContract {
   constructor(
-    private readonly menuSave: AddProductToMenuContract,
-    private readonly menu: FindMenuById
+    private readonly menuSave: AddProductToMenuRepository,
+    private readonly menu: LoadMenuByIdRepository
   ) { }
 
   async addProduct(menuModel: AddProductModel): Promise<Partial<{ count: number }>> {
-    const menu = await this.menu.findById(menuModel.menuId);
+    const menu = await this.menu.loadById(menuModel.menuId);
 
     if (!menu) {
       throw new MenuNotFoundError();
@@ -28,6 +25,6 @@ export class AddProductToMenuUseCase implements AddProductToMenu {
       }))
     );
 
-    return this.menuSave.add(products);
+    return this.menuSave.addProduct(products);
   }
 }

@@ -1,4 +1,3 @@
-import { CreateMeasureModel } from "@/entities/measure/createMeasure";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
@@ -7,6 +6,7 @@ import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { UpdateMeasureUseCaseContract } from "@/domain/usecases/measure/UpdateCategory";
+import { CreateMeasureModel } from "@/domain/usecases/measure/CreateMeasure";
 
 export class UpdateMeasureController implements Controller {
   constructor(private readonly updateMeasure: UpdateMeasureUseCaseContract) { }

@@ -2,8 +2,8 @@
 import { CreateCategoryRepository } from "@/data/protocols/db/category/CreateCategoryRepository.protocol";
 import { LoadCategoryByNameRepository } from "@/data/protocols/db/category/LoadCategoryByNameRepository.protocol.ts";
 import { CategoryModel } from "@/domain/models/Category";
-import { CreateCategoryUseCaseContract } from "@/domain/usecases/category/CreateCategory";
-import { CreateCategoryModel } from "@/entities/category/createCategory";
+import { CreateCategoryModel, CreateCategoryUseCaseContract } from "@/domain/usecases/category/CreateCategory";
+
 import { CategoryAlreadyExistsError } from "@/presentation/errors/CategoryAlreadyExistsError";
 
 export class CreateCategoryUseCase implements CreateCategoryUseCaseContract {

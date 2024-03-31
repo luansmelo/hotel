@@ -1,4 +1,3 @@
-import { CreateGroupModel } from "@/domain/usecases/group/group/createGroup";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
@@ -8,6 +7,7 @@ import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { FORBIDDEN_DELETE_UPDATING_GROUP } from "@/presentation/errors/pt-br";
 import { UpdateGroupUseCaseContract } from "@/domain/usecases/group/UpdateGroup";
+import { CreateGroupModel } from "@/domain/usecases/group/CreateGroup";
 
 export class UpdateGroupController implements Controller {
   constructor(private readonly group: UpdateGroupUseCaseContract) { }

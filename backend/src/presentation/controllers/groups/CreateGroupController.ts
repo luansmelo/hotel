@@ -1,11 +1,11 @@
-import { CreateGroupModel } from "@/domain/usecases/group/group/createGroup";
+
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { Validation } from "@/validators/sort/SortInputValidator";
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
-import { CreateGroupUseCaseContract } from "@/domain/usecases/group/CreateGroup";
+import { CreateGroupModel, CreateGroupUseCaseContract } from "@/domain/usecases/group/CreateGroup";
 
 export class CreateGroupController implements Controller {
   constructor(

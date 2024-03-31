@@ -2,8 +2,8 @@ import { LoadGroupByIdRepository } from "@/data/protocols/db/group/LoadGroupById
 import { LoadGroupByNameRepository } from "@/data/protocols/db/group/LoadGroupByNameRepository.protocol.ts";
 import { UpdateGroupRepository } from "@/data/protocols/db/group/UpdateGroupRepository.protocol";
 import { GroupModel } from "@/domain/models/Group";
+import { CreateGroupModel } from "@/domain/usecases/group/CreateGroup";
 import { UpdateGroupUseCaseContract } from "@/domain/usecases/group/UpdateGroup";
-import { CreateGroupModel } from "@/domain/usecases/group/group/createGroup";
 import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 
 export class UpdateGroupUseCase implements UpdateGroupUseCaseContract {

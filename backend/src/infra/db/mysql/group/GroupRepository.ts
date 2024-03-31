@@ -1,7 +1,4 @@
-import {
-  FindGroupsParams,
-  FindGroupsResponse,
-} from "@/entities/group/FindGroupsParams";
+
 import Group from "@/data/local/entity/group";
 import { CreateGroupRepository } from "@/data/protocols/db/group/CreateGroupRepository.protocol";
 import { GroupModel } from "@/domain/models/Group";
@@ -12,6 +9,7 @@ import { LoadGroupByIdRepository } from "@/data/protocols/db/group/LoadGroupById
 import { UpdateGroupRepository } from "@/data/protocols/db/group/UpdateGroupRepository.protocol";
 import { DeleteGroupRepository } from "@/data/protocols/db/group/DeleteGroupRepository.protocol.ts";
 import { LoadGroupsByIdsRepository } from "@/data/protocols/db/group/LoadGroupsByIdsRepository.protocol";
+import { FindGroupsParams, FindGroupsResponse } from "@/domain/usecases/group/FindGroupsParams";
 
 export class GroupRepository
   implements

@@ -1,14 +1,14 @@
-import { UpdateMenu } from "@/contracts/menu/UpdateMenuContract";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
-import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
+import { UpdateMenuUseCaseContract } from "@/domain/usecases/menu/UpdateMenu";
+import { CreateMenuModel } from "@/domain/usecases/menu/CreateMenu";
 
 export class UpdateMenuController implements Controller {
-  constructor(private readonly menu: UpdateMenu) { }
+  constructor(private readonly menu: UpdateMenuUseCaseContract) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

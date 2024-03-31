@@ -1,4 +1,4 @@
-import { FindGroupsParams, FindGroupsResponse } from "@/entities/group/FindGroupsParams";
+import { FindGroupsParams, FindGroupsResponse } from "@/domain/usecases/group/FindGroupsParams";
 
 export interface LoadGroupsRepository {
     loadAll(params: FindGroupsParams): Promise<FindGroupsResponse | null>

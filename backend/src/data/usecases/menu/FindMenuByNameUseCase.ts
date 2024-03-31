@@ -1,14 +1,12 @@
-import { MenuModel } from "@/contracts/menu/CreateMenuContract";
-import {
-  FindMenuByName,
-  FindMenuByNameContract,
-} from "@/contracts/menu/FindMenuByNameContract";
+import { LoadMenuByNameRepository } from "@/data/protocols/db/menu/LoadMenuByNameRepository.protocol.ts";
+import { MenuModel } from "@/domain/models/Menu";
+import { LoadMenuByNameUseCaseContract } from "@/domain/usecases/menu/LoadMenuByName";
 
-export class FindMenuByNameUseCase implements FindMenuByName {
-  constructor(private readonly findMenu: FindMenuByNameContract) {}
+export class FindMenuByNameUseCase implements LoadMenuByNameUseCaseContract {
+  constructor(private readonly findMenu: LoadMenuByNameRepository) {}
 
-  async findByName(name: string): Promise<MenuModel> {
-    const menu = await this.findMenu.findByName(name);
+  async loadByName(name: string): Promise<MenuModel> {
+    const menu = await this.findMenu.loadByName(name);
 
     return menu;
   }
