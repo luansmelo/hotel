@@ -11,15 +11,10 @@ export class CreateUserUseCase implements CreateUser {
   constructor(
     private readonly createUser: CreateUserRepository,
     private readonly findUser: LoadUserByEmailRepository,
-    private readonly emailValidator: EmailValidator,
     private readonly hasher: Hasher
   ) { }
 
   async create(userModel: CreateUserModel): Promise<UserModel> {
-    const isValid = this.emailValidator.isValid(userModel.email);
-
-    if (!isValid) throw new InvalidCredentialsError("email inválido");
-
     const user = await this.findUser.loadByEmail(userModel.email);
 
     if (user) throw new UserAlreadyExistsError("usuário já cadastrado");
