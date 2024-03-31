@@ -1,4 +1,4 @@
-import { Validation } from "@/controllers/protocols/validator/ValidationProtocol";
+import { Validation } from "@/presentation/protocols/validator/ValidationProtocol";
 import { InvalidParamError } from "@/utils/errors/InvalidParamError";
 
 export class SortCategoriesValidator implements Validation {
