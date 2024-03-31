@@ -1,5 +1,4 @@
 import { FindMeasureByIdContract } from "@/contracts";
-import { FindGroupByIdContract } from "@/contracts/group";
 import { FindInputByNameContract } from "@/contracts/input";
 import {
   CreateInput,
@@ -7,6 +6,7 @@ import {
   InputModel,
 } from "@/contracts/input/CreateInputContract";
 import { FindInputByCodeContract } from "@/contracts/input/FindInputByCodeContract";
+import { LoadGroupByIdRepository } from "@/data/protocols/db/group/LoadGroupByIdRepository.protocol";
 import { CreateInputModel } from "@/entities/input/createInput";
 import { CodeAlreadyExistsError } from "@/presentation/errors/CodeAlreadyExistsError";
 import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
@@ -19,7 +19,7 @@ export class CreateInputUseCase implements CreateInput {
     private readonly findByName: FindInputByNameContract,
     private readonly findByCode: FindInputByCodeContract,
     private readonly findMeasureById: FindMeasureByIdContract,
-    private readonly findGroupById: FindGroupByIdContract
+    private readonly findGroupById: LoadGroupByIdRepository
   ) {}
 
   async create(inputModel: CreateInputModel): Promise<InputModel> {
@@ -44,7 +44,7 @@ export class CreateInputUseCase implements CreateInput {
     }
 
     const groups = await Promise.all(
-      inputModel.groups.map((groupId) => this.findGroupById.findById(groupId))
+      inputModel.groups.map((groupId) => this.findGroupById.loadById(groupId))
     );
 
     if (groups.some((group) => !group)) {

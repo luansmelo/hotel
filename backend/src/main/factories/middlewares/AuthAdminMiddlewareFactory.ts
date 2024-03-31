@@ -1,5 +1,5 @@
-import { VerifyToken } from "@/contracts/user/VerifyToken";
-import { UserRepository } from "@/infra/db/mysql/UserRepository";
+import { VerifyToken } from "@/data/usecases/user/VerifyToken";
+import { UserRepository } from "@/infra/db/mysql/user/UserRepository";
 import env from "@/config/env";
 import { ROLE } from "@/config/constants";
 import { JwtAdapter } from "@/infra/token";

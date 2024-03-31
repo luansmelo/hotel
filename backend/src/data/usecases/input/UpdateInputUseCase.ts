@@ -1,11 +1,12 @@
 import { FindMeasureByIdContract } from "@/contracts";
-import { FindGroupsByIdContract } from "@/contracts/group/FindGroupsByIdContract";
+
 import {
   FindInputByIdContract,
   InputModel,
   UpdateInput,
   UpdateInputContract,
 } from "@/contracts/input";
+import { LoadGroupsByIdsRepository } from "@/data/protocols/db/group/LoadGroupsByIdsRepository.protocol";
 
 import { CreateInputModel } from "@/entities/input/createInput";
 import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
@@ -17,7 +18,7 @@ export class UpdateInputUseCase implements UpdateInput {
     private readonly updateInput: UpdateInputContract,
     private readonly findInput: FindInputByIdContract,
     private readonly findMeasure: FindMeasureByIdContract,
-    private readonly findGroups: FindGroupsByIdContract
+    private readonly findGroups: LoadGroupsByIdsRepository
   ) {}
 
   async updateById(

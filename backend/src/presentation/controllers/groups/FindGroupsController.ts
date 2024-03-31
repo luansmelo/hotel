@@ -1,4 +1,3 @@
-import { } from "@/contracts/group";
 import { FindGroupsParams } from "@/entities/group/FindGroupsParams";
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";

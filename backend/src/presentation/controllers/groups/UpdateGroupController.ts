@@ -1,4 +1,3 @@
-import { UpdateGroup } from "@/contracts/group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
@@ -8,9 +7,10 @@ import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { FORBIDDEN_DELETE_UPDATING_GROUP } from "@/presentation/errors/pt-br";
+import { UpdateGroupUseCaseContract } from "@/domain/usecases/group/UpdateGroup";
 
 export class UpdateGroupController implements Controller {
-  constructor(private readonly group: UpdateGroup) { }
+  constructor(private readonly group: UpdateGroupUseCaseContract) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

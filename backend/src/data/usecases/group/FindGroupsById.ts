@@ -1,8 +1,9 @@
-import { FindGroupsById } from "@/contracts/group/FindGroupsByIdContract";
 import { GroupModel } from "@/domain/models/Group";
+import { LoadGroupsByIdsRepository } from "@/data/protocols/db/group/LoadGroupsByIdsRepository.protocol";
+import { LoadGroupsByIdsUseCaseContract } from "@/domain/usecases/group/LoadGroupsByIds";
 
-export class FindGroupsByIdUseCase implements FindGroupsById {
-  constructor(private readonly findGroup: FindGroupsById) {}
+export class LoadGroupsByIdUseCase implements LoadGroupsByIdsUseCaseContract {
+  constructor(private readonly findGroup: LoadGroupsByIdsRepository) {}
 
   async findByIds(ids: string[]): Promise<GroupModel[]> {
     return this.findGroup.findByIds(ids);

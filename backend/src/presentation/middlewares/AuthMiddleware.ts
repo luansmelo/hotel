@@ -1,4 +1,4 @@
-import { VerifyUserToken } from "@/contracts/user/VerifyToken";
+
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 import { forbidden, ok, unauthorized } from "@/presentation/helpers/httpCodesHelper";
 import { HttpRequest } from "@/presentation/protocols/httpRequest";
@@ -7,6 +7,7 @@ import { Middleware } from "@/presentation/protocols/middleware";
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { InvalidTokenError } from "@/presentation/errors/InvalidTokenError";
 import { FindUserByToken } from "@/domain/usecases/user/LoadUserByIdAndToken";
+import { VerifyUserToken } from "@/data/usecases/user/VerifyToken";
 
 export class AuthMiddleware implements Middleware {
     constructor(

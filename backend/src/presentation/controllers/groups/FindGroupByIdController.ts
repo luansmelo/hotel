@@ -1,19 +1,18 @@
-import { FindGroupById } from "@/contracts/group";
-import { Controller } from "../../protocols/controller";
-import { HttpResponse } from "../../protocols/httpResponse";
-import { HttpRequest } from "../../protocols/httpRequest";
+
 import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
 import { notFound, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
+import { LoadGroupByIdUseCaseContract } from "@/domain/usecases/group/LoadGroupById";
+import { Controller, HttpRequest, HttpResponse } from "@/presentation/protocols";
 
 export class FindGroupByIdController implements Controller {
-  constructor(private readonly group: FindGroupById) { }
+  constructor(private readonly group: LoadGroupByIdUseCaseContract) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { id } = httpRequest.params as { id: string }
 
-      const group = await this.group.findById(id)
+      const group = await this.group.loadById(id)
 
       if (!group) {
         return notFound(new GroupNotFoundError())

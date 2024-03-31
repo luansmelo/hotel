@@ -1,11 +1,9 @@
-import { FindUserByEmailContract } from "@/contracts/user";
-import { CreateUserModel } from "@/entities/user/createUser";
-
 import { CreateAuth } from "@/contracts/auth/AuthenticationContract";
 import { Encrypter, HasherComparer } from "@/data/protocols/cryptography";
 import { EmailValidator } from "@/utils/EmailValidatorAdapter";
 import { UserModel } from "@/domain/models/User";
 import { LoadUserByEmailRepository } from "@/data/protocols/db/user/LoadUserByEmailRepository.protocol";
+import { CreateUserModel } from "@/domain/usecases/user/CreateUser";
 
 export class CreateAuthUseCase implements CreateAuth {
   constructor(

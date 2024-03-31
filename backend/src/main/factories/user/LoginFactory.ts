@@ -3,7 +3,8 @@ import env from "@/config/env";
 import { CreateAuthUseCase } from "@/data/usecases/auth/CreateAuthUseCase";
 
 import { BcryptAdapter } from "@/infra/cryptography";
-import { UserRepository } from "@/infra/db/mysql/UserRepository";
+import { UserRepository } from "@/infra/db/mysql/user/UserRepository";
+
 import { JwtAdapter } from "@/infra/token";
 import { CreateAuthenticationController } from "@/presentation/controllers/auth/CreateAuthenticateController";
 import { EmailValidatorAdapter } from "@/utils/EmailValidatorAdapter";

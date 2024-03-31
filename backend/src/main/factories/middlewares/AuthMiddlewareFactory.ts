@@ -1,10 +1,10 @@
-import { VerifyToken } from "@/contracts/user/VerifyToken";
-import { UserRepository } from "@/infra/db/mysql/UserRepository";
 
 import env from "@/config/env";
 import { JwtAdapter } from "@/infra/token";
 import { AuthMiddleware } from "@/presentation/middlewares/AuthMiddleware";
 import { LoadUserByToken } from "@/data/usecases/user/LoadUserByTokenAndRole";
+import { UserRepository } from "@/infra/db/mysql/user/UserRepository";
+import { VerifyToken } from "@/data/usecases/user/VerifyToken";
 
 export const makeAuthMiddleware = (): AuthMiddleware => {
     const userAccountRepository = new UserRepository();

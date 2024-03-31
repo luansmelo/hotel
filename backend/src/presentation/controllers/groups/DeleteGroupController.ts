@@ -1,15 +1,13 @@
-import { DeleteGroup } from "@/contracts/group";
-import { Controller } from "../../protocols/controller";
-import { HttpResponse } from "../../protocols/httpResponse";
-import { HttpRequest } from "../../protocols/httpRequest";
+
 import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
-
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { FORBIDDEN_DELETE_DELETING_GROUP } from "@/presentation/errors/pt-br";
+import { DeleteGroupUseCaseContract } from "@/domain/usecases/group/DeleteGroup";
+import { Controller, HttpRequest, HttpResponse } from "@/presentation/protocols";
 
 export class DeleteGroupController implements Controller {
-  constructor(private readonly group: DeleteGroup) { }
+  constructor(private readonly group: DeleteGroupUseCaseContract) { }
 
   async handle(httpResquest: HttpRequest): Promise<HttpResponse> {
     try {
