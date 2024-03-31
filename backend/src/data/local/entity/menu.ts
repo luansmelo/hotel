@@ -1,5 +1,5 @@
 import prisma from "@/config/prisma";
 
-const Menu = prisma.menu;
+export const Menu = prisma.menu;
+export const MenuSchedule = prisma.categoryProductSchedule
 
-export default Menu;

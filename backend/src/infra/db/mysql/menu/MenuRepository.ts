@@ -1,43 +1,39 @@
-import { AddProductToMenuContract } from "@/contracts/menu/AddProductToMenuContract";
-import {
-  CreateMenuContract,
-  MenuModel,
-} from "@/contracts/menu/CreateMenuContract";
-import { DeleteMenuContract } from "@/contracts/menu/DeleteMenuContract";
-import { DeleteProductToMenuContract } from "@/contracts/menu/DeleteProductToMenuContract";
-import { FindMenuById } from "@/contracts/menu/FindMenuByIdContract";
-import { FindMenuByNameContract } from "@/contracts/menu/FindMenuByNameContract";
-import { FindMenuContract } from "@/contracts/menu/FindMenuContract";
-import { FindMenusContract } from "@/contracts/menu/FindMenusContract";
-import { UpdateMenuContract } from "@/contracts/menu/UpdateMenuContract";
-import { AddProductModel, AddProductToMenuModel } from "@/entities/menu/AddProductToMenuEntity";
-import { CreateMenuModel } from "@/entities/menu/CreateMenuEntity";
-import { FindMenuModel } from "@/entities/menu/FindMenuEntity";
-import { RemoveProductModel } from "@/entities/menu/RemoveProductToMenuEntity";
 import { mapperMenu } from "@/data/usecases/menu/mapper/mapperMenu";
-import { PrismaClient } from "@prisma/client";
+import { CreateMenuRepository } from "@/data/protocols/db/menu/CreateMenuRepository.protocol";
+import { LoadMenusRepository } from "@/data/protocols/db/menu/LoadMenusRepository.protocol";
+import { LoadMenuByIdRepository } from "@/data/protocols/db/menu/LoadMenuByIdRepository.protocol";
+import { LoadMenuByNameRepository } from "@/data/protocols/db/menu/LoadMenuByNameRepository.protocol.ts";
+import { DeleteMenuRepository } from "@/data/protocols/db/menu/DeleteMenuRepository.protocol.ts";
+import { UpdateMenuRepository } from "@/data/protocols/db/menu/UpdateMenuRepository.protocol";
+import { Menu, MenuSchedule } from "@/data/local/entity/menu";
+import { MenuModel } from "@/domain/models/Menu";
+import { DeleteProductToMenuRepository } from "@/data/protocols/db/menu/DeleteProductToMenuRepository.protocol";
+import { AddProductToMenuModel, AddProductToMenuRepository } from "@/data/protocols/db/menu/AddProductToMenuRepository.protocol";
+import { CreateMenuModel } from "@/domain/usecases/menu/CreateMenu";
+import { RemoveProductModel } from "@/domain/usecases/menu/DeleteProductToMenu";
+import { LoadMenuRepository } from "@/data/protocols/db/menu/LoadMenuRepository";
+import { FindMenuModel } from "@/domain/usecases/menu/LoadMenu";
 
 export class MenuRepository
   implements
-  CreateMenuContract,
-  FindMenuById,
-  FindMenuContract,
-  FindMenusContract,
-  FindMenuByNameContract,
-  DeleteMenuContract,
-  DeleteProductToMenuContract,
-  AddProductToMenuContract,
-  UpdateMenuContract {
-  constructor(private readonly db: PrismaClient) { }
+  CreateMenuRepository,
+  LoadMenusRepository,
+  LoadMenuByIdRepository,
+  LoadMenuByNameRepository,
+  DeleteMenuRepository,
+  UpdateMenuRepository,
+  DeleteProductToMenuRepository,
+  AddProductToMenuRepository,
+  LoadMenuRepository {
 
-  async save(input: CreateMenuModel): Promise<MenuModel> {
-    return this.db.menu.create({
+  async create(input: CreateMenuModel): Promise<MenuModel> {
+    return Menu.create({
       data: input,
     });
   }
 
-  async findById(id: string): Promise<MenuModel | null> {
-    const menu = await this.db.menu.findUnique({
+  async loadById(id: string): Promise<MenuModel | null> {
+    const menu = await Menu.findUnique({
       where: {
         id,
       },
@@ -53,8 +49,8 @@ export class MenuRepository
     return mapperMenu(menu);
   }
 
-  async findByName(name: string): Promise<MenuModel | null> {
-    const db = await this.db.menu.findUnique({
+  async loadByName(name: string): Promise<MenuModel | null> {
+    const db = await Menu.findUnique({
       where: {
         name,
       },
@@ -63,8 +59,8 @@ export class MenuRepository
     return db;
   }
 
-  async findMenu(input: FindMenuModel): Promise<MenuModel | null> {
-    const menu = await this.db.menu.findFirst({
+  async loadMenu(input: FindMenuModel): Promise<MenuModel | null> {
+    const menu = await Menu.findFirst({
       where: {
         id: input.menuId,
       },
@@ -114,8 +110,8 @@ export class MenuRepository
     return mapperMenu(menu);
   }
 
-  async findAll(): Promise<MenuModel[] | null> {
-    const menu = await this.db.menu.findMany({
+  async loadAll(): Promise<MenuModel[] | null> {
+    const menu = await Menu.findMany({
       include: {
         categoryProductSchedule: {
           include: {
@@ -129,7 +125,7 @@ export class MenuRepository
   }
 
   async deleteProduct(input: RemoveProductModel): Promise<void> {
-    await this.db.categoryProductSchedule.deleteMany({
+    await MenuSchedule.deleteMany({
       where: {
         menuId: input.menuId,
         categoryId: input.categoryId,
@@ -139,8 +135,8 @@ export class MenuRepository
     });
   }
 
-  async add(input: AddProductToMenuModel[]): Promise<Partial<{ count: number }>> {
-    return this.db.categoryProductSchedule.createMany({
+  async addProduct(input: AddProductToMenuModel[]): Promise<Partial<{ count: number }>> {
+    return MenuSchedule.createMany({
       data: input.map((item) => ({
         menuId: item.menuId,
         categoryId: item.categoryId,
@@ -151,13 +147,13 @@ export class MenuRepository
   }
 
   async deleteById(id: string): Promise<MenuModel> {
-    return this.db.menu.delete({
+    return Menu.delete({
       where: { id },
     });
   }
 
   async updateById(id: string, param: Partial<CreateMenuModel>): Promise<Partial<MenuModel>> {
-    return this.db.menu.update({
+    return Menu.update({
       where: { id },
       data: param,
     });
