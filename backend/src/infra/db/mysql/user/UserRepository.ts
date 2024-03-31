@@ -7,15 +7,17 @@ import { LoadUserByEmailRepository } from "@/data/protocols/db/user/LoadUserByEm
 import { LoadUsersRepository } from "@/data/protocols/db/user/LoadUsersRepository.protocol";
 import { LoadUserByTokenRepository } from "@/data/protocols/db/user/LoadUserByTokenRepository.protocol";
 import { CreateUserModel } from "@/domain/usecases/user/CreateUser";
+import { UpdateUserRepository } from "@/data/protocols/db/user/UpdateUserRepository.protocol";
 
 export class UserRepository
   implements CreateUserRepository,
   LoadUserByEmailRepository,
   LoadUsersRepository,
-  LoadUserByTokenRepository {
+  LoadUserByTokenRepository,
+  UpdateUserRepository {
 
   async create(input: CreateUserModel): Promise<UserModel> {
-  
+
     return User.create({
       data: {
         ...input,
@@ -40,5 +42,15 @@ export class UserRepository
 
   async loadAll(): Promise<UserModel[]> {
     return User.findMany()
+  }
+
+  async updateById(id: string, data: Partial<CreateUserModel>): Promise<Partial<UserModel>> {
+    return User.update({
+      where: { id },
+      data: {
+        ...data,
+        role: data.role as ROLE
+      }
+    })
   }
 }
