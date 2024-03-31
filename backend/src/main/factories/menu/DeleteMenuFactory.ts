@@ -1,16 +1,11 @@
-import prisma from "@/config/prisma";
-
 import { DeleteMenuController } from "@/presentation/controllers/menu/DeleteProductController";
-import { MenuRepository } from "@/infra/db/mysql/MenuRepository";
 import { DeleteMenuUseCase } from "@/data/usecases/menu/DeleteMenuUseCase";
-import { FindMenuByIdUseCase } from "@/data/usecases/menu/FindMenuByIdUseCase";
+import { MenuRepository } from "@/infra/db/mysql/menu/MenuRepository";
 
 export function makeDeleteMenuController(): DeleteMenuController {
-  const repo = new MenuRepository(prisma);
+  const repo = new MenuRepository();
 
-  const findMenuById = new FindMenuByIdUseCase(repo);
-
-  const deleteMenu = new DeleteMenuUseCase(repo, findMenuById);
+  const deleteMenu = new DeleteMenuUseCase(repo, repo);
 
   return new DeleteMenuController(deleteMenu);
 }

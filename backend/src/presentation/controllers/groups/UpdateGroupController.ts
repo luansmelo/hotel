@@ -1,4 +1,4 @@
-import { CreateGroupModel } from "@/entities/group/createGroup";
+import { CreateGroupModel } from "@/domain/usecases/group/group/createGroup";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";

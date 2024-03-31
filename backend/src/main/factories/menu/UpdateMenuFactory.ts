@@ -1,12 +1,10 @@
-import prisma from "@/config/prisma";
-
 import { UpdateMenuController } from "@/presentation/controllers/menu/UpdateMenuController";
-import { MenuRepository } from "@/infra/db/mysql/MenuRepository";
 import { FindMenuByIdUseCase } from "@/data/usecases/menu/FindMenuByIdUseCase";
 import { UpdateMenuUseCase } from "@/data/usecases/menu/UpdateMenuUseCase";
+import { MenuRepository } from "@/infra/db/mysql/menu/MenuRepository";
 
 export function makeUpdateMenuController(): UpdateMenuController {
-  const repo = new MenuRepository(prisma);
+  const repo = new MenuRepository();
 
   const findMenuById = new FindMenuByIdUseCase(repo);
 

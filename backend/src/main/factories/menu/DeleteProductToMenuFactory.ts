@@ -1,19 +1,11 @@
-import prisma from "@/config/prisma";
-
 import { DeleteProductToMenuController } from "@/presentation/controllers/menu/DeleteProductToMenuController";
-import { MenuRepository } from "@/infra/db/mysql/MenuRepository";
 import { DeleteProductToMenuUseCase } from "@/data/usecases/menu/DeleteProductToMenuUseCase";
-import { FindMenuByIdUseCase } from "@/data/usecases/menu/FindMenuByIdUseCase";
+import { MenuRepository } from "@/infra/db/mysql/menu/MenuRepository";
 
 export function makeDeleteProductToMenuController(): DeleteProductToMenuController {
-  const repo = new MenuRepository(prisma);
+  const repo = new MenuRepository();
 
-  const findMenuById = new FindMenuByIdUseCase(repo);
-
-  const deleteProductToMenu = new DeleteProductToMenuUseCase(
-    repo,
-    findMenuById
-  );
+  const deleteProductToMenu = new DeleteProductToMenuUseCase(repo, repo);
 
   return new DeleteProductToMenuController(deleteProductToMenu);
 }

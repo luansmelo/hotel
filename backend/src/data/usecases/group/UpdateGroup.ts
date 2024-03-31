@@ -3,7 +3,7 @@ import { LoadGroupByNameRepository } from "@/data/protocols/db/group/LoadGroupBy
 import { UpdateGroupRepository } from "@/data/protocols/db/group/UpdateGroupRepository.protocol";
 import { GroupModel } from "@/domain/models/Group";
 import { UpdateGroupUseCaseContract } from "@/domain/usecases/group/UpdateGroup";
-import { CreateGroupModel } from "@/entities/group/createGroup";
+import { CreateGroupModel } from "@/domain/usecases/group/group/createGroup";
 import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 
 export class UpdateGroupUseCase implements UpdateGroupUseCaseContract {
