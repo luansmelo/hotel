@@ -1,6 +1,6 @@
+import User from "@/data/local/entity/user";
 import { ROLE } from "@/config/constants";
 import { CreateUserModel } from "@/entities/user/createUser";
-import User from "@/data/local/entity/user";
 import { CreateUserRepository } from "@/data/protocols/db/user/CreateUserRepository.protocol";
 import { UserModel } from "@/domain/models/User";
 import { LoadUserByEmailRepository } from "@/data/protocols/db/user/LoadUserByEmailRepository.protocol";

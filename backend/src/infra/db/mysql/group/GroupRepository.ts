@@ -1,13 +1,4 @@
 import {
-  DeleteGroupContract,
-  FindGroupByIdContract,
-  FindGroupByNameContract,
-  FindGroupsContract,
-  UpdateGroupContract,
-} from "@/contracts/group";
-
-import { FindGroupsByIdContract } from "@/contracts/group/FindGroupsByIdContract";
-import {
   FindGroupsParams,
   FindGroupsResponse,
 } from "@/entities/group/FindGroupsParams";
@@ -15,16 +6,22 @@ import Group from "@/data/local/entity/group";
 import { CreateGroupRepository } from "@/data/protocols/db/group/CreateGroupRepository.protocol";
 import { GroupModel } from "@/domain/models/Group";
 import { CreateGroupModel } from "@/domain/usecases/group/CreateGroup";
+import { LoadGroupByNameRepository } from "@/data/protocols/db/group/LoadGroupByNameRepository.protocol.ts";
+import { LoadGroupsRepository } from "@/data/protocols/db/group/LoadGroupsRepository.protocol";
+import { LoadGroupByIdRepository } from "@/data/protocols/db/group/LoadGroupByIdRepository.protocol";
+import { UpdateGroupRepository } from "@/data/protocols/db/group/UpdateGroupRepository.protocol";
+import { DeleteGroupRepository } from "@/data/protocols/db/group/DeleteGroupRepository.protocol.ts";
+import { LoadGroupsByIdsRepository } from "@/data/protocols/db/group/LoadGroupsByIdsRepository.protocol";
 
 export class GroupRepository
   implements
   CreateGroupRepository,
-  DeleteGroupContract,
-  FindGroupByIdContract,
-  FindGroupByNameContract,
-  FindGroupsByIdContract,
-  FindGroupsContract,
-  UpdateGroupContract {
+  DeleteGroupRepository,
+  LoadGroupByIdRepository,
+  LoadGroupByNameRepository,
+  LoadGroupsByIdsRepository,
+  LoadGroupsRepository,
+  UpdateGroupRepository {
 
   async create(input: CreateGroupModel): Promise<GroupModel> {
     return Group.create({
@@ -32,7 +29,7 @@ export class GroupRepository
     });
   }
 
-  async findAll(
+  async loadAll(
     findParams: FindGroupsParams
   ): Promise<FindGroupsResponse | null> {
     const page = findParams.page || 1;
@@ -63,7 +60,7 @@ export class GroupRepository
     };
   }
 
-  async findById(id: string): Promise<GroupModel | null> {
+  async loadById(id: string): Promise<GroupModel | null> {
     return Group.findUnique({ where: { id } });
   }
 
@@ -77,7 +74,7 @@ export class GroupRepository
     });
   }
 
-  async findByName(name: string): Promise<GroupModel | null> {
+  async loadByName(name: string): Promise<GroupModel | null> {
     return Group.findUnique({ where: { name } });
   }
 

@@ -5,11 +5,11 @@ import { HttpResponse } from "../../protocols/httpResponse";
 import { Validation } from "@/validators/sort/SortInputValidator";
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
-import { CreateGroup } from "@/domain/usecases/group/CreateGroup";
+import { CreateGroupUseCaseContract } from "@/domain/usecases/group/CreateGroup";
 
 export class CreateGroupController implements Controller {
   constructor(
-    private readonly group: CreateGroup,
+    private readonly group: CreateGroupUseCaseContract,
     private readonly validation: Validation) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {

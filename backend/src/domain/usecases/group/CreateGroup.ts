@@ -4,6 +4,6 @@ export interface CreateGroupModel {
     name: string;
 }
 
-export interface CreateGroup {
+export interface CreateGroupUseCaseContract {
     create(input: CreateGroupModel): Promise<GroupModel>;
 }

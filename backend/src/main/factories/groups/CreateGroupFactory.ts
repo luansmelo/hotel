@@ -1,13 +1,14 @@
 import { CreateGroupController } from "@/presentation/controllers/groups/CreateGroupController";
-import { GroupRepository } from "@/infra/db/mysql/GroupRepository";
-import { CreateGroupUseCase } from "@/data/usecases/group/CreateGroupUseCase";
-import { FindGroupByNameUseCase } from "@/data/usecases/group/FindGroupByNameUseCase";
+
 import { makeGroupValidationFactory } from "./GroupValidationFactory";
+import { GroupRepository } from "@/infra/db/mysql/group/GroupRepository";
+import { LoadGroupByNameUseCase } from "@/data/usecases/group/LoadGroupByName";
+import { CreateGroupUseCase } from "@/data/usecases/group/CreateGroup";
 
 export function makeCreateGroupController(): CreateGroupController {
   const repo = new GroupRepository();
 
-  const findGroupByName = new FindGroupByNameUseCase(repo);
+  const findGroupByName = new LoadGroupByNameUseCase(repo);
 
   const createGroup = new CreateGroupUseCase(repo, findGroupByName);
 

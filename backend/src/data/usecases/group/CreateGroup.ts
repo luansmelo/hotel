@@ -1,21 +1,18 @@
-import {
-
-  FindGroupByNameContract,
-} from "@/contracts/group";
 import { CreateGroupRepository } from "@/data/protocols/db/group/CreateGroupRepository.protocol";
+import { LoadGroupByNameRepository } from "@/data/protocols/db/group/LoadGroupByNameRepository.protocol.ts";
 import { GroupModel } from "@/domain/models/Group";
-import { CreateGroup } from "@/domain/usecases/group/CreateGroup";
+import { CreateGroupUseCaseContract } from "@/domain/usecases/group/CreateGroup";
 import { CreateGroupModel } from "@/entities/group/createGroup";
 import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 
-export class CreateGroupUseCase implements CreateGroup {
+export class CreateGroupUseCase implements CreateGroupUseCaseContract {
   constructor(
     private readonly createGroup: CreateGroupRepository,
-    private readonly findGroup: FindGroupByNameContract
+    private readonly findGroup: LoadGroupByNameRepository
   ) { }
 
   async create(groupModel: CreateGroupModel): Promise<GroupModel> {
-    const group = await this.findGroup.findByName(groupModel.name);
+    const group = await this.findGroup.loadByName(groupModel.name);
 
     if (group) {
       throw new GroupAlreadyExistsError('Grupo ja cadastrado');
