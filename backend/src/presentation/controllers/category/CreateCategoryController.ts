@@ -1,14 +1,13 @@
-import { CreateCategory } from "@/contracts/category";
-import { CreateCategoryModel } from "@/entities/category/createCategory";
-import { Controller } from "../../protocols/controller";
-import { HttpRequest } from "../../protocols/httpRequest";
-import { HttpResponse } from "../../protocols/httpResponse";
-import { Validation } from "../../protocols/validator/ValidationProtocol";
+
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
+import { CreateCategoryModel, CreateCategoryUseCaseContract } from "@/domain/usecases/category/CreateCategory";
+import { Controller, HttpRequest, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class CreateCategoryController implements Controller {
-  constructor(private readonly saveCategory: CreateCategory, private readonly validation: Validation) { }
+  constructor(
+    private readonly saveCategory: CreateCategoryUseCaseContract,
+    private readonly validation: Validation) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

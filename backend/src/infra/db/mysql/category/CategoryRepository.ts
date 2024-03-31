@@ -1,35 +1,33 @@
 import {
-  CategoryModel,
-  CreateCategoryContract,
-  DeleteCategoryContract,
-  FindCategoriesContract,
-  FindCategoryByIdContract,
-  FindCategoryByNameContract,
-  UpdateCategoryContract,
-} from "@/contracts";
-import {
   FindCategoriesParams,
   FindCategoriesResponse,
 } from "@/entities/category/FindCategoriesParams";
 import { CreateCategoryModel } from "@/entities/category/createCategory";
 import Category from "@/data/local/entity/category";
+import { CreateCategoryRepository } from "@/data/protocols/db/category/CreateCategoryRepository.protocol";
+import { LoadCategoriesRepository } from "@/data/protocols/db/category/LoadCategoriesRepository.protocol";
+import { LoadCategoryByNameRepository } from "@/data/protocols/db/category/LoadCategoryByNameRepository.protocol.ts";
+import { LoadCategoryByIdRepository } from "@/data/protocols/db/category/LoadCategoryByIdRepository.protocol";
+import { DeleteCategoryRepository } from "@/data/protocols/db/category/DeleteCategoryRepository.protocol.ts";
+import { UpdateCategoryRepository } from "@/data/protocols/db/category/UpdateCategoryRepository.protocol";
+import { CategoryModel } from "@/domain/models/Category";
 
 export class CategoryRepository
   implements
-  CreateCategoryContract,
-  FindCategoriesContract,
-  FindCategoryByNameContract,
-  FindCategoryByIdContract,
-  DeleteCategoryContract,
-  UpdateCategoryContract {
+  CreateCategoryRepository,
+  LoadCategoriesRepository,
+  LoadCategoryByNameRepository,
+  LoadCategoryByIdRepository,
+  DeleteCategoryRepository,
+  UpdateCategoryRepository {
 
-  async save(input: CreateCategoryModel): Promise<CategoryModel> {
+  async create(input: CreateCategoryModel): Promise<CategoryModel> {
     return await Category.create({
       data: input,
     });
   }
 
-  async findAll(
+  async loadAll(
     findParams: FindCategoriesParams
   ): Promise<FindCategoriesResponse> {
     const page = findParams.page || 1;
@@ -60,13 +58,13 @@ export class CategoryRepository
     };
   }
 
-  async findById(id: string): Promise<CategoryModel | null> {
+  async loadById(id: string): Promise<CategoryModel | null> {
     return Category.findUnique({
       where: { id },
     });
   }
 
-  async findByName(name: string): Promise<CategoryModel | null> {
+  async loadByName(name: string): Promise<CategoryModel | null> {
     return Category.findFirst({
       where: { name },
     });

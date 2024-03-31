@@ -1,11 +1,12 @@
 import User from "@/data/local/entity/user";
 import { ROLE } from "@/config/constants";
-import { CreateUserModel } from "@/entities/user/createUser";
+
 import { CreateUserRepository } from "@/data/protocols/db/user/CreateUserRepository.protocol";
 import { UserModel } from "@/domain/models/User";
 import { LoadUserByEmailRepository } from "@/data/protocols/db/user/LoadUserByEmailRepository.protocol";
 import { LoadUsersRepository } from "@/data/protocols/db/user/LoadUsersRepository.protocol";
 import { LoadUserByTokenRepository } from "@/data/protocols/db/user/LoadUserByTokenRepository.protocol";
+import { CreateUserModel } from "@/domain/usecases/user/CreateUser";
 
 export class UserRepository
   implements CreateUserRepository,

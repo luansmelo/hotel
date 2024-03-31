@@ -1,13 +1,12 @@
-import { CategoryModel, UpdateCategory } from "@/contracts/category";
-import { Controller } from "../../protocols/controller";
-import { HttpRequest } from "../../protocols/httpRequest";
-import { HttpResponse } from "../../protocols/httpResponse";
+import { Controller, HttpRequest, HttpResponse } from "@/presentation/protocols";
 import { CategoryNotFoundError } from "@/presentation/errors/CategoryNotFoundError";
 import { notFound, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
+import { UpdateCategoryUseCaseContract } from "@/domain/usecases/category/UpdateCategory";
+import { CategoryModel } from "@/domain/models/Category";
 
 export class UpdateCategoryController implements Controller {
-  constructor(private readonly updateCategory: UpdateCategory) { }
+  constructor(private readonly updateCategory: UpdateCategoryUseCaseContract) { }
 
   async handle(httpResquest: HttpRequest): Promise<HttpResponse> {
     try {

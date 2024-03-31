@@ -24,6 +24,7 @@ export async function errorHandler(error: unknown): Promise<HttpResponse> {
     });
   } 
 
+  console.log(error)
   if (errors.some((errorItem) => error instanceof (errorItem as never))) {
     return badRequest(error as Error);
   }

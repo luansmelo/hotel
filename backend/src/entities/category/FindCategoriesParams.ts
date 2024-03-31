@@ -1,4 +1,5 @@
-import { CategoryModel } from "@/contracts";
+import { CategoryModel } from "@/domain/models/Category";
+
 
 export type Sort = "name" | "createdAt" | "updatedAt";
 
