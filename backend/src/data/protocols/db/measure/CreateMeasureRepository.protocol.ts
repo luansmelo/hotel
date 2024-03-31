@@ -1,6 +1,6 @@
 import { CategoryModel } from "@/domain/models/Category";
-import { CreateCategoryModel } from "@/domain/usecases/category/CreateCategory";
+import { CreateMeasureModel } from "@/domain/usecases/measure/CreateMeasure";
 
 export interface CreateMeasureRepository {
-    create(input: CreateCategoryModel): Promise<CategoryModel>;
+    create(input: CreateMeasureModel): Promise<CategoryModel>;
 }
