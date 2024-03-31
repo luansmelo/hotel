@@ -1,11 +1,10 @@
-import prisma from "@/config/prisma";
-
 import { FindInputsController } from "@/presentation/controllers/input/FindInputController";
 
 import { FindInputsUseCase } from "@/data/usecases/input/FindInputsUseCase";
-import { SortInputValidator } from "@/validators/sort/SortInputValidator";
-import { ValidationComposite } from "@/validators/ValidationComposition";
+
 import { InputRepository } from "@/infra/db/mysql/input/InputRepository";
+import { SortInputValidator } from "@/validation/validators/SortInputValidator";
+import { ValidationComposite } from "@/validation/validators";
 
 export function makeFindInputsController(): FindInputsController {
   const repo = new InputRepository();

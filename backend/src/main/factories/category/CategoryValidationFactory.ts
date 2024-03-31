@@ -1,8 +1,7 @@
-import { GroupFieldValidatorAdapter } from "@/validators/GroupValidationAdapter";
-import { FieldValidator } from "@/validators/FieldValidator";
-import { RequiredFieldValitation } from "@/validators/RequiredFieldValidation";
-import { Validation } from "@/validators/sort/SortInputValidator";
-import { ValidationComposite } from "@/validators/ValidationComposition";
+import { Validation } from "@/validation/protocols";
+import { FieldValidator, ValidationComposite } from "@/validation/validators";
+import { GroupFieldValidatorAdapter } from "@/validation/validators/GroupValidationAdapter";
+import { RequiredFieldValitation } from "@/validation/validators/RequiredFieldValidation";
 
 export const makeCategoryValidationFactory = (): ValidationComposite => {
     const validations: Validation[] = [];

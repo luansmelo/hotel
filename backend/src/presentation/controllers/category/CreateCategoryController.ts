@@ -2,7 +2,8 @@
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 import { CreateCategoryModel, CreateCategoryUseCaseContract } from "@/domain/usecases/category/CreateCategory";
-import { Controller, HttpRequest, HttpResponse, Validation } from "@/presentation/protocols";
+import { Controller, HttpRequest, HttpResponse } from "@/presentation/protocols";
+import { Validation } from "@/validation/protocols";
 
 export class CreateCategoryController implements Controller {
   constructor(

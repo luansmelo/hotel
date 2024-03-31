@@ -1,8 +1,9 @@
 import { FindGroupsUseCase } from "@/data/usecases/group/LoadGroups";
 import { GroupRepository } from "@/infra/db/mysql/group/GroupRepository";
 import { LoadGroupsController } from "@/presentation/controllers/groups/FindGroupsController";
-import { SortGroupValidator } from "@/validators/sort/SortGroupValidator";
-import { ValidationComposite } from "@/validators/ValidationComposition";
+import { ValidationComposite } from "@/validation/validators";
+import { SortGroupValidator } from "@/validation/validators/SortGroupValidator";
+
 
 export function makeFindGroupsController(): LoadGroupsController {
   const repo = new GroupRepository();

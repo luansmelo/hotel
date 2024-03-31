@@ -1,11 +1,13 @@
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { FORBIDDEN_UPDATE_UPDATING_INPUT } from "@/presentation/errors/pt-br";
-import { Controller, HttpRequest, HttpResponse, Validation } from "../../protocols";
+  import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 import { MissingParamError } from "@/presentation/errors/MissingParamError";
 import { badRequest, forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 import { UpdateInputUseCaseContract } from "@/domain/usecases/input/UpdateInput";
 import { CreateInputModel } from "@/domain/usecases/input/CreateInput";
+import { Validation } from "@/validation/protocols";
+
 export class UpdateInputController implements Controller {
   constructor(private readonly updateInput: UpdateInputUseCaseContract, private readonly validation: Validation) { }
 

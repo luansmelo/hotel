@@ -1,4 +1,4 @@
-import { Validation } from "./sort/SortInputValidator";
+import { Validation } from "./SortInputValidator";
 
 export class ValidationComposite implements Validation {
   constructor(private readonly validations: Validation[]) {}

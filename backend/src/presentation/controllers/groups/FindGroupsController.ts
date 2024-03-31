@@ -1,8 +1,9 @@
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 import { LoadGroupsUseCaseContract } from "@/domain/usecases/group/LoadGroups";
-import { Controller, HttpRequest, HttpResponse, Validation } from "@/presentation/protocols";
+import { Controller, HttpRequest, HttpResponse } from "@/presentation/protocols";
 import { FindGroupsParams } from "@/domain/usecases/group/FindGroupsParams";
+import { Validation } from "@/validation/protocols";
 
 export class LoadGroupsController implements Controller {
   constructor(

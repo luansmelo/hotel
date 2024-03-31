@@ -1,7 +1,7 @@
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { Controller } from "../../protocols/controller";
-import { Validation } from "../../protocols/validator/ValidationProtocol";
+import { Validation } from "@/validation/protocols";
 import { badRequest, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 import { CreateInputModel, CreateInputUseCaseContract } from "@/domain/usecases/input/CreateInput";

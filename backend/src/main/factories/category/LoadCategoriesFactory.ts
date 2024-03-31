@@ -2,9 +2,8 @@
 import { LoadCategoriesUseCase } from "@/data/usecases/category/LoadCategoriesUseCase";
 import { CategoryRepository } from "@/infra/db/mysql/category/CategoryRepository";
 import { FindCategoriesController } from "@/presentation/controllers/category/FindCategoriesController";
-
-import { SortCategoriesValidator } from "@/validators/sort/SortCategoriesValidator";
-import { ValidationComposite } from "@/validators/ValidationComposition";
+import { ValidationComposite } from "@/validation/validators";
+import { SortCategoriesValidator } from "@/validation/validators/SortCategoriesValidator";
 
 export function makeFindCategoriesController(): FindCategoriesController {
   const repo = new CategoryRepository();
