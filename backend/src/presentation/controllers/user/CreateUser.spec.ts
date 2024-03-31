@@ -46,7 +46,7 @@ describe('Create User', () => {
                 name: 'any name',
                 email: 'any email',
                 password: 'any password',
-                gender: 'any gender',
+                role: 'any role',
             },
         }
 
@@ -99,7 +99,7 @@ describe('Create User', () => {
                 name: 'any name',
                 email: 'any email',
                 password: 'any password',
-                gender: 'any gender',
+                role: 'any role',
             },
         };
         await sut.handle(httpRequest);
@@ -116,7 +116,7 @@ describe('Create User', () => {
                 name: 'any name',
                 email: 'any email',
                 password: 'any password',
-                gender: 'any gender',
+                role: 'any role',
             },
         };
         const httpResponse = await sut.handle(httpRequest);
