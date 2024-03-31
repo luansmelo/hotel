@@ -1,45 +1,42 @@
-import { PrismaClient } from "@prisma/client";
-import {
-  AddInputToProductContract,
-  CreateProductContract,
-  DeleteInputToProductContract,
-  DeleteProductContract,
-  FindProductByIdContract,
-  FindProductByNameContract,
-  FindProductsContract,
-  ProductModel,
-  UpdateProductContract,
-} from "@/contracts/product";
-import { CreateProductModel } from "@/entities/product/createProduct";
-import { FindPredefinedProductByIdContract } from "@/contracts/product/FindPredefinedProductByIdContract";
-import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
-import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
-import { UpdateProductModel } from "@/entities/product/updateProduct";
 import { mapperProduct } from "@/data/usecases/product/mapper/mapperProduct";
+import { CreateProductRepository } from "@/data/protocols/db/product/CreateProductRepository.protocol";
+import { CreateProductModel } from "@/domain/usecases/product/CreateProduct";
+import { ProductModel } from "@/domain/models/Product";
+import { Product, InputOnProducts } from "@/data/local/entity/product";
+import { AddInputToProductRepository } from "@/data/protocols/db/product/AddInputToProductRepository.protocol";
+import { LoadProductByIdRepository } from "@/data/protocols/db/product/LoadProductByIdRepository.protocol";
+import { LoadProductByNameRepository } from "@/data/protocols/db/product/LoadProductByNameRepository.protocol";
+import { LoadProductsRepository } from "@/data/protocols/db/product/LoadProductsRepository.protocol";
+import { LoadPredefinedProductRepository } from "@/data/protocols/db/product/LoadPredefinedProductRepository.protocol";
+import { DeleteInputToProductRepository } from "@/data/protocols/db/product/DeleteInputToProductRepository.protocol";
+import { UpdateProductRepository } from "@/data/protocols/db/product/UpdateProductRepository.protocol";
+import { AddInputToProductModel } from "@/domain/usecases/product/AddInputToProduct";
+import { RemoveInputToProductModel } from "@/domain/usecases/product/DeleteInputToProduct";
+import { UpdateProductModel } from "@/domain/usecases/product/UpdateProduct";
+import { DeleteProductRepository } from "@/data/protocols/db/product/DeleteProductRepository.protocol";
 
 export class ProductRepository
   implements
-  CreateProductContract,
-  AddInputToProductContract,
-  FindProductByIdContract,
-  FindProductByNameContract,
-  FindProductsContract,
-  FindPredefinedProductByIdContract,
-  DeleteProductContract,
-  DeleteInputToProductContract,
-  UpdateProductContract {
-  constructor(private readonly db: PrismaClient) { }
+  CreateProductRepository,
+  AddInputToProductRepository,
+  LoadProductByIdRepository,
+  LoadProductByNameRepository,
+  LoadProductsRepository,
+  LoadPredefinedProductRepository,
+  DeleteProductRepository,
+  DeleteInputToProductRepository,
+  UpdateProductRepository {
 
-  async save(input: CreateProductModel) {
-    return this.db.product.create({
+  async create(input: CreateProductModel) {
+    return Product.create({
       data: {
         ...input,
       },
     });
   }
 
-  async findById(id: string): Promise<ProductModel | null> {
-    const product = await this.db.product.findUnique({
+  async loadById(id: string): Promise<ProductModel | null> {
+    const product = await Product.findUnique({
       where: { id },
       include: {
         inputs: {
@@ -74,13 +71,13 @@ export class ProductRepository
     return mapperProduct(product);
   }
 
-  async findByName(name: string): Promise<ProductModel | null> {
-    const db = await this.db.product.findUnique({ where: { name } });
+  async loadByName(name: string): Promise<ProductModel | null> {
+    const db = await Product.findUnique({ where: { name } });
     return db;
   }
 
-  async findAll(): Promise<ProductModel[] | null> {
-    const db = await this.db.product.findMany({
+  async loadAll(): Promise<ProductModel[] | null> {
+    const db = await Product.findMany({
       include: {
         inputs: {
           select: {
@@ -114,8 +111,8 @@ export class ProductRepository
     return db.map((product) => mapperProduct(product));
   }
 
-  async findPredefinedById(id: string): Promise<ProductModel | null> {
-    const product = await this.db.product.findFirst({
+  async loadPredefinedProduct(id: string): Promise<ProductModel | null> {
+    const product = await Product.findFirst({
       where: { id },
       include: {
         inputs: {
@@ -152,7 +149,7 @@ export class ProductRepository
   }
 
   async updateById(id: string, input: Partial<UpdateProductModel>) {
-    return this.db.product.update({
+    return Product.update({
       where: { id },
       data: {
         ...input,
@@ -171,12 +168,12 @@ export class ProductRepository
   }
 
   async deleteById(id: string) {
-    return this.db.product.delete({
+    return Product.delete({
       where: { id },
     });
   }
 
-  async add(input: AddInputToProductModel): Promise<Partial<{ count: number }>> {
+  async addInput(input: AddInputToProductModel): Promise<Partial<{ count: number }>> {
     const data = input.inputs.map((inputItem) => ({
       productId: input.id,
       inputId: inputItem.id as string,
@@ -184,13 +181,13 @@ export class ProductRepository
       grammage: inputItem.grammage,
     }));
 
-    return this.db.inputsOnProducts.createMany({ data });
+    return InputOnProducts.createMany({ data });
   }
 
-  async deleteInputToProductById(
+  async deleteProduct(
     input: RemoveInputToProductModel
   ): Promise<Partial<{ count: number }>> {
-    return this.db.inputsOnProducts.deleteMany({
+    return InputOnProducts.deleteMany({
       where: {
         productId: input.productId,
         inputId: input.inputId,

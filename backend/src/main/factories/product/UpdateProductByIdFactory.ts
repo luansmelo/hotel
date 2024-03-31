@@ -1,16 +1,11 @@
-import prisma from "@/config/prisma";
-
 import { UpdateProductController } from "@/presentation/controllers/products/UpdateInputController";
-import { ProductRepository } from "@/infra/db/mysql/ProductRepository";
-import { FindProductByIdUseCase } from "@/data/usecases/product/FindProductByIdUseCase";
 import { UpdateProductByIdUseCase } from "@/data/usecases/product/UpdateProductByIdUseCase";
+import { ProductRepository } from "@/infra/db/mysql/product/ProductRepository";
 
 export function makeUpdateProductController(): UpdateProductController {
-  const repo = new ProductRepository(prisma);
+  const repo = new ProductRepository();
 
-  const findProductById = new FindProductByIdUseCase(repo);
-
-  const updateProduct = new UpdateProductByIdUseCase(repo, findProductById);
+  const updateProduct = new UpdateProductByIdUseCase(repo, repo);
 
   return new UpdateProductController(updateProduct);
 }

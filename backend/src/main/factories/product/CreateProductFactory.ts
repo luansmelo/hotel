@@ -1,16 +1,11 @@
-import prisma from "@/config/prisma";
-
 import { CreateProductController } from "@/presentation/controllers/products/CreateProductController";
-import { ProductRepository } from "@/infra/db/mysql/ProductRepository";
 import { CreateProductUseCase } from "@/data/usecases/product/CreateProductUseCase";
-import { FindProductByNameUseCase } from "@/data/usecases/product/FindProductByNameUseCase";
+import { ProductRepository } from "@/infra/db/mysql/product/ProductRepository";
 
 export function makeCreateProductController(): CreateProductController {
-  const repo = new ProductRepository(prisma);
+  const repo = new ProductRepository();
 
-  const findProductByName = new FindProductByNameUseCase(repo);
-
-  const createProduct = new CreateProductUseCase(repo, findProductByName);
+  const createProduct = new CreateProductUseCase(repo, repo);
 
   return new CreateProductController(createProduct);
 }

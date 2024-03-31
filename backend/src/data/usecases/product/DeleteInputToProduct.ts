@@ -1,22 +1,19 @@
-import {
-  DeleteInputToProduct,
-  DeleteInputToProductContract,
-  FindProductByIdContract,
-} from "@/contracts/product";
-import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
+import { DeleteInputToProductRepository } from "@/data/protocols/db/product/DeleteInputToProductRepository.protocol";
+import { LoadProductByIdRepository } from "@/data/protocols/db/product/LoadProductByIdRepository.protocol";
+import { DeleteInputToProductUseCaseContract, RemoveInputToProductModel } from "@/domain/usecases/product/DeleteInputToProduct";
 import { InputNotFoundError } from "@/presentation/errors/InputNotFoundError";
 import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
-export class DeleteInputToProductUseCase implements DeleteInputToProduct {
+export class DeleteInputToProductUseCase implements DeleteInputToProductUseCaseContract {
   constructor(
-    private readonly removeInput: DeleteInputToProductContract,
-    private readonly findProduct: FindProductByIdContract
+    private readonly removeInput: DeleteInputToProductRepository,
+    private readonly findProduct: LoadProductByIdRepository
   ) { }
 
-  async deleteInputToProductById(
+  async deleteProduct(
     productModel: RemoveInputToProductModel
-  ): Promise<Partial<{ count: number }>> {
-    const product = await this.findProduct.findById(productModel.productId);
+  ) {
+    const product = await this.findProduct.loadById(productModel.productId);
 
     if (!product) {
       throw new ProductNotFoundError();
@@ -28,6 +25,6 @@ export class DeleteInputToProductUseCase implements DeleteInputToProduct {
       throw new InputNotFoundError();
     }
 
-    return this.removeInput.deleteInputToProductById(productModel);
+    return this.removeInput.deleteProduct(productModel);
   }
 }

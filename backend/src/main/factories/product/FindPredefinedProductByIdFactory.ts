@@ -1,11 +1,10 @@
-import prisma from "@/config/prisma";
-
 import { FindPredefinedProductByIdController } from "@/presentation/controllers/products/FindPredefinedProductByIdController";
-import { ProductRepository } from "@/infra/db/mysql/ProductRepository";
+
 import { FindPredefinedProductByIdUseCase } from "@/data/usecases/product/FindPredefinedProductUseCase";
+import { ProductRepository } from "@/infra/db/mysql/product/ProductRepository";
 
 export function makeFindPredefinedProductByIdController(): FindPredefinedProductByIdController {
-  const repo = new ProductRepository(prisma);
+  const repo = new ProductRepository();
 
   const product = new FindPredefinedProductByIdUseCase(repo);
 

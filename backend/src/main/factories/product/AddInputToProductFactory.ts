@@ -1,16 +1,12 @@
-import prisma from "@/config/prisma";
-
 import { AddInputToProductController } from "@/presentation/controllers/products/AddInputToProductController";
-import { ProductRepository } from "@/infra/db/mysql/ProductRepository";
+
 import { AddInputToProductUseCase } from "@/data/usecases/product/AddInputToProductUseCase";
-import { FindPredefinedProductByIdUseCase } from "@/data/usecases/product/FindPredefinedProductUseCase";
+import { ProductRepository } from "@/infra/db/mysql/product/ProductRepository";
 
 export function makeAddInputToProductController(): AddInputToProductController {
-  const repo = new ProductRepository(prisma);
+  const repo = new ProductRepository();
 
-  const findProductById = new FindPredefinedProductByIdUseCase(repo);
-
-  const createProduct = new AddInputToProductUseCase(repo, findProductById);
+  const createProduct = new AddInputToProductUseCase(repo, repo);
 
   return new AddInputToProductController(createProduct);
 }

@@ -1,20 +1,17 @@
-import {
-  AddInputToProduct,
-  AddInputToProductContract,
-} from "@/contracts/product";
-import { FindPredefinedProductByIdContract } from "@/contracts/product/FindPredefinedProductByIdContract";
-import { AddInputToProductModel } from "@/entities/product/addInputToProduct";
+import { AddInputToProductRepository } from "@/data/protocols/db/product/AddInputToProductRepository.protocol";
+import { LoadPredefinedProductRepository } from "@/data/protocols/db/product/LoadPredefinedProductRepository.protocol";
+import { AddInputToProductModel, AddInputToProductUseCaseContract } from "@/domain/usecases/product/AddInputToProduct";
 import { InputAlreadyExistsError } from "@/presentation/errors/InputAlreadyExistsError";
 import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
-export class AddInputToProductUseCase implements AddInputToProduct {
+export class AddInputToProductUseCase implements AddInputToProductUseCaseContract {
   constructor(
-    private readonly input: AddInputToProductContract,
-    private readonly findProduct: FindPredefinedProductByIdContract
+    private readonly input: AddInputToProductRepository,
+    private readonly findProduct: LoadPredefinedProductRepository
   ) { }
 
-  async addInput(productModel: AddInputToProductModel): Promise<Partial<{ count: number }>> {
-    const product = await this.findProduct.findPredefinedById(productModel.id);
+  async addProduct(productModel: AddInputToProductModel): Promise<Partial<{ count: number }>> {
+    const product = await this.findProduct.loadPredefinedProduct(productModel.id);
 
     if (!product) {
       throw new ProductNotFoundError();
@@ -31,7 +28,7 @@ export class AddInputToProductUseCase implements AddInputToProduct {
       );
     }
 
-    return this.input.add({
+    return this.input.addInput({
       id: productModel.id,
       inputs: uniqueInputs,
     });

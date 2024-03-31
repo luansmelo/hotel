@@ -1,14 +1,12 @@
-import {
-  FindProductById,
-  FindProductByIdContract,
-  ProductModel,
-} from "@/contracts/product";
+import { LoadProductByIdRepository } from "@/data/protocols/db/product/LoadProductByIdRepository.protocol";
+import { ProductModel } from "@/domain/models/Product";
+import { LoadProductByIdUseCaseContract } from "@/domain/usecases/product/LoadProductById";
 
-export class FindProductByIdUseCase implements FindProductById {
-  constructor(private readonly findProduct: FindProductByIdContract) {}
+export class FindProductByIdUseCase implements LoadProductByIdUseCaseContract {
+  constructor(private readonly findProduct: LoadProductByIdRepository) { }
 
-  async findById(id: string): Promise<ProductModel> {
-    const product = await this.findProduct.findById(id);
+  async loadById(id: string): Promise<ProductModel> {
+    const product = await this.findProduct.loadById(id);
 
     return product;
   }

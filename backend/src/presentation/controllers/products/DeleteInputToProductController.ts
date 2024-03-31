@@ -1,25 +1,18 @@
-import { DeleteInputToProduct } from "@/contracts/product";
-import { RemoveInputToProductModel } from "@/entities/product/removeInputToProduct";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
-import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
+import { ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
-
-import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
+import { DeleteInputToProductUseCaseContract, RemoveInputToProductModel } from "@/domain/usecases/product/DeleteInputToProduct";
 
 export class DeleteInputToProductController implements Controller {
-  constructor(private readonly product: DeleteInputToProduct) { }
+  constructor(private readonly product: DeleteInputToProductUseCaseContract) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const product = httpRequest.params as RemoveInputToProductModel
 
-      const deletedProduct = await this.product.deleteInputToProductById(product)
-
-      if (!deletedProduct) {
-        return forbidden(new AccessDeniedError())
-      }
+      const deletedProduct = await this.product.deleteProduct(product)
 
       return ok(deletedProduct)
     } catch (error) {

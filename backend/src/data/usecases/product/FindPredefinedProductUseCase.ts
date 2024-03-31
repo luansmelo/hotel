@@ -1,19 +1,16 @@
-import { ProductModel } from "@/contracts/product";
-import {
-  FindPredefinedProductById,
-  FindPredefinedProductByIdContract,
-} from "@/contracts/product/FindPredefinedProductByIdContract";
+import { LoadPredefinedProductRepository } from "@/data/protocols/db/product/LoadPredefinedProductRepository.protocol";
+import { ProductModel } from "@/domain/models/Product";
+import { LoadPredefinedProductUseCaseContract } from "@/domain/usecases/product/LoadPredefinedProduct";
 import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
 
 export class FindPredefinedProductByIdUseCase
-  implements FindPredefinedProductById
-{
+  implements LoadPredefinedProductUseCaseContract {
   constructor(
-    private readonly findProduct: FindPredefinedProductByIdContract
-  ) {}
+    private readonly findProduct: LoadPredefinedProductRepository
+  ) { }
 
-  async findPredefinedById(id: string): Promise<ProductModel> {
-    const product = await this.findProduct.findPredefinedById(id);
+  async loadPredefinedProduct(id: string): Promise<ProductModel> {
+    const product = await this.findProduct.loadPredefinedProduct(id);
 
     if (!product) {
       throw new ProductNotFoundError();

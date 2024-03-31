@@ -8,3 +8,7 @@ export interface AddInputToProductModel {
   id: string;
   inputs: InputToProduct[];
 }
+
+export interface AddInputToProductUseCaseContract {
+  addProduct(input: AddInputToProductModel): Promise<Partial<{ count: number }>>;
+}

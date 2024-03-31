@@ -1,15 +1,13 @@
-import { UpdateProduct } from "@/contracts/product";
-import { CreateProductModel } from "@/entities/product/createProduct";
 import { Controller } from "../../protocols/controller";
 import { HttpResponse } from "../../protocols/httpResponse";
 import { HttpRequest } from "../../protocols/httpRequest";
-import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
+import { ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
-
-import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
+import { UpdateProductUseCaseContract } from "@/domain/usecases/product/UpdateProduct";
+import { CreateProductModel } from "@/domain/usecases/product/CreateProduct";
 
 export class UpdateProductController implements Controller {
-  constructor(private readonly product: UpdateProduct) { }
+  constructor(private readonly product: UpdateProductUseCaseContract) { }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -17,10 +15,6 @@ export class UpdateProductController implements Controller {
       const input = httpRequest.body as CreateProductModel
 
       const result = await this.product.updateById(id, input);
-
-      if (!result) {
-        return forbidden(new AccessDeniedError())
-      }
 
       return ok(result)
 

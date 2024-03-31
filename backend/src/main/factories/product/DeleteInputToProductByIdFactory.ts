@@ -1,16 +1,13 @@
-import prisma from "@/config/prisma";
-
 import { DeleteInputToProductController } from "@/presentation/controllers/products/DeleteInputToProductController";
-import { ProductRepository } from "@/infra/db/mysql/ProductRepository";
 import { DeleteInputToProductUseCase } from "@/data/usecases/product/DeleteInputToProduct";
 import { FindProductByIdUseCase } from "@/data/usecases/product/FindProductByIdUseCase";
+import { ProductRepository } from "@/infra/db/mysql/product/ProductRepository";
 
 export function makeDeleteInputToProductController(): DeleteInputToProductController {
-  const repo = new ProductRepository(prisma);
+  const repo = new ProductRepository();
 
-  const findProductById = new FindProductByIdUseCase(repo);
 
-  const deleteProduct = new DeleteInputToProductUseCase(repo, findProductById);
+  const deleteProduct = new DeleteInputToProductUseCase(repo, repo);
 
   return new DeleteInputToProductController(deleteProduct);
 }
