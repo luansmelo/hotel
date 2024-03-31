@@ -1,17 +1,17 @@
 import { ROLE } from "@/config/constants";
-import { FindUsersContract } from "@/contracts/user/FindAllUsers";
-import { FindUserByTokenContract } from "@/contracts/user/FindUserByTokenAndRole";
-import { FindUserByEmailContract } from "@/contracts/user/FindUseryByEmailContract";
 import { CreateUserModel } from "@/entities/user/createUser";
 import User from "@/data/local/entity/user";
 import { CreateUserRepository } from "@/data/protocols/db/user/CreateUserRepository.protocol";
 import { UserModel } from "@/domain/models/User";
+import { LoadUserByEmailRepository } from "@/data/protocols/db/user/LoadUserByEmailRepository.protocol";
+import { LoadUsersRepository } from "@/data/protocols/db/user/LoadUsersRepository.protocol";
+import { LoadUserByTokenRepository } from "@/data/protocols/db/user/LoadUserByTokenRepository.protocol";
 
 export class UserRepository
   implements CreateUserRepository,
-  FindUserByEmailContract,
-  FindUserByTokenContract,
-  FindUsersContract {
+  LoadUserByEmailRepository,
+  LoadUsersRepository,
+  LoadUserByTokenRepository {
 
   async create(input: CreateUserModel): Promise<UserModel> {
   
@@ -23,11 +23,11 @@ export class UserRepository
     });
   }
 
-  async findByEmail(email: string): Promise<UserModel | null> {
+  async loadByEmail(email: string): Promise<UserModel | null> {
     return User.findUnique({ where: { email } });
   }
 
-  async findByIdAndRole(id: string, role?: string): Promise<UserModel | null> {
+  async loadByIdAndRole(id: string, role?: string): Promise<UserModel | null> {
 
     return User.findUnique({
       where: {
@@ -37,7 +37,7 @@ export class UserRepository
     });
   }
 
-  async findUsers(): Promise<UserModel[]> {
+  async loadAll(): Promise<UserModel[]> {
     return User.findMany()
   }
 }

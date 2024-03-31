@@ -1,5 +1,4 @@
-import { GroupModel } from "./CreateGroupContract";
-
+import { GroupModel } from "@/domain/models/Group";
 export interface FindGroupsByIdContract {
   findByIds(id: string[]): Promise<GroupModel[] | null>;
 }

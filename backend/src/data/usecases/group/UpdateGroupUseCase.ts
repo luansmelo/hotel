@@ -1,10 +1,10 @@
 import {
   FindGroupByIdContract,
   FindGroupByNameContract,
-  GroupModel,
   UpdateGroup,
   UpdateGroupContract,
 } from "@/contracts/group";
+import { GroupModel } from "@/domain/models/Group";
 import { CreateGroupModel } from "@/entities/group/createGroup";
 import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 

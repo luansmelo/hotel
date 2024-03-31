@@ -1,5 +1,5 @@
 import { CreateInputModel } from "@/entities/input/createInput";
-import { GroupModel } from "../group";
+import { GroupModel } from "@/domain/models/Group";
 import { MeasureModel } from "../measure";
 
 export interface InputModel {

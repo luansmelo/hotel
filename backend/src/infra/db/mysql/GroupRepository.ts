@@ -1,31 +1,32 @@
 import {
-  CreateGroupContract,
   DeleteGroupContract,
   FindGroupByIdContract,
   FindGroupByNameContract,
   FindGroupsContract,
   UpdateGroupContract,
-  GroupModel,
 } from "@/contracts/group";
-import { CreateGroupModel } from "@/entities/group/createGroup";
+
 import { FindGroupsByIdContract } from "@/contracts/group/FindGroupsByIdContract";
 import {
   FindGroupsParams,
   FindGroupsResponse,
 } from "@/entities/group/FindGroupsParams";
 import Group from "@/data/local/entity/group";
+import { CreateGroupRepository } from "@/data/protocols/db/group/CreateGroupRepository.protocol";
+import { GroupModel } from "@/domain/models/Group";
+import { CreateGroupModel } from "@/domain/usecases/group/CreateGroup";
 
 export class GroupRepository
   implements
-  CreateGroupContract,
+  CreateGroupRepository,
   DeleteGroupContract,
   FindGroupByIdContract,
   FindGroupByNameContract,
   FindGroupsByIdContract,
   FindGroupsContract,
   UpdateGroupContract {
-  
-  async save(input: CreateGroupModel): Promise<GroupModel> {
+
+  async create(input: CreateGroupModel): Promise<GroupModel> {
     return Group.create({
       data: input,
     });

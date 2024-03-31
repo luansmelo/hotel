@@ -1,4 +1,4 @@
-import { GroupModel } from "@/contracts/group";
+import { GroupModel } from "@/domain/models/Group";
 
 export type Sort = "name" | "createdAt" | "updatedAt";
 

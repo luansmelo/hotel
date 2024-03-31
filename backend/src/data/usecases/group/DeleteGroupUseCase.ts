@@ -2,8 +2,8 @@ import {
   DeleteGroup,
   DeleteGroupContract,
   FindGroupByIdContract,
-  GroupModel,
 } from "@/contracts/group";
+import { GroupModel } from "@/domain/models/Group";
 
 export class DeleteGroupUseCase implements DeleteGroup {
   constructor(

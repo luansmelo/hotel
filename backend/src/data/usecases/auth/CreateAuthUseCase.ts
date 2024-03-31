@@ -5,10 +5,11 @@ import { CreateAuth } from "@/contracts/auth/AuthenticationContract";
 import { Encrypter, HasherComparer } from "@/data/protocols/cryptography";
 import { EmailValidator } from "@/utils/EmailValidatorAdapter";
 import { UserModel } from "@/domain/models/User";
+import { LoadUserByEmailRepository } from "@/data/protocols/db/user/LoadUserByEmailRepository.protocol";
 
 export class CreateAuthUseCase implements CreateAuth {
   constructor(
-    private readonly findUser: FindUserByEmailContract,
+    private readonly findUser: LoadUserByEmailRepository,
     private readonly emailValidator: EmailValidator,
     private readonly hashed: HasherComparer,
     private readonly encrypter: Encrypter
@@ -19,7 +20,7 @@ export class CreateAuthUseCase implements CreateAuth {
 
     if (!isValid) return null;
 
-    const user = await this.findUser.findByEmail(userModel.email);
+    const user = await this.findUser.loadByEmail(userModel.email);
 
     if (!user) return null;
 

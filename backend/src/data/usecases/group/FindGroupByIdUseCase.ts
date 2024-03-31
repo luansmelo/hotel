@@ -1,8 +1,8 @@
 import {
   FindGroupById,
   FindGroupByIdContract,
-  GroupModel,
 } from "@/contracts/group";
+import { GroupModel } from "@/domain/models/Group";
 
 export class FindGroupByIdUseCase implements FindGroupById {
   constructor(private readonly findGroup: FindGroupByIdContract) {}
