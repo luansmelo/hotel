@@ -4,12 +4,12 @@ import request from 'supertest';
 import User from '@/data/local/entity/user';
 import { hash } from 'bcrypt';
 
-describe('Category Routes', () => {
+describe('Group Routes', () => {
     let adminToken: string;
 
     beforeEach(async () => {
         await prisma.$executeRaw`DELETE FROM user;`;
-        await prisma.$executeRaw`DELETE FROM category;`;
+        await prisma.$executeRaw`DELETE FROM \`group\`;`;
 
         const pass = await hash('adminPassword', 12);
         
@@ -36,13 +36,13 @@ describe('Category Routes', () => {
         prisma.$disconnect();
     });
 
-    it('should return 200 on success create a category', async () => {
+    it('should return 200 on success create a group', async () => {
 
         await request(app)
-            .post('/api/category/create')
+            .post('/api/group/create')
             .set('x-access-token', adminToken)
             .send({
-                name: 'any name',
+                name: 'any_name',
             })
             .expect(200);
     });
