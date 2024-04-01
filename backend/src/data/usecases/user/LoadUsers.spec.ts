@@ -21,17 +21,17 @@ const makeLoadAllUsersRepositoryStub = () => {
 };
 
 const makeSut = () => {
-    const listAllUserRepositoryStub = makeLoadAllUsersRepositoryStub();
-    const sut = new LoadUsersUseCase(listAllUserRepositoryStub);
-    return { sut, listAllUserRepositoryStub };
+    const loadUsersRepositoryStub = makeLoadAllUsersRepositoryStub();
+    const sut = new LoadUsersUseCase(loadUsersRepositoryStub);
+    return { sut, loadUsersRepositoryStub };
 };
 
 describe('List Users Use Case', () => {
-    it('should call ListAllUserRepository with correct values', () => {
-        const { sut, listAllUserRepositoryStub } = makeSut();
-        const listAllUserSpy = jest.spyOn(listAllUserRepositoryStub, 'loadAll');
+    it('should call LoadUsersRepository with correct values', () => {
+        const { sut, loadUsersRepositoryStub } = makeSut();
+        const loadUsersSpy = jest.spyOn(loadUsersRepositoryStub, 'loadAll');
         sut.loadAll();
-        expect(listAllUserSpy).toHaveBeenCalledWith();
+        expect(loadUsersSpy).toHaveBeenCalledWith();
     });
 
     it('should return a list of users on success', async () => {
@@ -47,9 +47,9 @@ describe('List Users Use Case', () => {
         );
     });
 
-    it('should throw if ListAllUserRepository throws', async () => {
-        const { sut, listAllUserRepositoryStub } = makeSut();
-        jest.spyOn(listAllUserRepositoryStub, 'loadAll').mockImplementationOnce(() => {
+    it('should throw if LoadUsersRepository throws', async () => {
+        const { sut, loadUsersRepositoryStub } = makeSut();
+        jest.spyOn(loadUsersRepositoryStub, 'loadAll').mockImplementationOnce(() => {
             throw new Error();
         });
         const promise = sut.loadAll();
