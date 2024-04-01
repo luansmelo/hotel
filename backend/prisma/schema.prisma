@@ -27,6 +27,7 @@ model Product {
   description             String                    @db.VarChar(1000)
   preparationTime         Float
   resource                String                    @db.VarChar(400)
+  accession               Int?
   inputs                  InputsOnProducts[]
   productMedia            ProductMedia?
   categoryProductSchedule CategoryProductSchedule[]
