@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for UpdateCategoryController.ts</title>
+    <title>Code coverage report for LoadUserByTokenAndRole.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> UpdateCategoryController.ts</h1>
+        <h1><a href="index.html">All files</a> LoadUserByTokenAndRole.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/28</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/28</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
@@ -84,17 +84,7 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -105,56 +95,45 @@
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Controller, HttpRequest, HttpResponse } from "@/presentation/protocols";
-import { CategoryNotFoundError } from "@/presentation/errors/CategoryNotFoundError";
-import { notFound, ok } from "@/presentation/helpers/httpCodesHelper";
-import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
-import { UpdateCategoryUseCaseContract } from "@/domain/usecases/category/UpdateCategory";
-import { CategoryModel } from "@/domain/models/Category";
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+import { Decrypter } from "@/data/protocols/cryptography";
+import { LoadUserByTokenRepository } from "@/data/protocols/db/user/LoadUserByTokenRepository.protocol";
+import { UserModel } from "@/domain/models/User";
+import { FindUserByToken } from "@/domain/usecases/user/LoadUserByIdAndToken";
 &nbsp;
-export class UpdateCategoryController implements Controller {
-  constructor(private readonly updateCategory: UpdateCategoryUseCaseContract) { }
+export class LoadUserByToken implements FindUserByToken {
+    constructor(
+        private readonly decrypter: Decrypter,
+        private readonly loadUser: LoadUserByTokenRepository
+    ) { }
 &nbsp;
-  async handle(httpResquest: HttpRequest): Promise&lt;HttpResponse&gt; {
-    try {
-      const { id } = httpResquest.params as { id: string }
-      const payload = httpResquest.body as CategoryModel
+    async findByToken(token: string, role?: string): Promise&lt;UserModel | null&gt; {
+        const result = await this.decrypter.decrypt(token) as { id: string };
 &nbsp;
-      const result = await this.updateCategory.updateById(id, payload);
+        if (result) {
+            return this.loadUser.loadByIdAndRole(result.id, role);
+        }
 &nbsp;
-      if (!result) {
-        return notFound(new CategoryNotFoundError())
-      }
-&nbsp;
-      return ok(result)
-&nbsp;
-    } catch (error) {
-      return errorHandler(error)
+        return null;
     }
-  }
-}
-&nbsp;</pre></td></tr></table></pre>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-01T02:36:31.131Z
+                at 2024-04-01T12:14:25.354Z
             </div>
         <script src="prettify.js"></script>
         <script>
