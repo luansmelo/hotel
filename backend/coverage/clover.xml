@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1711987545569" clover="3.2.0">
-  <project timestamp="1711987545569" name="All files">
-    <metrics statements="22" coveredstatements="20" conditionals="3" coveredconditionals="2" methods="2" coveredmethods="2" elements="27" coveredelements="24" complexity="0" loc="22" ncloc="22" packages="1" files="1" classes="1"/>
-    <file name="DeleteCategoryUseCase.ts" path="/home/luan/desenvolvimento/hotel/backend/src/data/usecases/category/DeleteCategoryUseCase.ts">
-      <metrics statements="22" coveredstatements="20" conditionals="3" coveredconditionals="2" methods="2" coveredmethods="2"/>
+<coverage generated="1711988345035" clover="3.2.0">
+  <project timestamp="1711988345035" name="All files">
+    <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2" elements="15" coveredelements="15" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
+    <file name="LoadCategoriesUseCase.ts" path="/home/luan/desenvolvimento/hotel/backend/src/data/usecases/category/LoadCategoriesUseCase.ts">
+      <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -11,21 +11,12 @@
       <line num="5" count="1" type="stmt"/>
       <line num="6" count="1" type="stmt"/>
       <line num="7" count="1" type="stmt"/>
-      <line num="8" count="1" type="cond" truecount="1" falsecount="0"/>
+      <line num="8" count="1" type="stmt"/>
       <line num="9" count="3" type="stmt"/>
       <line num="10" count="3" type="stmt"/>
       <line num="11" count="3" type="stmt"/>
-      <line num="12" count="1" type="stmt"/>
-      <line num="13" count="1" type="cond" truecount="1" falsecount="0"/>
-      <line num="14" count="3" type="stmt"/>
-      <line num="15" count="3" type="stmt"/>
-      <line num="16" count="3" type="cond" truecount="0" falsecount="1"/>
-      <line num="17" count="0" type="stmt"/>
-      <line num="18" count="0" type="stmt"/>
-      <line num="19" count="3" type="stmt"/>
-      <line num="20" count="3" type="stmt"/>
-      <line num="21" count="3" type="stmt"/>
-      <line num="22" count="1" type="stmt"/>
+      <line num="12" count="3" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>
