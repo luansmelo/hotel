@@ -36,7 +36,7 @@ const makeSut = () => {
     }
 }
 
-describe('find user by token', () => {
+describe('Find user by token', () => {
     it('should call decrypter with correct value', async () => {
         const { sut, decrypterStub } = makeSut();
         const decryptSpy = jest.spyOn(decrypterStub, 'decrypt');
