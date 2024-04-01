@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for CreateCategoryUseCase.ts</title>
+    <title>Code coverage report for DeleteCategoryUseCase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> CreateCategoryUseCase.ts</h1>
+        <h1><a href="index.html">All files</a> DeleteCategoryUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/24</span>
+                <span class='fraction'>20/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/24</span>
+                <span class='fraction'>20/22</span>
             </div>
         
             
@@ -85,54 +85,48 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
-import { CreateCategoryRepository } from "@/data/protocols/db/category/CreateCategoryRepository.protocol";
-import { LoadCategoryByNameRepository } from "@/data/protocols/db/category/LoadCategoryByNameRepository.protocol.ts";
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { DeleteCategoryRepository } from "@/data/protocols/db/category/DeleteCategoryRepository.protocol.ts";
+import { DeleteCategoryUseCaseContract } from "@/domain/usecases/category/DeleteCategory";
+import { LoadCategoryByIdRepository } from "@/data/protocols/db/category/LoadCategoryByIdRepository.protocol";
 import { CategoryModel } from "@/domain/models/Category";
-import { CreateCategoryModel, CreateCategoryUseCaseContract } from "@/domain/usecases/category/CreateCategory";
+import { CategoryNotFoundError } from "@/presentation/errors/CategoryNotFoundError";
 &nbsp;
-import { CategoryAlreadyExistsError } from "@/presentation/errors/CategoryAlreadyExistsError";
-&nbsp;
-export class CreateCategoryUseCase implements CreateCategoryUseCaseContract {
+export class DeleteCategoryUseCase implements DeleteCategoryUseCaseContract {
   constructor(
-    private readonly createCategory: CreateCategoryRepository,
-    private readonly findCategory: LoadCategoryByNameRepository
+    private readonly deleteCategory: DeleteCategoryRepository,
+    private readonly findCategory: LoadCategoryByIdRepository
   ) {}
 &nbsp;
-  async create(categoryModel: CreateCategoryModel): Promise&lt;CategoryModel&gt; {
-    const category = await this.findCategory.loadByName(categoryModel.name);
+  async deleteById(id: string): Promise&lt;CategoryModel&gt; {
+    const category = await this.findCategory.loadById(id);
 &nbsp;
-    if (category) {
-      throw new CategoryAlreadyExistsError("Categoria já cadastrada");
-    }
+    if (!category) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >      throw new CategoryNotFoundError();</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
-    return this.createCategory.create(categoryModel);
+    return this.deleteCategory.deleteById(category.id);
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -142,7 +136,7 @@ export class CreateCategoryUseCase implements CreateCategoryUseCaseContract {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-01T15:56:01.763Z
+                at 2024-04-01T16:05:45.564Z
             </div>
         <script src="prettify.js"></script>
         <script>
