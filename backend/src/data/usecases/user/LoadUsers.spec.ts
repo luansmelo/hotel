@@ -1,6 +1,6 @@
 import { LoadUsersRepository } from "@/data/protocols/db/user/LoadUsersRepository.protocol";
-import { UserModel } from "@/domain/models/User";
 import { LoadUsersUseCase } from "./LoadUsers";
+import { UserModel } from "@/domain/models/User";
 
 const makeLoadAllUsersRepositoryStub = () => {
     class LoadUserRepositoryStub implements LoadUsersRepository {
