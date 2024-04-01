@@ -1,13 +1,14 @@
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/httpRequest";
 import { HttpResponse } from "../../protocols/httpResponse";
-import { forbidden, ok } from "@/presentation/helpers/httpCodesHelper";
+import { forbidden, notFound, ok } from "@/presentation/helpers/httpCodesHelper";
 import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
 
 import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
 import { FORBIDDEN_DELETE_UPDATING_GROUP } from "@/presentation/errors/pt-br";
 import { UpdateGroupUseCaseContract } from "@/domain/usecases/group/UpdateGroup";
 import { CreateGroupModel } from "@/domain/usecases/group/CreateGroup";
+import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
 
 export class UpdateGroupController implements Controller {
   constructor(private readonly group: UpdateGroupUseCaseContract) { }
@@ -20,7 +21,7 @@ export class UpdateGroupController implements Controller {
       const result = await this.group.updateById(id, input);
 
       if (!result) {
-        return forbidden(new AccessDeniedError(FORBIDDEN_DELETE_UPDATING_GROUP));
+        return notFound(new GroupNotFoundError())
       }
 
       return ok(result)
