@@ -6,9 +6,10 @@ import { BcryptAdapter } from "@/infra/cryptography";
 import { UserRepository } from "@/infra/db/mysql/user/UserRepository";
 
 import { JwtAdapter } from "@/infra/token";
-import { LoginController } from "@/presentation/controllers/user/Login";
+import { LoginController } from "@/presentation/controllers/user/LoginController";
 
 import { EmailValidatorAdapter } from "@/utils/EmailValidatorAdapter";
+import { makeLoginValidationFactory } from "./LoginValidationFactory";
 
 export function makeLoginController(): LoginController {
   const repository = new UserRepository();
@@ -25,6 +26,6 @@ export function makeLoginController(): LoginController {
     hashed,
     jwtAdapter
   );
-  
-  return new LoginController(createAuth);
+
+  return new LoginController(createAuth, makeLoginValidationFactory());
 }
