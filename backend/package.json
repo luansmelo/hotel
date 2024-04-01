@@ -11,7 +11,8 @@
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
-    "test": "jest --passWithNoTests --watch --detectOpenHandles"
+    "test": "jest --passWithNoTests --watch --detectOpenHandles",
+    "test:ci": "jest --coverage --passWithNoTests --silent --runInBand --detectOpenHandles --forceExit"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.514.0",
