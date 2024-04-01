@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for controllers/groups/UpdateGroupController.ts</title>
+    <title>Code coverage report for UpdateGroup.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">controllers/groups</a> UpdateGroupController.ts</h1>
+        <h1><a href="index.html">All files</a> UpdateGroup.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>32/32</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>32/32</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
@@ -95,7 +95,11 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -105,58 +109,66 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Controller } from "../../protocols/controller";
-import { HttpRequest } from "../../protocols/httpRequest";
-import { HttpResponse } from "../../protocols/httpResponse";
-import { forbidden, notFound, ok } from "@/presentation/helpers/httpCodesHelper";
-import { errorHandler } from "@/presentation/helpers/errorHandler/errorHandler";
-&nbsp;
-import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
-import { FORBIDDEN_DELETE_UPDATING_GROUP } from "@/presentation/errors/pt-br";
-import { UpdateGroupUseCaseContract } from "@/domain/usecases/group/UpdateGroup";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { LoadGroupByIdRepository } from "@/data/protocols/db/group/LoadGroupByIdRepository.protocol";
+import { LoadGroupByNameRepository } from "@/data/protocols/db/group/LoadGroupByNameRepository.protocol.ts";
+import { UpdateGroupRepository } from "@/data/protocols/db/group/UpdateGroupRepository.protocol";
+import { GroupModel } from "@/domain/models/Group";
 import { CreateGroupModel } from "@/domain/usecases/group/CreateGroup";
-import { GroupNotFoundError } from "@/presentation/errors/GroupNotFoundError";
+import { UpdateGroupUseCaseContract } from "@/domain/usecases/group/UpdateGroup";
+import { GroupAlreadyExistsError } from "@/presentation/errors/GroupAlreadyExistsError";
 &nbsp;
-export class UpdateGroupController implements Controller {
-  constructor(private readonly group: UpdateGroupUseCaseContract) { }
+export class UpdateGroupUseCase implements UpdateGroupUseCaseContract {
+  constructor(
+    private readonly updateGroup: UpdateGroupRepository,
+    private readonly findGroup: LoadGroupByIdRepository,
+    private readonly findGroupByName: LoadGroupByNameRepository
+  ) { }
 &nbsp;
-  async handle(httpRequest: HttpRequest): Promise&lt;HttpResponse&gt; {
-    try {
-      const { id } = httpRequest.params as { id: string };
-      const input = httpRequest.body as CreateGroupModel;
+  async updateById(
+    id: string,
+    input: Partial&lt;CreateGroupModel&gt;
+  ): Promise&lt;Partial&lt;GroupModel | null&gt;&gt; {
+    const group = await this.findGroup.loadById(id);
 &nbsp;
-      const result = await this.group.updateById(id, input);
-&nbsp;
-      if (!result) {
-        return notFound(new GroupNotFoundError())
-      }
-&nbsp;
-      return ok(result)
-    } catch (error) {
-      return errorHandler(error);
+    if (!group) {
+      return null;
     }
+&nbsp;
+    if (input.name) {
+      const groupExists = await this.findGroupByName.loadByName(input.name);
+&nbsp;
+      if (groupExists) {
+        throw new GroupAlreadyExistsError('Nome do grupo já em uso');
+      }
+    }
+&nbsp;
+    return this.updateGroup.updateById(group.id, { name: input.name });;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -166,16 +178,16 @@ export class UpdateGroupController implements Controller {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-01T19:17:42.208Z
+                at 2024-04-01T19:30:29.928Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="sorter.js"></script>
+        <script src="block-navigation.js"></script>
     </body>
 </html>
     
