@@ -35,15 +35,14 @@ export class GroupRepository
       ? parseInt(process.env.PAGE_LIMIT)
       : 10;
     const offset = (page - 1) * limit;
-    const order = findParams.order || "ASC";
+    const order = findParams.order || "asc";
     const sort = findParams.sort || "name";
 
     const groups = await Group.findMany({
-      orderBy: [
-        {
-          [sort]: order,
-        },
-      ],
+      orderBy:
+      {
+        [sort]: order,
+      },
       take: limit,
       skip: offset,
     });
