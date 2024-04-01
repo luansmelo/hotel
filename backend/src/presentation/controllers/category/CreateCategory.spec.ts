@@ -7,7 +7,7 @@ import { badRequest } from "@/presentation/helpers/httpCodesHelper";
 
 const makeCreateCategoryStub = () => {
     class CreateCategoryStub implements CreateCategoryUseCaseContract {
-        create(input: CreateCategoryModel): Promise<CategoryModel> {
+        async create(input: CreateCategoryModel): Promise<CategoryModel> {
             return Promise.resolve({
                 id: 'valid_id',
                 name: input.name,
