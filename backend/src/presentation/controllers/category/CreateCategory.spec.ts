@@ -1,6 +1,5 @@
 import { CreateCategoryModel, CreateCategoryUseCaseContract } from "@/domain/usecases/category/CreateCategory";
 import { CreateCategoryController } from "./CreateCategoryController";
-import Category from "@/data/local/entity/category";
 import { CategoryModel } from "@/domain/models/Category";
 import { Validation } from "@/validation/protocols";
 import { HttpRequest } from "@/presentation/protocols";
@@ -89,6 +88,4 @@ describe('Create Category Controller', () => {
         const httpResponse = await sut.handle(httpRequest);
         expect(httpResponse).toEqual(badRequest(new Error()));
     });
-
-
 })
