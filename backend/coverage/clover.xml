@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1711996793747" clover="3.2.0">
-  <project timestamp="1711996793747" name="All files">
+<coverage generated="1711997387878" clover="3.2.0">
+  <project timestamp="1711997387878" name="All files">
     <metrics statements="84" coveredstatements="84" conditionals="8" coveredconditionals="6" methods="6" coveredmethods="6" elements="98" coveredelements="96" complexity="0" loc="84" ncloc="84" packages="1" files="1" classes="1"/>
     <file name="CategoryRepository.ts" path="/home/luan/desenvolvimento/hotel/backend/src/infra/db/mysql/category/CategoryRepository.ts">
       <metrics statements="84" coveredstatements="84" conditionals="8" coveredconditionals="6" methods="6" coveredmethods="6"/>
