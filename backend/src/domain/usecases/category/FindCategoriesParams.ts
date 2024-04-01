@@ -6,7 +6,7 @@ export type Sort = "name" | "createdAt" | "updatedAt";
 export interface FindCategoriesParams {
   page?: number;
   sort?: Sort;
-  order?: 'ASC' | 'DESC';
+  order?: "asc" | "desc";
 }
 
 export interface FindCategoriesResponse {

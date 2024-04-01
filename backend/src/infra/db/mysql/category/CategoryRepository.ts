@@ -27,13 +27,14 @@ export class CategoryRepository
   async loadAll(
     findParams: FindCategoriesParams
   ): Promise<FindCategoriesResponse> {
+
     const page = findParams.page || 1;
     const limit = process.env.PAGE_LIMIT
       ? parseInt(process.env.PAGE_LIMIT)
       : 10;
 
     const offset = (page - 1) * limit;
-    const order = findParams.order || "ASC";
+    const order = findParams.order || "asc";
     const sort = findParams.sort || "name";
 
     const categories = await Category.findMany({
@@ -74,7 +75,7 @@ export class CategoryRepository
   async updateById(
     id: string,
     input: Partial<CategoryModel>
-  ): Promise<CategoryModel> {
+  ): Promise<CategoryModel | null> {
     return Category.update({
       where: { id },
       data: input,
