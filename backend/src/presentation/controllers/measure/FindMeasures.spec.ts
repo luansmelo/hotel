@@ -1,8 +1,8 @@
 import { HttpRequest } from "@/presentation/protocols";
 import { Validation } from "@/validation/protocols";
 import { FindMeasuresController } from "./FindMeasuresController";
-import { MeasureModel } from "@/domain/models/Measure";
 import { LoadMeasuresUseCaseContract } from "@/domain/usecases/measure/LoadMeasures";
+import { FindMeasuresParams, FindMeasuresResponse } from "@/domain/usecases/measure/FindMeasuresParams";
 
 const httpRequest: HttpRequest = {
     query: {
@@ -23,13 +23,17 @@ const makeValidation = (): Validation => {
 
 const makeLoadMeasuresStub = () => {
     class LoadMeasuresStub implements LoadMeasuresUseCaseContract {
-        async loadAll(): Promise<MeasureModel[]> {
-            return Promise.resolve(
-                [{
-                    id: 'any_id',
-                    name: 'any_name'
-                }],
-            )
+        async loadAll(params: FindMeasuresParams): Promise<FindMeasuresResponse> {
+            return Promise.resolve({
+                measures: [
+                    {
+                        id: 'any_id',
+                        name: 'any_name',
+                    }
+                ],
+                totalPages: 1,
+                totalItems: 1
+            })
         }
     }
 
@@ -39,7 +43,7 @@ const makeLoadMeasuresStub = () => {
 const makeSut = () => {
     const validationStub = makeValidation()
     const loadMeasuresStub = makeLoadMeasuresStub()
-    const sut = new FindMeasuresController(loadMeasuresStub)
+    const sut = new FindMeasuresController(loadMeasuresStub, validationStub)
     return { sut, loadMeasuresStub, validationStub }
 }
 
@@ -49,14 +53,16 @@ describe('LoadMeasuresController', () => {
         const httpResponse = await sut.handle(httpRequest)
 
         expect(httpResponse.statusCode).toBe(200)
-        expect(httpResponse.body).toEqual(
-            [
+        expect(httpResponse.body).toEqual({
+            measures: [
                 {
                     id: 'any_id',
-                    name: 'any_name'
-                },
+                    name: 'any_name',
+                }
             ],
-        )
+            totalPages: 1,
+            totalItems: 1
+        })
     })
 
     it('should return 500 if LoadMeasures throws', async () => {
@@ -67,5 +73,24 @@ describe('LoadMeasuresController', () => {
 
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse.statusCode).toBe(500)
+    })
+
+    it('should call Validation with correct value', async () => {
+        const { sut, validationStub } = makeSut()
+        const validateSpy = jest.spyOn(validationStub, 'validate')
+
+        sut.handle(httpRequest)
+
+        expect(validateSpy).toHaveBeenCalledWith(httpRequest.query)
+    })
+
+    it('should return 400 if Validation returns an error', async () => {
+        const { sut, validationStub } = makeSut()
+
+        jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error())
+
+        const httpResponse = await sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(400)
     })
 })

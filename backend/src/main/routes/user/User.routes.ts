@@ -8,7 +8,7 @@ import { makeLoadUsersFactory } from "@/main/factories/user/LoadUsersFactory";
 export default (router: Router): void => {
   const userRouter = Router();
 
-  userRouter.post("/signup", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateUserController()));
+  userRouter.post("/signup", adaptRoute(makeCreateUserController()));
   userRouter.get("/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeLoadUsersFactory()));
   
   router.use('/user', userRouter);

@@ -1,23 +1,14 @@
 import { InvalidParamError } from '@/presentation/errors/InvalidParamError';
-import { FieldValidatorProtocol } from '@/validation/protocols';
 import { z, ZodError } from 'zod';
+import { FieldValidatorProtocol } from './FieldValidator';
 
 const schemas = {
-  email: z.string({
-    required_error: 'O email é obrigatório',
-  }).min(3).max(50),
-  password: z.string({
-    required_error: 'A senha é obrigatória'
-  }),
   name: z.string({
-    required_error: 'O nome é obrigatório'
-  }).min(3).max(50),
-  role: z.string({
-    required_error: 'O papel é obrigatório'
+    required_error: 'O nome da categoria é obrigatório',
   }).min(3).max(50),
 };
 
-export class FieldValidatorAdapter implements FieldValidatorProtocol {
+export class MeasureFieldValidatorAdapter implements FieldValidatorProtocol {
   validate(field: string, value: unknown): Error | void {
     let schema = schemas[field] || z.string().min(1);
 

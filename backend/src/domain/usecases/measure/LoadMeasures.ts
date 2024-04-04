@@ -1,5 +1,5 @@
-import { MeasureModel } from "@/domain/models/Measure";
+import { FindMeasuresParams, FindMeasuresResponse } from "./FindMeasuresParams";
 
 export interface LoadMeasuresUseCaseContract {
-  loadAll(): Promise<MeasureModel[] | null>
+  loadAll(params: FindMeasuresParams): Promise<FindMeasuresResponse>
 }

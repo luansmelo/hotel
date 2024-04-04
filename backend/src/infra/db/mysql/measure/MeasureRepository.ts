@@ -7,6 +7,7 @@ import { UpdateMeasureRepository } from "@/data/protocols/db/measure/UpdateMeasu
 import { MeasureModel } from "@/domain/models/Measure";
 import { CreateMeasureModel } from "@/domain/usecases/measure/CreateMeasure";
 import Measure from "@/data/local/entity/measure";
+import { FindMeasuresParams, FindMeasuresResponse } from "@/domain/usecases/measure/FindMeasuresParams";
 
 export class MeasureRepository
   implements
@@ -23,8 +24,32 @@ export class MeasureRepository
     });
   }
 
-  async loadAll(): Promise<MeasureModel[] | null> {
-    return Measure.findMany();
+  async loadAll(findParams: FindMeasuresParams): Promise<FindMeasuresResponse> {
+    const page = findParams.page || 1;
+    const limit = process.env.PAGE_LIMIT
+      ? parseInt(process.env.PAGE_LIMIT)
+      : 10;
+    const offset = (page - 1) * limit;
+    const order = findParams.order || "asc";
+    const sort = findParams.sort || "name";
+
+    const measures = await Measure.findMany({
+      orderBy:
+      {
+        [sort]: order,
+      },
+      take: limit,
+      skip: offset,
+    });
+
+    const totalItems = measures.length;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return {
+      measures,
+      totalPages,
+      totalItems,
+    };
   }
 
   async loadById(id: string): Promise<MeasureModel | null> {

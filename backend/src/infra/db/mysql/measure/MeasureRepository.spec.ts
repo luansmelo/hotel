@@ -29,13 +29,15 @@ describe('Measure MySQL Repository', () => {
         const sut = makeSut()
         const createMeasure = await sut.create(makeFakeMeasure())
 
-        const category = await sut.loadAll()
+        const measure = await sut.loadAll({ page: 1, })
 
-        expect(category).toEqual([
-            {
+        expect(measure).toEqual({
+            measures: [{
                 ...createMeasure
-            }
-        ])
+            }],
+            totalPages: 1,
+            totalItems: 1
+        })
     })
 
     it('should return an updated Measure on success on UpdateMeasure', async () => {

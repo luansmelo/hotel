@@ -1,6 +1,7 @@
 import { LoadMeasuresRepository } from "@/data/protocols/db/measure/LoadMeasuresRepository.protocol";
 import { LoadMeasuresUseCase } from "./LoadMeasuresUseCase";
-import { MeasureModel } from "@/domain/models/Measure";
+
+import { FindMeasuresParams, FindMeasuresResponse } from "@/domain/usecases/measure/FindMeasuresParams";
 
 const fakeRequest = {
     page: 1,
@@ -10,16 +11,17 @@ const fakeRequest = {
 const makeLoadAllMeasuresRepositoryStub = () => {
     class LoadMeasuresRepositoryStub implements LoadMeasuresRepository {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        async loadAll(): Promise<MeasureModel[]> {
-            return new Promise(resolve => resolve(
-                [
+        async loadAll(params: FindMeasuresParams): Promise<FindMeasuresResponse> {
+            return new Promise(resolve => resolve({
+                measures: [
                     {
                         id: 'any_id',
                         name: 'any_name',
                     }
                 ],
-
-            ));
+                totalPages: 1,
+                totalItems: 1
+            }));
         }
     }
 
@@ -36,15 +38,17 @@ describe('Load Measures Use Case', () => {
 
     it('should return a list of Measures on success', async () => {
         const { sut } = makeSut();
-        const Measures = await sut.loadAll();
-        expect(Measures).toEqual(
-            [
+        const Measures = await sut.loadAll(fakeRequest);
+        expect(Measures).toEqual({
+            measures: [
                 {
                     id: 'any_id',
                     name: 'any_name',
                 }
             ],
-        );
+            totalPages: 1,
+            totalItems: 1
+        });
     });
 
     it('should throw if LoadMeasuresRepository throws', async () => {
@@ -52,7 +56,7 @@ describe('Load Measures Use Case', () => {
         jest.spyOn(loadMeasuresRepositoryStub, 'loadAll').mockImplementationOnce(() => {
             throw new Error();
         });
-        const promise = sut.loadAll();
+        const promise = sut.loadAll(fakeRequest);
         await expect(promise).rejects.toThrow();
     });
 });
