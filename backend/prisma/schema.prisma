@@ -28,6 +28,7 @@ model Product {
   preparationTime         String
   resource                String                    @db.VarChar(400)
   accession               Int?
+  status                  Status?                   @default(INCOMPLETE)
   inputs                  InputsOnProducts[]
   productMedia            ProductMedia?
   categoryProductSchedule CategoryProductSchedule[]
@@ -71,6 +72,7 @@ model Input {
   name              String             @unique
   code              String             @unique
   unitPrice         Float
+  status            Status?            @default(INCOMPLETE)
   measurementUnit   MeasurementUnit    @relation(fields: [measurementUnitId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groups            GroupsOnInputs[]
   products          InputsOnProducts[]
@@ -153,6 +155,11 @@ model MeasurementUnit {
 
   @@index([name])
   @@map("measurementUnit")
+}
+
+enum Status {
+  COMPLETE
+  INCOMPLETE
 }
 
 enum Role {
