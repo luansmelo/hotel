@@ -14,6 +14,7 @@ import { AddInputToProductModel } from "@/domain/usecases/product/AddInputToProd
 import { RemoveInputToProductModel } from "@/domain/usecases/product/DeleteInputToProduct";
 import { UpdateProductModel } from "@/domain/usecases/product/UpdateProduct";
 import { DeleteProductRepository } from "@/data/protocols/db/product/DeleteProductRepository.protocol";
+import { FindProductsParams, FindProductsResponse } from "@/domain/usecases/product/FindProductsParams";
 
 export class ProductRepository
   implements
@@ -76,8 +77,20 @@ export class ProductRepository
     return db;
   }
 
-  async loadAll(): Promise<ProductModel[] | null> {
-    const db = await Product.findMany({
+  async loadAll(findParams: FindProductsParams): Promise<FindProductsResponse> {
+
+    const page = findParams.page || 1;
+    const limit = process.env.PAGE_LIMIT
+      ? parseInt(process.env.PAGE_LIMIT)
+      : 10;
+    const offset = (page - 1) * limit;
+    const order = findParams.order || "asc";
+    const sort = findParams.sort || "name";
+
+    const product = await Product.findMany({
+      orderBy: {
+        [sort]: order,
+      },
       include: {
         inputs: {
           select: {
@@ -104,11 +117,20 @@ export class ProductRepository
           },
         },
       },
+      take: limit,
+      skip: offset,
     });
 
-    if (!db) return null;
+    if (!product) return null;
 
-    return db.map((product) => mapperProduct(product));
+    const totalItems = product.length;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return {
+      products: product.map((product) => mapperProduct(product)),
+      totalItems,
+      totalPages
+    }
   }
 
   async loadPredefinedProduct(id: string): Promise<ProductModel | null> {
