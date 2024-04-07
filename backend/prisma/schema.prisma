@@ -25,7 +25,7 @@ model Product {
   id                      String                    @id @default(uuid())
   name                    String                    @unique
   description             String                    @db.VarChar(1000)
-  preparationTime         Float
+  preparationTime         String
   resource                String                    @db.VarChar(400)
   accession               Int?
   inputs                  InputsOnProducts[]

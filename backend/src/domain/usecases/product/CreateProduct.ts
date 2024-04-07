@@ -3,8 +3,9 @@ import { ProductModel } from "@/domain/models/Product";
 export interface CreateProductModel {
     name: string;
     description: string;
-    preparationTime: number;
+    preparationTime: string;
     resource: string;
+    accession: number;
     photo_url?: string;
 }
 

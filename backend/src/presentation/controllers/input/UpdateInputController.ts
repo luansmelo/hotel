@@ -14,7 +14,7 @@ export class UpdateInputController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
 
-      const error = this.validation.validate(request.params);
+      const error = this.validation.validate(request.body);
 
       if (error) {
         return badRequest(error);

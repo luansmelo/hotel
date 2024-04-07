@@ -4,7 +4,8 @@ export interface ProductModel {
   id?: string;
   name: string;
   description: string;
-  preparationTime: number;
+  preparationTime: string;
+  accession?: number;
   grammage?: number;
   resource: string;
   photo_url?: string;
