@@ -1,5 +1,5 @@
-import { ProductModel } from "@/domain/models/Product";
+import { FindProductsParams, FindProductsResponse } from "@/domain/usecases/product/FindProductsParams";
 
 export interface LoadProductsRepository {
-  loadAll(): Promise<ProductModel[] | null>;
+  loadAll(params: FindProductsParams): Promise<FindProductsResponse>;
 }
