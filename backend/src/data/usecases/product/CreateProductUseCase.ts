@@ -14,10 +14,15 @@ export class CreateProductUseCase implements CreateProductUseCaseContract {
 
     const product = await this.findProduct.loadByName(productModel.name);
 
+    const productData = {
+      ...productModel,
+      accession: Number(productModel.accession)
+    }
+
     if (product) {
       throw new ProductAlreadyExistsError("Produto já cadastrado");
     }
 
-    return this.createProduct.create(productModel);
+    return this.createProduct.create(productData);
   }
 }
