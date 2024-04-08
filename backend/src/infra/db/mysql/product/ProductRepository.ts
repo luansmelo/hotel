@@ -177,7 +177,7 @@ export class ProductRepository
         ...input,
         inputs: {
           updateMany:
-            input.inputs.map((input) => ({
+            input?.inputs?.map((input) => ({
               where: { inputId: input.id },
               data: {
                 grammage: input.grammage,
@@ -197,7 +197,7 @@ export class ProductRepository
 
   async addInput(input: AddInputToProductModel): Promise<Partial<{ count: number }>> {
     const data = input.inputs.map((inputItem) => ({
-      productId: input.id,
+      productId: input.productId,
       inputId: inputItem.id as string,
       measurementUnit: inputItem.measurementUnit,
       grammage: inputItem.grammage,

@@ -1,11 +1,17 @@
 export function mapperProduct(product: any) {
+  if (!product) return null;
   return {
     id: product.id,
     name: product.name,
     description: product.description,
     preparationTime: product.preparationTime,
     resource: product.resource,
-    inputs: product.inputs.map((input) => ({
+    accession: product.accession,
+    status: product.status,
+    createdAt: product.createdAt,
+    updatedAt: product.updatedAt,
+    photo_url: product.photo_url || null,
+    inputs: product?.inputs.map((input) => ({
       id: input.input.id,
       name: input.input.name,
       code: input.input.code,

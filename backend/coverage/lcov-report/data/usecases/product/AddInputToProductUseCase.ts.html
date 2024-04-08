@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.88% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/36</span>
+                <span class='fraction'>0/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.88% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/36</span>
+                <span class='fraction'>0/36</span>
             </div>
         
             
@@ -99,19 +99,7 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -134,21 +122,33 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { AddInputToProductRepository } from "@/data/protocols/db/product/AddInputToProductRepository.protocol";
-import { LoadPredefinedProductRepository } from "@/data/protocols/db/product/LoadPredefinedProductRepository.protocol";
-import { AddInputToProductModel, AddInputToProductUseCaseContract } from "@/domain/usecases/product/AddInputToProduct";
-import { InputAlreadyExistsError } from "@/presentation/errors/InputAlreadyExistsError";
-import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";
-&nbsp;
-export class AddInputToProductUseCase implements AddInputToProductUseCaseContract {
-  constructor(
-    private readonly input: AddInputToProductRepository,
-    private readonly findProduct: LoadPredefinedProductRepository
-  ) { }
-&nbsp;
-<span class="fstat-no" title="function not covered" >  async addProduct(productModel: AddInputToProductModel): Promise&lt;Partial&lt;{ count: number }&gt;&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const product = await this.findProduct.loadPredefinedProduct(productModel.id);</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { AddInputToProductRepository } from "@/data/protocols/db/product/AddInputToProductRepository.protocol";</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { LoadPredefinedProductRepository } from "@/data/protocols/db/product/LoadPredefinedProductRepository.protocol";</span>
+<span class="cstat-no" title="statement not covered" >import { AddInputToProductModel, AddInputToProductUseCaseContract } from "@/domain/usecases/product/AddInputToProduct";</span>
+<span class="cstat-no" title="statement not covered" >import { InputAlreadyExistsError } from "@/presentation/errors/InputAlreadyExistsError";</span>
+<span class="cstat-no" title="statement not covered" >import { ProductNotFoundError } from "@/presentation/errors/ProductNotFoundError";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export class AddInputToProductUseCase implements AddInputToProductUseCaseContract {</span>
+<span class="cstat-no" title="statement not covered" >  constructor(</span>
+<span class="cstat-no" title="statement not covered" >    private readonly input: AddInputToProductRepository,</span>
+<span class="cstat-no" title="statement not covered" >    private readonly findProduct: LoadPredefinedProductRepository</span>
+<span class="cstat-no" title="statement not covered" >  ) { }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  async addProduct(productModel: AddInputToProductModel): Promise&lt;Partial&lt;{ count: number }&gt;&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const product = await this.findProduct.loadPredefinedProduct(productModel.productId);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (!product) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new ProductNotFoundError();</span>
@@ -166,11 +166,11 @@ export class AddInputToProductUseCase implements AddInputToProductUseCaseContrac
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    return this.input.addInput({</span>
-<span class="cstat-no" title="statement not covered" >      id: productModel.id,</span>
+<span class="cstat-no" title="statement not covered" >      productId: productModel.productId,</span>
 <span class="cstat-no" title="statement not covered" >      inputs: uniqueInputs,</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-}
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -178,7 +178,7 @@ export class AddInputToProductUseCase implements AddInputToProductUseCaseContrac
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-01T01:33:42.481Z
+                at 2024-04-07T23:55:12.699Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

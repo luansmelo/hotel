@@ -16,6 +16,7 @@ const makeCreateProductStub = () => {
                 preparationTime: 'valid_time',
                 resource: 'valid_resource',
                 accession: 10,
+                status: 'INCOMPLETE'
             })
         }
     }

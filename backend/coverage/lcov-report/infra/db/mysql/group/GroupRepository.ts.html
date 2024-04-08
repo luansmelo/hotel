@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.57% </span>
+                <span class="strong">46.59% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/89</span>
+                <span class='fraction'>41/88</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">14.28% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>1/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.57% </span>
+                <span class="strong">46.59% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/89</span>
+                <span class='fraction'>41/88</span>
             </div>
         
             
@@ -151,8 +151,7 @@
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -176,13 +175,12 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -264,11 +262,11 @@ export class GroupRepository
   LoadGroupsRepository,
   UpdateGroupRepository {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  async create(input: CreateGroupModel): Promise&lt;GroupModel&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return Group.create({</span>
-<span class="cstat-no" title="statement not covered" >      data: input,</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  async create(input: CreateGroupModel): Promise&lt;GroupModel&gt; {
+    return Group.create({
+      data: input,
+    });
+  }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  async loadAll(</span>
 <span class="cstat-no" title="statement not covered" >    findParams: FindGroupsParams</span>
@@ -278,15 +276,14 @@ export class GroupRepository
 <span class="cstat-no" title="statement not covered" >      ? parseInt(process.env.PAGE_LIMIT)</span>
 <span class="cstat-no" title="statement not covered" >      : 10;</span>
 <span class="cstat-no" title="statement not covered" >    const offset = (page - 1) * limit;</span>
-<span class="cstat-no" title="statement not covered" >    const order = findParams.order || "ASC";</span>
+<span class="cstat-no" title="statement not covered" >    const order = findParams.order || "asc";</span>
 <span class="cstat-no" title="statement not covered" >    const sort = findParams.sort || "name";</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const groups = await Group.findMany({</span>
-<span class="cstat-no" title="statement not covered" >      orderBy: [</span>
-<span class="cstat-no" title="statement not covered" >        {</span>
-<span class="cstat-no" title="statement not covered" >          [sort]: order,</span>
-<span class="cstat-no" title="statement not covered" >        },</span>
-<span class="cstat-no" title="statement not covered" >      ],</span>
+<span class="cstat-no" title="statement not covered" >      orderBy:</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        [sort]: order,</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
 <span class="cstat-no" title="statement not covered" >      take: limit,</span>
 <span class="cstat-no" title="statement not covered" >      skip: offset,</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
@@ -337,7 +334,7 @@ export class GroupRepository
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-01T01:33:42.481Z
+                at 2024-04-07T23:55:12.699Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

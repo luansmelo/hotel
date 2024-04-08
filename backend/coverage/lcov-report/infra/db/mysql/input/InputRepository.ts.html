@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.04% </span>
+                <span class="strong">23.07% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/299</span>
+                <span class='fraction'>69/299</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">12.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>1/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.04% </span>
+                <span class="strong">23.07% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>39/299</span>
+                <span class='fraction'>69/299</span>
             </div>
         
             
@@ -386,36 +386,36 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -684,37 +684,37 @@ export class InputRepository
   DeleteInputRepository,
   UpdateInputRepository {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  async create(input: CreateInputModel): Promise&lt;InputModel&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const createInput = await Input.create({</span>
-<span class="cstat-no" title="statement not covered" >      data: {</span>
-<span class="cstat-no" title="statement not covered" >        ...input,</span>
-<span class="cstat-no" title="statement not covered" >        groups: {</span>
-<span class="cstat-no" title="statement not covered" >          create: input.groups.map((groupId) =&gt; ({</span>
-<span class="cstat-no" title="statement not covered" >            groupId,</span>
-<span class="cstat-no" title="statement not covered" >          })),</span>
-<span class="cstat-no" title="statement not covered" >        },</span>
-<span class="cstat-no" title="statement not covered" >      },</span>
-<span class="cstat-no" title="statement not covered" >      select: {</span>
-<span class="cstat-no" title="statement not covered" >        id: true,</span>
-<span class="cstat-no" title="statement not covered" >        name: true,</span>
-<span class="cstat-no" title="statement not covered" >        unitPrice: true,</span>
-<span class="cstat-no" title="statement not covered" >        measurementUnit: true,</span>
-<span class="cstat-no" title="statement not covered" >        code: true,</span>
-<span class="cstat-no" title="statement not covered" >        groups: {</span>
-<span class="cstat-no" title="statement not covered" >          include: {</span>
-<span class="cstat-no" title="statement not covered" >            group: {</span>
-<span class="cstat-no" title="statement not covered" >              select: {</span>
-<span class="cstat-no" title="statement not covered" >                id: true,</span>
-<span class="cstat-no" title="statement not covered" >                name: true,</span>
-<span class="cstat-no" title="statement not covered" >              },</span>
-<span class="cstat-no" title="statement not covered" >            },</span>
-<span class="cstat-no" title="statement not covered" >          },</span>
-<span class="cstat-no" title="statement not covered" >        },</span>
-<span class="cstat-no" title="statement not covered" >      },</span>
-<span class="cstat-no" title="statement not covered" >    });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    return mapperInput(createInput);</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  async create(input: CreateInputModel): Promise&lt;InputModel&gt; {
+    const createInput = await Input.create({
+      data: {
+        ...input,
+        groups: {
+          create: input.groups.map((groupId) =&gt; ({
+            groupId,
+          })),
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        unitPrice: true,
+        measurementUnit: true,
+        code: true,
+        groups: {
+          include: {
+            group: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+&nbsp;
+    return mapperInput(createInput);
+  }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  async loadById(id: string): Promise&lt;InputModel | null&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    const db = await Input.findUnique({</span>
@@ -967,7 +967,7 @@ export class InputRepository
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-01T01:33:42.481Z
+                at 2024-04-07T23:55:12.699Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

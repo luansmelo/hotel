@@ -11,7 +11,7 @@ export class AddInputToProductUseCase implements AddInputToProductUseCaseContrac
   ) { }
 
   async addProduct(productModel: AddInputToProductModel): Promise<Partial<{ count: number }>> {
-    const product = await this.findProduct.loadPredefinedProduct(productModel.id);
+    const product = await this.findProduct.loadPredefinedProduct(productModel.productId);
 
     if (!product) {
       throw new ProductNotFoundError();
@@ -29,7 +29,7 @@ export class AddInputToProductUseCase implements AddInputToProductUseCaseContrac
     }
 
     return this.input.addInput({
-      id: productModel.id,
+      productId: productModel.productId,
       inputs: uniqueInputs,
     });
   }

@@ -5,7 +5,7 @@ export interface InputToProduct {
 }
 
 export interface AddInputToProductModel {
-  id: string;
+  productId: string;
   inputs: InputToProduct[];
 }
 
