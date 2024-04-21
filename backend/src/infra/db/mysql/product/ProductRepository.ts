@@ -1,7 +1,7 @@
 import { mapperProduct } from "@/data/usecases/product/mapper/mapperProduct";
 import { CreateProductRepository } from "@/data/protocols/db/product/CreateProductRepository.protocol";
 import { CreateProductModel } from "@/domain/usecases/product/CreateProduct";
-import { ProductModel } from "@/domain/models/Product";
+import { ProductModel, Status } from "@/domain/models/Product";
 import { Product, InputOnProducts } from "@/data/local/entity/product";
 import { AddInputToProductRepository } from "@/data/protocols/db/product/AddInputToProductRepository.protocol";
 import { LoadProductByIdRepository } from "@/data/protocols/db/product/LoadProductByIdRepository.protocol";
@@ -32,6 +32,7 @@ export class ProductRepository
     return Product.create({
       data: {
         ...input,
+        status: 'INCOMPLETE'
       },
     });
   }
@@ -98,6 +99,7 @@ export class ProductRepository
             grammage: true,
             input: {
               select: {
+                id: true,
                 name: true,
                 groups: {
                   select: {
@@ -175,17 +177,17 @@ export class ProductRepository
       where: { id },
       data: {
         ...input,
+        status: Status[input.status],
         inputs: {
-          updateMany:
-            input?.inputs?.map((input) => ({
-              where: { inputId: input.id },
-              data: {
-                grammage: input.grammage,
-                measurementUnit: input.measurementUnit,
-              },
-            })) || [],
-        },
-      },
+          updateMany: input?.inputs?.map((inputUpdated) => ({
+            where: { inputId: inputUpdated.id },
+            data: {
+              grammage: inputUpdated.grammage,
+              measurementUnit: inputUpdated.measurementUnit.name
+            },
+          })) || [],
+        }
+      }
     });
   }
 
@@ -196,6 +198,7 @@ export class ProductRepository
   }
 
   async addInput(input: AddInputToProductModel): Promise<Partial<{ count: number }>> {
+
     const data = input.inputs.map((inputItem) => ({
       productId: input.productId,
       inputId: inputItem.id as string,
@@ -209,6 +212,7 @@ export class ProductRepository
   async deleteProduct(
     input: RemoveInputToProductModel
   ): Promise<Partial<{ count: number }>> {
+
     return InputOnProducts.deleteMany({
       where: {
         productId: input.productId,

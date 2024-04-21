@@ -1,4 +1,4 @@
-import { ProductModel } from "@/domain/models/Product";
+import { ProductModel, Status } from "@/domain/models/Product";
 
 export interface CreateProductModel {
     name: string;
@@ -6,6 +6,7 @@ export interface CreateProductModel {
     preparationTime: string;
     resource: string;
     accession: number;
+    status?: string
     photo_url?: string;
 }
 

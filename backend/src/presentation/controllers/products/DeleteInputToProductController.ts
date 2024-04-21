@@ -11,7 +11,7 @@ export class DeleteInputToProductController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const product = httpRequest.params as RemoveInputToProductModel
-
+      
       const deletedProduct = await this.product.deleteProduct(product)
 
       return ok(deletedProduct)

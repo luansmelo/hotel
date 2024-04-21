@@ -16,6 +16,6 @@ export class UpdateProductByIdUseCase implements UpdateProductUseCaseContract {
       throw new ProductNotFoundError();
     }
 
-    return this.updateProduct.updateById(product.id, input);
+    return this.updateProduct.updateById(product.id, { ...input });
   }
 }

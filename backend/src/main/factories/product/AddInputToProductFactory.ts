@@ -6,7 +6,7 @@ import { ProductRepository } from "@/infra/db/mysql/product/ProductRepository";
 export function makeAddInputToProductController(): AddInputToProductController {
   const repo = new ProductRepository();
 
-  const createProduct = new AddInputToProductUseCase(repo, repo);
+  const createProduct = new AddInputToProductUseCase(repo, repo, repo);
 
   return new AddInputToProductController(createProduct);
 }
