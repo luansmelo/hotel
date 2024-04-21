@@ -1,5 +1,5 @@
-import { UserModel } from "@/domain/models/User";
+import { FindUsersParams, FindUsersResponse } from "@/domain/usecases/user/FindUsersParams";
 
 export interface LoadUsersRepository {
-    loadAll(): Promise<UserModel[] | null>
+    loadAll(params: FindUsersParams): Promise<FindUsersResponse>
 }

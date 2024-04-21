@@ -182,15 +182,13 @@ export class InputRepository
       ? parseInt(process.env.PAGE_LIMIT)
       : 10;
     const offset = (page - 1) * limit;
-    const order = findParams.order || "ASC";
+    const order = findParams.order || "asc";
     const sort = findParams.sort || "name";
 
     const input = await Input.findMany({
-      orderBy: [
-        {
-          [sort]: order,
-        },
-      ],
+      orderBy: {
+        [sort]: order,
+      },
       include: {
         measurementUnit: {
           select: {

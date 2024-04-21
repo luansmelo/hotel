@@ -17,7 +17,7 @@ export class FindInputsController implements Controller {
     try {
       const params = request.query as FindInputsParams;
       const error = this.validation.validate(params);
-
+      
       if (error) {
         return badRequest(error);
       }

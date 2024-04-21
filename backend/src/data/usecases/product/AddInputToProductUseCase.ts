@@ -17,20 +17,21 @@ export class AddInputToProductUseCase implements AddInputToProductUseCaseContrac
       throw new ProductNotFoundError();
     }
 
-    const existingInputIds = new Set(product.inputs.map((input) => input.id));
-    const uniqueInputs = productModel.inputs.filter(
-      (input) => !existingInputIds.has(input.id)
-    );
+    console.log("lista que chega", productModel.inputs)
 
-    if (!uniqueInputs.length) {
-      throw new InputAlreadyExistsError(
-        "Todos os insumos já estão inclusos no produto"
-      );
-    }
+//    const existingInputIds = new Set(product.inputs.map((input) => input.id));
+  //  const uniqueInputs = productModel.inputs.filter(
+    //  (input) => !existingInputIds.has(input.id)
+    //);
 
-    return this.input.addInput({
-      productId: productModel.productId,
-      inputs: uniqueInputs,
-    });
+    //console.log("Lista única", uniqueInputs)
+
+    //if (!uniqueInputs.length) {
+     // throw new InputAlreadyExistsError(
+      //  "Todos os insumos já estão inclusos no produto"
+    //  );
+    //}
+
+    return this.input.addInput(productModel);
   }
 }

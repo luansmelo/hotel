@@ -8,6 +8,8 @@ import { LoadUsersRepository } from "@/data/protocols/db/user/LoadUsersRepositor
 import { LoadUserByTokenRepository } from "@/data/protocols/db/user/LoadUserByTokenRepository.protocol";
 import { CreateUserModel } from "@/domain/usecases/user/CreateUser";
 import { UpdateUserRepository } from "@/data/protocols/db/user/UpdateUserRepository.protocol";
+import { FindUsersResponse } from "@/domain/usecases/user/FindUsersParams";
+import { FindGroupsParams } from "@/domain/usecases/group/FindGroupsParams";
 
 export class UserRepository
   implements CreateUserRepository,
@@ -40,8 +42,32 @@ export class UserRepository
     });
   }
 
-  async loadAll(): Promise<UserModel[]> {
-    return User.findMany()
+  async loadAll(findParams: FindGroupsParams): Promise<FindUsersResponse> {
+    const page = findParams.page || 1;
+    const limit = process.env.PAGE_LIMIT
+      ? parseInt(process.env.PAGE_LIMIT)
+      : 10;
+    const offset = (page - 1) * limit;
+    const order = findParams.order || "asc";
+    const sort = findParams.sort || "name";
+
+    const users = await User.findMany({
+      orderBy:
+      {
+        [sort]: order,
+      },
+      take: limit,
+      skip: offset,
+    });
+
+    const totalItems = users.length;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return {
+      users,
+      totalPages,
+      totalItems,
+    };
   }
 
   async updateById(id: string, data: Partial<CreateUserModel>): Promise<Partial<UserModel>> {
