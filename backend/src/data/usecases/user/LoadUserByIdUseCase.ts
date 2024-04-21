@@ -7,6 +7,11 @@ export class LoadUserByIdUseCase implements LoadUserByIdUseCaseContract {
   constructor(private readonly user: LoadUserByIdRepository) {}
 
   async loadById(id: string): Promise<UserModel> {
-    return this.user.loadById(id);
+    const user = await this.user.loadById(id);
+
+    return {
+      ...user,
+      password: undefined
+    }
   }
 }

@@ -11,6 +11,7 @@ import { UpdateUserRepository } from "@/data/protocols/db/user/UpdateUserReposit
 import { FindUsersResponse } from "@/domain/usecases/user/FindUsersParams";
 import { FindGroupsParams } from "@/domain/usecases/group/FindGroupsParams";
 import { LoadUserByIdRepository } from "@/data/protocols/db/user/LoadUserByIdRepository.protocol";
+import { DeleteUserRepository } from "@/data/protocols/db/user/DeleteUserRepository.protocol.ts";
 
 export class UserRepository
   implements CreateUserRepository,
@@ -18,7 +19,8 @@ export class UserRepository
   LoadUsersRepository,
   LoadUserByTokenRepository,
   LoadUserByIdRepository,
-  UpdateUserRepository {
+  UpdateUserRepository,
+  DeleteUserRepository {
 
   async create(input: CreateUserModel): Promise<UserModel> {
 
@@ -84,5 +86,9 @@ export class UserRepository
         role: data.role as ROLE
       }
     })
+  }
+
+  async deleteById(id: string): Promise<UserModel> {
+    return User.delete({ where: { id } })
   }
 }

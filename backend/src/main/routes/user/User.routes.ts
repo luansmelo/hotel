@@ -6,6 +6,7 @@ import { makeAuthAdminMiddleware } from "@/main/factories/middlewares/AuthAdminM
 import { makeLoadUsersFactory } from "@/main/factories/user/LoadUsersFactory";
 import { makeFindUserById } from "@/main/factories/user/LoadUserByIdFactory";
 import { makeUpdateUser } from "@/main/factories/user/UpdateUserFactory";
+import { makeDeleteUser } from "@/main/factories/user/DeleteUserFactory";
 
 export default (router: Router): void => {
   const userRouter = Router();
@@ -14,8 +15,9 @@ export default (router: Router): void => {
   userRouter.get("/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeLoadUsersFactory()));
 
   // admin router 
-  userRouter.get("/user/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeFindUserById()));
-  userRouter.put("/user/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateUser()));
+  userRouter.get("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeFindUserById()));
+  userRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateUser()));
+  userRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteUser()));
 
   router.use('/user', userRouter);
 }
