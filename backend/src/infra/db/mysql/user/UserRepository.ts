@@ -10,12 +10,14 @@ import { CreateUserModel } from "@/domain/usecases/user/CreateUser";
 import { UpdateUserRepository } from "@/data/protocols/db/user/UpdateUserRepository.protocol";
 import { FindUsersResponse } from "@/domain/usecases/user/FindUsersParams";
 import { FindGroupsParams } from "@/domain/usecases/group/FindGroupsParams";
+import { LoadUserByIdRepository } from "@/data/protocols/db/user/LoadUserByIdRepository.protocol";
 
 export class UserRepository
   implements CreateUserRepository,
   LoadUserByEmailRepository,
   LoadUsersRepository,
   LoadUserByTokenRepository,
+  LoadUserByIdRepository,
   UpdateUserRepository {
 
   async create(input: CreateUserModel): Promise<UserModel> {
@@ -30,6 +32,10 @@ export class UserRepository
 
   async loadByEmail(email: string): Promise<UserModel | null> {
     return User.findUnique({ where: { email } });
+  }
+
+  async loadById(id: string): Promise<UserModel | null> {
+    return User.findUnique({ where: { id } });
   }
 
   async loadByIdAndRole(id: string, role?: string): Promise<UserModel | null> {

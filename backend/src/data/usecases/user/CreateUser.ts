@@ -1,6 +1,4 @@
-import { InvalidCredentialsError } from "@/presentation/errors/InvalidCredentialsError";
 import { CreateUserRepository } from "@/data/protocols/db/user/CreateUserRepository.protocol";
-import { EmailValidator } from "@/utils/EmailValidatorAdapter";
 import { Hasher } from "@/data/protocols/cryptography";
 import { CreateUser, CreateUserModel } from "@/domain/usecases/user/CreateUser";
 import { UserModel } from "@/domain/models/User";
