@@ -13,6 +13,7 @@ import { CreateMenuModel } from "@/domain/usecases/menu/CreateMenu";
 import { RemoveProductModel } from "@/domain/usecases/menu/DeleteProductToMenu";
 import { LoadMenuRepository } from "@/data/protocols/db/menu/LoadMenuRepository";
 import { FindMenuModel } from "@/domain/usecases/menu/LoadMenu";
+import { FindMenuParams, FindMenuResponse } from "@/domain/usecases/menu/FindMenuParams";
 
 export class MenuRepository
   implements
@@ -67,8 +68,12 @@ export class MenuRepository
       include: {
         categoryProductSchedule: {
           where: {
-            categoryId: input.categoryId,
-            weekDay: input.day,
+            AND: [
+              {
+                categoryId: input.categoryId,
+                weekDay: input.weekDay,
+              }
+            ]
           },
           include: {
             category: {
@@ -93,7 +98,7 @@ export class MenuRepository
                     },
                   },
                   where: {
-                    weekDay: input.day,
+                    weekDay: input.weekDay,
                     categoryId: input.categoryId,
                     menuId: input.menuId,
                   },
@@ -110,8 +115,20 @@ export class MenuRepository
     return mapperMenu(menu);
   }
 
-  async loadAll(): Promise<MenuModel[] | null> {
+  async loadAll(findParams: FindMenuParams): Promise<FindMenuResponse> {
+    const page = findParams.page || 1;
+    const limit = process.env.PAGE_LIMIT
+      ? parseInt(process.env.PAGE_LIMIT)
+      : 10;
+    const offset = (page - 1) * limit;
+    const order = findParams.order || "asc";
+    const sort = findParams.sort || "name";
+
     const menu = await Menu.findMany({
+      orderBy:
+      {
+        [sort]: order,
+      },
       include: {
         categoryProductSchedule: {
           include: {
@@ -119,9 +136,18 @@ export class MenuRepository
           },
         },
       },
+      take: limit,
+      skip: offset,
     });
 
-    return menu.map((menu) => mapperMenu(menu));
+    const totalItems = menu.length;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return {
+      menus: menu.map((menu) => mapperMenu(menu)),
+      totalPages,
+      totalItems,
+    };
   }
 
   async deleteProduct(input: RemoveProductModel): Promise<void> {
@@ -141,7 +167,7 @@ export class MenuRepository
         menuId: item.menuId,
         categoryId: item.categoryId,
         productId: item.productId,
-        weekDay: item.weekDay,
+        weekDay: item.weekDay.toUpperCase(),
       })),
     });
   }

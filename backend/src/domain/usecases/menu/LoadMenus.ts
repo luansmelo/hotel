@@ -1,5 +1,5 @@
-import { MenuModel } from "@/domain/models/Menu";
+import { FindMenuParams, FindMenuResponse } from "./FindMenuParams";
 
 export interface LoadMenusUseCaseContract {
-  loadAll(): Promise<MenuModel[] | null>;
+  loadAll(findParams: FindMenuParams): Promise<FindMenuResponse>;
 }

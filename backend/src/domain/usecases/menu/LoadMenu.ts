@@ -3,7 +3,7 @@ import { MenuModel } from "@/domain/models/Menu";
 export interface FindMenuModel {
   menuId: string;
   categoryId: string;
-  day: string;
+  weekDay: string;
 }
 
 export interface LoadMenuUseCaseContract {

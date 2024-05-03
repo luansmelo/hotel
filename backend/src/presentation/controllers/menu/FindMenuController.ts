@@ -13,7 +13,7 @@ export class FindMenuController implements Controller {
     try {
 
       const param = httpRequest.params as FindMenuModel
-
+      
       const menu = await this.menu.loadMenu(param)
 
       if (!menu) {

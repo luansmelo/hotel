@@ -1,11 +1,14 @@
 import { FindMenusController } from "@/presentation/controllers/menu/FindMenusController";
-import { FindMenusUseCase } from "@/data/usecases/menu/FindMenusUseCase";
 import { MenuRepository } from "@/infra/db/mysql/menu/MenuRepository";
+import { ValidationComposite } from "@/validation/validators";
+import { SortMenuValidator } from "@/validation/validators/SortMenuValidator";
 
 export function makeFindMenusController(): FindMenusController {
   const repo = new MenuRepository();
 
-  const menu = new FindMenusUseCase(repo);
+  const validation = new SortMenuValidator();
 
-  return new FindMenusController(menu);
+  const composition = new ValidationComposite([validation]);
+
+  return new FindMenusController(repo, composition);
 }

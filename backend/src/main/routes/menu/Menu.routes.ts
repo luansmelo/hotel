@@ -19,7 +19,7 @@ import { makeAuthAdminMiddleware } from "../../factories/middlewares/AuthAdminMi
 export default (router: Router): void => {
   const menuRouter = Router();
 
-  menuRouter.get("/production/map", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMenuController()));
+  menuRouter.get("/map/:menuId/category/:categoryId/weekDay/:weekDay", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMenuController()));
   menuRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMenuByIdController()));
   menuRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMenusController()));
 
