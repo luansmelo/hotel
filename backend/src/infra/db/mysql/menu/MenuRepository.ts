@@ -86,6 +86,8 @@ export class MenuRepository
                         id: true,
                         name: true,
                         description: true,
+                        status: true,
+                        accession: true,
                         inputs: {
                           select: {
                             id: true,

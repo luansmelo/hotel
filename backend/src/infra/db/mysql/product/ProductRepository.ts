@@ -143,6 +143,7 @@ export class ProductRepository
           select: {
             id: true,
             grammage: true,
+            measurementUnit: true,
             input: {
               select: {
                 id: true,
@@ -183,7 +184,7 @@ export class ProductRepository
             where: { inputId: inputUpdated.id },
             data: {
               grammage: inputUpdated.grammage,
-              measurementUnit: inputUpdated.measurementUnit.name
+              measurementUnit: inputUpdated.measurementUnit
             },
           })) || [],
         }

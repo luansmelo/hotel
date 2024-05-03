@@ -17,12 +17,7 @@ export function mapperProduct(product: any) {
       code: input.input.code,
       grammage: input.grammage,
       unitPrice: input.input.unitPrice,
-      measurementUnit: {
-        id: input.input.measurementUnit.id,
-        name: input.input.measurementUnit.name,
-        createdAt: input.input.measurementUnit.createdAt,
-        updatedAt: input.input.measurementUnit.updatedAt,
-      },
+      measurementUnit: input.measurementUnit,
       groups: input.input.groups.map((group) => ({
         id: group.group.id,
         name: group.group.name,

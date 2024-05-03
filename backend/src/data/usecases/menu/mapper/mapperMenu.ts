@@ -22,6 +22,8 @@ export function mapperMenu(menu: any) {
             name: schedule.product.name,
             description: schedule.product.description,
             weekDay: schedule.weekDay,
+            accession: schedule.product.accession,
+            status: schedule.product.status,
             inputs: schedule.product.inputs.map((input: any) => ({
               id: input?.input.id,
               name: input?.input.name,

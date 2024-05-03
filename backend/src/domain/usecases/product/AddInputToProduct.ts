@@ -1,8 +1,6 @@
-import { MeasureModel } from "@/domain/models/Measure";
-
 export interface InputToProduct {
   id: string;
-  measurementUnit: MeasureModel;
+  measurementUnit: string;
   grammage: number;
 }
 
