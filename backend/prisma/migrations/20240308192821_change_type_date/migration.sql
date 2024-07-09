@@ -11,8 +11,8 @@
   - You are about to alter the column `updated_at` on the `input` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `DateTime(3)`.
   - You are about to alter the column `created_at` on the `inputsOnProducts` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
   - You are about to alter the column `updated_at` on the `inputsOnProducts` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
-  - You are about to alter the column `created_at` on the `measurementUnit` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
-  - You are about to alter the column `updated_at` on the `measurementUnit` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
+  - You are about to alter the column `created_at` on the `measurement` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
+  - You are about to alter the column `updated_at` on the `measurement` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
   - You are about to alter the column `created_at` on the `menu` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
   - You are about to alter the column `updated_at` on the `menu` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
   - You are about to alter the column `created_at` on the `product` table. The data in that column could be lost. The data in that column will be cast from `VarChar(191)` to `Timestamp(6)`.
@@ -35,7 +35,7 @@ ALTER TABLE `categoryProductSchedule` DROP FOREIGN KEY `categoryProductSchedule_
 ALTER TABLE `categoryProductSchedule` DROP FOREIGN KEY `categoryProductSchedule_productId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `input` DROP FOREIGN KEY `input_measurementUnitId_fkey`;
+ALTER TABLE `input` DROP FOREIGN KEY `input_measurementId_fkey`;
 
 -- DropForeignKey
 ALTER TABLE `inputsOnProducts` DROP FOREIGN KEY `inputsOnProducts_inputId_fkey`;
@@ -67,7 +67,7 @@ ALTER TABLE `inputsOnProducts` MODIFY `created_at` TIMESTAMP(6) NOT NULL DEFAULT
     MODIFY `updated_at` TIMESTAMP(6) NOT NULL;
 
 -- AlterTable
-ALTER TABLE `measurementUnit` MODIFY `created_at` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+ALTER TABLE `measurement` MODIFY `created_at` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     MODIFY `updated_at` TIMESTAMP(6) NOT NULL;
 
 -- AlterTable
@@ -99,7 +99,7 @@ ALTER TABLE `inputsOnProducts` ADD CONSTRAINT `inputsOnProducts_inputId_fkey` FO
 ALTER TABLE `inputsOnProducts` ADD CONSTRAINT `inputsOnProducts_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `input` ADD CONSTRAINT `input_measurementUnitId_fkey` FOREIGN KEY (`measurementUnitId`) REFERENCES `measurementUnit`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `input` ADD CONSTRAINT `input_measurementId_fkey` FOREIGN KEY (`measurementId`) REFERENCES `measurement`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `categoryProductSchedule` ADD CONSTRAINT `categoryProductSchedule_menuId_fkey` FOREIGN KEY (`menuId`) REFERENCES `menu`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -24,10 +24,10 @@ export default (router: Router): void => {
   productRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindProductByIdController()));
 
   // Admin Routes
-  productRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateProductController()));
+  productRouter.post("/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateProductController()));
   productRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteProductController()));
-  productRouter.post("/add/input/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeAddInputToProductController()))
-  productRouter.delete("/:productId/input/:inputId", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteInputToProductController()));
+  productRouter.post("/add/ingredient/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeAddInputToProductController()))
+  productRouter.delete("/:productId/ingredient/:ingredientId", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteInputToProductController()));
   productRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateProductController()));
 
   router.use('/product', productRouter);

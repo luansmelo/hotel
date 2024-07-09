@@ -13,14 +13,14 @@ services:
     ports:
       - "3306:3306"
 
-  # application:
-  #   build:
-  #     context: backend
-  #   container_name: application
-  #   ports:
-  #     - "3003:3003"
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     DATABASE_URL: "mysql://root:docker@db:3306/hotel"
+##  application:
+##    build:
+##      context: backend
+##    container_name: application
+##    ports:
+##      - "3003:3003"
+##    depends_on:
+##      - db
+##    environment:
+##      DATABASE_URL: "mysql://root:docker@db:3306/hotel"
 

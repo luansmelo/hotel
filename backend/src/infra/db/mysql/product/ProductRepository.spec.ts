@@ -1,6 +1,6 @@
 import prisma from "@/config/prisma";
 import { ProductRepository } from "./ProductRepository";
-import { InputRepository } from "../input/InputRepository";
+import { IngredientRepository } from "../ingredient/IngredientRepository";
 import { MeasureRepository } from "../measure/MeasureRepository";
 import { GroupRepository } from "../group/GroupRepository";
 
@@ -18,7 +18,7 @@ const makeFakeInput = () => ({
     name: 'any_name',
     code: 'any_code',
     unitPrice: 3,
-    measurementUnitId: 'any_measure_id',
+    measurementId: 'any_measure_id',
     groups: ["any_id"]
 });
 
@@ -28,19 +28,19 @@ const makeFakeGroup = () => ({
 
 const makeFakeAddInputToProduct = () => ({
     productId: "any_id",
-    inputs: [
+    ingredients: [
         {
             id: "any_input_id",
             grammage: 4,
-            measurementUnit: "any_measure"
+            measurement: "any_measure"
         }
     ]
 });
 
 const makeSut = () => ({
     product: new ProductRepository(),
-    input: new InputRepository(),
-    measurementUnit: new MeasureRepository(),
+    input: new IngredientRepository(),
+    measurement: new MeasureRepository(),
     group: new GroupRepository()
 });
 
@@ -49,7 +49,7 @@ describe('Product MySQL Repository', () => {
         await prisma.$executeRaw`DELETE FROM \`group\`;`;
         await prisma.$executeRaw`DELETE FROM \`input\`;`;
         await prisma.$executeRaw`DELETE FROM product;`;
-        await prisma.$executeRaw`DELETE FROM measurementUnit;`;
+        await prisma.$executeRaw`DELETE FROM measurement;`;
     });
 
     afterAll(async () => {
@@ -64,16 +64,16 @@ describe('Product MySQL Repository', () => {
     });
 
     it('should add inputs to the product on success', async () => {
-        const { product, group, input, measurementUnit } = makeSut();
+        const { product, group, input, measurement } = makeSut();
 
         const groupCreate = await group.create(makeFakeGroup());
 
-        const measurement = await measurementUnit.create({ name: 'any_measure' });
+        const measurementResponse = await measurement.create({ name: 'any_measure' });
 
         const data = {
             ...makeFakeInput(),
-            groups: [groupCreate.id],
-            measurementUnitId: measurement.id as string
+            groupIds: [groupCreate.id],
+            measurementId: measurementResponse.id as string
         };
 
         await input.create(data);
@@ -85,16 +85,16 @@ describe('Product MySQL Repository', () => {
     });
 
     it('should delete an inputs on success on delete inputs', async () => {
-        const { product, group, input, measurementUnit } = makeSut();
+        const { product, group, input, measurement } = makeSut();
 
         const groupCreate = await group.create(makeFakeGroup());
 
-        const measurement = await measurementUnit.create({ name: 'any_measure' });
+        const measurementResponse = await measurement.create({ name: 'any_measure' });
 
         const data = {
             ...makeFakeInput(),
-            groups: [groupCreate.id],
-            measurementUnitId: measurement.id as string
+            groupIds: [groupCreate.id],
+            measurementId: measurementResponse.id as string
         };
 
         const inputCreated = await input.create(data);
@@ -103,7 +103,7 @@ describe('Product MySQL Repository', () => {
 
         await product.addInput(makeFakeAddInputToProduct());
 
-        const removeInput = await product.deleteProduct({ productId: createdProduct.id, inputId: inputCreated.id })
+        const removeInput = await product.deleteProduct({ productId: createdProduct.id, ingredientId: inputCreated.id })
 
         expect(removeInput).toBeTruthy()
     });
@@ -128,7 +128,7 @@ describe('Product MySQL Repository', () => {
         const createProduct = await sut.product.create(makeFakeProduct());
         const updateProduct = await sut.product.updateById(createProduct.id, {
             name: 'new_name',
-            inputs: null
+            ingredients: null
         });
 
         expect(updateProduct.name).toBe('new_name');

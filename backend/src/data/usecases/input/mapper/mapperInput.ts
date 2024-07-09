@@ -5,7 +5,7 @@ export function mapperInput(input: any) {
     code: input.code,
     unitPrice: input.unitPrice,
     grammage: input.grammage,
-    measurementUnit: input.measurementUnit,
+    measurement: input.measurement,
     groups: input.groups.map((group) => group.group),
   };
 }

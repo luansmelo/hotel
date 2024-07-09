@@ -1,9 +1,9 @@
-import { DeleteInputController } from "@/presentation/controllers/input/DeleteInputController";
+import { DeleteInputController } from "@/presentation/controllers/ingredient/DeleteIngredientController";
 import { DeleteInputUseCase } from "@/data/usecases/input/DeleteInputUseCase";
-import { InputRepository } from "@/infra/db/mysql/input/InputRepository";
+import { IngredientRepository } from "@/infra/db/mysql/ingredient/IngredientRepository";
 
 export function makeDeleteInputController(): DeleteInputController {
-  const repo = new InputRepository();
+  const repo = new IngredientRepository();
 
   const deleteInput = new DeleteInputUseCase(repo, repo);
 

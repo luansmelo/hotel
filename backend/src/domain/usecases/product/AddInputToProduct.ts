@@ -1,18 +1,18 @@
 export interface InputToProduct {
   id: string;
-  measurementUnit: string;
+  measurement: string;
   grammage: number;
 }
 
 export interface InputAddProduct {
   id: string;
-  measurementUnit: string;
+  measurement: string;
   grammage: number;
 }
 
 export interface AddInputToProductModel {
   productId: string;
-  inputs: InputAddProduct[];
+  ingredients: InputAddProduct[];
 }
 
 export interface AddInputToProductUseCaseContract {

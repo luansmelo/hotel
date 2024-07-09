@@ -1,4 +1,4 @@
 import prisma from "@/config/prisma";
 
 export const Product = prisma.product;
-export const InputOnProducts = prisma.inputsOnProducts
+export const InputOnProducts = prisma.ingredientsOnProducts

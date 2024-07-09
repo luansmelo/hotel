@@ -29,7 +29,7 @@ CREATE TABLE `inputsOnProducts` (
     `productId` VARCHAR(191) NOT NULL,
     `inputId` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `measurementUnit` VARCHAR(191) NOT NULL,
+    `measurement` VARCHAR(191) NOT NULL,
     `grammage` DOUBLE NOT NULL,
     `created_at` VARCHAR(191) NOT NULL,
     `updated_at` VARCHAR(191) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `input` (
     `code` VARCHAR(191) NOT NULL,
     `unitPrice` DOUBLE NOT NULL,
     `group` VARCHAR(191) NOT NULL,
-    `measurementUnit` VARCHAR(191) NOT NULL,
+    `measurement` VARCHAR(191) NOT NULL,
     `created_at` VARCHAR(191) NOT NULL,
     `updated_at` VARCHAR(191) NOT NULL,
 
@@ -108,13 +108,13 @@ CREATE TABLE `group` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `measurementUnit` (
+CREATE TABLE `measurement` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `created_at` VARCHAR(191) NOT NULL,
     `updated_at` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `measurementUnit_name_key`(`name`),
+    UNIQUE INDEX `measurement_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

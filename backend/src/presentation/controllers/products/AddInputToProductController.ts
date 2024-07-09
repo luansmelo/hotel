@@ -14,7 +14,6 @@ export class AddInputToProductController implements Controller {
     try {
 
       const input = httpRequest.body as AddInputToProductModel
-      console.log("INPUT", input)
 
       const product = await this.product.addProduct(input)
 

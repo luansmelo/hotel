@@ -41,11 +41,11 @@ export class ProductRepository
     const product = await Product.findUnique({
       where: { id },
       include: {
-        inputs: {
+        ingredients: {
           select: {
             id: true,
             grammage: true,
-            input: {
+            ingredient: {
               select: {
                 name: true,
                 groups: {
@@ -59,7 +59,7 @@ export class ProductRepository
                   },
                 },
                 unitPrice: true,
-                measurementUnit: true,
+                measurement: true,
                 code: true,
               },
             },
@@ -93,11 +93,11 @@ export class ProductRepository
         [sort]: order,
       },
       include: {
-        inputs: {
+        ingredients: {
           select: {
             id: true,
             grammage: true,
-            input: {
+            ingredient: {
               select: {
                 id: true,
                 name: true,
@@ -112,7 +112,7 @@ export class ProductRepository
                   },
                 },
                 unitPrice: true,
-                measurementUnit: true,
+                measurement: true,
                 code: true,
               },
             },
@@ -139,12 +139,12 @@ export class ProductRepository
     const product = await Product.findFirst({
       where: { id },
       include: {
-        inputs: {
+        ingredients: {
           select: {
             id: true,
             grammage: true,
-            measurementUnit: true,
-            input: {
+            measurement: true,
+            ingredient: {
               select: {
                 id: true,
                 name: true,
@@ -159,7 +159,7 @@ export class ProductRepository
                   },
                 },
                 unitPrice: true,
-                measurementUnit: true,
+                measurement: true,
                 code: true,
               },
             },
@@ -179,12 +179,12 @@ export class ProductRepository
       data: {
         ...input,
         status: Status[input.status],
-        inputs: {
-          updateMany: input?.inputs?.map((inputUpdated) => ({
-            where: { inputId: inputUpdated.id },
+        ingredients: {
+          updateMany: input?.ingredients?.map((inputUpdated) => ({
+            where: { ingredientId: inputUpdated.id },
             data: {
               grammage: inputUpdated.grammage,
-              measurementUnit: inputUpdated.measurementUnit
+              measurement: inputUpdated.measurement
             },
           })) || [],
         }
@@ -200,10 +200,10 @@ export class ProductRepository
 
   async addInput(input: AddInputToProductModel): Promise<Partial<{ count: number }>> {
 
-    const data = input.inputs.map((inputItem) => ({
+    const data = input.ingredients.map((inputItem) => ({
       productId: input.productId,
-      inputId: inputItem.id as string,
-      measurementUnit: inputItem.measurementUnit,
+      ingredientId: inputItem.id as string,
+      measurement: inputItem.measurement,
       grammage: inputItem.grammage,
     }));
 
@@ -217,7 +217,7 @@ export class ProductRepository
     return InputOnProducts.deleteMany({
       where: {
         productId: input.productId,
-        inputId: input.inputId,
+        ingredientId: input.ingredientId,
       },
     });
   }

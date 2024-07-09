@@ -1,13 +1,11 @@
-import { FindInputsController } from "@/presentation/controllers/input/FindInputController";
-
+import { FindInputsController } from "@/presentation/controllers/ingredient/FindIngredientController";
 import { FindInputsUseCase } from "@/data/usecases/input/FindInputsUseCase";
-
-import { InputRepository } from "@/infra/db/mysql/input/InputRepository";
+import { IngredientRepository } from "@/infra/db/mysql/ingredient/IngredientRepository";
 import { SortInputValidator } from "@/validation/validators/SortInputValidator";
 import { ValidationComposite } from "@/validation/validators";
 
 export function makeFindInputsController(): FindInputsController {
-  const repo = new InputRepository();
+  const repo = new IngredientRepository();
 
   const inputs = new FindInputsUseCase(repo);
 

@@ -16,8 +16,8 @@ export class AddProductToMenuUseCase implements AddProductToMenuUseCaseContract 
       throw new MenuNotFoundError();
     }
 
-    const products = menuModel.product.flatMap(({ productId, weekDay }) =>
-      weekDay.map((day) => ({
+    const products = menuModel.products.flatMap(({ productId, weekDays }) =>
+      weekDays.map((day) => ({
         menuId: menuModel.menuId,
         categoryId: menuModel.categoryId,
         productId,

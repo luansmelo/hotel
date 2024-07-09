@@ -8,7 +8,7 @@ describe('User Routes', () => {
     let adminToken: string;
 
     beforeEach(async () => {
-        await prisma.$executeRaw`DELETE FROM user;`;
+       // await prisma.$executeRaw`DELETE FROM user;`;
 
         const pass = await hash('adminPassword', 12);
         await User.create({

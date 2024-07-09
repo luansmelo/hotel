@@ -1,12 +1,12 @@
 export interface Product {
   productId: string;
-  weekDay: string[];
+  weekDays: string[];
 }
 
 export interface AddProductModel {
   menuId: string;
   categoryId: string;
-  product: Product[];
+  products: Product[];
 }
 
 export interface AddProductToMenuUseCaseContract {

@@ -19,8 +19,6 @@ export class AddInputToProductUseCase implements AddInputToProductUseCaseContrac
       throw new ProductNotFoundError();
     }
 
-    console.log("lista que chega", productModel.inputs)
-
     //    const existingInputIds = new Set(product.inputs.map((input) => input.id));
     //  const uniqueInputs = productModel.inputs.filter(
     //  (input) => !existingInputIds.has(input.id)

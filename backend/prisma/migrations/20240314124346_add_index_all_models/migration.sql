@@ -11,7 +11,7 @@ CREATE INDEX `groupsOnInputs_inputId_groupId_idx` ON `groupsOnInputs`(`inputId`,
 CREATE INDEX `input_code_name_unitPrice_idx` ON `input`(`code`, `name`, `unitPrice`);
 
 -- CreateIndex
-CREATE INDEX `measurementUnit_name_idx` ON `measurementUnit`(`name`);
+CREATE INDEX `measurement_name_idx` ON `measurement`(`name`);
 
 -- CreateIndex
 CREATE INDEX `menu_name_idx` ON `menu`(`name`);

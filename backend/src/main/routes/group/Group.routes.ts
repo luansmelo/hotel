@@ -19,7 +19,7 @@ export default (router: Router): void => {
   groupRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindGroupsController()));
 
   // Admin Routes
-  groupRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateGroupController()));
+  groupRouter.post("/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateGroupController()));
   groupRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateGroupController()));
   groupRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteGroupController()));
 

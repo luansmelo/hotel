@@ -9,7 +9,7 @@ describe('Measure Routes', () => {
 
     beforeEach(async () => {
         await prisma.$executeRaw`DELETE FROM user;`;
-        await prisma.$executeRaw`DELETE FROM measurementUnit;`;
+        await prisma.$executeRaw`DELETE FROM measurement;`;
 
         const pass = await hash('adminPassword', 12);
         

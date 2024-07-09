@@ -21,7 +21,7 @@ ALTER TABLE `inputsOnProducts` MODIFY `created_at` DATETIME(3) NOT NULL DEFAULT 
     MODIFY `updated_at` DATETIME(3) NOT NULL;
 
 -- AlterTable
-ALTER TABLE `measurementUnit` MODIFY `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+ALTER TABLE `measurement` MODIFY `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     MODIFY `updated_at` DATETIME(3) NOT NULL;
 
 -- AlterTable

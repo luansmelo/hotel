@@ -1,4 +1,4 @@
-import { LoadInputByNameRepository } from "@/data/protocols/db/input/LoadInputByNameRepository.protocol";
+import { LoadInputByNameRepository } from "@/data/protocols/db/input/LoadIngredientByNameRepository.protocol";
 import { InputModel } from "@/domain/models/Input";
 import { LoadInputByNameUseCaseContract } from "@/domain/usecases/input/LoadInputByName";
 

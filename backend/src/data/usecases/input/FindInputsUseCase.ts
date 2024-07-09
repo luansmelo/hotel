@@ -1,4 +1,4 @@
-import { LoadInputsRepository } from "@/data/protocols/db/input/LoadInputsRepository.protocol";
+import { LoadInputsRepository } from "@/data/protocols/db/input/LoadIngredientsRepository.protocol";
 import { FindInputsParams, FindInputsResponse } from "@/domain/usecases/input/FindInputsParams";
 import { LoadInputsUseCaseContract } from "@/domain/usecases/input/LoadInputs";
 

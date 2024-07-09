@@ -88,12 +88,30 @@ export class MenuRepository
                         description: true,
                         status: true,
                         accession: true,
-                        inputs: {
+                        ingredients: {
                           select: {
                             id: true,
-                            input: true,
+                            ingredient: {
+                              select: {
+                                id: true,
+                                name: true,
+                                groups: {
+                                  select: {
+                                    group: {
+                                      select: {
+                                        id: true,
+                                        name: true,
+                                      },
+                                    },
+                                  },
+                                },
+                                unitPrice: true,
+                                measurement: true,
+                                code: true,
+                              },
+                            },
                             grammage: true,
-                            measurementUnit: true,
+                            measurement: true,
                           },
                         },
                       },
@@ -113,7 +131,7 @@ export class MenuRepository
     });
 
     if (!menu) return null;
-
+    console.log(menu)
     return mapperMenu(menu);
   }
 

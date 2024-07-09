@@ -1,5 +1,5 @@
 import prisma from "@/config/prisma";
 
-const Measure = prisma.measurementUnit;
+const Measure = prisma.measurement;
 
 export default Measure;

@@ -11,14 +11,14 @@ export function mapperProduct(product: any) {
     createdAt: product.createdAt,
     updatedAt: product.updatedAt,
     photo_url: product.photo_url || null,
-    inputs: product?.inputs.map((input) => ({
-      id: input.input.id,
-      name: input.input.name,
-      code: input.input.code,
+    ingredients: product?.ingredients.map((input) => ({
+      id: input.ingredient.id,
+      name: input.ingredient.name,
+      code: input.ingredient.code,
       grammage: input.grammage,
-      unitPrice: input.input.unitPrice,
-      measurementUnit: input.measurementUnit,
-      groups: input.input.groups.map((group) => ({
+      unitPrice: input.ingredient.unitPrice,
+      measurement: input.ingredient.measurement,
+      groups: input.ingredient.groups.map((group) => ({
         id: group.group.id,
         name: group.group.name,
       })),

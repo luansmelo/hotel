@@ -20,9 +20,9 @@ export default (router: Router): void => {
   measureRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindMeasuresController()));
 
   // Admin Routes
-  measureRouter.post("/create", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateMeasureController()));
+  measureRouter.post("/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateMeasureController()));
   measureRouter.delete("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteMeasureController()));
   measureRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateMeasureController()));
 
-  router.use('/measure', measureRouter);
+  router.use('/measurement', measureRouter);
 }

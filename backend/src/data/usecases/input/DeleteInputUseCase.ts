@@ -1,12 +1,12 @@
-import { DeleteInputRepository } from "@/data/protocols/db/input/DeleteInputRepository.protocol";
-import { LoadInputByIdRepository } from "@/data/protocols/db/input/LoadInputByIdRepository.protocol";
+import { DeleteIngredientRepository } from "@/data/protocols/db/input/DeleteIngredientRepository.protocol";
+import { LoadInputByIdRepository } from "@/data/protocols/db/input/LoadIngredientByIdRepository.protocol";
 import { InputModel } from "@/domain/models/Input";
 import { DeleteInputUseCaseContract } from "@/domain/usecases/input/DeleteInput";
 import { InputNotFoundError } from "@/presentation/errors/InputNotFoundError";
 
 export class DeleteInputUseCase implements DeleteInputUseCaseContract {
   constructor(
-    private readonly deleteInput: DeleteInputRepository,
+    private readonly deleteInput: DeleteIngredientRepository,
     private readonly findInput: LoadInputByIdRepository
   ) {}
 

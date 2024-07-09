@@ -1,6 +1,6 @@
 import { InputModel } from "@/domain/models/Input";
 
-export type Sort = "name" | "code" | "unitPrice" | "measurementUnit" | "groups" | "createdAt" | "updatedAt";
+export type Sort = "name" | "code" | "unitPrice" | "measurement" | "groups" | "createdAt" | "updatedAt";
 
 export interface FindInputsParams {
   page?: number;
@@ -9,7 +9,7 @@ export interface FindInputsParams {
 }
 
 export interface FindInputsResponse {
-  inputs: Partial<InputModel>[];
+  ingredients: Partial<InputModel>[];
   totalPages: number;
   totalItems: number;
 }

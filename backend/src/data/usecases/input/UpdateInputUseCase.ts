@@ -1,6 +1,6 @@
 import { LoadGroupsByIdsRepository } from "@/data/protocols/db/group/LoadGroupsByIdsRepository.protocol";
-import { LoadInputByIdRepository } from "@/data/protocols/db/input/LoadInputByIdRepository.protocol";
-import { UpdateInputRepository } from "@/data/protocols/db/input/UpdateInputRepository.protocol";
+import { LoadInputByIdRepository } from "@/data/protocols/db/input/LoadIngredientByIdRepository.protocol";
+import { UpdateIngredientRepository } from "@/data/protocols/db/input/UpdateIngredientRepository.protocol";
 import { LoadMeasureByIdRepository } from "@/data/protocols/db/measure/LoadMeasureByIdRepository.protocol";
 import { InputModel } from "@/domain/models/Input";
 import { CreateInputModel } from "@/domain/usecases/input/CreateInput";
@@ -11,7 +11,7 @@ import { MeasureNotFoundError } from "@/presentation/errors/MeasureNotFoundError
 
 export class UpdateInputUseCase implements UpdateInputUseCaseContract {
   constructor(
-    private readonly updateInput: UpdateInputRepository,
+    private readonly updateInput: UpdateIngredientRepository,
     private readonly findInput: LoadInputByIdRepository,
     private readonly findMeasure: LoadMeasureByIdRepository,
     private readonly findGroups: LoadGroupsByIdsRepository
@@ -27,15 +27,14 @@ export class UpdateInputUseCase implements UpdateInputUseCaseContract {
       throw new InputNotFoundError();
     }
 
-    if (param.measurementUnitId !== input.measurementUnit.id) {
-      const measure = await this.findMeasure.loadById(param.measurementUnitId);
-
+    if (param.measurementId !== input.measurement.id) {
+      const measure = await this.findMeasure.loadById(param.measurementId);
       if (!measure) {
         throw new MeasureNotFoundError();
       }
     }
 
-    const groupsIDs = param.groups || [];
+    const groupsIDs = param.groupIds || [];
 
     if (!groupsIDs.length) {
       throw new GroupNotFoundError();

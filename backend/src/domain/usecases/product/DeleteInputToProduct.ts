@@ -1,6 +1,6 @@
 export interface RemoveInputToProductModel {
     productId: string;
-    inputId: string;
+    ingredientId: string;
 }
 
 export interface DeleteInputToProductUseCaseContract {

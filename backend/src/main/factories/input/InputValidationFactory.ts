@@ -9,8 +9,8 @@ export const makeInputValidationFactory = (): ValidationComposite => {
         'name',
         'code',
         'unitPrice',
-        'measurementUnitId',
-        'groups',
+        'measurementId',
+        'groupIds',
     ];
 
     for (const field of requiredFields) {

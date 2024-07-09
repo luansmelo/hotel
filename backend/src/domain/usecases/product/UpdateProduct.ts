@@ -3,7 +3,7 @@ import { InputToProduct } from "./AddInputToProduct";
 import { CreateProductModel } from "./CreateProduct";
 
 export interface UpdateProductModel extends Partial<CreateProductModel> {
-    inputs: InputToProduct[];
+    ingredients: InputToProduct[];
 }
 
 export interface UpdateProductUseCaseContract {

@@ -11,7 +11,7 @@ const makeSut = () => {
 
 describe('Measure MySQL Repository', () => {
     beforeEach(async () => {
-        await prisma.$executeRaw`DELETE FROM measurementUnit;`;
+        await prisma.$executeRaw`DELETE FROM measurement;`;
     });
 
     afterAll(async () => {

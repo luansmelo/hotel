@@ -24,13 +24,17 @@ export function mapperMenu(menu: any) {
             weekDay: schedule.weekDay,
             accession: schedule.product.accession,
             status: schedule.product.status,
-            inputs: schedule.product.inputs.map((input: any) => ({
-              id: input?.input.id,
-              name: input?.input.name,
-              code: input.input.code,
-              unitPrice: input.input.unitPrice,
-              grammage: input.grammage,
-              measurementUnit: input.measurementUnit,
+            ingredients: schedule.product.ingredients.map((ingredient: any) => ({
+              id: ingredient.ingredient.id,
+              name: ingredient.ingredient.name,
+              code: ingredient.ingredient.code,
+              unitPrice: ingredient.ingredient.unitPrice,
+              grammage: ingredient.grammage,
+              measurement: ingredient.measurement,
+              groups: ingredient.ingredient.groups.map((group) => ({
+                id: group.group.id,
+                name: group.group.name,
+              })),
             })),
           })
         ),

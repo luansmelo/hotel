@@ -7,6 +7,6 @@ export interface InputModel {
   code: string;
   grammage?: number;
   unitPrice: number;
-  measurementUnit: MeasureModel;
+  measurement: MeasureModel;
   groups: GroupModel[];
 }
