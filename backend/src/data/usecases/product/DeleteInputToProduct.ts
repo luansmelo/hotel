@@ -23,7 +23,7 @@ export class DeleteInputToProductUseCase implements DeleteInputToProductUseCaseC
 
     const removeProduct = await this.removeInput.deleteProduct(productModel);
 
-    if (removeProduct?.count && product.inputs.length - removeProduct.count === 0) {
+    if (removeProduct?.count && product.ingredients.length - removeProduct.count === 0) {
       await this.updateProduct.updateById(product.id, { status: 'INCOMPLETE' });
     }
 

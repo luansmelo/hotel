@@ -181,7 +181,7 @@ export class ProductRepository
         status: Status[input.status],
         ingredients: {
           updateMany: input?.ingredients?.map((inputUpdated) => ({
-            where: { ingredientId: inputUpdated.id },
+            where: { id: inputUpdated.id },
             data: {
               grammage: inputUpdated.grammage,
               measurement: inputUpdated.measurement
@@ -213,11 +213,9 @@ export class ProductRepository
   async deleteProduct(
     input: RemoveInputToProductModel
   ): Promise<Partial<{ count: number }>> {
-
     return InputOnProducts.deleteMany({
       where: {
-        productId: input.productId,
-        ingredientId: input.ingredientId,
+        id: input.ingredientId,
       },
     });
   }

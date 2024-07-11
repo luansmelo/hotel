@@ -12,7 +12,7 @@ export function mapperProduct(product: any) {
     updatedAt: product.updatedAt,
     photo_url: product.photo_url || null,
     ingredients: product?.ingredients.map((input) => ({
-      id: input.ingredient.id,
+      id: input.id,
       name: input.ingredient.name,
       code: input.ingredient.code,
       grammage: input.grammage,

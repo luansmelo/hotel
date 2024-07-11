@@ -15,7 +15,7 @@ export interface ProductModel {
   resource: string;
   status: string,
   photo_url?: string;
-  inputs?: InputModel[];
+  ingredients?: InputModel[];
   createdAt?: Date
   updatedAt?: Date
 }
