@@ -39,7 +39,7 @@ describe('Group Routes', () => {
     it('should return 200 on success create a group', async () => {
 
         await request(app)
-            .post('/api/group/create')
+            .post('/api/group')
             .set('x-access-token', adminToken)
             .send({
                 name: 'any_name',

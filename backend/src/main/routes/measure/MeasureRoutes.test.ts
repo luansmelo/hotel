@@ -39,7 +39,7 @@ describe('Measure Routes', () => {
     it('should return 200 on success create a measure', async () => {
 
         await request(app)
-            .post('/api/measure/create')
+            .post('/api/measure/')
             .set('x-access-token', adminToken)
             .send({
                 name: 'any_name',

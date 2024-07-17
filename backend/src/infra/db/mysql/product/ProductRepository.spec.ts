@@ -39,7 +39,7 @@ const makeFakeAddInputToProduct = () => ({
 
 const makeSut = () => ({
     product: new ProductRepository(),
-    input: new IngredientRepository(),
+    ingredient: new IngredientRepository(),
     measurement: new MeasureRepository(),
     group: new GroupRepository()
 });
@@ -47,7 +47,7 @@ const makeSut = () => ({
 describe('Product MySQL Repository', () => {
     beforeEach(async () => {
         await prisma.$executeRaw`DELETE FROM \`group\`;`;
-        await prisma.$executeRaw`DELETE FROM \`input\`;`;
+        await prisma.$executeRaw`DELETE FROM \`ingredient\`;`;
         await prisma.$executeRaw`DELETE FROM product;`;
         await prisma.$executeRaw`DELETE FROM measurement;`;
     });
@@ -63,8 +63,8 @@ describe('Product MySQL Repository', () => {
         expect(Product).toBeTruthy();
     });
 
-    it('should add inputs to the product on success', async () => {
-        const { product, group, input, measurement } = makeSut();
+    it('should add ingredients to the product on success', async () => {
+        const { product, group, ingredient, measurement } = makeSut();
 
         const groupCreate = await group.create(makeFakeGroup());
 
@@ -76,7 +76,7 @@ describe('Product MySQL Repository', () => {
             measurementId: measurementResponse.id as string
         };
 
-        await input.create(data);
+        await ingredient.create(data);
         await product.create(makeFakeProduct());
 
         const addInput = await product.addInput(makeFakeAddInputToProduct());
@@ -84,8 +84,8 @@ describe('Product MySQL Repository', () => {
         expect(addInput).toBeTruthy();
     });
 
-    it('should delete an inputs on success on delete inputs', async () => {
-        const { product, group, input, measurement } = makeSut();
+    it('should delete an ingredients on success on delete ingredients', async () => {
+        const { product, group, ingredient, measurement } = makeSut();
 
         const groupCreate = await group.create(makeFakeGroup());
 
@@ -97,7 +97,7 @@ describe('Product MySQL Repository', () => {
             measurementId: measurementResponse.id as string
         };
 
-        const inputCreated = await input.create(data);
+        const inputCreated = await ingredient.create(data);
 
         const createdProduct = await product.create(makeFakeProduct());
 
@@ -116,7 +116,7 @@ describe('Product MySQL Repository', () => {
         expect(product).toEqual({
             products: [{
                 ...createProduct,
-                inputs: []
+                ingredients: []
             }],
             totalPages: 1,
             totalItems: 1
@@ -149,7 +149,7 @@ describe('Product MySQL Repository', () => {
 
         expect(loadProductById).toEqual({
             ...createProduct,
-            inputs: []
+            ingredients: []
         });
     });
 
