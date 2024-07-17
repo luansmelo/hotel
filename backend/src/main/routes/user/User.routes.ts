@@ -7,13 +7,15 @@ import { makeLoadUsersFactory } from "@/main/factories/user/LoadUsersFactory";
 import { makeFindUserById } from "@/main/factories/user/LoadUserByIdFactory";
 import { makeUpdateUser } from "@/main/factories/user/UpdateUserFactory";
 import { makeDeleteUser } from "@/main/factories/user/DeleteUserFactory";
+import { makeCountUsersController } from "@/main/factories/user/CountIngredientsFactory";
 
 export default (router: Router): void => {
   const userRouter = Router();
 
   userRouter.post("/signup", adaptRoute(makeCreateUserController()));
   userRouter.get("/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeLoadUsersFactory()));
-
+  userRouter.get("/count/users", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCountUsersController()));
+  
   // admin router 
   userRouter.get("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeFindUserById()));
   userRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateUser()));

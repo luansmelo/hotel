@@ -1,6 +1,7 @@
 import { adaptRoute } from "@/main/adapters/express/ExpressRouteAdapter";
 import { adaptMiddleware } from "@/main/adapters/middlewares/ExpressMiddlewareAdapter";
 import { makeCreateInputController, makeDeleteInputController, makeFindIngredientByIdController, makeFindInputsController, makeUpdateInputController } from "@/main/factories";
+import { makeCountIngredientsController } from "@/main/factories/input/CountIngredientsFactory";
 import { makeAuthAdminMiddleware } from "@/main/factories/middlewares/AuthAdminMiddlewareFactory";
 import { makeAuthMiddleware } from "@/main/factories/middlewares/AuthMiddlewareFactory";
 import { Router } from "express";
@@ -10,7 +11,8 @@ export default (router: Router): void => {
 
   ingredientRouter.get("/", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindInputsController()));
   ingredientRouter.get("/:id", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeFindIngredientByIdController()));
-
+  ingredientRouter.get("/count/ingredients", adaptMiddleware(makeAuthMiddleware()), adaptRoute(makeCountIngredientsController()));
+  
   // Admin Routes
   ingredientRouter.post("/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeCreateInputController()));
   ingredientRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateInputController()));
