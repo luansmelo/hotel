@@ -1,8 +1,8 @@
 import { LoadProductByIdRepository } from "@/data/protocols/db/product/LoadProductByIdRepository.protocol";
-import { UploadProductPhotoRepository } from "@/data/protocols/db/productMedia/UploadProductPhotoRepository.protocol";
 import { ProductModel } from "@/domain/models/Product";
 import { File } from "@/domain/usecases/file/File";
 import { UploadProductPhotoUseCaseContract } from "@/domain/usecases/productMedia/UploadProductPhoto";
+import { UploadProductPhotoRepository } from "@/data/protocols/db/productMedia/UploadProductPhotoRepository.protocol";
 
 export class UploadProductPhoto implements UploadProductPhotoUseCaseContract {
     constructor(

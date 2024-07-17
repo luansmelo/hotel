@@ -2,7 +2,7 @@ import { mapperProduct } from "@/data/usecases/product/mapper/mapperProduct";
 import { CreateProductRepository } from "@/data/protocols/db/product/CreateProductRepository.protocol";
 import { CreateProductModel } from "@/domain/usecases/product/CreateProduct";
 import { ProductModel, Status } from "@/domain/models/Product";
-import { Product, InputOnProducts } from "@/data/local/entity/product";
+import { Product, InputOnProducts, ProductMedia } from "@/data/local/entity/product";
 import { AddInputToProductRepository } from "@/data/protocols/db/product/AddInputToProductRepository.protocol";
 import { LoadProductByIdRepository } from "@/data/protocols/db/product/LoadProductByIdRepository.protocol";
 import { LoadProductByNameRepository } from "@/data/protocols/db/product/LoadProductByNameRepository.protocol";
@@ -14,6 +14,8 @@ import { RemoveInputToProductModel } from "@/domain/usecases/product/DeleteInput
 import { UpdateProductModel } from "@/domain/usecases/product/UpdateProduct";
 import { DeleteProductRepository } from "@/data/protocols/db/product/DeleteProductRepository.protocol";
 import { FindProductsParams, FindProductsResponse } from "@/domain/usecases/product/FindProductsParams";
+import { UploadProductPhotoRepository } from "@/data/protocols/db/productMedia/UploadProductPhotoRepository.protocol";
+import { File } from "@/domain/usecases/file/File";
 
 export class ProductRepository
   implements
@@ -24,7 +26,8 @@ export class ProductRepository
   LoadProductsRepository,
   LoadPredefinedProductRepository,
   DeleteProductRepository,
-  DeleteInputToProductRepository {
+  DeleteInputToProductRepository,
+  UploadProductPhotoRepository {
 
   async create(input: CreateProductModel) {
     return Product.create({
@@ -216,5 +219,23 @@ export class ProductRepository
         id: input.ingredientId,
       },
     });
+  }
+
+  async uploadProductPhoto(productId: string, file: File): Promise<Partial<ProductModel> | null> {
+    return await Product.update({
+      where: { id: productId },
+      data: {
+        photo_url: file.filename
+      }
+    })
+  }
+
+  async deleteProductPhoto(productId: string): Promise<Partial<ProductModel> | null> { 
+    return await Product.update({
+      where: { id: productId },
+      data: {
+        photo_url: null
+      }
+    })
   }
 }

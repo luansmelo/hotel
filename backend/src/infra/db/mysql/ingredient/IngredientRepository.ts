@@ -10,6 +10,7 @@ import { LoadInputByNameRepository } from "@/data/protocols/db/input/LoadIngredi
 import { LoadInputsRepository } from "@/data/protocols/db/input/LoadIngredientsRepository.protocol";
 import { UpdateIngredientRepository } from "@/data/protocols/db/input/UpdateIngredientRepository.protocol";
 import { DeleteIngredientRepository } from "@/data/protocols/db/input/DeleteIngredientRepository.protocol";
+import { CountTotalIngredientsRepository } from "@/data/protocols/db/input/CountTotalIngredientsRepository.protocol";
 
 export class IngredientRepository
   implements
@@ -19,10 +20,11 @@ export class IngredientRepository
   LoadInputByNameRepository,
   LoadInputsRepository,
   DeleteIngredientRepository,
-  UpdateIngredientRepository {
+  UpdateIngredientRepository,
+  CountTotalIngredientsRepository {
 
   async create(input: CreateInputModel): Promise<InputModel> {
-    const { groupIds, ...rest} = input
+    const { groupIds, ...rest } = input
     const createInput = await Input.create({
       data: {
         ...rest,
@@ -294,5 +296,10 @@ export class IngredientRepository
     });
 
     return mapperInput(db);
+  }
+
+  async countTotalIngredients(): Promise<number> {
+    const count = await Input.count();
+    return count;
   }
 }

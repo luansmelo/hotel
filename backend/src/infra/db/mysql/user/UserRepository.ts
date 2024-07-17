@@ -12,6 +12,7 @@ import { FindUsersResponse } from "@/domain/usecases/user/FindUsersParams";
 import { FindGroupsParams } from "@/domain/usecases/group/FindGroupsParams";
 import { LoadUserByIdRepository } from "@/data/protocols/db/user/LoadUserByIdRepository.protocol";
 import { DeleteUserRepository } from "@/data/protocols/db/user/DeleteUserRepository.protocol.ts";
+import { CountTotalUserRepository } from "@/data/protocols/db/user/CountTotalUserRepository.protocol";
 
 export class UserRepository
   implements CreateUserRepository,
@@ -20,7 +21,8 @@ export class UserRepository
   LoadUserByTokenRepository,
   LoadUserByIdRepository,
   UpdateUserRepository,
-  DeleteUserRepository {
+  DeleteUserRepository,
+  CountTotalUserRepository {
 
   async create(input: CreateUserModel): Promise<UserModel> {
 
@@ -90,5 +92,10 @@ export class UserRepository
 
   async deleteById(id: string): Promise<UserModel> {
     return User.delete({ where: { id } })
+  }
+
+  async countTotalUsers(): Promise<number> {
+    const count = await User.count();
+    return count;
   }
 }
