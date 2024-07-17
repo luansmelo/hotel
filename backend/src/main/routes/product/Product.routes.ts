@@ -15,6 +15,14 @@ import { adaptMiddleware } from "../../adapters/middlewares/ExpressMiddlewareAda
 import { makeAuthMiddleware } from "../../factories/middlewares/AuthMiddlewareFactory";
 
 import { makeAuthAdminMiddleware } from "../../factories/middlewares/AuthAdminMiddlewareFactory";
+import MulterAdapter from "@/main/adapters/multer/MulterAdapter";
+
+const uploadMiddleware = new MulterAdapter({
+  allowedMimes: ['image/png', 'image/jpeg'],
+  notAllowedMessage: 'Only .png, .jpg format allowed!',
+  fileSizeLimit: 16 * 1024 * 1024,
+  savePath: 'medias/products',
+}).getMiddleware();
 
 export default (router: Router): void => {
   const productRouter = Router();
@@ -29,6 +37,6 @@ export default (router: Router): void => {
   productRouter.post("/add/ingredient/", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeAddInputToProductController()))
   productRouter.delete("/remove/:productId/ingredient/:ingredientId", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeDeleteInputToProductController()));
   productRouter.put("/:id", adaptMiddleware(makeAuthAdminMiddleware()), adaptRoute(makeUpdateProductController()));
-
+  productRouter.put("/:id/profile", adaptMiddleware(makeAuthAdminMiddleware()), uploadMiddleware, adaptRoute(makeUpdateProductController()));
   router.use('/product', productRouter);
 }

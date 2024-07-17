@@ -29,7 +29,7 @@ model Product {
   resource                String                    @db.VarChar(400)
   accession               Int?
   status                  Status?                   @default(INCOMPLETE)
-  ingredients                  IngredientsOnProducts[]
+  ingredients             IngredientsOnProducts[]
   productMedia            ProductMedia?
   categoryProductSchedule CategoryProductSchedule[]
   photo_url               String?
@@ -41,43 +41,42 @@ model Product {
 }
 
 model ProductMedia {
-  id           String   @id @default(uuid())
-  location     String
-  originalName String
-  mimeType     String
-  productId    String   @unique
-  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  updatedAt    DateTime @updatedAt @map(name: "updated_at")
+  id        String   @id @default(uuid())
+  filename  String
+  metadata  String
+  productId String   @unique
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
 
   @@map("product_media")
 }
 
 model IngredientsOnProducts {
-  id              String   @id @default(uuid())
-  productId       String
-  ingredientId         String
-  measurement String
-  grammage        Float
-  ingredient           Ingredient    @relation(fields: [ingredientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdAt       DateTime @default(now()) @map(name: "created_at")
-  updatedAt       DateTime @updatedAt @map(name: "updated_at")
+  id           String     @id @default(uuid())
+  productId    String
+  ingredientId String
+  measurement  String
+  grammage     Float
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt    DateTime   @default(now()) @map(name: "created_at")
+  updatedAt    DateTime   @updatedAt @map(name: "updated_at")
 
   @@map("inputsOnProducts")
 }
 
 model Ingredient {
-  id                String             @id @default(uuid())
-  name              String             @unique
-  code              String             @unique
-  unitPrice         Float
-  status            Status?            @default(INCOMPLETE)
-  measurement   Measurement    @relation(fields: [measurementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  groups            GroupsOnIngredients[]
-  products          IngredientsOnProducts[]
-  createdAt         DateTime           @default(now()) @map(name: "created_at")
-  updatedAt         DateTime           @updatedAt @map(name: "updated_at")
+  id            String                  @id @default(uuid())
+  name          String                  @unique
+  code          String                  @unique
+  unitPrice     Float
+  status        Status?                 @default(INCOMPLETE)
+  measurement   Measurement             @relation(fields: [measurementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  groups        GroupsOnIngredients[]
+  products      IngredientsOnProducts[]
+  createdAt     DateTime                @default(now()) @map(name: "created_at")
+  updatedAt     DateTime                @updatedAt @map(name: "updated_at")
   measurementId String
 
   @@index([code, name, unitPrice])
@@ -85,24 +84,24 @@ model Ingredient {
 }
 
 model GroupsOnIngredients {
-  id        String   @id @default(uuid())
-  ingredient     Ingredient    @relation(fields: [ingredientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ingredientId   String
-  group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  groupId   String
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  id           String     @id @default(uuid())
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ingredientId String
+  group        Group      @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  groupId      String
+  createdAt    DateTime   @default(now()) @map(name: "created_at")
+  updatedAt    DateTime   @updatedAt @map(name: "updated_at")
 
   @@index([ingredientId, groupId])
   @@map("groupsOnInputs")
 }
 
 model Group {
-  id        String           @id @default(uuid())
-  name      String           @unique
+  id        String                @id @default(uuid())
+  name      String                @unique
   input     GroupsOnIngredients[]
-  createdAt DateTime         @default(now()) @map(name: "created_at")
-  updatedAt DateTime         @updatedAt @map(name: "updated_at")
+  createdAt DateTime              @default(now()) @map(name: "created_at")
+  updatedAt DateTime              @updatedAt @map(name: "updated_at")
 
   @@index([name])
   @@map("group")
@@ -147,11 +146,11 @@ model Category {
 }
 
 model Measurement {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
-  ingredient     Ingredient[]
+  id         String       @id @default(uuid())
+  name       String       @unique
+  createdAt  DateTime     @default(now()) @map(name: "created_at")
+  updatedAt  DateTime     @updatedAt @map(name: "updated_at")
+  ingredient Ingredient[]
 
   @@index([name])
   @@map("measurement")

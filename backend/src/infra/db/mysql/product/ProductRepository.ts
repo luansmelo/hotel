@@ -9,7 +9,6 @@ import { LoadProductByNameRepository } from "@/data/protocols/db/product/LoadPro
 import { LoadProductsRepository } from "@/data/protocols/db/product/LoadProductsRepository.protocol";
 import { LoadPredefinedProductRepository } from "@/data/protocols/db/product/LoadPredefinedProductRepository.protocol";
 import { DeleteInputToProductRepository } from "@/data/protocols/db/product/DeleteInputToProductRepository.protocol";
-import { UpdateProductRepository } from "@/data/protocols/db/product/UpdateProductRepository.protocol";
 import { AddInputToProductModel } from "@/domain/usecases/product/AddInputToProduct";
 import { RemoveInputToProductModel } from "@/domain/usecases/product/DeleteInputToProduct";
 import { UpdateProductModel } from "@/domain/usecases/product/UpdateProduct";
@@ -25,8 +24,7 @@ export class ProductRepository
   LoadProductsRepository,
   LoadPredefinedProductRepository,
   DeleteProductRepository,
-  DeleteInputToProductRepository,
-  UpdateProductRepository {
+  DeleteInputToProductRepository {
 
   async create(input: CreateProductModel) {
     return Product.create({
